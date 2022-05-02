@@ -1,6 +1,20 @@
 # Compiled class file
 *.class
 
+.settings/
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+dependency-reduced-pom.xml
+.idea/
+
+*.properties
+
+# https://github.com/takari/maven-wrapper#usage-without-binary-jar
+.mvn/wrapper/maven-wrapper.jar
+
 # Log file
 *.log
 
