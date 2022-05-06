@@ -14,6 +14,11 @@ public class BasicQuery<T> {
     private final Session session;
     private final Class<T> aClass;
 
+    public BasicQuery(Class<T> aClass){
+        this.session = ConnectionManager.getConnection().getSession();
+        this.aClass = aClass;
+    }
+
     public BasicQuery(Session s, Class<T> aClass){
         this.session = s;
         this.aClass = aClass;
@@ -38,7 +43,6 @@ public class BasicQuery<T> {
         try{
             query = query.select(root).where(cb.equal(root.get("id"), id));
             result = session.createQuery(query).getSingleResult();
-            System.out.println(result);
         } catch(NoResultException ignored){}
         return Optional.ofNullable(result);
     }
