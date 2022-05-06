@@ -5,7 +5,7 @@ import com.revature.TeamCP2.interfaces.Model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "cart", schema = "public")
+@Table(name = "cart-item", schema = "public")
 public class CartItem implements Model {
 
     @Id
