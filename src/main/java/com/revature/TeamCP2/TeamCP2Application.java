@@ -13,6 +13,10 @@ public class TeamCP2Application {
 	public static void main(String[] args) {
 		SpringApplication.run(TeamCP2Application.class, args);
 
+		ConnectionManager.getConnection()
+				.addAnnotatedClass(Product.class)
+				.addAnnotatedClass(User.class)
+				.initializeDatasource();
 	}
 
 }
