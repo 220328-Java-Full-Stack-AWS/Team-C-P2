@@ -16,6 +16,7 @@ public abstract class AbstractHibernateDao<T> {
 
     /**
      * Uses BasicQuery
+     * @GH
      */
     public List<T> getAll(){
         Class<T> type = (Class<T>) GenericTypeResolver.resolveTypeArgument(getClass(), AbstractHibernateDao.class);
@@ -26,6 +27,7 @@ public abstract class AbstractHibernateDao<T> {
 
     /**
      * Uses BasicQuery
+     * @GH
      */
     public Optional<T> getById(int id){
         Class<T> type = (Class<T>) GenericTypeResolver.resolveTypeArgument(getClass(), AbstractHibernateDao.class);

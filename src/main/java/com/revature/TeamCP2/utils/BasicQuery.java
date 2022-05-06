@@ -25,6 +25,7 @@ public class BasicQuery<T> {
     /**
      * Constructor
      * @param aClass The type you want the query to act on
+     * @GH
      */
     public BasicQuery(Class<T> aClass){
         this.session = ConnectionManager.getConnection().getSession();
@@ -35,6 +36,7 @@ public class BasicQuery<T> {
      * Constructor
      * @param s Specific session you would like to use (otherwise uses ConnectionManager session)
      * @param aClass The type you want the query to act on
+     * @GH
      */
     public BasicQuery(Session s, Class<T> aClass){
         this.session = s;
@@ -43,6 +45,7 @@ public class BasicQuery<T> {
 
     /**
      * Gets all the entities associated with the object type
+     * @GH
      */
     public List<T> getAll(){
         CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -55,6 +58,7 @@ public class BasicQuery<T> {
 
     /**
      * Gets the entity associated with the id passed in
+     * @GH
      */
     public Optional<T> getById(int id){
 
