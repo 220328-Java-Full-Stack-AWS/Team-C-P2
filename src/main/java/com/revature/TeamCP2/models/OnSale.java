@@ -3,6 +3,8 @@ package com.revature.TeamCP2.models;
 import com.revature.TeamCP2.interfaces.Model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "On_Sale", schema = "public")
@@ -13,8 +15,16 @@ public class OnSale implements Model {
     @Column(name = "sale_id")
     private Long id;
 
+    //This Class is the owning entity associated with the target entity (Product)
+    //The foreign key will be stored here
+    @OneToMany
+    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
+    List<Product> products = new ArrayList<>();
+
+
     @Column(name = "product_id")
     private Long productId;
+
 
     @Column(name = "discount_percentage")
     private Double discount;

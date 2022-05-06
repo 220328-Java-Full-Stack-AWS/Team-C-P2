@@ -13,6 +13,19 @@ public class UserAddress implements Model {
     @Column(name = "adress_id")
     private Long addressID;
 
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    public User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Column(name = "user_id")
     private Long user_id;
 
