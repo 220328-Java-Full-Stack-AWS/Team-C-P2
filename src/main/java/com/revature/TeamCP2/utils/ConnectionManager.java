@@ -35,6 +35,7 @@ public class ConnectionManager {
 
         sf = config.buildSessionFactory();
         session = sf.openSession();
+        System.out.println("Database connection initialized");
     }
 
     public ConnectionManager addAnnotatedClass(Class c){
