@@ -26,21 +26,21 @@ public class ProductCategory implements Model {
             cascade = CascadeType.ALL)
     private List<Product> productsAssociated;
 
-    @Column
+    @Column(nullable = false)
     private String name;
 
-    @Column
+    @Column(nullable = false)
     private String description;
 
     @Column
     private byte[] image;
 
     public ProductCategory() {
-        this.productsAssociated = new LinkedList<Product>();
+        this.productsAssociated = new LinkedList<>();
     }
 
     public ProductCategory(String name, String description, byte[] image) {
-        this.productsAssociated = new LinkedList<Product>();
+        this.productsAssociated = new LinkedList<>();
         this.name = name;
         this.description = description;
         this.image = image;

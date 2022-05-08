@@ -10,7 +10,6 @@ import com.revature.TeamCP2.interfaces.Model;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "saved_payments", schema = "public")
@@ -24,27 +23,29 @@ public class Payment implements Model {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "payment_type")
-    private String paymentType;
+    @Column(name = "payment_type", nullable = false)
+    // Visa, Amex, Discover, Mastercard, etc.
+    private String network;
 
     @Column
-    private String provider;
+    // Capital One, US Bank, Chase, etc.
+    private String issuer;
 
-    @Column(name = "card_number")
+    @Column(name = "card_number", nullable = false)
     private Integer cardNumber;
 
-    @Column(name = "security_code")
-    private Integer securityCode;
+    @Column(name = "security_code", nullable = false)
+    private Short securityCode;
 
-    @Column(name = "expiration_date")
+    @Column(name = "expiration_date", nullable = false)
     private Date expirationDate;
 
     public Payment() {}
 
-    public Payment(User user, String paymentType, String provider, Integer cardNumber, Integer securityCode, Date expirationDate) {
+    public Payment(User user, String network, String issuer, Integer cardNumber, Short securityCode, Date expirationDate) {
         this.user = user;
-        this.paymentType = paymentType;
-        this.provider = provider;
+        this.network = network;
+        this.issuer = issuer;
         this.cardNumber = cardNumber;
         this.securityCode = securityCode;
         this.expirationDate = expirationDate;
@@ -58,20 +59,20 @@ public class Payment implements Model {
         this.user = user;
     }
 
-    public String getPaymentType() {
-        return paymentType;
+    public String getNetwork() {
+        return network;
     }
 
-    public void setPaymentType(String paymentType) {
-        this.paymentType = paymentType;
+    public void setNetwork(String paymentType) {
+        this.network = paymentType;
     }
 
-    public String getProvider() {
-        return provider;
+    public String getIssuer() {
+        return issuer;
     }
 
-    public void setProvider(String provider) {
-        this.provider = provider;
+    public void setIssuer(String provider) {
+        this.issuer = provider;
     }
 
     public Integer getCardNumber() {
@@ -82,11 +83,11 @@ public class Payment implements Model {
         this.cardNumber = cardNumber;
     }
 
-    public Integer getSecurityCode() {
+    public Short getSecurityCode() {
         return securityCode;
     }
 
-    public void setSecurityCode(Integer securityCode) {
+    public void setSecurityCode(Short securityCode) {
         this.securityCode = securityCode;
     }
 
