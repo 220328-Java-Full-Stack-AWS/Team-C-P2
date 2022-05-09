@@ -26,7 +26,7 @@ public class ConnectionManager {
         return connectionManager;
     }
 
-    public void initializeDatasource(){
+    public void initializeDatasource()  {
         Configuration config = new Configuration();
 
         for(Class c : annotatedEntities){
