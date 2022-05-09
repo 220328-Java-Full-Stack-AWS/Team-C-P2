@@ -20,7 +20,7 @@ public class Order implements Model {
     private Long id;
 
     // foreign key to the cart table
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
     public Cart cart;
 
@@ -30,13 +30,13 @@ public class Order implements Model {
     public OrderDetail detail;
 
     // table columns
-    @Column(name = "cart_id");
+    @Column(name = "cart_id")
     private Long cartId;
 
-    @Column(name = "order_detail_id");
+    @Column(name = "order_detail_id")
     private Long detailId;
 
-    @Column(name = "date_created");
+    @Column(name = "date_created")
     private String dateCreated;
 
     // constructors
