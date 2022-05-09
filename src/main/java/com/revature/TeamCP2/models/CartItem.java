@@ -12,17 +12,23 @@ public class CartItem implements Model {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer sessionId;
 
+
+    @ManyToOne
+    @Column (name = "cart-id")
+    private Cart cart;
+
+    @Column (name = "product-id")
     private Integer productId;
 
+    @Column
     private Integer quantity;
 
     public CartItem() {
     }
 
-    public CartItem(Integer sessionId, Integer productId, Integer quantity) {
-        this.sessionId = sessionId;
+    public CartItem(Cart cart, Integer productId, Integer quantity) {
+        this.cart = cart;
         this.productId = productId;
         this.quantity = quantity;
     }
@@ -35,12 +41,12 @@ public class CartItem implements Model {
         this.id = id;
     }
 
-    public Integer getSessionId() {
-        return sessionId;
+    public Cart getCart() {
+        return cart;
     }
 
-    public void setSessionId(Integer sessionId) {
-        this.sessionId = sessionId;
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
     public Integer getProductId() {
