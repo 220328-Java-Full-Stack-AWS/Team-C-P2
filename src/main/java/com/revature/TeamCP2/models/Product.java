@@ -26,7 +26,7 @@ public class Product implements Model {
     private String descr;
 
     @Column(name = "price")
-    private int price;
+    private double price;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category")
@@ -41,7 +41,7 @@ public class Product implements Model {
     public Product() {
     }
 
-    public Product(Integer id, String name, String descr, int price, Category category, boolean is_featured, byte[] image) {
+    public Product(Integer id, String name, String descr, double price, Category category, boolean is_featured, byte[] image) {
         this.id = id;
         this.name = name;
         this.descr = descr;
@@ -75,11 +75,11 @@ public class Product implements Model {
         this.descr = descr;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
