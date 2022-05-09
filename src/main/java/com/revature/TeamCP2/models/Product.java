@@ -32,7 +32,7 @@ public class Product implements Model {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category")
-    private Category category;
+    private ProductCategory category;
 
     @Column(name = "is_featured")
     private boolean is_featured;
@@ -43,7 +43,7 @@ public class Product implements Model {
     public Product() {
     }
 
-    public Product(Integer id, String name, String descr, double price, Category category, boolean is_featured, byte[] image) {
+    public Product(Integer id, String name, String descr, double price, ProductCategory category, boolean is_featured, byte[] image) {
         this.id = id;
         this.name = name;
         this.descr = descr;
@@ -85,13 +85,6 @@ public class Product implements Model {
         this.price = price;
     }
 
-    public int getCategory_id() {
-        return category;
-    }
-
-    public void setCategory_id(int category_id) {
-        this.category = category_id;
-    }
 
     public boolean isIs_featured() {
         return is_featured;
@@ -107,5 +100,13 @@ public class Product implements Model {
 
     public void setImage(byte[] image) {
         this.image = image;
+    }
+
+    public ProductCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(ProductCategory category) {
+        this.category = category;
     }
 }
