@@ -1,3 +1,9 @@
+/**
+ * Author(s): @Diego Leon
+ * Contributor(s):
+ * Purpose: OnSale Entity
+ */
+
 package com.revature.TeamCP2.models;
 
 import com.revature.TeamCP2.interfaces.Model;
@@ -17,8 +23,9 @@ public class OnSale implements Model {
 
     //This Class is the owning entity associated with the target entity (Product)
     //The foreign key will be stored here
-    @OneToMany(mappedBy = "onSale")
-    List<Product> products = new ArrayList<>();
+    @OneToMany(mappedBy = "on_sale")
+    List<Product> productsOnSale = new ArrayList<>();
+
 
 
     @Column(name = "discount_percentage")
@@ -29,7 +36,7 @@ public class OnSale implements Model {
 
     public OnSale(Long id, List<Product> products, Double discount) {
         this.id = id;
-        this.products = products;
+        this.productsOnSale = products;
         this.discount = discount;
     }
 
@@ -41,12 +48,22 @@ public class OnSale implements Model {
         this.id = id;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public List<Product> getProductsOnSale() {
+        return productsOnSale;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setProductsOnSale(List<Product> products) {
+        this.productsOnSale = products;
+    }
+
+    public OnSale addOnSaleProduct(Product product) {
+        this.productsOnSale.add(product);
+        return this;
+    }
+
+    public OnSale removeOnSaleProduct(Product product) {
+        this.productsOnSale.remove(product);
+        return this;
     }
 
     public Double getDiscount() {
