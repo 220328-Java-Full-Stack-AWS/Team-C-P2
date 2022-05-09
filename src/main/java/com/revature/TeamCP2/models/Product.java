@@ -30,8 +30,12 @@ public class Product implements Model {
     @Column(name = "price")
     private double price;
 
+    @ManyToOne()
+    @Column(name = "on_sale", nullable = true)
+    private OnSale on_sale;
+
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "category")
+    @JoinColumn(name = "category_id")
     private ProductCategory category;
 
     @Column(name = "is_featured")
