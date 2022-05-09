@@ -5,6 +5,11 @@ import com.revature.TeamCP2.interfaces.Model;
 import javax.persistence.*;
 import java.util.List;
 
+/*
+Author: Steven Dowd
+Purpose: Model for cart objects
+ */
+
 @Entity
 @Table(name = "cart", schema = "public")
 public class Cart implements Model {
@@ -45,7 +50,7 @@ public class Cart implements Model {
     }
 
     public void removeCartItem(CartItem cartItem) {
-        cartItem = null;
+        this.cartItems.remove(cartItem);
     }
 
     public User getUserId() {
