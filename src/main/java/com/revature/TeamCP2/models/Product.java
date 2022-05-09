@@ -2,8 +2,8 @@
  * Author(s): @Brandon Le
  * Contributor(s):
  * Purpose: Generates table model for Products.
- *          The table 'Products' has a many-to-one relation with 'Category'
- *          and a one-to-one relation with 'On_Sale', and 'Cart_item'.
+ *          The table 'Products' has a many-to-one relation with 'Category' and 'On_sale'
+ *          and a one-to-one relation with 'Cart_item'.
  *
  */
 
@@ -30,8 +30,12 @@ public class Product implements Model {
     @Column(name = "price")
     private double price;
 
+    @ManyToOne()
+    @Column(name = "on_sale", nullable = true)
+    private OnSale on_sale;
+
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "category")
+    @JoinColumn(name = "category_id")
     private ProductCategory category;
 
     @Column(name = "is_featured")
