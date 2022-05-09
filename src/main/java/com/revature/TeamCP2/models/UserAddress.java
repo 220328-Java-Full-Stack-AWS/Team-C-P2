@@ -1,3 +1,9 @@
+/**
+ * Author(s): @Diego Leon
+ * Contributor(s):
+ * Purpose: UserAddress Entity
+ */
+
 package com.revature.TeamCP2.models;
 
 import com.revature.TeamCP2.interfaces.Model;
@@ -5,7 +11,7 @@ import com.revature.TeamCP2.interfaces.Model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "User_Adress", schema="public")
+@Table(name = "User_Address", schema="public")
 public class UserAddress implements Model {
 
     @Id
@@ -48,8 +54,9 @@ public class UserAddress implements Model {
     public UserAddress() {
     }
 
-    public UserAddress(Long addressID, Long user_id, String addressLine1, String addressLine2, String city, Long postalCode, String country, String phoneNumber) {
-        this.id = addressID;
+    public UserAddress(Long id, User user, String addressLine1, String addressLine2, String city, Long postalCode, String country, String phoneNumber) {
+        this.id = id;
+        this.user = user;
         this.addressLine1 = addressLine1;
         this.addressLine2 = addressLine2;
         this.city = city;
