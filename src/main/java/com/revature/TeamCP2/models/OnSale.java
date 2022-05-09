@@ -17,13 +17,8 @@ public class OnSale implements Model {
 
     //This Class is the owning entity associated with the target entity (Product)
     //The foreign key will be stored here
-    @OneToMany
-    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
+    @OneToMany(mappedBy = "onSale")
     List<Product> products = new ArrayList<>();
-
-
-    @Column(name = "product_id")
-    private Long productId;
 
 
     @Column(name = "discount_percentage")
@@ -32,9 +27,9 @@ public class OnSale implements Model {
     public OnSale() {
     }
 
-    public OnSale(Long id, Long productId, Double discount) {
+    public OnSale(Long id, List<Product> products, Double discount) {
         this.id = id;
-        this.productId = productId;
+        this.products = products;
         this.discount = discount;
     }
 
@@ -46,12 +41,12 @@ public class OnSale implements Model {
         this.id = id;
     }
 
-    public Long getProductId() {
-        return productId;
+    public List<Product> getProducts() {
+        return products;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 
     public Double getDiscount() {

@@ -10,8 +10,8 @@ public class UserAddress implements Model {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "adress_id")
-    private Long addressID;
+    @Column(name = "address_id")
+    private Long id;
 
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -26,8 +26,6 @@ public class UserAddress implements Model {
         this.user = user;
     }
 
-    @Column(name = "user_id")
-    private Long user_id;
 
     @Column(name = "address_line1")
     private String addressLine1;
@@ -51,8 +49,7 @@ public class UserAddress implements Model {
     }
 
     public UserAddress(Long addressID, Long user_id, String addressLine1, String addressLine2, String city, Long postalCode, String country, String phoneNumber) {
-        this.addressID = addressID;
-        this.user_id = user_id;
+        this.id = addressID;
         this.addressLine1 = addressLine1;
         this.addressLine2 = addressLine2;
         this.city = city;
@@ -61,21 +58,14 @@ public class UserAddress implements Model {
         this.phoneNumber = phoneNumber;
     }
 
-    public Long getAddressID() {
-        return addressID;
+    public Long getId() {
+        return id;
     }
 
-    public void setAddressID(Long addressID) {
-        this.addressID = addressID;
+    public void setId(Long addressID) {
+        this.id = addressID;
     }
 
-    public Long getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
-    }
 
     public String getAddressLine1() {
         return addressLine1;
