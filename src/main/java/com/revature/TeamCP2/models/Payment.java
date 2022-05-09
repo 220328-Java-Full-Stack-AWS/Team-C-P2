@@ -38,11 +38,11 @@ public class Payment implements Model {
     private Short securityCode;
 
     @Column(name = "expiration_date", nullable = false)
-    private Date expirationDate;
+    private String expirationDate;
 
     public Payment() {}
 
-    public Payment(User user, String network, String issuer, Integer cardNumber, Short securityCode, Date expirationDate) {
+    public Payment(User user, String network, String issuer, Integer cardNumber, Short securityCode, String expirationDate) {
         this.user = user;
         this.network = network;
         this.issuer = issuer;
@@ -91,11 +91,11 @@ public class Payment implements Model {
         this.securityCode = securityCode;
     }
 
-    public Date getExpirationDate() {
+    public String getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(Date expirationDate) {
+    public void setExpirationDate(String expirationDate) {
         this.expirationDate = expirationDate;
     }
 
