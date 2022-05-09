@@ -2,7 +2,8 @@
  * Author(s): @Brandon Le
  * Contributor(s):
  * Purpose: Generates table model for Products.
- *          The table 'Products' has a one to one relation with 'Category', 'On_Sale', and 'Cart_item'.
+ *          The table 'Products' has a many-to-one relation with 'Category'
+ *          and a one-to-one relation with 'On_Sale', and 'Cart_item'.
  *
  */
 
@@ -29,7 +30,7 @@ public class Product implements Model {
     @Column(name = "price")
     private double price;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category")
     private Category category;
 
