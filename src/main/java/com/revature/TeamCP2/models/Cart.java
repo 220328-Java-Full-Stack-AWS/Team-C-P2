@@ -3,6 +3,7 @@ package com.revature.TeamCP2.models;
 import com.revature.TeamCP2.interfaces.Model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,21 +19,23 @@ public class Cart implements Model {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column (name = "user-id")
     @OneToOne
+    @JoinColumn(name = "user-id")
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cart_item")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
+    @Column(name = "cart_item")
     private List<CartItem> cartItems;
 
     @Column
     private Double total;
 
     public Cart() {
+        cartItems = new ArrayList<>();
     }
 
-    public Cart(Integer userId, Double total) {
+    public Cart(User user, Double total) {
+        cartItems = new ArrayList<>();
         this.user = user;
         this.total = total;
     }
@@ -57,7 +60,7 @@ public class Cart implements Model {
         return user;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(User user) {
         this.user = user;
     }
 

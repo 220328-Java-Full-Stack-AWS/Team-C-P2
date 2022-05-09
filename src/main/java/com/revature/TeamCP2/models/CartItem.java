@@ -20,11 +20,12 @@ public class CartItem implements Model {
 
 
     @ManyToOne
-    @Column (name = "cart-id")
+    @JoinColumn (name = "cart-id")
     private Cart cart;
 
-    @Column (name = "product-id")
-    private Integer productId;
+    @OneToOne
+    @JoinColumn (name = "product-id")
+    private Product product;
 
     @Column
     private Integer quantity;
@@ -32,9 +33,9 @@ public class CartItem implements Model {
     public CartItem() {
     }
 
-    public CartItem(Cart cart, Integer productId, Integer quantity) {
+    public CartItem(Cart cart, Product product, Integer quantity) {
         this.cart = cart;
-        this.productId = productId;
+        this.product = product;
         this.quantity = quantity;
     }
 
@@ -54,12 +55,12 @@ public class CartItem implements Model {
         this.cart = cart;
     }
 
-    public Integer getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(Integer productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public Integer getQuantity() {
