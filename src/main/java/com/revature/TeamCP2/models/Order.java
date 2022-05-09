@@ -1,3 +1,9 @@
+/**
+ * Author(s): @Arun Mohan
+ * Contributor(s):
+ * Purpose: Model class used to represent an Order to be persisted in the database.
+ */
+
 package com.revature.TeamCP2.models;
 
 import com.revature.TeamCP2.interfaces.Model;
