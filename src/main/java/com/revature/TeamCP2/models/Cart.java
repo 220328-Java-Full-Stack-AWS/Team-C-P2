@@ -5,7 +5,7 @@ import com.revature.TeamCP2.interfaces.Model;
 import javax.persistence.*;
 import java.util.List;
 
-/*
+/**
 Author: Steven Dowd
 Purpose: Model for cart objects
  */
