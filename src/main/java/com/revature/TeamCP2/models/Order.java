@@ -24,7 +24,7 @@ public class Order implements Model {
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
     public Cart cart;
 
-    // foreign key to the order detail - might be removing because not using order detail table?
+    // foreign key to the order detail
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_detail_id", referencedColumnName = "id")
     public OrderDetail detail;
