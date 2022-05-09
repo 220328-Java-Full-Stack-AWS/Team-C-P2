@@ -31,16 +31,15 @@ public class Order implements Model {
     private Long detailId;
 
     @Column(name = "date_created");
-    private Long dateCreated;
+    private String dateCreated;
 
     // constructors
 
     public Order() {
     }
 
-    public Order(Long id, OrderDetail detail, Long cartId, Long detailId, Long dateCreated) {
+    public Order(Long id, Long cartId, Long detailId, String dateCreated) {
         this.id = id;
-        this.detail = detail;
         this.cartId = cartId;
         this.detailId = detailId;
         this.dateCreated = dateCreated;
@@ -90,11 +89,11 @@ public class Order implements Model {
         this.detailId = detailId;
     }
 
-    public Long getDateCreated() {
+    public String getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(Long dateCreated) {
+    public void setDateCreated(String dateCreated) {
         this.dateCreated = dateCreated;
     }
 }
