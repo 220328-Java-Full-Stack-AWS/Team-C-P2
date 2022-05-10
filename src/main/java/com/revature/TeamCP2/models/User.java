@@ -2,7 +2,10 @@ package com.revature.TeamCP2.models;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @Entity
 public class User {
@@ -31,11 +34,11 @@ public class User {
     @Basic
     @Column(name = "phone")
     private String phone;
+    //User one to many relationship with payment
+    @OneToMany(mappedBy = "user")
+    private List<Payment> payments = new ArrayList<>();
     @Basic
-    @Column(name = "payment_id")
-    private String paymentId;
-    @Basic
-    @Column(name = "date_created")
+    @Column(name = "date_created",updatable = false)
     private Date dateCreated;
     @Basic
     @Column(name = "date_modifies")
@@ -46,6 +49,15 @@ public class User {
     @OneToMany(mappedBy = "id")
     private Collection<Order> orderById;
     //---------------------------------------------
+    //User one to many relationship to Payment
+    public List<Payment> getPayments() {
+        return Collections.unmodifiableList(payments);
+    }
+
+    public void addPayment(Payment payment) {
+        payments.add(payment);
+    }
+    //----------------------------------------------------------------------
     public int getId() {
         return id;
     }
@@ -110,13 +122,13 @@ public class User {
         this.phone = phone;
     }
 
-    public String getPaymentId() {
-        return paymentId;
-    }
-
-    public void setPaymentId(String paymentId) {
-        this.paymentId = paymentId;
-    }
+//    public String getPaymentId() {
+//        return paymentId;
+//    }
+//
+//    public void setPaymentId(String paymentId) {
+//        this.paymentId = paymentId;
+//    }
 
     public Date getDateCreated() {
         return dateCreated;
@@ -149,7 +161,7 @@ public class User {
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
         if (addressId != null ? !addressId.equals(user.addressId) : user.addressId != null) return false;
         if (phone != null ? !phone.equals(user.phone) : user.phone != null) return false;
-        if (paymentId != null ? !paymentId.equals(user.paymentId) : user.paymentId != null) return false;
+//        if (paymentId != null ? !paymentId.equals(user.paymentId) : user.paymentId != null) return false;
         if (dateCreated != null ? !dateCreated.equals(user.dateCreated) : user.dateCreated != null) return false;
         if (dateModifies != null ? !dateModifies.equals(user.dateModifies) : user.dateModifies != null) return false;
 
@@ -166,7 +178,7 @@ public class User {
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (addressId != null ? addressId.hashCode() : 0);
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
-        result = 31 * result + (paymentId != null ? paymentId.hashCode() : 0);
+//        result = 31 * result + (paymentId != null ? paymentId.hashCode() : 0);
         result = 31 * result + (dateCreated != null ? dateCreated.hashCode() : 0);
         result = 31 * result + (dateModifies != null ? dateModifies.hashCode() : 0);
         return result;
