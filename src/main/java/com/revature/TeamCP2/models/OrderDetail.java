@@ -25,8 +25,6 @@ public class OrderDetail implements Model {
     public Order order;
 
     // table columns
-    @Column(name = "order_id")
-    private Long orderId;
 
     @Column(name = "details")
     private String details;
@@ -36,9 +34,9 @@ public class OrderDetail implements Model {
     public OrderDetail() {
     }
 
-    public OrderDetail(Long id, Long orderId, String details) {
+    public OrderDetail(Long id, Order order, String details) {
         this.id = id;
-        this.orderId = orderId;
+        this.order = order;
         this.details = details;
     }
 
@@ -61,14 +59,6 @@ public class OrderDetail implements Model {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
     }
 
     public String getDetails() {

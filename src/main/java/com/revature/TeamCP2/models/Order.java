@@ -22,19 +22,14 @@ public class Order implements Model {
     // foreign key to the cart table
     @OneToOne
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
-    public Cart cart;
+    private Cart cart;
 
     // foreign key to the order detail
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_detail_id", referencedColumnName = "id")
-    public OrderDetail detail;
+    private OrderDetail detail;
 
     // table columns
-    @Column(name = "cart_id")
-    private Long cartId;
-
-    @Column(name = "order_detail_id")
-    private Long detailId;
 
     @Column(name = "date_created")
     private String dateCreated;
@@ -44,10 +39,10 @@ public class Order implements Model {
     public Order() {
     }
 
-    public Order(Long id, Long cartId, Long detailId, String dateCreated) {
+    public Order(Long id, Cart cart, OrderDetail detail, String dateCreated) {
         this.id = id;
-        this.cartId = cartId;
-        this.detailId = detailId;
+        this.cart = cart;
+        this.detail = detail;
         this.dateCreated = dateCreated;
     }
 
@@ -77,22 +72,6 @@ public class Order implements Model {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getCartId() {
-        return cartId;
-    }
-
-    public void setCartId(Long cartId) {
-        this.cartId = cartId;
-    }
-
-    public Long getDetailId() {
-        return detailId;
-    }
-
-    public void setDetailId(Long detailId) {
-        this.detailId = detailId;
     }
 
     public String getDateCreated() {
