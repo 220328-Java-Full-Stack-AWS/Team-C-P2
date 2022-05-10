@@ -28,9 +28,8 @@ public class User {
     @Basic
     @Column(name = "email")
     private String email;
-    @Basic
-    @Column(name = "address_id")
-    private Integer addressId;
+    @OneToOne(mappedBy = "user")
+    private UserAddress userAddresses;
     @Basic
     @Column(name = "phone")
     private String phone;
@@ -39,7 +38,7 @@ public class User {
     private List<Payment> payments = new ArrayList<>();
     @Basic
     @Column(name = "date_created",updatable = false)
-    private Date dateCreated;
+    private String dateCreated;
     @Basic
     @Column(name = "date_modifies")
     private Date dateModifies;
@@ -57,7 +56,10 @@ public class User {
     public void addPayment(Payment payment) {
         payments.add(payment);
     }
-    //----------------------------------------------------------------------
+
+   //----------------------------------------------------------------------
+
+
     public int getId() {
         return id;
     }
@@ -106,13 +108,21 @@ public class User {
         this.email = email;
     }
 
-    public Integer getAddressId() {
-        return addressId;
+    public UserAddress getUserAddresses() {
+        return userAddresses;
     }
 
-    public void setAddressId(Integer addressId) {
-        this.addressId = addressId;
+    public void setUserAddresses(UserAddress userAddresses) {
+        this.userAddresses = userAddresses;
     }
+
+    //    public Integer getAddressId() {
+//        return addressId;
+//    }
+//
+//    public void setAddressId(Integer addressId) {
+//        this.addressId = addressId;
+//    }
 
     public String getPhone() {
         return phone;
@@ -122,6 +132,13 @@ public class User {
         this.phone = phone;
     }
 
+    public String getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(String dateCreated) {
+        this.dateCreated = dateCreated;
+    }
 //    public String getPaymentId() {
 //        return paymentId;
 //    }
@@ -130,13 +147,13 @@ public class User {
 //        this.paymentId = paymentId;
 //    }
 
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
+//    public Date getDateCreated() {
+//        return dateCreated;
+//    }
+//
+//    public void setDateCreated(Date dateCreated) {
+//        this.dateCreated = dateCreated;
+//    }
 
     public Date getDateModifies() {
         return dateModifies;
@@ -159,7 +176,7 @@ public class User {
         if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
         if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
-        if (addressId != null ? !addressId.equals(user.addressId) : user.addressId != null) return false;
+//        if (addressId != null ? !addressId.equals(user.addressId) : user.addressId != null) return false;
         if (phone != null ? !phone.equals(user.phone) : user.phone != null) return false;
 //        if (paymentId != null ? !paymentId.equals(user.paymentId) : user.paymentId != null) return false;
         if (dateCreated != null ? !dateCreated.equals(user.dateCreated) : user.dateCreated != null) return false;
@@ -176,7 +193,7 @@ public class User {
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (addressId != null ? addressId.hashCode() : 0);
+//        result = 31 * result + (addressId != null ? addressId.hashCode() : 0);
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
 //        result = 31 * result + (paymentId != null ? paymentId.hashCode() : 0);
         result = 31 * result + (dateCreated != null ? dateCreated.hashCode() : 0);
