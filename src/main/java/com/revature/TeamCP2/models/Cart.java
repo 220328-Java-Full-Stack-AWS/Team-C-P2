@@ -17,6 +17,7 @@ public class Cart implements Model {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cart-id")
     private Integer id;
 
     @OneToOne

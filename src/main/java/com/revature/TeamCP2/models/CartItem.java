@@ -15,6 +15,7 @@ public class CartItem implements Model {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cart-item-id")
     private Integer id;
 
 
