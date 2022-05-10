@@ -31,7 +31,7 @@ public class Product implements Model {
     private double price;
 
     @ManyToOne()
-    @Column(name = "on_sale", nullable = true)
+    @JoinColumn(name = "on_sale", nullable = true)
     private OnSale on_sale;
 
     @ManyToOne(cascade = CascadeType.ALL)
