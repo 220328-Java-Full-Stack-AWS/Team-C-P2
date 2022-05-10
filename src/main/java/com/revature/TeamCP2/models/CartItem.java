@@ -4,26 +4,39 @@ import com.revature.TeamCP2.interfaces.Model;
 
 import javax.persistence.*;
 
+/**
+Author: Steven Dowd
+Purpose: Model for cart item objects
+ */
+
 @Entity
 @Table(name = "cart-item", schema = "public")
 public class CartItem implements Model {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cart-item-id")
     private Integer id;
 
-    private Integer sessionId;
 
-    private Integer productId;
 
+    @ManyToOne
+    @JoinColumn (name = "cart-id")
+    private Cart cart;
+
+    @OneToOne
+    @JoinColumn (name = "product-id")
+    private Product product;
+
+    @Column
     private Integer quantity;
 
     public CartItem() {
     }
 
-    public CartItem(Integer sessionId, Integer productId, Integer quantity) {
-        this.sessionId = sessionId;
-        this.productId = productId;
+    public CartItem(Cart cart, Product product, Integer quantity) {
+        this.cart = cart;
+        this.product = product;
         this.quantity = quantity;
     }
 
@@ -35,20 +48,20 @@ public class CartItem implements Model {
         this.id = id;
     }
 
-    public Integer getSessionId() {
-        return sessionId;
+    public Cart getCart() {
+        return cart;
     }
 
-    public void setSessionId(Integer sessionId) {
-        this.sessionId = sessionId;
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
-    public Integer getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(Integer productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public Integer getQuantity() {
