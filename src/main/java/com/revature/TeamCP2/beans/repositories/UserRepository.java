@@ -71,3 +71,4 @@ public class UserRepository extends AbstractHibernateRepo<User> {
     }
 
 }
+
