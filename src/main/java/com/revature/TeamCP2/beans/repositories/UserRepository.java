@@ -64,3 +64,46 @@ public class UserRepository extends AbstractHibernateRepo {
     }
 
 }
+
+/*
+public User update(User user) {
+        User updateUser = this.getById(user.getId());
+        updateUser.setFirstName(user.getFirstName());
+        updateUser.setLastName(user.getLastName());
+        updateUser.setPassword(user.getPassword());
+        this.save(updateUser);
+        return user;
+        //TODO: Find a better way to do this
+    }
+
+public List<User> getAll() {
+        String sql = "SELECT * FROM users";
+        Query query = session.createNativeQuery(sql);
+        //query.setParameter("table", tableName);
+        List<Object[]> results = query.getResultList();
+
+        List<User> userList = new LinkedList<>();
+        for(Object[] result : results) {
+            User user = new User();
+            user.setId((Integer)result[0]);
+            user.setFirstName((String)result[1]);
+            user.setLastName((String)result[2]);
+            user.setPassword((String)result[3]);
+            user.setUsername((String)result[4]);
+            userList.add(user);
+        }
+        return userList;
+
+public User getById(Integer id) {
+        String hql = "FROM User WHERE id = :id";
+        TypedQuery<User> query = session.createQuery(hql, User.class);
+
+        query.setParameter("id", id);
+
+        User user = query.getSingleResult();
+
+        return user;
+    }
+
+
+ */
