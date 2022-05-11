@@ -2,12 +2,13 @@
  * Author(s): @George Henderson
  * Contributor(s):
  * Purpose: Implements the base functionality and required methods of
- *      future entity DAOs.
+ * future entity DAOs.
  */
 package com.revature.TeamCP2.repositories;
 
 import java.util.List;
 import java.util.Optional;
+
 
 import com.revature.TeamCP2.utils.BasicQuery;
 import org.springframework.context.Lifecycle;
@@ -17,9 +18,11 @@ public abstract class AbstractHibernateRepo<T> implements Lifecycle {
 
     /**
      * Uses BasicQuery
+     *
      * @GH
      */
-    public List<T> getAll(){
+
+    public List<T> getAll() {
         Class<T> type = (Class<T>) GenericTypeResolver.resolveTypeArgument(getClass(), AbstractHibernateRepo.class);
         BasicQuery<T> query = new BasicQuery<>(type);
 
@@ -28,9 +31,11 @@ public abstract class AbstractHibernateRepo<T> implements Lifecycle {
 
     /**
      * Uses BasicQuery
+     *
      * @GH
      */
-    public Optional<T> getById(int id){
+
+    public Optional<T> getById(int id) {
         Class<T> type = (Class<T>) GenericTypeResolver.resolveTypeArgument(getClass(), AbstractHibernateRepo.class);
         BasicQuery<T> query = new BasicQuery<>(type);
 
@@ -38,5 +43,8 @@ public abstract class AbstractHibernateRepo<T> implements Lifecycle {
     }
 
     public abstract void deleteById(int id);
-    public abstract T updateById(int id);
+
+    public abstract T update(T t);
+
+
 }

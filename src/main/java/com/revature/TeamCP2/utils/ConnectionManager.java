@@ -3,10 +3,13 @@ package com.revature.TeamCP2.utils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
 
+@Service
 public class ConnectionManager {
 
     private static ConnectionManager connectionManager;
@@ -14,22 +17,22 @@ public class ConnectionManager {
     private Session session;
     private List<Class> annotatedEntities;
 
-
-    private ConnectionManager(){
+    @Autowired
+    private ConnectionManager() {
         annotatedEntities = new LinkedList<>();
     }
 
-    public static ConnectionManager getConnection(){
-        if(connectionManager == null){
+    public static ConnectionManager getConnection() {
+        if (connectionManager == null) {
             connectionManager = new ConnectionManager();
         }
         return connectionManager;
     }
 
-    public void initializeDatasource()  {
+    public void initializeDatasource() {
         Configuration config = new Configuration();
 
-        for(Class c : annotatedEntities){
+        for (Class c : annotatedEntities) {
             config.addAnnotatedClass(c);
         }
 
@@ -38,7 +41,7 @@ public class ConnectionManager {
         System.out.println("Database connection initialized");
     }
 
-    public ConnectionManager addAnnotatedClass(Class c){
+    public ConnectionManager addAnnotatedClass(Class c) {
         annotatedEntities.add(c);
         return this;
     }

@@ -39,15 +39,15 @@ public class UserRepository extends AbstractHibernateRepo {
     }
 
     @Override
-    public User updateById(int id) {
+    public Object update(Object o) {
         return null;
     }
+
 
     public void start() {
         this.session = connectionManager.getSession();
         running = true;
     }
-
 
 
     public void stop() {
