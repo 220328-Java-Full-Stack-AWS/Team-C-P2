@@ -1,17 +1,26 @@
+/**
+ * Author(s): @Diego Leon
+ * Contributor(s):
+ * Purpose: CategoryDao
+ */
+
 package com.revature.TeamCP2.repositories;
 
+import com.revature.TeamCP2.models.Product;
 import com.revature.TeamCP2.models.ProductCategory;
 import com.revature.TeamCP2.utils.ConnectionManager;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.TypedQuery;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class CategoriesDao extends AbstractHibernateDao<ProductCategory>{
     private ConnectionManager connectionManager;
     private Session session;
@@ -70,7 +79,7 @@ public class CategoriesDao extends AbstractHibernateDao<ProductCategory>{
             productCategory.setDescription(result.getDescription());
             productCategory.setImage(result.getImage());
             productCategory.setName(result.getName());
-//            productCategory.setProductsAssociated(results)
+           productCategory.setProductsAssociated(result.getProductsAssociated());
 
 
             productCategoryList.add(productCategory);
@@ -85,11 +94,21 @@ public class CategoriesDao extends AbstractHibernateDao<ProductCategory>{
     }
 
     @Override
-    public ProductCategory updateById(int id) {
-        Optional<ProductCategory> updateProduct = this.getById(id);
-        session.saveOrUpdate(updateProduct);
+    public ProductCategory update(ProductCategory productCategory) {
 
+        Transaction transaction = session.beginTransaction();
+        Optional<ProductCategory> updateProductCategory = (Optional<ProductCategory>)
+                session.get(String.valueOf(Product.class), productCategory.getId());
+
+        updateProductCategory.get().setDescription(productCategory.getDescription());
+        updateProductCategory.get().setImage(productCategory.getImage());
+        updateProductCategory.get().setName(productCategory.getName());
+        updateProductCategory.get().setProductsAssociated(productCategory.getProductsAssociated());
+
+        transaction.commit();
 
         return null;
     }
+
+
 }

@@ -1,19 +1,25 @@
+/**
+ * Author(s): @Diego Leon
+ * Contributor(s):
+ * Purpose: ProductsDao
+ */
+
 package com.revature.TeamCP2.repositories;
 
-import com.revature.TeamCP2.models.OnSale;
 import com.revature.TeamCP2.models.Product;
-import com.revature.TeamCP2.models.ProductCategory;
 import com.revature.TeamCP2.utils.ConnectionManager;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.TypedQuery;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class ProductsDao extends AbstractHibernateDao<Product> {
     private ConnectionManager connectionManager;
     private Session session;
@@ -31,12 +37,6 @@ public class ProductsDao extends AbstractHibernateDao<Product> {
         transaction.commit();
         return product;
     }
-
-    //@Override
-    public ProductCategory get(Product obj) {
-        return null;
-    }
-
 
 
     @Override
@@ -60,8 +60,8 @@ public class ProductsDao extends AbstractHibernateDao<Product> {
 
         List<Product> productList = new LinkedList<>();
 
-        for (Product result:results) {
-            Product product =  new Product();
+        for (Product result : results) {
+            Product product = new Product();
             product.setId(result.getId());
             product.setDescr(result.getDescr());
             product.setImage(result.getImage());
@@ -82,7 +82,20 @@ public class ProductsDao extends AbstractHibernateDao<Product> {
     }
 
     @Override
-    public Product updateById(int id) {
+    public Product update(Product product) {
+        Transaction transaction = session.beginTransaction();
+        Optional<Product> updateProduct = (Optional<Product>)
+                session.get(String.valueOf(Product.class), product.getId());
+//        Optional<Product> product1 = this.getById(product.getId());
+        updateProduct.get().setDescr(product.getDescr());
+        updateProduct.get().setImage(product.getImage());
+        updateProduct.get().setIs_featured(product.isIs_featured());
+        updateProduct.get().setName(product.getName());
+        updateProduct.get().setPrice(product.getPrice());
+        updateProduct.get().setCategory(product.getCategory());
+
+        transaction.commit();
+
 
         return null;
     }

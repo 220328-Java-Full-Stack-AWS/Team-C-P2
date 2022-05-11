@@ -1,18 +1,27 @@
+/**
+ * Author(s): @Diego Leon
+ * Contributor(s):
+ * Purpose: OnSaleDao
+ */
+
 package com.revature.TeamCP2.repositories;
 
 import com.revature.TeamCP2.models.OnSale;
+import com.revature.TeamCP2.models.Product;
 import com.revature.TeamCP2.models.ProductCategory;
 import com.revature.TeamCP2.utils.ConnectionManager;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.TypedQuery;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class OnSaleDao extends AbstractHibernateDao<OnSale>{
     private ConnectionManager connectionManager;
     private Session session;
@@ -22,6 +31,8 @@ public class OnSaleDao extends AbstractHibernateDao<OnSale>{
     public OnSaleDao(ConnectionManager connectionManager) {
         this.connectionManager = connectionManager;
     }
+
+
     //@Override
     public OnSale create(OnSale onSale) {
         Transaction transaction = session.beginTransaction();
@@ -29,12 +40,6 @@ public class OnSaleDao extends AbstractHibernateDao<OnSale>{
         transaction.commit();
         return onSale;
     }
-
-    //@Override
-    public ProductCategory get(OnSale obj) {
-        return null;
-    }
-
 
 
     @Override
@@ -62,6 +67,7 @@ public class OnSaleDao extends AbstractHibernateDao<OnSale>{
             OnSale onSale =  new OnSale();
             onSale.setId(result.getId());
             onSale.setDiscount(result.getDiscount());
+            onSale.setProductsOnSale(result.getProductsOnSale());
 
             onSaleList.add(onSale);
         }
@@ -76,8 +82,15 @@ public class OnSaleDao extends AbstractHibernateDao<OnSale>{
     }
 
     @Override
-    public OnSale updateById(int id) {
+    public OnSale update(OnSale onSale) {
+        Transaction transaction = session.beginTransaction();
+        Optional<OnSale> updateOnSale = (Optional<OnSale>)
+                session.get(String.valueOf(Product.class), onSale.getId());
 
+        updateOnSale.get().setDiscount(onSale.getDiscount());
+        updateOnSale.get().setProductsOnSale(onSale.getProductsOnSale());
+
+        transaction.commit();
         return null;
     }
 }

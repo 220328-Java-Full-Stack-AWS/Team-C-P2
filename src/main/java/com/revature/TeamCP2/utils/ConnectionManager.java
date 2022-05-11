@@ -3,10 +3,12 @@ package com.revature.TeamCP2.utils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
 
+@Service
 public class ConnectionManager {
 
     private static ConnectionManager connectionManager;

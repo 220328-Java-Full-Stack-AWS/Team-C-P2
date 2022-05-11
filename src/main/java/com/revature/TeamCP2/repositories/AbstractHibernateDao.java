@@ -9,6 +9,7 @@ package com.revature.TeamCP2.repositories;
 import java.util.List;
 import java.util.Optional;
 
+import com.revature.TeamCP2.models.Product;
 import com.revature.TeamCP2.utils.BasicQuery;
 import org.springframework.core.GenericTypeResolver;
 
@@ -37,5 +38,7 @@ public abstract class AbstractHibernateDao<T> {
     }
 
     public abstract void deleteById(int id);
-    public abstract T updateById(int id);
+    public abstract T update(T t);
+
+
 }
