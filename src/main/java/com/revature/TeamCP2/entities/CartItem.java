@@ -10,8 +10,9 @@ Purpose: Model for cart item objects
  */
 
 @javax.persistence.Entity
-@Table(name = "cart_item", schema = "public")
+@Table(name = "cart_items", schema = "public")
 public class CartItem implements Entity {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

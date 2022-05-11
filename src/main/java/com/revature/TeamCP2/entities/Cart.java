@@ -24,7 +24,6 @@ public class Cart implements Entity {
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
-    @Column(name = "cart_item")
     private List<CartItem> cartItems;
 
     @Column

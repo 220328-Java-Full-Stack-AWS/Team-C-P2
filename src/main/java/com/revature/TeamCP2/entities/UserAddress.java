@@ -16,7 +16,6 @@ public class UserAddress implements Entity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long id;
 
 

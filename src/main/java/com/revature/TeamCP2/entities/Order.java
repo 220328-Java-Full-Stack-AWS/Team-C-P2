@@ -24,25 +24,18 @@ public class Order implements Entity {
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
     private Cart cart;
 
-    // foreign key to the order detail
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_detail_id", referencedColumnName = "id")
-    private OrderDetail detail;
-
     // table columns
 
     @Column(name = "date_created")
     private String dateCreated;
 
     // constructors
-
     public Order() {
     }
 
-    public Order(Long id, Cart cart, OrderDetail detail, String dateCreated) {
+    public Order(Long id, Cart cart, String dateCreated) {
         this.id = id;
         this.cart = cart;
-        this.detail = detail;
         this.dateCreated = dateCreated;
     }
 
@@ -54,14 +47,6 @@ public class Order implements Entity {
 
     public void setCart(Cart cart) {
         this.cart = cart;
-    }
-
-    public OrderDetail getDetail() {
-        return detail;
-    }
-
-    public void setDetail(OrderDetail detail) {
-        this.detail = detail;
     }
 
     // getters and setters
