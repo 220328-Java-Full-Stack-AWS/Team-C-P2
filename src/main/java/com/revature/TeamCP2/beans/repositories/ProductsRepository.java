@@ -6,9 +6,10 @@
 
 package com.revature.TeamCP2.beans.repositories;
 
+import com.revature.TeamCP2.beans.services.ConnectionManager;
 import com.revature.TeamCP2.entities.Product;
 import com.revature.TeamCP2.repositories.AbstractHibernateRepo;
-import com.revature.TeamCP2.utils.ConnectionManager;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -103,16 +104,17 @@ public class ProductsRepository extends AbstractHibernateRepo<Product> {
 
     @Override
     public void start() {
-
+        this.session = connectionManager.getSession();
+        running = true;
     }
 
     @Override
     public void stop() {
-
+        running = false;
     }
 
     @Override
     public boolean isRunning() {
-        return false;
+        return running;
     }
 }

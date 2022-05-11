@@ -2,11 +2,12 @@
  * Author(s): @George Henderson
  * Contributor(s):
  * Purpose: Uses JPA CriteriaBuilder to make getAll & getById
- *      requests on any class that includes hibernate annotations and is explicitly mentioned
- *      when starting the connection in main.
+ * requests on any class that includes hibernate annotations and is explicitly mentioned
+ * when starting the connection in main.
  */
 
 package com.revature.TeamCP2.utils;
+
 
 import org.hibernate.Session;
 
@@ -24,30 +25,33 @@ public class BasicQuery<T> {
 
     /**
      * Constructor
+     *
      * @param aClass The type you want the query to act on
      * @GH
      */
-    public BasicQuery(Class<T> aClass){
+    public BasicQuery(Class<T> aClass) {
         this.session = ConnectionManager.getConnection().getSession();
         this.aClass = aClass;
     }
 
     /**
      * Constructor
-     * @param s Specific session you would like to use (otherwise uses ConnectionManager session)
+     *
+     * @param s      Specific session you would like to use (otherwise uses ConnectionManager session)
      * @param aClass The type you want the query to act on
      * @GH
      */
-    public BasicQuery(Session s, Class<T> aClass){
+    public BasicQuery(Session s, Class<T> aClass) {
         this.session = s;
         this.aClass = aClass;
     }
 
     /**
      * Gets all the entities associated with the object type
+     *
      * @GH
      */
-    public List<T> getAll(){
+    public List<T> getAll() {
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<T> query = cb.createQuery(aClass);
 
@@ -58,19 +62,21 @@ public class BasicQuery<T> {
 
     /**
      * Gets the entity associated with the id passed in
+     *
      * @GH
      */
-    public Optional<T> getById(int id){
+    public Optional<T> getById(int id) {
 
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<T> query = cb.createQuery(aClass);
         Root<T> root = query.from(aClass);
 
         T result = null;
-        try{
+        try {
             query = query.select(root).where(cb.equal(root.get("id"), id));
             result = session.createQuery(query).getSingleResult();
-        } catch(NoResultException ignored){}
+        } catch (NoResultException ignored) {
+        }
         return Optional.ofNullable(result);
     }
 }
