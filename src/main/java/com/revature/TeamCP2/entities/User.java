@@ -1,4 +1,4 @@
-package com.revature.TeamCP2.models;
+package com.revature.TeamCP2.entities;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -8,10 +8,11 @@ import java.util.Collections;
 import java.util.List;
 
 @Entity
+@Table (name = "users")
 public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id")
+
     private int id;
     @Basic
     @Column(name = "username")

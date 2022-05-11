@@ -4,19 +4,19 @@
  * Purpose: UserAddress Entity
  */
 
-package com.revature.TeamCP2.models;
+package com.revature.TeamCP2.entities;
 
-import com.revature.TeamCP2.interfaces.Model;
+import com.revature.TeamCP2.interfaces.Entity;
 
 import javax.persistence.*;
 
-@Entity
+@javax.persistence.Entity
 @Table(name = "User_Address", schema="public")
-public class UserAddress implements Model {
+public class UserAddress implements Entity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "address_id")
+
     private Long id;
 
 
