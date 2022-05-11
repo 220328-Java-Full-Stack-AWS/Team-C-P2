@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -36,7 +37,12 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public User getUserById(@PathVariable int id) {
         try {
-            return userService.getById(id);
+            Optional<User> opUser = userService.getById(id);
+
+            if(!opUser.isPresent())
+                throw new ItemDoesNotExistException();
+
+            return opUser.get();
         } catch (ItemDoesNotExistException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();

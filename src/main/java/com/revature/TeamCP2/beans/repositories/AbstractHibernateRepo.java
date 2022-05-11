@@ -7,6 +7,7 @@
 package com.revature.TeamCP2.beans.repositories;
 
 import java.util.List;
+import java.util.Optional;
 import com.revature.TeamCP2.exceptions.*;
 import com.revature.TeamCP2.beans.services.BasicQuery;
 import org.springframework.beans.BeansException;
@@ -36,11 +37,11 @@ public abstract class AbstractHibernateRepo<T> implements Lifecycle, Application
      * Uses BasicQuery
      * @GH
      */
-    public T getById(int id) throws ItemDoesNotExistException {
+    public Optional<T> getById(int id) throws ItemDoesNotExistException {
         Class<T> type = (Class<T>) GenericTypeResolver.resolveTypeArgument(getClass(), AbstractHibernateRepo.class);
         BasicQuery<T> query = context.getBean(BasicQuery.class, type);
 
-        return query.getById(id);
+        return Optional.ofNullable(query.getById(id));
     }
 
     public abstract T create(T model) throws ItemHasNonNullIdException, CreationFailedException;
