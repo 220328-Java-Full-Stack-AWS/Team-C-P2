@@ -6,8 +6,8 @@
 
 package com.revature.TeamCP2.repositories;
 
-import com.revature.TeamCP2.models.Product;
-import com.revature.TeamCP2.models.ProductCategory;
+
+import com.revature.TeamCP2.entities.ProductCategory;
 import com.revature.TeamCP2.utils.ConnectionManager;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class CategoriesDao extends AbstractHibernateDao<ProductCategory>{
+public class CategoriesDao extends AbstractHibernateRepo<ProductCategory> {
     private ConnectionManager connectionManager;
     private Session session;
     private boolean running = false;
@@ -34,7 +34,7 @@ public class CategoriesDao extends AbstractHibernateDao<ProductCategory>{
 
     //@Override
     public ProductCategory create(ProductCategory productCategory) {
-        Transaction transaction =session.beginTransaction();
+        Transaction transaction = session.beginTransaction();
         session.save(productCategory);
         transaction.commit();
         return productCategory;
@@ -44,7 +44,6 @@ public class CategoriesDao extends AbstractHibernateDao<ProductCategory>{
     public ProductCategory get(ProductCategory productCategory) {
         return null;
     }
-
 
 
     @Override
@@ -72,14 +71,14 @@ public class CategoriesDao extends AbstractHibernateDao<ProductCategory>{
         List<ProductCategory> results = query.list();
 
         List<ProductCategory> productCategoryList = new LinkedList<>();
-        for(ProductCategory result : results) {
+        for (ProductCategory result : results) {
 
             ProductCategory productCategory = new ProductCategory();
             productCategory.setId(result.getId());
             productCategory.setDescription(result.getDescription());
             productCategory.setImage(result.getImage());
             productCategory.setName(result.getName());
-           productCategory.setProductsAssociated(result.getProductsAssociated());
+            productCategory.setProductsAssociated(result.getProductsAssociated());
 
 
             productCategoryList.add(productCategory);
@@ -92,13 +91,13 @@ public class CategoriesDao extends AbstractHibernateDao<ProductCategory>{
         Optional<ProductCategory> productCategory = this.getById(id);
         session.delete(productCategory);
     }
-
+    
     @Override
     public ProductCategory update(ProductCategory productCategory) {
 
         Transaction transaction = session.beginTransaction();
         Optional<ProductCategory> updateProductCategory = (Optional<ProductCategory>)
-                session.get(String.valueOf(Product.class), productCategory.getId());
+                session.get(String.valueOf(ProductCategory.class), productCategory.getId());
 
         updateProductCategory.get().setDescription(productCategory.getDescription());
         updateProductCategory.get().setImage(productCategory.getImage());
@@ -110,5 +109,18 @@ public class CategoriesDao extends AbstractHibernateDao<ProductCategory>{
         return null;
     }
 
+    @Override
+    public void start() {
 
+    }
+
+    @Override
+    public void stop() {
+
+    }
+
+    @Override
+    public boolean isRunning() {
+        return false;
+    }
 }

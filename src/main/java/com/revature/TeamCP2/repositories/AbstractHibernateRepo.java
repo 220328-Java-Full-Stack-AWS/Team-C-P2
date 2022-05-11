@@ -9,7 +9,7 @@ package com.revature.TeamCP2.repositories;
 import java.util.List;
 import java.util.Optional;
 
-import com.revature.TeamCP2.models.Product;
+
 import com.revature.TeamCP2.utils.BasicQuery;
 import org.springframework.context.Lifecycle;
 import org.springframework.core.GenericTypeResolver;
@@ -23,8 +23,8 @@ public abstract class AbstractHibernateRepo<T> implements Lifecycle {
      */
 
     public List<T> getAll() {
-        Class<T> type = (Class<T>) GenericTypeResolver.resolveTypeArgument(getClass(), AbstractHibernateDao.class);
-
+        Class<T> type = (Class<T>) GenericTypeResolver.resolveTypeArgument(getClass(), AbstractHibernateRepo.class);
+        BasicQuery<T> query = new BasicQuery<>(type);
 
         return query.getAll();
     }
@@ -44,7 +44,7 @@ public abstract class AbstractHibernateRepo<T> implements Lifecycle {
 
     public abstract void deleteById(int id);
 
-    public abstract T updateById(int id);
+    public abstract T update(T t);
 
 
 }

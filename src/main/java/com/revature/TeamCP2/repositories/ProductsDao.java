@@ -6,7 +6,7 @@
 
 package com.revature.TeamCP2.repositories;
 
-import com.revature.TeamCP2.models.Product;
+import com.revature.TeamCP2.entities.Product;
 import com.revature.TeamCP2.utils.ConnectionManager;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class ProductsDao extends AbstractHibernateDao<Product> {
+public class ProductsDao extends AbstractHibernateRepo<Product> {
     private ConnectionManager connectionManager;
     private Session session;
     private boolean running = false;
@@ -98,5 +98,20 @@ public class ProductsDao extends AbstractHibernateDao<Product> {
 
 
         return null;
+    }
+
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void stop() {
+
+    }
+
+    @Override
+    public boolean isRunning() {
+        return false;
     }
 }

@@ -6,9 +6,8 @@
 
 package com.revature.TeamCP2.repositories;
 
-import com.revature.TeamCP2.models.OnSale;
-import com.revature.TeamCP2.models.Product;
-import com.revature.TeamCP2.models.ProductCategory;
+import com.revature.TeamCP2.entities.OnSale;
+
 import com.revature.TeamCP2.utils.ConnectionManager;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -22,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class OnSaleDao extends AbstractHibernateDao<OnSale>{
+public class OnSaleDao extends AbstractHibernateRepo<OnSale> {
     private ConnectionManager connectionManager;
     private Session session;
     private boolean running = false;
@@ -63,8 +62,8 @@ public class OnSaleDao extends AbstractHibernateDao<OnSale>{
 
         List<OnSale> onSaleList = new LinkedList<>();
 
-        for (OnSale result:results) {
-            OnSale onSale =  new OnSale();
+        for (OnSale result : results) {
+            OnSale onSale = new OnSale();
             onSale.setId(result.getId());
             onSale.setDiscount(result.getDiscount());
             onSale.setProductsOnSale(result.getProductsOnSale());
@@ -81,16 +80,32 @@ public class OnSaleDao extends AbstractHibernateDao<OnSale>{
         session.delete(sale);
     }
 
+
     @Override
     public OnSale update(OnSale onSale) {
         Transaction transaction = session.beginTransaction();
         Optional<OnSale> updateOnSale = (Optional<OnSale>)
-                session.get(String.valueOf(Product.class), onSale.getId());
+                session.get(String.valueOf(OnSale.class), onSale.getId());
 
         updateOnSale.get().setDiscount(onSale.getDiscount());
         updateOnSale.get().setProductsOnSale(onSale.getProductsOnSale());
 
         transaction.commit();
         return null;
+    }
+
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void stop() {
+
+    }
+
+    @Override
+    public boolean isRunning() {
+        return false;
     }
 }
