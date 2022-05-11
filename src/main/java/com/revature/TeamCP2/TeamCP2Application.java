@@ -12,7 +12,7 @@ public class TeamCP2Application {
 		context.start();
 
 		/*
-		//Working example of creating a user through services and persisting it into database.
+		//Working example of creating a user through the service layer and persisting it into database.
 		UserRepository userRepository = context.getBean(UserRepository.class);
 		UserService userService = new UserService(userRepository);
 
