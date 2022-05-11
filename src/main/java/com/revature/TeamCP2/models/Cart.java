@@ -12,20 +12,18 @@ Purpose: Model for cart objects
  */
 
 @Entity
-@Table(name = "cart", schema = "public")
+@Table(name = "carts", schema = "public")
 public class Cart implements Model {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cart-id")
     private Integer id;
 
     @OneToOne
-    @JoinColumn(name = "user-id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
-    @Column(name = "cart_item")
     private List<CartItem> cartItems;
 
     @Column

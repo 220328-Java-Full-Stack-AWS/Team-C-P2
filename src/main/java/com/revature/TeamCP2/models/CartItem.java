@@ -10,22 +10,21 @@ Purpose: Model for cart item objects
  */
 
 @Entity
-@Table(name = "cart-item", schema = "public")
+@Table(name = "cart_items", schema = "public")
 public class CartItem implements Model {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cart-item-id")
     private Integer id;
 
 
 
     @ManyToOne
-    @JoinColumn (name = "cart-id")
+    @JoinColumn (name = "cart_id")
     private Cart cart;
 
     @OneToOne
-    @JoinColumn (name = "product-id")
+    @JoinColumn (name = "product_id")
     private Product product;
 
     @Column
