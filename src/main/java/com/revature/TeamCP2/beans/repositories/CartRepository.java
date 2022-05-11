@@ -1,3 +1,8 @@
+/**
+ Author: Steven Dowd
+ Purpose: Repo for cart objects
+ */
+
 package com.revature.TeamCP2.beans.repositories;
 
 import com.revature.TeamCP2.beans.services.ConnectionManager;
