@@ -2,7 +2,7 @@
  * Author(s): @George Henderson
  * Contributor(s):
  * Purpose: Implements the base functionality and required methods of
- *      future entity DAOs.
+ * future entity DAOs.
  */
 package com.revature.TeamCP2.repositories;
 
@@ -19,7 +19,7 @@ public abstract class AbstractHibernateDao<T> {
      * Uses BasicQuery
      * @GH
      */
-    public List<T> getAll(){
+    public List<T> getAll() {
         Class<T> type = (Class<T>) GenericTypeResolver.resolveTypeArgument(getClass(), AbstractHibernateDao.class);
         BasicQuery<T> query = new BasicQuery<>(type);
 
@@ -30,7 +30,7 @@ public abstract class AbstractHibernateDao<T> {
      * Uses BasicQuery
      * @GH
      */
-    public Optional<T> getById(int id){
+    public Optional<T> getById(int id) {
         Class<T> type = (Class<T>) GenericTypeResolver.resolveTypeArgument(getClass(), AbstractHibernateDao.class);
         BasicQuery<T> query = new BasicQuery<>(type);
 
@@ -38,7 +38,8 @@ public abstract class AbstractHibernateDao<T> {
     }
 
     public abstract void deleteById(int id);
-    public abstract T update(T t);
+
+    public abstract T updateById(int id);
 
 
 }
