@@ -1,6 +1,6 @@
-package com.revature.TeamCP2.models;
+package com.revature.TeamCP2.entities;
 
-import com.revature.TeamCP2.interfaces.Model;
+import com.revature.TeamCP2.interfaces.Entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,9 +11,9 @@ Author: Steven Dowd
 Purpose: Model for cart objects
  */
 
-@Entity
-@Table(name = "carts", schema = "public")
-public class Cart implements Model {
+@javax.persistence.Entity
+@Table(name = "cart", schema = "public")
+public class Cart implements Entity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

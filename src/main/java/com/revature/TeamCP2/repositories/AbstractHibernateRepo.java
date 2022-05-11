@@ -11,27 +11,32 @@ import java.util.Optional;
 
 import com.revature.TeamCP2.models.Product;
 import com.revature.TeamCP2.utils.BasicQuery;
+import org.springframework.context.Lifecycle;
 import org.springframework.core.GenericTypeResolver;
 
-public abstract class AbstractHibernateDao<T> {
+public abstract class AbstractHibernateRepo<T> implements Lifecycle {
 
     /**
      * Uses BasicQuery
+     *
      * @GH
      */
+
     public List<T> getAll() {
         Class<T> type = (Class<T>) GenericTypeResolver.resolveTypeArgument(getClass(), AbstractHibernateDao.class);
-        BasicQuery<T> query = new BasicQuery<>(type);
+
 
         return query.getAll();
     }
 
     /**
      * Uses BasicQuery
+     *
      * @GH
      */
+
     public Optional<T> getById(int id) {
-        Class<T> type = (Class<T>) GenericTypeResolver.resolveTypeArgument(getClass(), AbstractHibernateDao.class);
+        Class<T> type = (Class<T>) GenericTypeResolver.resolveTypeArgument(getClass(), AbstractHibernateRepo.class);
         BasicQuery<T> query = new BasicQuery<>(type);
 
         return query.getById(id);

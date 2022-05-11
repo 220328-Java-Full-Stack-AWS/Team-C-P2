@@ -4,20 +4,21 @@
  * Purpose: OnSale Entity
  */
 
-package com.revature.TeamCP2.models;
+package com.revature.TeamCP2.entities;
 
-import com.revature.TeamCP2.interfaces.Model;
+import com.revature.TeamCP2.interfaces.Entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@javax.persistence.Entity
 @Table(name = "On_Sale", schema = "public")
-public class OnSale implements Model {
+public class OnSale implements Entity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
 
     //This Class is the owning entity associated with the target entity (Product)

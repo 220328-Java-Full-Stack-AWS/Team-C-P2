@@ -4,17 +4,17 @@
  * Purpose: ProductCategory Entity
  */
 
-package com.revature.TeamCP2.models;
+package com.revature.TeamCP2.entities;
 
-import com.revature.TeamCP2.interfaces.Model;
+import com.revature.TeamCP2.interfaces.Entity;
 
 import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
 
-@Entity
+@javax.persistence.Entity
 @Table(name = "product_categories", schema = "public")
-public class ProductCategory implements Model {
+public class ProductCategory implements Entity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,14 +1,17 @@
-package com.revature.TeamCP2.models;
+package com.revature.TeamCP2.entities;
 
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.*;
+import com.revature.TeamCP2.interfaces.Entity;
 
-@Entity
-@Table(name = "users")
-public class User {
+@javax.persistence.Entity
+@Table (name = "users", schema = "public")
+public class User implements Entity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+
+
     private int id;
     @Basic
     @Column(name = "username")
