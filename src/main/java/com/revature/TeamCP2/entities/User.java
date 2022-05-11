@@ -10,9 +10,8 @@ import com.revature.TeamCP2.interfaces.Entity;
 public class User implements Entity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    private Integer id;
 
-
-    private int id;
     @Basic
     @Column(name = "username")
     private String username;
