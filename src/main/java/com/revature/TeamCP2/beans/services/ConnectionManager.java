@@ -41,7 +41,6 @@ public class ConnectionManager implements Lifecycle {
         models.add(CartItem.class);
         models.add(OnSale.class);
         models.add(Order.class);
-        models.add(OrderDetail.class);
         models.add(Payment.class);
         models.add(Product.class);
         models.add(ProductCategory.class);
