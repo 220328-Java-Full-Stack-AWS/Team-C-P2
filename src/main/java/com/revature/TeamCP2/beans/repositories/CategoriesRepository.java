@@ -4,10 +4,11 @@
  * Purpose: CategoryDao
  */
 
-package com.revature.TeamCP2.repositories;
+package com.revature.TeamCP2.beans.repositories;
 
 
 import com.revature.TeamCP2.entities.ProductCategory;
+import com.revature.TeamCP2.repositories.AbstractHibernateRepo;
 import com.revature.TeamCP2.utils.ConnectionManager;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -21,13 +22,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class CategoriesDao extends AbstractHibernateRepo<ProductCategory> {
+public class CategoriesRepository extends AbstractHibernateRepo<ProductCategory> {
     private ConnectionManager connectionManager;
     private Session session;
     private boolean running = false;
 
     @Autowired
-    public CategoriesDao(ConnectionManager connectionManager) {
+    public CategoriesRepository(ConnectionManager connectionManager) {
         this.connectionManager = connectionManager;
     }
 
@@ -91,7 +92,7 @@ public class CategoriesDao extends AbstractHibernateRepo<ProductCategory> {
         Optional<ProductCategory> productCategory = this.getById(id);
         session.delete(productCategory);
     }
-    
+
     @Override
     public ProductCategory update(ProductCategory productCategory) {
 

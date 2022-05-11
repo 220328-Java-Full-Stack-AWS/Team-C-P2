@@ -4,10 +4,11 @@
  * Purpose: OnSaleDao
  */
 
-package com.revature.TeamCP2.repositories;
+package com.revature.TeamCP2.beans.repositories;
 
 import com.revature.TeamCP2.entities.OnSale;
 
+import com.revature.TeamCP2.repositories.AbstractHibernateRepo;
 import com.revature.TeamCP2.utils.ConnectionManager;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -21,13 +22,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class OnSaleDao extends AbstractHibernateRepo<OnSale> {
+public class OnSaleRepository extends AbstractHibernateRepo<OnSale> {
     private ConnectionManager connectionManager;
     private Session session;
     private boolean running = false;
 
     @Autowired
-    public OnSaleDao(ConnectionManager connectionManager) {
+    public OnSaleRepository(ConnectionManager connectionManager) {
         this.connectionManager = connectionManager;
     }
 

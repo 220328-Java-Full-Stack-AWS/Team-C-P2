@@ -4,9 +4,10 @@
  * Purpose: ProductsDao
  */
 
-package com.revature.TeamCP2.repositories;
+package com.revature.TeamCP2.beans.repositories;
 
 import com.revature.TeamCP2.entities.Product;
+import com.revature.TeamCP2.repositories.AbstractHibernateRepo;
 import com.revature.TeamCP2.utils.ConnectionManager;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -20,13 +21,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class ProductsDao extends AbstractHibernateRepo<Product> {
+public class ProductsRepository extends AbstractHibernateRepo<Product> {
     private ConnectionManager connectionManager;
     private Session session;
     private boolean running = false;
 
     @Autowired
-    public ProductsDao(ConnectionManager connectionManager) {
+    public ProductsRepository(ConnectionManager connectionManager) {
         this.connectionManager = connectionManager;
     }
 
