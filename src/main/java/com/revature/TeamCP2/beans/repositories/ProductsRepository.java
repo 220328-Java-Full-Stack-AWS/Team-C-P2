@@ -8,7 +8,7 @@ package com.revature.TeamCP2.beans.repositories;
 
 import com.revature.TeamCP2.beans.services.ConnectionManager;
 import com.revature.TeamCP2.entities.Product;
-import com.revature.TeamCP2.repositories.AbstractHibernateRepo;
+import com.revature.TeamCP2.exceptions.ItemHasNoIdException;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -100,6 +100,14 @@ public class ProductsRepository extends AbstractHibernateRepo<Product> {
 
 
         return null;
+    }
+
+    @Override
+    public void delete(Product model) throws ItemHasNoIdException {
+        if(model.getId() == null)
+            throw new ItemHasNoIdException();
+
+        deleteById(model.getId().intValue());
     }
 
     @Override

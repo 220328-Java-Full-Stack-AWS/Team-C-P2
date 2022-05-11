@@ -9,7 +9,7 @@ package com.revature.TeamCP2.beans.repositories;
 
 import com.revature.TeamCP2.beans.services.ConnectionManager;
 import com.revature.TeamCP2.entities.ProductCategory;
-import com.revature.TeamCP2.repositories.AbstractHibernateRepo;
+import com.revature.TeamCP2.exceptions.ItemHasNoIdException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -108,6 +108,14 @@ public class CategoriesRepository extends AbstractHibernateRepo<ProductCategory>
         transaction.commit();
 
         return null;
+    }
+
+    @Override
+    public void delete(ProductCategory model) throws ItemHasNoIdException {
+        if(model.getId() == null)
+            throw new ItemHasNoIdException();
+
+        deleteById(model.getId().intValue());
     }
 
     @Override
