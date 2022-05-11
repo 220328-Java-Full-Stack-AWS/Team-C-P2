@@ -18,7 +18,6 @@ public class OnSale implements Model {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "sale_id")
     private Long id;
 
     //This Class is the owning entity associated with the target entity (Product)
