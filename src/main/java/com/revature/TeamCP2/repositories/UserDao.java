@@ -9,9 +9,10 @@ public class UserDao extends AbstractHibernateRepo<User> {
     }
 
     @Override
-    public User updateById(int id) {
+    public User update(User user) {
         return null;
     }
+
 
     @Override
     public void start() {
