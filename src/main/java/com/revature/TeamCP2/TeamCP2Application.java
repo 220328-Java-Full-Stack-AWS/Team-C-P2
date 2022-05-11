@@ -1,28 +1,28 @@
 package com.revature.TeamCP2;
 
-import com.revature.TeamCP2.models.*;
-import com.revature.TeamCP2.utils.ConnectionManager;
-import org.hibernate.HibernateException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.revature.TeamCP2.beans")
 public class TeamCP2Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TeamCP2Application.class, args);
+		ConfigurableApplicationContext context = SpringApplication.run(TeamCP2Application.class, args);
+		context.start();
 
-		ConnectionManager.getConnection()
-				.addAnnotatedClass(Product.class)
-				.addAnnotatedClass(User.class)
-				.addAnnotatedClass(Cart.class)
-				.addAnnotatedClass(CartItem.class)
-				.addAnnotatedClass(OnSale.class)
-				.addAnnotatedClass(Order.class)
-				.addAnnotatedClass(Payment.class)
-				.addAnnotatedClass(ProductCategory.class)
-				.addAnnotatedClass(UserAddress.class)
-				.initializeDatasource();
+		/*
+		//Working example of creating a user through the service layer and persisting it into database.
+		UserRepository userRepository = context.getBean(UserRepository.class);
+		UserService userService = new UserService(userRepository);
+
+		User newUser = new User();
+		newUser.setUsername("BL");
+		newUser.setFirstName("Brandon");
+		newUser.setLastName("Le");
+		userService.create(newUser);
+
+		*/
 	}
 
 }

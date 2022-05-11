@@ -7,15 +7,15 @@
  *
  */
 
-package com.revature.TeamCP2.models;
+package com.revature.TeamCP2.entities;
 
-import com.revature.TeamCP2.interfaces.Model;
+import com.revature.TeamCP2.interfaces.Entity;
 
 import javax.persistence.*;
 
-@Entity(name = "Products")
+@javax.persistence.Entity(name = "Products")
 @Table(name = "products", schema = "public")
-public class Product implements Model {
+public class Product implements Entity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

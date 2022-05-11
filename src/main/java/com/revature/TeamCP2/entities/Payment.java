@@ -4,16 +4,15 @@
  * Purpose: Payment Entity
  */
 
-package com.revature.TeamCP2.models;
+package com.revature.TeamCP2.entities;
 
-import com.revature.TeamCP2.interfaces.Model;
+import com.revature.TeamCP2.interfaces.Entity;
 
 import javax.persistence.*;
-import java.util.Date;
 
-@Entity
+@javax.persistence.Entity
 @Table(name = "saved_payments", schema = "public")
-public class Payment implements Model {
+public class Payment implements Entity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
