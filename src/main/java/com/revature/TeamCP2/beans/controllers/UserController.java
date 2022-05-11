@@ -6,9 +6,12 @@ package com.revature.TeamCP2.beans.controllers;
 
 import com.revature.TeamCP2.beans.services.UserService;
 import com.revature.TeamCP2.entities.User;
+import com.revature.TeamCP2.exceptions.ItemDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -20,14 +23,27 @@ public class UserController {
         this.userService = userService;
     }
 
-/*
+
     //get all users
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
-*/
+
+    // Get user by Id
+    @GetMapping("{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public User getUserById(@PathVariable int id) {
+        try {
+            return userService.getById(id);
+        } catch (ItemDoesNotExistException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
 
 

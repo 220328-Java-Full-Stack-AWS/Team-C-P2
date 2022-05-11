@@ -10,8 +10,11 @@ package com.revature.TeamCP2.beans.services;
 
 import com.revature.TeamCP2.beans.repositories.UserRepository;
 import com.revature.TeamCP2.entities.User;
+import com.revature.TeamCP2.exceptions.ItemDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -24,6 +27,14 @@ public class UserService {
 
     public User create(User user) {
         return userRepository.create(user);
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.getAll();
+    }
+
+    public User getById(int id) throws ItemDoesNotExistException {
+        return userRepository.getById(id);
     }
 }
 
