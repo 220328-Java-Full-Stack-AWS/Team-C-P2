@@ -90,7 +90,7 @@ public class PaymentRepository extends AbstractHibernateRepo<Payment> {
         transaction.commit();
 
 
-        return null;
+        return payment;
     }
 
     @Override

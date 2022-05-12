@@ -1,6 +1,6 @@
 /**
- Author: Steven Dowd
- Purpose: Repo for cart objects
+ * Author: Steven Dowd
+ * Purpose: Repo for cart objects
  */
 
 package com.revature.TeamCP2.beans.repositories;
@@ -80,7 +80,7 @@ public class CartRepository extends AbstractHibernateRepo<Cart> {
 
         List<Cart> cartList = new LinkedList<>();
 
-        for (Cart result: results) {
+        for (Cart result : results) {
             Cart cart = new Cart();
             cart.setId(result.getId());
             cart.setUserId(result.getUserId());
