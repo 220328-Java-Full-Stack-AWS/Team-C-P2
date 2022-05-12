@@ -17,7 +17,6 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.TypedQuery;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -34,7 +33,6 @@ public class CategoriesRepository extends AbstractHibernateRepo<ProductCategory>
     }
 
 
-    //@Override
     public ProductCategory create(ProductCategory productCategory) {
         Transaction transaction = session.beginTransaction();
         session.save(productCategory);
@@ -42,7 +40,7 @@ public class CategoriesRepository extends AbstractHibernateRepo<ProductCategory>
         return productCategory;
     }
 
-    //@Override
+
     public ProductCategory get(ProductCategory productCategory) {
         return null;
     }
@@ -50,23 +48,13 @@ public class CategoriesRepository extends AbstractHibernateRepo<ProductCategory>
 
     @Override
     public Optional<ProductCategory> getById(int id) {
-//        String hql = "from ProductCategory where id = :id";
-//        TypedQuery<ProductCategory> query = session.createQuery(hql, ProductCategory.class);
-
-        TypedQuery<ProductCategory> query = session.createQuery("from ProductCategory where id = :id");
-
-        query.setParameter("id", id);
-
-        ProductCategory productCategory = query.getSingleResult();
+        ProductCategory productCategory = session.get(ProductCategory.class, id);
 
         return Optional.ofNullable(productCategory);
     }
 
     @Override
     public List<ProductCategory> getAll() {
-
-//        String sql = "SELECT * FROM product_categories";
-//        Query query = session.createNativeQuery(sql);
 
         Query query = session.createQuery("from ProductCategory ");
 
@@ -90,8 +78,10 @@ public class CategoriesRepository extends AbstractHibernateRepo<ProductCategory>
 
     @Override
     public void deleteById(int id) {
-        Optional<ProductCategory> productCategory = this.getById(id);
+        Transaction transaction = session.beginTransaction();
+        ProductCategory productCategory = (ProductCategory) session.get(ProductCategory.class, id);
         session.delete(productCategory);
+        transaction.commit();
     }
 
     @Override
@@ -104,6 +94,8 @@ public class CategoriesRepository extends AbstractHibernateRepo<ProductCategory>
         updateProductCategory.setImage(productCategory.getImage());
         updateProductCategory.setName(productCategory.getName());
         updateProductCategory.setProductsAssociated(productCategory.getProductsAssociated());
+
+        session.saveOrUpdate(updateProductCategory);
 
         transaction.commit();
 
