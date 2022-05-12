@@ -27,11 +27,11 @@ public class User implements Entity {
     @Basic
     @Column(name = "email")
     private String email;
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private UserAddress userAddresses;
 
     //User one to many relationship with payment
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Payment> payments = new ArrayList<>();
     @Basic
     @Column(name = "date_created",updatable = false)
@@ -40,9 +40,9 @@ public class User implements Entity {
     @Column(name = "date_modifies")
     private Date dateModifies;
     //Both @OneToMany needs Testing------------
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
     private Collection<Cart> cartsById;
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
     private Collection<Order> orderById;
     //---------------------------------------------
     //User one to many relationship to Payment
