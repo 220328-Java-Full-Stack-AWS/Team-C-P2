@@ -57,7 +57,7 @@ public class User implements Entity {
    //----------------------------------------------------------------------
 
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
