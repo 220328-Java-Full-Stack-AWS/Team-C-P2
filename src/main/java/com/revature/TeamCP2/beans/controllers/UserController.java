@@ -6,7 +6,9 @@ package com.revature.TeamCP2.beans.controllers;
 
 import com.revature.TeamCP2.beans.services.UserService;
 import com.revature.TeamCP2.entities.User;
+import com.revature.TeamCP2.exceptions.CreationFailedException;
 import com.revature.TeamCP2.exceptions.ItemDoesNotExistException;
+import com.revature.TeamCP2.exceptions.ItemHasNonNullIdException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -56,7 +58,7 @@ public class UserController {
     //post a new user - auto generate the ID
     @PostMapping()
     @ResponseStatus(HttpStatus.OK)
-    public User persistNewUser(@RequestBody User newUser) {
+    public User persistNewUser(@RequestBody User newUser) throws CreationFailedException, ItemHasNonNullIdException {
         return userService.create(newUser);
     }
 
