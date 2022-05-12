@@ -1,74 +1,122 @@
 /**
- * UserRepository is a test file to see if objects would be persisted by @Autowiring the ConnectionManager.
+ * Author(s): @Arun Mohan
+ * Contributor(s):
+ * Purpose: User Repository class used to implement CRUD functionality on User
+ * models that are persisted in the database
  */
 
 package com.revature.TeamCP2.beans.repositories;
 
-import com.revature.TeamCP2.beans.services.ConnectionManager;
 import com.revature.TeamCP2.entities.User;
 import com.revature.TeamCP2.exceptions.*;
+import com.revature.TeamCP2.utils.ConnectionManager;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Optional;
 
 @Component
 public class UserRepository extends AbstractHibernateRepo<User> {
-    private final ConnectionManager connectionManager;
-    private boolean running = false;
-    private Session session;
-    private String tableName;
 
+    private ConnectionManager conn;
+    private Session session;
+    private boolean run = false;
+
+    // constructor - pass in connection
     @Autowired
-    public UserRepository(ConnectionManager connectionManager) {
-        this.connectionManager = connectionManager;
+    public UserRepository(ConnectionManager conn) {
+        this.conn = conn;
     }
 
-    @Override
-    public User create(User user) {
-        Transaction tx = session.beginTransaction();
-        session.save(user);
-        tx.commit();
 
+    // implement abstract class CRUD functionality
+
+    @Override
+    public User create(User user) throws ItemHasNonNullIdException, CreationFailedException {
+
+        Transaction tran = session.beginTransaction();
+        session.save(user);
+        // commit transaction and return saved user
+        tran.commit();
         return user;
     }
 
     @Override
-    public User update(User model) throws ItemHasNoIdException, ItemDoesNotExistException, UpdateFailedException {
-        return null;
-    }
+    public User update(User user) throws ItemHasNoIdException, ItemDoesNotExistException, UpdateFailedException {
 
-    @Override
-    public void delete(User model) throws ItemHasNoIdException, ItemDoesNotExistException, DeletionFailedException {
+        Transaction tran = session.beginTransaction();
+        // create a new user to update db using given user model
+        User updated = (User) session.get(String.valueOf(User.class), user.getId());
+        // populate fields using given user
+        updated.setUsername(user.getUsername());
+        updated.setPassword(user.getPassword());
+        updated.setFirstName(user.getFirstName());
+        updated.setLastName(user.getLastName());
+        updated.setEmail(user.getEmail());
+        updated.setUserAddresses(user.getUserAddresses());
+        //updated.setUserPayments(user.getUserPayments());
+        updated.setDateCreated(user.getDateCreated());
+        updated.setDateModifies(user.getDateModifies());
 
+        // save to session, commit, and return updated user
+        session.save(updated);
+        tran.commit();
+
+        return updated;
     }
 
     @Override
     public void deleteById(int id) throws ItemHasNoIdException, ItemDoesNotExistException, DeletionFailedException {
 
+        // forcing me to use optional here - look into why again
+        Optional<User> toDelete = this.getById(id);
+        session.delete(toDelete);
+
     }
 
 
+    @Override
+    public void delete(User user) throws ItemHasNoIdException, ItemDoesNotExistException, DeletionFailedException {
+
+        deleteById(user.getId());
+
+
+    }
+
+    // implement get by username method
+
+    public User getByUsername (String username) {
+        List<User> users = this.getAll();
+        // for each user, check if the username matches
+        for (User u : users) {
+            // if we find a match, assign the user
+            if (u.getUsername().equals(username)) {
+                 return u;
+            }
+        }
+        return new User();
+    }
+
+
+    // override lifecycle methods
+
+    @Override
     public void start() {
-        this.session = connectionManager.getSession();
-        running = true;
+        this.session = conn.getSession();
+        run = true;
+
     }
 
-
-
+    @Override
     public void stop() {
-        running = false;
+        run = false;
     }
 
+    @Override
     public boolean isRunning() {
-        return running;
+        return run;
     }
-
-    @Value("users")
-    public void setTableName(String tableName) {
-        this.tableName = tableName;
-    }
-
 }
-
