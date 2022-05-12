@@ -1,3 +1,10 @@
+/**
+ * Author(s): @Arun Mohan
+ * Contributor(s):
+ * Purpose: User Repository class used to implement CRUD functionality on User
+ * models that are persisted in the database
+ */
+
 package com.revature.TeamCP2.beans.repositories;
 
 import com.revature.TeamCP2.entities.User;
@@ -8,6 +15,7 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -76,6 +84,20 @@ public class UserRepo extends AbstractHibernateRepo<User> {
         deleteById(user.getId());
 
 
+    }
+
+    // implement get by username method
+
+    public User getByUsername (String username) {
+        List<User> users = this.getAll();
+        // for each user, check if the username matches
+        for (User u : users) {
+            // if we find a match, assign the user
+            if (u.getUsername().equals(username)) {
+                 return u;
+            }
+        }
+        return new User();
     }
 
 
