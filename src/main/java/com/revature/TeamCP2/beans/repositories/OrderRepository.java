@@ -14,6 +14,7 @@ import com.revature.TeamCP2.exceptions.*;
 import com.revature.TeamCP2.utils.ConnectionManager;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -24,6 +25,14 @@ public class OrderRepository extends AbstractHibernateRepo<Order> {
     private ConnectionManager conn;
     private Session session;
     private boolean run = false;
+
+    // constructor
+
+    @Autowired
+    public OrderRepository(ConnectionManager conn) {
+        this.conn = conn;
+    }
+
     // implement abstract class CRUD functions
 
     @Override
