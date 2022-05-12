@@ -15,7 +15,6 @@ import com.revature.TeamCP2.exceptions.ItemDoesNotExistException;
 import com.revature.TeamCP2.exceptions.ItemHasNonNullIdException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +27,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User create(User user) {
+    public User create(User user) throws CreationFailedException, ItemHasNonNullIdException {
         return userRepository.create(user);
     }
 
@@ -40,4 +39,3 @@ public class UserService {
         return userRepository.getById(id);
     }
 }
-

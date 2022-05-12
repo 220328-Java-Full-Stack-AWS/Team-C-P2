@@ -3,6 +3,8 @@ package com.revature.TeamCP2.beans.controllers;
 
 import com.revature.TeamCP2.beans.services.TestService;
 import com.revature.TeamCP2.entities.*;
+import com.revature.TeamCP2.exceptions.CreationFailedException;
+import com.revature.TeamCP2.exceptions.ItemHasNonNullIdException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -52,5 +54,11 @@ public class AdminController {
     @ResponseStatus(HttpStatus.OK)
     public CartItem persistAddress(@RequestBody CartItem t) {
         return testService.createCartItem(t);
+    }
+
+    @PostMapping("/order")
+    @ResponseStatus(HttpStatus.OK)
+    public Order persistAddress(@RequestBody Order t) throws CreationFailedException, ItemHasNonNullIdException {
+        return testService.createOrder(t);
     }
 }

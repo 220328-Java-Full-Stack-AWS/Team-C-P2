@@ -2,6 +2,8 @@ package com.revature.TeamCP2.beans.services;
 
 import com.revature.TeamCP2.beans.repositories.*;
 import com.revature.TeamCP2.entities.*;
+import com.revature.TeamCP2.exceptions.CreationFailedException;
+import com.revature.TeamCP2.exceptions.ItemHasNonNullIdException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,9 +17,11 @@ public class TestService {
     private final CategoriesRepository categoriesRepository;
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
+    private final OrderRepository orderRepository;
+
 
     @Autowired
-    public TestService(UserRepository userRepository, UserAddressRepository userAddressRepository, ProductsRepository productsRepository, PaymentRepository paymentRepository, OnSaleRepository onSaleRepository, CategoriesRepository categoriesRepository, CartRepository cartRepository, CartItemRepository cartItemRepository) {
+    public TestService(UserRepository userRepository, UserAddressRepository userAddressRepository, ProductsRepository productsRepository, PaymentRepository paymentRepository, OnSaleRepository onSaleRepository, CategoriesRepository categoriesRepository, CartRepository cartRepository, CartItemRepository cartItemRepository, OrderRepository orderRepository) {
         this.userRepository = userRepository;
         this.userAddressRepository = userAddressRepository;
         this.productsRepository = productsRepository;
@@ -26,6 +30,7 @@ public class TestService {
         this.categoriesRepository = categoriesRepository;
         this.cartRepository = cartRepository;
         this.cartItemRepository = cartItemRepository;
+        this.orderRepository = orderRepository;
     }
 
     //create
@@ -55,5 +60,9 @@ public class TestService {
 
     public CartItem createCartItem(CartItem item) {
         return cartItemRepository.create(item);
+    }
+
+    public Order createOrder(Order order) throws CreationFailedException, ItemHasNonNullIdException {
+        return orderRepository.create(order);
     }
 }
