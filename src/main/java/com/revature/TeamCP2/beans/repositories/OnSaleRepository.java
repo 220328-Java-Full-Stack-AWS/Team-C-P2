@@ -9,6 +9,7 @@ package com.revature.TeamCP2.beans.repositories;
 import com.revature.TeamCP2.beans.services.ConnectionManager;
 import com.revature.TeamCP2.entities.OnSale;
 
+import com.revature.TeamCP2.entities.Product;
 import com.revature.TeamCP2.exceptions.ItemHasNoIdException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -16,7 +17,6 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.TypedQuery;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -44,16 +44,12 @@ public class OnSaleRepository extends AbstractHibernateRepo<OnSale> {
 
     @Override
     public Optional<OnSale> getById(int id) {
-//        String hql = "FROM on_sale WHERE id = :id";
-//        TypedQuery<OnSale> query = session.createQuery(hql, OnSale.class);
-        TypedQuery<OnSale> query = session.createQuery("from ProductCategory where id = :id");
 
-        query.setParameter("id", id);
+        OnSale onSale = session.get(OnSale.class, id);
 
-        OnSale OnSale = query.getSingleResult();
-
-        return Optional.ofNullable(OnSale);
+        return Optional.ofNullable(onSale);
     }
+
 
     @Override
     public List<OnSale> getAll() {
@@ -77,27 +73,31 @@ public class OnSaleRepository extends AbstractHibernateRepo<OnSale> {
 
     @Override
     public void deleteById(int id) {
-        Optional<OnSale> sale = this.getById(id);
-        session.delete(sale);
+        Transaction transaction = session.beginTransaction();
+        OnSale onSale = (OnSale) session.get(OnSale.class, id);
+        session.delete(onSale);
+        transaction.commit();
     }
 
 
     @Override
     public OnSale update(OnSale onSale) {
         Transaction transaction = session.beginTransaction();
-        Optional<OnSale> updateOnSale = (Optional<OnSale>)
-                session.get(String.valueOf(OnSale.class), onSale.getId());
+        OnSale updateOnSale = session.get(OnSale.class, onSale.getId());
 
-        updateOnSale.get().setDiscount(onSale.getDiscount());
-        updateOnSale.get().setProductsOnSale(onSale.getProductsOnSale());
+        updateOnSale.setDiscount(onSale.getDiscount());
+        updateOnSale.setProductsOnSale(onSale.getProductsOnSale());
+
+        session.saveOrUpdate(updateOnSale);
 
         transaction.commit();
-        return null;
+
+        return updateOnSale;
     }
 
     @Override
     public void delete(OnSale model) throws ItemHasNoIdException {
-        if(model.getId() == null)
+        if (model.getId() == null)
             throw new ItemHasNoIdException();
 
         deleteById(model.getId().intValue());
