@@ -16,35 +16,31 @@ import java.util.List;
 @Table(name = "On_Sale", schema = "public")
 public class OnSale implements Entity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    private Long id;
-
     //This Class is the owning entity associated with the target entity (Product)
     //The foreign key will be stored here
     @OneToMany(mappedBy = "on_sale")
     List<Product> productsOnSale = new ArrayList<>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-
-
+    private Integer id;
     @Column(name = "discount_percentage")
     private Double discount;
 
     public OnSale() {
     }
 
-    public OnSale(Long id, List<Product> products, Double discount) {
+    public OnSale(Integer id, List<Product> products, Double discount) {
         this.id = id;
         this.productsOnSale = products;
         this.discount = discount;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

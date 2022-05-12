@@ -11,49 +11,32 @@ import com.revature.TeamCP2.interfaces.Entity;
 import javax.persistence.*;
 
 @javax.persistence.Entity
-@Table(name = "User_Address", schema="public")
+@Table(name = "User_Address", schema = "public")
 public class UserAddress implements Entity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     public User user;
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @Column(name = "address_line1")
     private String addressLine1;
-
     @Column(name = "address_line2")
     private String addressLine2;
-
     @Column(name = "city")
     private String city;
-
     @Column(name = "postal_code")
     private Long postalCode;
-
     @Column(name = "country")
     private String country;
-
     @Column(name = "phone_number")
     private String phoneNumber;
 
     public UserAddress() {
     }
 
-    public UserAddress(Long id, User user, String addressLine1, String addressLine2, String city, Long postalCode, String country, String phoneNumber) {
+    public UserAddress(Integer id, User user, String addressLine1, String addressLine2, String city, Long postalCode, String country, String phoneNumber) {
         this.id = id;
         this.user = user;
         this.addressLine1 = addressLine1;
@@ -64,11 +47,19 @@ public class UserAddress implements Entity {
         this.phoneNumber = phoneNumber;
     }
 
-    public Long getId() {
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long addressID) {
+    public void setId(Integer addressID) {
         this.id = addressID;
     }
 

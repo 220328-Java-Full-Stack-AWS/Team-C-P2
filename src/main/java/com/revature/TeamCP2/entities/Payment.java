@@ -16,7 +16,7 @@ public class Payment implements Entity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -39,7 +39,8 @@ public class Payment implements Entity {
     @Column(name = "expiration_date", nullable = false)
     private String expirationDate;
 
-    public Payment() {}
+    public Payment() {
+    }
 
     public Payment(User user, String network, String issuer, Integer cardNumber, Short securityCode, String expirationDate) {
         this.user = user;
@@ -98,11 +99,11 @@ public class Payment implements Entity {
         this.expirationDate = expirationDate;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Integer getId() {
+        return id;
     }
 
-    public Long getId() {
-        return id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

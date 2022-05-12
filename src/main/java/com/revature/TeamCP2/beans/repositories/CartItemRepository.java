@@ -1,13 +1,12 @@
 /**
- Author: Steven Dowd
- Purpose: Repo for cart item objects
+ * Author: Steven Dowd
+ * Purpose: Repo for cart item objects
  */
 
 package com.revature.TeamCP2.beans.repositories;
 
 import com.revature.TeamCP2.beans.services.ConnectionManager;
 import com.revature.TeamCP2.entities.CartItem;
-import com.revature.TeamCP2.repositories.AbstractHibernateRepo;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +39,7 @@ public class CartItemRepository extends AbstractHibernateRepo<CartItem> {
   getByID(int id) x
   getAll() x
      */
-    public CartItem create (CartItem cartItem) {
+    public CartItem create(CartItem cartItem) {
         Transaction tx = session.beginTransaction();
         session.save(cartItem);
         tx.commit();
@@ -89,7 +88,7 @@ public class CartItemRepository extends AbstractHibernateRepo<CartItem> {
 
         List<CartItem> cartItemList = new LinkedList<>();
 
-        for (CartItem result: results) {
+        for (CartItem result : results) {
             CartItem cartItem = new CartItem();
             cartItem.setId(result.getId());
             cartItem.setCart(result.getCart());
