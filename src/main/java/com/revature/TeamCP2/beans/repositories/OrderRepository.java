@@ -55,7 +55,6 @@ public class OrderRepository extends AbstractHibernateRepo<Order> {
     @Override
     public void deleteById(int id) throws ItemHasNoIdException, ItemDoesNotExistException, DeletionFailedException {
 
-        // forcing me to use optional here - look into why again
         Optional<Order> toDelete = this.getById(id);
         session.delete(toDelete);
     }
@@ -63,8 +62,7 @@ public class OrderRepository extends AbstractHibernateRepo<Order> {
     @Override
     public void delete(Order order) throws ItemHasNoIdException, ItemDoesNotExistException, DeletionFailedException {
 
-        // convert long to int
-        deleteById(order.getId().intValue());
+        deleteById(order.getId());
     }
 
     // override lifecycle methods

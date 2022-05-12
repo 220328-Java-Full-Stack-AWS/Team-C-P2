@@ -17,7 +17,7 @@ public class Order implements Entity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    private Long id;
+    private Integer id;
 
     // foreign key to the cart table
     @OneToOne
@@ -33,7 +33,7 @@ public class Order implements Entity {
     public Order() {
     }
 
-    public Order(Long id, Cart cart, String dateCreated) {
+    public Order(Integer id, Cart cart, String dateCreated) {
         this.id = id;
         this.cart = cart;
         this.dateCreated = dateCreated;
@@ -51,11 +51,11 @@ public class Order implements Entity {
 
     // getters and setters
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
