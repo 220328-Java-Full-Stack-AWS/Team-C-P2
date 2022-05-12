@@ -9,6 +9,7 @@ package com.revature.TeamCP2.beans.repositories;
 import com.revature.TeamCP2.beans.services.ConnectionManager;
 import com.revature.TeamCP2.entities.OnSale;
 
+import com.revature.TeamCP2.entities.ProductCategory;
 import com.revature.TeamCP2.exceptions.ItemHasNoIdException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -85,19 +86,18 @@ public class OnSaleRepository extends AbstractHibernateRepo<OnSale> {
     @Override
     public OnSale update(OnSale onSale) {
         Transaction transaction = session.beginTransaction();
-        Optional<OnSale> updateOnSale = (Optional<OnSale>)
-                session.get(String.valueOf(OnSale.class), onSale.getId());
+        OnSale updateOnSale = session.get(OnSale.class, onSale.getId());
 
-        updateOnSale.get().setDiscount(onSale.getDiscount());
-        updateOnSale.get().setProductsOnSale(onSale.getProductsOnSale());
+        updateOnSale.setDiscount(onSale.getDiscount());
+        updateOnSale.setProductsOnSale(onSale.getProductsOnSale());
 
         transaction.commit();
-        return null;
+        return onSale;
     }
 
     @Override
     public void delete(OnSale model) throws ItemHasNoIdException {
-        if(model.getId() == null)
+        if (model.getId() == null)
             throw new ItemHasNoIdException();
 
         deleteById(model.getId().intValue());

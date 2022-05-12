@@ -8,6 +8,7 @@ package com.revature.TeamCP2.beans.repositories;
 
 
 import com.revature.TeamCP2.beans.services.ConnectionManager;
+import com.revature.TeamCP2.entities.Product;
 import com.revature.TeamCP2.entities.ProductCategory;
 import com.revature.TeamCP2.exceptions.ItemHasNoIdException;
 import org.hibernate.Session;
@@ -97,22 +98,21 @@ public class CategoriesRepository extends AbstractHibernateRepo<ProductCategory>
     public ProductCategory update(ProductCategory productCategory) {
 
         Transaction transaction = session.beginTransaction();
-        Optional<ProductCategory> updateProductCategory = (Optional<ProductCategory>)
-                session.get(String.valueOf(ProductCategory.class), productCategory.getId());
+        ProductCategory updateProductCategory = session.get(ProductCategory.class, productCategory.getId());
 
-        updateProductCategory.get().setDescription(productCategory.getDescription());
-        updateProductCategory.get().setImage(productCategory.getImage());
-        updateProductCategory.get().setName(productCategory.getName());
-        updateProductCategory.get().setProductsAssociated(productCategory.getProductsAssociated());
+        updateProductCategory.setDescription(productCategory.getDescription());
+        updateProductCategory.setImage(productCategory.getImage());
+        updateProductCategory.setName(productCategory.getName());
+        updateProductCategory.setProductsAssociated(productCategory.getProductsAssociated());
 
         transaction.commit();
 
-        return null;
+        return updateProductCategory;
     }
 
     @Override
     public void delete(ProductCategory model) throws ItemHasNoIdException {
-        if(model.getId() == null)
+        if (model.getId() == null)
             throw new ItemHasNoIdException();
 
         deleteById(model.getId().intValue());

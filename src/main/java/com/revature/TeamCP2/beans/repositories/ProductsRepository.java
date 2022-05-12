@@ -86,20 +86,19 @@ public class ProductsRepository extends AbstractHibernateRepo<Product> {
     @Override
     public Product update(Product product) {
         Transaction transaction = session.beginTransaction();
-        Optional<Product> updateProduct = (Optional<Product>)
-                session.get(String.valueOf(Product.class), product.getId());
-//        Optional<Product> product1 = this.getById(product.getId());
-        updateProduct.get().setDescr(product.getDescr());
-        updateProduct.get().setImage(product.getImage());
-        updateProduct.get().setIs_featured(product.isIs_featured());
-        updateProduct.get().setName(product.getName());
-        updateProduct.get().setPrice(product.getPrice());
-        updateProduct.get().setCategory(product.getCategory());
+
+        Product updateProduct = session.get(Product.class, product.getId());
+        updateProduct.setDescr(product.getDescr());
+        updateProduct.setImage(product.getImage());
+        updateProduct.setIs_featured(product.isIs_featured());
+        updateProduct.setName(product.getName());
+        updateProduct.setPrice(product.getPrice());
+        updateProduct.setCategory(product.getCategory());
 
         transaction.commit();
 
 
-        return null;
+        return updateProduct;
     }
 
     @Override
