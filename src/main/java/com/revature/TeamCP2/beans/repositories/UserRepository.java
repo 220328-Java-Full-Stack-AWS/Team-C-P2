@@ -89,16 +89,16 @@ public class UserRepository extends AbstractHibernateRepo<User> {
 
     // implement get by username method
 
-    public User getByUsername (String username) {
+    public Optional<User> getByUsername (String username) {
         List<User> users = this.getAll();
         // for each user, check if the username matches
         for (User u : users) {
             // if we find a match, assign the user
             if (u.getUsername().equals(username)) {
-                 return u;
+                 return Optional.of(u);
             }
         }
-        return new User();
+        return Optional.empty();
     }
 
 
