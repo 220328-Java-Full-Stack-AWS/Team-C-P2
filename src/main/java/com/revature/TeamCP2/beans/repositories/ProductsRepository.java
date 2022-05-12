@@ -104,7 +104,7 @@ public class ProductsRepository extends AbstractHibernateRepo<Product> {
 
     @Override
     public void delete(Product model) throws ItemHasNoIdException {
-        if(model.getId() == null)
+        if (model.getId() == null)
             throw new ItemHasNoIdException();
 
         deleteById(model.getId().intValue());

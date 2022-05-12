@@ -18,7 +18,7 @@ public class ProductCategory implements Entity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @OneToMany(
             mappedBy = "category",
@@ -80,20 +80,20 @@ public class ProductCategory implements Entity {
         return this;
     }
 
+    public List<Product> getProductsAssociated() {
+        return productsAssociated;
+    }
+
     public ProductCategory setProductsAssociated(List<Product> productsAssociated) {
         this.productsAssociated = productsAssociated;
         return this;
     }
 
-    public List<Product> getProductsAssociated() {
-        return productsAssociated;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
+    public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }
