@@ -7,9 +7,10 @@
 
 package com.revature.TeamCP2.beans.repositories;
 
+import com.revature.TeamCP2.beans.services.ConnectionManager;
 import com.revature.TeamCP2.entities.User;
 import com.revature.TeamCP2.exceptions.*;
-import com.revature.TeamCP2.utils.ConnectionManager;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;

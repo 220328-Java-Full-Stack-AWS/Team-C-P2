@@ -92,13 +92,12 @@ public class UserAddressRepository extends AbstractHibernateRepo<UserAddress> {
 
         transaction.commit();
 
-
         return null;
     }
 
     @Override
     public void delete(UserAddress model) throws ItemHasNoIdException {
-        if(model.getId() == null)
+        if (model.getId() == null)
             throw new ItemHasNoIdException();
 
         deleteById(model.getId().intValue());

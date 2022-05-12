@@ -16,7 +16,6 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.TypedQuery;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +31,7 @@ public class ProductsRepository extends AbstractHibernateRepo<Product> {
         this.connectionManager = connectionManager;
     }
 
-    //@Override
+
     public Product create(Product product) {
         Transaction transaction = session.beginTransaction();
         session.save(product);
@@ -43,13 +42,8 @@ public class ProductsRepository extends AbstractHibernateRepo<Product> {
 
     @Override
     public Optional<Product> getById(int id) {
-//        String hql = "FROM products WHERE id = :id";
-//        TypedQuery<Product> query = session.createQuery(hql, Product.class);
 
-        TypedQuery<Product> query = session.createQuery("from ProductCategory where id = :id");
-        query.setParameter("id", id);
-
-        Product product = query.getSingleResult();
+        Product product = session.get(Product.class, id);
 
         return Optional.ofNullable(product);
     }
@@ -77,29 +71,57 @@ public class ProductsRepository extends AbstractHibernateRepo<Product> {
         return productList;
     }
 
+    public List<Product> getAllFeatured() {
+        Query query = session.createQuery("from Products where is_featured = true");
+
+        List<Product> results = query.list();
+
+        List<Product> featuredList = new LinkedList<>();
+
+        for (Product result : results) {
+            if (result.isIs_featured()) {
+                Product product = new Product();
+                product.setId(result.getId());
+                product.setDescr(result.getDescr());
+                product.setImage(result.getImage());
+                product.setIs_featured(result.isIs_featured());
+                product.setName(result.getName());
+                product.setPrice(result.getPrice());
+                product.setCategory(result.getCategory());
+
+                featuredList.add(product);
+            }
+        }
+
+
+        return featuredList;
+    }
+
     @Override
     public void deleteById(int id) {
-        Optional<Product> product = this.getById(id);
+        Transaction transaction = session.beginTransaction();
+        Product product = (Product) session.get(Product.class, id);
         session.delete(product);
+        transaction.commit();
     }
 
     @Override
     public Product update(Product product) {
         Transaction transaction = session.beginTransaction();
-        Optional<Product> updateProduct = (Optional<Product>)
-                session.get(String.valueOf(Product.class), product.getId());
-//        Optional<Product> product1 = this.getById(product.getId());
-        updateProduct.get().setDescr(product.getDescr());
-        updateProduct.get().setImage(product.getImage());
-        updateProduct.get().setIs_featured(product.isIs_featured());
-        updateProduct.get().setName(product.getName());
-        updateProduct.get().setPrice(product.getPrice());
-        updateProduct.get().setCategory(product.getCategory());
+
+        Product updateProduct = session.get(Product.class, product.getId());
+        updateProduct.setDescr(product.getDescr());
+        updateProduct.setImage(product.getImage());
+        updateProduct.setIs_featured(product.isIs_featured());
+        updateProduct.setName(product.getName());
+        updateProduct.setPrice(product.getPrice());
+        updateProduct.setCategory(product.getCategory());
+
+        session.saveOrUpdate(updateProduct);
 
         transaction.commit();
 
-
-        return null;
+        return updateProduct;
     }
 
     @Override
@@ -107,8 +129,9 @@ public class ProductsRepository extends AbstractHibernateRepo<Product> {
         if (model.getId() == null)
             throw new ItemHasNoIdException();
 
-        deleteById(model.getId().intValue());
+        deleteById(model.getId());
     }
+
 
     @Override
     public void start() {

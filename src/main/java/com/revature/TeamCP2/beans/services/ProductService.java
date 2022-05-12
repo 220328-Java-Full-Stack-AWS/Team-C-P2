@@ -1,17 +1,14 @@
 /**
- * Author(s): @Brandon Le
+ * Author(s): @Diego Leon
  * Contributor(s):
- * Purpose: UserService provides implementations to persist or retrieve user objects.
- * UserService @Autowires UserRepository.
+ * Purpose: ProductService
  */
-
 package com.revature.TeamCP2.beans.services;
 
 import com.revature.TeamCP2.beans.repositories.ProductsRepository;
-import com.revature.TeamCP2.beans.repositories.UserRepository;
 import com.revature.TeamCP2.entities.Product;
-import com.revature.TeamCP2.entities.User;
 import com.revature.TeamCP2.exceptions.ItemDoesNotExistException;
+import com.revature.TeamCP2.exceptions.ItemHasNoIdException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,16 +24,31 @@ public class ProductService {
         this.productsRepository = userRepository;
     }
 
+
     public Product create(Product product) {
         return productsRepository.create(product);
     }
 
-    public List<Product> getAllUsers() {
+    public Optional<Product> getById(int id) throws ItemDoesNotExistException {
+        return productsRepository.getById(id);
+    }
+
+    public List<Product> getAll() {
         return productsRepository.getAll();
     }
 
-    public Optional<Product> getById(int id) throws ItemDoesNotExistException {
-        return productsRepository.getById(id);
+    public void delete(Product model) throws ItemHasNoIdException {
+        productsRepository.delete(model);
+    }
+
+
+    public Product update(Product product) {
+        return productsRepository.update(product);
+    }
+
+
+    public List<Product> getAllFeatured() {
+        return productsRepository.getAllFeatured();
     }
 }
 
