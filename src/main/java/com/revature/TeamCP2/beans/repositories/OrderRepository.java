@@ -1,3 +1,11 @@
+/**
+ * Author(s): @Arun Mohan
+ * Contributor(s):
+ * Purpose: Order Repository class used to implement CRUD functionality on Order
+ * models that are persisted in the database
+ */
+
+
 package com.revature.TeamCP2.beans.repositories;
 
 
