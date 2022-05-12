@@ -1,3 +1,10 @@
+/**
+ * Author(s): @Brandon Le
+ * Contributor(s):
+ * Purpose: TestService is meant to be used as a guideline to creating the service layer
+ *          and to test all repositories.
+ */
+
 package com.revature.TeamCP2.beans.services;
 
 import com.revature.TeamCP2.beans.repositories.*;

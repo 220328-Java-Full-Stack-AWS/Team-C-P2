@@ -2,7 +2,6 @@
  * Author(s): @Brandon Le
  * Contributor(s):
  * Purpose: UserService provides implementations to persist or retrieve user objects.
- *          UserService @Autowires UserRepository.
  *
  */
 
