@@ -8,11 +8,9 @@
 package com.revature.TeamCP2.beans.services;
 
 import com.revature.TeamCP2.beans.repositories.UserRepository;
+import com.revature.TeamCP2.dtos.LoginDto;
 import com.revature.TeamCP2.entities.User;
-import com.revature.TeamCP2.exceptions.CreationFailedException;
-import com.revature.TeamCP2.exceptions.ItemDoesNotExistException;
-import com.revature.TeamCP2.exceptions.ItemHasNonNullIdException;
-import com.revature.TeamCP2.exceptions.UsernameAlreadyExistsException;
+import com.revature.TeamCP2.exceptions.*;
 import com.revature.TeamCP2.interfaces.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,10 +21,12 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
     private final BCryptHash bCrypt;
+    private final AuthService authService;
 
     @Autowired
-    public UserService(UserRepository userRepository, BCryptHash bCrypt) {
+    public UserService(UserRepository userRepository, BCryptHash bCrypt, AuthService authService) {
         this.userRepository = userRepository;
+        this.authService = authService;
         this.bCrypt = bCrypt;
     }
 
@@ -40,8 +40,17 @@ public class UserService {
         return userRepository.create(user);
     }
 
+    public User loginUser (String username, String password) throws NotAuthorizedException {
+        LoginDto user = new LoginDto();
+        user.setUsername(username);
+        user.setPassword(password);
+
+        return authService.loginUser(user);
+    }
     public List<User> getAllUsers() {
-        return userRepository.getAll();
+
+
+    return userRepository.getAll();
     }
 
     public Optional<User> getById(int id) throws ItemDoesNotExistException {
