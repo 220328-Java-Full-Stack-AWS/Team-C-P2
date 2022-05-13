@@ -65,7 +65,7 @@ public class CartRepository extends AbstractHibernateRepo<Cart> {
         Optional<Cart> updateCart = (Optional<Cart>)
                 session.get(String.valueOf(Cart.class), cart.getId());
 
-        updateCart.get().setUserId(cart.getUserId());
+        updateCart.get().setUser(cart.getUser());
         updateCart.get().setTotal(cart.getTotal());
 
         transaction.commit();
@@ -83,7 +83,7 @@ public class CartRepository extends AbstractHibernateRepo<Cart> {
         for (Cart result : results) {
             Cart cart = new Cart();
             cart.setId(result.getId());
-            cart.setUserId(result.getUserId());
+            cart.setUser(result.getUser());
             cart.setTotal(result.getTotal());
 
             cartList.add(cart);

@@ -34,7 +34,7 @@ public class CartService {
     //Creates cart and assign to user upon creation
     public Cart createCart(User user) {
         Cart cart = new Cart();
-        cart.setUserId(user);
+        cart.setUser(user);
         return cartRepository.create(cart);
     }
 
