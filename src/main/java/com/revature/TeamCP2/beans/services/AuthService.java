@@ -13,6 +13,7 @@ import com.revature.TeamCP2.exceptions.CreationFailedException;
 import com.revature.TeamCP2.exceptions.ItemHasNonNullIdException;
 import com.revature.TeamCP2.exceptions.NotAuthorizedException;
 import com.revature.TeamCP2.exceptions.UsernameAlreadyExistsException;
+import com.revature.TeamCP2.interfaces.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -64,6 +65,7 @@ public class AuthService {
         if(opUser.isPresent())
             throw new UsernameAlreadyExistsException();
 
+        user.setRole(Role.USER);
         user.setPassword(bCryptHash.hash(user.getPassword()));
         return userRepository.create(user);
     }

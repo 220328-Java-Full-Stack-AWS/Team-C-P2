@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.util.*;
 import com.revature.TeamCP2.interfaces.Entity;
+import com.revature.TeamCP2.interfaces.Role;
 
 @javax.persistence.Entity
 @Table (name = "users", schema = "public")
@@ -27,6 +28,10 @@ public class User implements Entity {
     @Basic
     @Column(name = "email")
     private String email;
+
+    @Column(name = "role")
+    private Role role;
+
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private UserAddress userAddresses;
 
@@ -103,6 +108,14 @@ public class User implements Entity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public UserAddress getUserAddresses() {
