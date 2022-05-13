@@ -69,4 +69,12 @@ public class AuthService {
         user.setPassword(bCryptHash.hash(user.getPassword()));
         return userRepository.create(user);
     }
+
+    public boolean isAdmin(CookieDto cookieDto) {
+        return cookieDto.getUserRole() != Role.ADMIN;
+    }
+
+    public CookieDto getCookieDto(String cookieString) throws NotAuthorizedException {
+        return jsonWebToken.verify(cookieString);
+    }
 }
