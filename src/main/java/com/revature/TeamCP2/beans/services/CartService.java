@@ -1,3 +1,8 @@
+/**
+ Author: Steven Dowd
+ Purpose: Cart Service
+ */
+
 package com.revature.TeamCP2.beans.services;
 
 import com.revature.TeamCP2.beans.repositories.CartItemRepository;
@@ -30,14 +35,27 @@ public class CartService {
         cartItemRepository.create(cartItem);
     }
 
-    public void removeCartItem(CartItem cartItem) {
-        cartItemRepository.delete(cartItem);
-    }
 
     public List<CartItem> getAllCartItems() {
         return cartItemRepository.getAll();
     }
     public Optional<Cart> getCartbyId(int id) {
         return cartRepository.getById(id);
+    }
+
+    public void deleteCartItem(CartItem cartItem) {
+        cartItemRepository.delete(cartItem);
+    }
+
+    public void deleteCart(Cart cart) {
+        cartRepository.delete(cart);
+    }
+
+    public Cart updateCart(Cart cart) {
+        return cartRepository.update(cart);
+    }
+
+    public CartItem updateCartItem(CartItem cartItem) {
+        return cartItemRepository.update(cartItem);
     }
 }
