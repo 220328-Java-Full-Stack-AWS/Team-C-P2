@@ -71,7 +71,7 @@ public class AuthService {
     }
 
     public boolean isAdmin(CookieDto cookieDto) {
-        return cookieDto.getUserRole() != Role.ADMIN;
+        return cookieDto.getUserRole() == Role.ADMIN;
     }
 
     public CookieDto getCookieDto(String cookieString) throws NotAuthorizedException {
