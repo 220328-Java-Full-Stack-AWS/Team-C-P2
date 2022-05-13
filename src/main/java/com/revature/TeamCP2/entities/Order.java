@@ -34,8 +34,7 @@ public class Order implements Entity {
     public Order() {
     }
 
-    public Order(Integer id, Cart cart, String dateCreated) {
-        this.id = id;
+    public Order(Cart cart, String dateCreated) {
         this.cart = cart;
         this.dateCreated = dateCreated;
     }
