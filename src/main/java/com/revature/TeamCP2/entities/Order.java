@@ -30,6 +30,7 @@ public class Order implements Entity {
     private String dateCreated;
 
     // constructors
+
     public Order() {
     }
 

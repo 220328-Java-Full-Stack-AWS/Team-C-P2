@@ -71,8 +71,7 @@ public class UserRepository extends AbstractHibernateRepo<User> {
 
     @Override
     public void deleteById(int id) throws ItemHasNoIdException, ItemDoesNotExistException, DeletionFailedException {
-
-        // forcing me to use optional here - look into why again
+        
         Optional<User> toDelete = this.getById(id);
         session.delete(toDelete);
 
