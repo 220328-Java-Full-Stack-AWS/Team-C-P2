@@ -1,7 +1,7 @@
 /**
  * Author(s): @Brandon Le
  * Contributor(s):
- * Purpose: OnSaleService provides implementations to persist or retrieve OnSale objects.
+ * Purpose: OnSaleService provides implementations to persist or retrieve OnSale entities.
  *
  */
 package com.revature.TeamCP2.beans.services;

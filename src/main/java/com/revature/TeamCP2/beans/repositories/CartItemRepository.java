@@ -6,6 +6,7 @@
 package com.revature.TeamCP2.beans.repositories;
 
 import com.revature.TeamCP2.beans.services.ConnectionManager;
+import com.revature.TeamCP2.entities.Cart;
 import com.revature.TeamCP2.entities.CartItem;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -98,6 +100,25 @@ public class CartItemRepository extends AbstractHibernateRepo<CartItem> {
             cartItemList.add(cartItem);
         }
         return cartItemList;
+    }
+
+    public List<CartItem> getAllCartItemsByCart(Cart cart) {
+        Query query = session.createQuery("from CartItem where cart = :cart");
+
+        query.setParameter("cart", cart);
+
+        List<CartItem> resultList = query.getResultList();
+        List<CartItem> list = new ArrayList<>();
+        for (CartItem cartItem : resultList) {
+            CartItem item = new CartItem();
+            item.setCart(cartItem.getCart());
+            item.setId(cartItem.getId());
+            item.setProduct(cartItem.getProduct());
+            item.setQuantity(cartItem.getQuantity());
+
+            list.add(item);
+        }
+        return list;
     }
 
 
