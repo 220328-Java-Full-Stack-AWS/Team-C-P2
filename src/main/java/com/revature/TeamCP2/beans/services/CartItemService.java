@@ -10,6 +10,7 @@ import com.revature.TeamCP2.beans.repositories.CartItemRepository;
 import com.revature.TeamCP2.entities.Cart;
 import com.revature.TeamCP2.entities.CartItem;
 import com.revature.TeamCP2.exceptions.ItemHasNoIdException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.Optional;
 public class CartItemService {
     private final CartItemRepository cartItemRepository;
 
+    @Autowired
     public CartItemService(CartItemRepository cartItemRepository) {
         this.cartItemRepository = cartItemRepository;
     }
