@@ -25,9 +25,6 @@ public class AuthService {
     JsonWebToken jsonWebToken;
     UserRepository userRepository;
 
-    public AuthService() {
-    }
-
     @Autowired
     public AuthService(BCryptHash bCryptHash, JsonWebToken jsonWebToken, UserRepository userRepository) {
         this.bCryptHash = bCryptHash;
@@ -39,7 +36,7 @@ public class AuthService {
      * Returns the json web token if user is successful at logging in.
      * @param loginInfo Contains username & password
      */
-    public String loginUser(LoginDto loginInfo) throws NotAuthorizedException {
+    public User loginUser(LoginDto loginInfo) throws NotAuthorizedException {
 
         // Check to see if username exists
         Optional<User> opUser = userRepository.getByUsername(loginInfo.getUsername());
@@ -52,14 +49,14 @@ public class AuthService {
             throw new NotAuthorizedException();
 
         // Return JsonToken
-        return jsonWebToken.sign(new CookieDto(user));
+        return user;
     }
 
     /**
      * Registers a user and returns json web token;
      * @param user The user to register
      */
-    public String registerUser(User user) throws CreationFailedException, ItemHasNonNullIdException, UsernameAlreadyExistsException {
+    public User registerUser(User user) throws CreationFailedException, ItemHasNonNullIdException, UsernameAlreadyExistsException {
         if(user.getId() != null)
             throw new ItemHasNonNullIdException();
 
@@ -68,7 +65,6 @@ public class AuthService {
             throw new UsernameAlreadyExistsException();
 
         user.setPassword(bCryptHash.hash(user.getPassword()));
-        User createdUser = userRepository.create(user);
-        return jsonWebToken.sign(new CookieDto(createdUser));
+        return userRepository.create(user);
     }
 }
