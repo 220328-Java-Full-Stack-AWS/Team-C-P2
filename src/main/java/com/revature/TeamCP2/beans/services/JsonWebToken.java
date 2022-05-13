@@ -23,18 +23,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class JsonWebToken {
 
-    private final Algorithm algorithm;
-    private final JWTVerifier verifier;
-    private final ObjectMapper objectMapper;
+    private Algorithm algorithm;
+    private JWTVerifier verifier;
+    private ObjectMapper objectMapper;
+    @Value("${secret}")
+    private String secret;
 
-    @Autowired
-    public JsonWebToken(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
-        String secret = "SqAwBcH9Xa0KdGam";
-        algorithm =  Algorithm.HMAC512(secret);
 
-        verifier = JWT.require(algorithm)
-                .build();
+    public JsonWebToken() {
     }
 
     /**
@@ -70,5 +66,13 @@ public class JsonWebToken {
         }
     }
 
+    @Autowired
+    public void setConfig(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+        algorithm =  Algorithm.HMAC512(secret);
+
+        verifier = JWT.require(algorithm)
+                .build();
+    }
 
 }
