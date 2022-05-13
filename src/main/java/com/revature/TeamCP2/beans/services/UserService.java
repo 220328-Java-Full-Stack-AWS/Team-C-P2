@@ -1,7 +1,7 @@
 /**
  * Author(s): @Brandon Le
  * Contributor(s):
- * Purpose: UserService provides implementations to persist or retrieve user objects.
+ * Purpose: UserService provides implementations to persist or retrieve User entities.
  *
  */
 
@@ -28,14 +28,16 @@ public class UserService {
     private final AuthService authService;
     private final UserAddressRepository userAddressRepository;
     private final PaymentRepository paymentRepository;
+    private final CartService cartService;
 
     @Autowired
-    public UserService(UserRepository userRepository, BCryptHash bCrypt, AuthService authService, UserAddressRepository userAddressRepository, PaymentRepository paymentRepository) {
+    public UserService(UserRepository userRepository, BCryptHash bCrypt, AuthService authService, UserAddressRepository userAddressRepository, PaymentRepository paymentRepository, CartService cartService) {
         this.userRepository = userRepository;
         this.authService = authService;
         this.bCrypt = bCrypt;
         this.userAddressRepository = userAddressRepository;
         this.paymentRepository = paymentRepository;
+        this.cartService = cartService;
     }
 
     public User create(User user) throws CreationFailedException, ItemHasNonNullIdException, UsernameAlreadyExistsException {
@@ -45,6 +47,7 @@ public class UserService {
 
         user.setRole(Role.USER);
         user.setPassword(bCrypt.hash(user.getPassword()));
+        cartService.createCart(user);
         return userRepository.create(user);
     }
 

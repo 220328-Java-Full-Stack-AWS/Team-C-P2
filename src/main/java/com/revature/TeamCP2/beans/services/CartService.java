@@ -1,5 +1,6 @@
 /**
  Author: Steven Dowd
+ Contributor(s): @Brandon Le
  Purpose: Cart Service
  */
 
@@ -9,6 +10,8 @@ import com.revature.TeamCP2.beans.repositories.CartItemRepository;
 import com.revature.TeamCP2.beans.repositories.CartRepository;
 import com.revature.TeamCP2.entities.Cart;
 import com.revature.TeamCP2.entities.CartItem;
+import com.revature.TeamCP2.entities.User;
+import com.revature.TeamCP2.exceptions.ItemHasNoIdException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,32 +22,37 @@ import java.util.Optional;
 public class CartService {
 
     private final CartRepository cartRepository;
-    private final CartItemRepository cartItemRepository;
+    private final CartItemService cartItemService;
 
     @Autowired
-    public CartService(CartRepository cartRepository, CartItemRepository cartItemRepository) {
+    public CartService(CartRepository cartRepository, CartItemService cartItemService) {
         this.cartRepository = cartRepository;
-        this.cartItemRepository = cartItemRepository;
+        this.cartItemService = cartItemService;
     }
 
-    public Cart createCart(Cart cart) {
+    //@BL
+    //Creates cart and assign to user upon creation
+    public Cart createCart(User user) {
+        Cart cart = new Cart();
+        cart.setUserId(user);
         return cartRepository.create(cart);
     }
 
-    public void addCartItem(CartItem cartItem) {
-        cartItemRepository.create(cartItem);
+    public Cart addCartItem(CartItem cartItem) {
+        cartItemService.createCartItem(cartItem);
+        return cartItem.getCart();
     }
 
+    public Cart removeCartItem(CartItem cartItem) throws ItemHasNoIdException {
+        cartItemService.delete(cartItem);
+        return cartItem.getCart();
+    }
 
-    public List<CartItem> getAllCartItems() {
-        return cartItemRepository.getAll();
+    public List<CartItem> getAllCartItems(Cart cart) {
+        return cartItemService.getAllCartItemsByCart(cart);
     }
     public Optional<Cart> getCartbyId(int id) {
         return cartRepository.getById(id);
-    }
-
-    public void deleteCartItem(CartItem cartItem) {
-        cartItemRepository.delete(cartItem);
     }
 
     public void deleteCart(Cart cart) {
@@ -55,7 +63,4 @@ public class CartService {
         return cartRepository.update(cart);
     }
 
-    public CartItem updateCartItem(CartItem cartItem) {
-        return cartItemRepository.update(cartItem);
-    }
 }
