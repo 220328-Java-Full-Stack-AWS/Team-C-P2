@@ -10,6 +10,7 @@ package com.revature.TeamCP2.beans.repositories;
 
 
 import com.revature.TeamCP2.beans.services.ConnectionManager;
+import com.revature.TeamCP2.entities.Cart;
 import com.revature.TeamCP2.entities.Order;
 import com.revature.TeamCP2.exceptions.*;
 
@@ -42,6 +43,7 @@ public class OrderRepository extends AbstractHibernateRepo<Order> {
         session.save(order);
         // commit transaction and return saved order
         tran.commit();
+
         return order;
     }
 

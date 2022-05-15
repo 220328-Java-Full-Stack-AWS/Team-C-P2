@@ -5,9 +5,11 @@
  */
 package com.revature.TeamCP2.beans.services;
 
+import com.revature.TeamCP2.beans.repositories.CartRepository;
 import com.revature.TeamCP2.beans.repositories.UserRepository;
 import com.revature.TeamCP2.dtos.CookieDto;
 import com.revature.TeamCP2.dtos.LoginDto;
+import com.revature.TeamCP2.entities.Cart;
 import com.revature.TeamCP2.entities.User;
 import com.revature.TeamCP2.exceptions.CreationFailedException;
 import com.revature.TeamCP2.exceptions.ItemHasNonNullIdException;
@@ -25,12 +27,14 @@ public class AuthService {
     BCryptHash bCryptHash;
     JsonWebToken jsonWebToken;
     UserRepository userRepository;
+    CartRepository cartRepository;
 
     @Autowired
-    public AuthService(BCryptHash bCryptHash, JsonWebToken jsonWebToken, UserRepository userRepository) {
+    public AuthService(BCryptHash bCryptHash, JsonWebToken jsonWebToken, UserRepository userRepository, CartRepository cartRepository) {
         this.bCryptHash = bCryptHash;
         this.jsonWebToken = jsonWebToken;
         this.userRepository = userRepository;
+        this.cartRepository = cartRepository;
     }
 
     /**
@@ -67,6 +71,10 @@ public class AuthService {
 
         user.setRole(Role.USER);
         user.setPassword(bCryptHash.hash(user.getPassword()));
+        Cart cart = new Cart();
+        cart.setUser(user);
+        user.setActiveCartID(cartRepository.create(cart).getId());
+
         return userRepository.create(user);
     }
 

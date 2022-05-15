@@ -11,10 +11,7 @@ import com.revature.TeamCP2.beans.services.AuthService;
 import com.revature.TeamCP2.beans.services.BCryptHash;
 import com.revature.TeamCP2.beans.services.OrderService;
 import com.revature.TeamCP2.beans.services.UserService;
-import com.revature.TeamCP2.dtos.CookieDto;
-import com.revature.TeamCP2.dtos.HttpResponseDto;
-import com.revature.TeamCP2.dtos.UpdateAddressDto;
-import com.revature.TeamCP2.dtos.UpdatePaymentDto;
+import com.revature.TeamCP2.dtos.*;
 import com.revature.TeamCP2.entities.Payment;
 import com.revature.TeamCP2.entities.User;
 import com.revature.TeamCP2.entities.UserAddress;
@@ -110,8 +107,6 @@ public class UserController {
             return new HttpResponseDto(200, "Success", orderService.getByUserId(id));
         }
     }
-
-
 
     @PutMapping("/update/password")
     @ResponseStatus(HttpStatus.OK)
@@ -214,38 +209,10 @@ public class UserController {
         }
     }
 
-    //post a new user - auto generate the ID
-    @PostMapping()
+    @PostMapping("cart/checkout")
     @ResponseStatus(HttpStatus.OK)
-    public User persistNewUser(@RequestBody User newUser) throws CreationFailedException, ItemHasNonNullIdException {
-        try {
-            return userService.create(newUser);
-        } catch (UsernameAlreadyExistsException e) {
-            e.printStackTrace();
-            System.out.println("Failed to create, username: " + newUser.getUsername() + ", already exists");
-        }
+    public HttpResponseDto createOrder (@RequestBody CartDto cart, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws NotAuthorizedException, ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException {
+
         return null;
     }
-
-/*
-    //copied from kyle's example
-    @GetMapping("/auth")
-    @ResponseStatus(HttpStatus.OK)
-    public User authorizeUSer(@RequestBody AuthDto authDto) throws Exception {
-        return userService.authenticateUser(authDto);
-        //TODO: ResponseEntity<User> use this object to send back a different response for unauthorized
-    }
-
-    //put (update) an existing user (based on id)
-    @PutMapping
-    @ResponseStatus(HttpStatus.OK)
-    public User updateUser(@RequestBody User user) {
-        return userService.update(user);
-    }
-*/
-
-
-
-    //delete user by id
-    //TODO: add delete method.
 }
