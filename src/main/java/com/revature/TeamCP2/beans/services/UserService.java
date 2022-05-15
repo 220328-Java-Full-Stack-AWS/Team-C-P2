@@ -29,15 +29,17 @@ public class UserService {
     private final UserAddressRepository userAddressRepository;
     private final PaymentRepository paymentRepository;
     private final CartService cartService;
+    private final BCryptHash bCryptHash;
 
     @Autowired
-    public UserService(UserRepository userRepository, BCryptHash bCrypt, AuthService authService, UserAddressRepository userAddressRepository, PaymentRepository paymentRepository, CartService cartService) {
+    public UserService(UserRepository userRepository, BCryptHash bCrypt, AuthService authService, UserAddressRepository userAddressRepository, PaymentRepository paymentRepository, CartService cartService, BCryptHash bCryptHash) {
         this.userRepository = userRepository;
         this.authService = authService;
         this.bCrypt = bCrypt;
         this.userAddressRepository = userAddressRepository;
         this.paymentRepository = paymentRepository;
         this.cartService = cartService;
+        this.bCryptHash = bCryptHash;
     }
 
     public User create(User user) throws CreationFailedException, ItemHasNonNullIdException, UsernameAlreadyExistsException {
@@ -65,12 +67,12 @@ public class UserService {
 
     //needs a bit more logic regarding exceptions
     public User updatePassword (User user, String currentPassword, String newPassword) throws ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException {
-        if (user.getPassword().equals(currentPassword)) {
-            user.setPassword(newPassword);
-            return userRepository.update(user);
+        if (!bCryptHash.verify(currentPassword, user.getPassword())) {
+            return null;
         }
         else {
-            return null;
+            user.setPassword(bCryptHash.hash(newPassword));
+            return user;
         }
     }
 

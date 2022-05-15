@@ -1,19 +1,27 @@
 /**
- * UserController is a test file still in progress to see the interactions between front end requests and responses.
+ * Author(s): @Brandon Le, @Arun Mohan
+ * Contributor(s):
+ * Purpose: UserController processes requests from the front end and interacts with services to formulate a response.
  */
 
 package com.revature.TeamCP2.beans.controllers;
 
+import com.revature.TeamCP2.beans.services.AuthService;
+import com.revature.TeamCP2.beans.services.BCryptHash;
+import com.revature.TeamCP2.beans.services.OrderService;
 import com.revature.TeamCP2.beans.services.UserService;
+import com.revature.TeamCP2.dtos.CookieDto;
+import com.revature.TeamCP2.dtos.HttpResponseDto;
 import com.revature.TeamCP2.entities.User;
-import com.revature.TeamCP2.exceptions.CreationFailedException;
-import com.revature.TeamCP2.exceptions.ItemDoesNotExistException;
-import com.revature.TeamCP2.exceptions.ItemHasNonNullIdException;
-import com.revature.TeamCP2.exceptions.UsernameAlreadyExistsException;
+import com.revature.TeamCP2.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,10 +29,15 @@ import java.util.Optional;
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
+    private final AuthService authService;
+    private final OrderService orderService;
+
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, AuthService authService, OrderService orderService) {
         this.userService = userService;
+        this.authService = authService;
+        this.orderService = orderService;
     }
 
 
@@ -53,7 +66,67 @@ public class UserController {
         return null;
     }
 
+    @GetMapping("/{id}/profile")
+    @ResponseStatus(HttpStatus.OK)
+    public HttpResponseDto getUserProfile (HttpServletResponse res, @PathVariable int id, @CookieValue(name = "user_session", required = false) String userSession) throws NotAuthorizedException, ItemDoesNotExistException {
+        if(userSession == null){
+            res.setStatus(400);
+            return new HttpResponseDto(400, "Failed. You are not logged in", null);
+        }
 
+        CookieDto cookie = authService.getCookieDto(userSession);
+
+        if (cookie.getUserId() != id) {
+            res.setStatus(403);
+            return new HttpResponseDto(403, "Forbidden access", null);
+        }
+        else {
+            res.setStatus(200);
+            return new HttpResponseDto(200, "Success", userService.getById(id).get());
+        }
+    }
+
+    @GetMapping("/{id}/orders")
+    @ResponseStatus(HttpStatus.OK)
+    public HttpResponseDto getAllOrders (HttpServletResponse res, @PathVariable int id, @CookieValue(name = "user_session", required = false) String userSession) throws NotAuthorizedException, ItemDoesNotExistException {
+        if(userSession == null){
+            res.setStatus(400);
+            return new HttpResponseDto(400, "Failed. You are not logged in", null);
+        }
+
+        CookieDto cookie = authService.getCookieDto(userSession);
+
+        if (cookie.getUserId() != id) {
+            res.setStatus(403);
+            return new HttpResponseDto(403, "Forbidden access", null);
+        }
+        else {
+            res.setStatus(200);
+            return new HttpResponseDto(200, "Success", orderService.getByUserId(id));
+        }
+    }
+
+
+
+    @PutMapping("/update/password")
+    @ResponseStatus(HttpStatus.OK)
+    public HttpResponseDto updatePassword (HttpServletResponse res, HttpServletRequest req, @CookieValue(name = "user_session", required = false) String userSession) throws NotAuthorizedException, ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException, IOException {
+        Integer userID = req.getIntHeader("id");
+        String currentPassword = req.getHeader("currentPassword");
+        String newPassword = req.getHeader("newPassword");
+
+        User user = userService.getById(userID).get();
+
+        if (userService.updatePassword(user, currentPassword, newPassword) == null) {
+            res.setStatus(401);
+            return new HttpResponseDto(401, "Unauthorized. Incorrect password.", user);
+        }
+        else {
+            res.setStatus(200);
+            res.sendRedirect("logout.html");
+            return new HttpResponseDto(200, "Successfully changed password.", user);
+        }
+    }
 
 
     //post a new user - auto generate the ID
