@@ -32,6 +32,9 @@ public class User implements Entity {
     @Column(name = "role")
     private Role role;
 
+    @Column(name = "activeCartID")
+    Integer activeCartID;
+
     @OneToOne()
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private UserAddress userAddresses;
@@ -53,6 +56,26 @@ public class User implements Entity {
     private Collection<Order> orderById;
 
 
+    public User() {
+    }
+
+    public User(Integer id, String username, String password, String firstName, String lastName, String email, Role role, Integer activeCartID, UserAddress userAddresses, Payment payments, String dateCreated, Date dateModifies, Collection<Cart> cartsById, Collection<Order> orderById) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.role = role;
+        this.activeCartID = activeCartID;
+        this.userAddresses = userAddresses;
+        this.payments = payments;
+        this.dateCreated = dateCreated;
+        this.dateModifies = dateModifies;
+        this.cartsById = cartsById;
+        this.orderById = orderById;
+    }
+
     //---------------------------------------------
     //User one to many relationship to Payment
     public Payment getPayments() {
@@ -64,6 +87,14 @@ public class User implements Entity {
     }
 //----------------------------------------------------------------------
 
+
+    public Integer getActiveCartID() {
+        return activeCartID;
+    }
+
+    public void setActiveCartID(Integer activeCartID) {
+        this.activeCartID = activeCartID;
+    }
 
     public Integer getId() {
         return id;
