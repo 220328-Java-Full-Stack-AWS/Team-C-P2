@@ -71,9 +71,6 @@ public class AuthService {
 
         user.setRole(Role.USER);
         user.setPassword(bCryptHash.hash(user.getPassword()));
-        Cart cart = new Cart();
-        cart.setUser(user);
-        user.setActiveCartID(cartRepository.create(cart).getId());
 
         return userRepository.create(user);
     }

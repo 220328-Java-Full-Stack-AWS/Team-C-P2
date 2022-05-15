@@ -7,14 +7,9 @@
 package com.revature.TeamCP2.beans.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.revature.TeamCP2.beans.services.AuthService;
-import com.revature.TeamCP2.beans.services.BCryptHash;
-import com.revature.TeamCP2.beans.services.OrderService;
-import com.revature.TeamCP2.beans.services.UserService;
+import com.revature.TeamCP2.beans.services.*;
 import com.revature.TeamCP2.dtos.*;
-import com.revature.TeamCP2.entities.Payment;
-import com.revature.TeamCP2.entities.User;
-import com.revature.TeamCP2.entities.UserAddress;
+import com.revature.TeamCP2.entities.*;
 import com.revature.TeamCP2.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,13 +28,17 @@ public class UserController {
     private final UserService userService;
     private final AuthService authService;
     private final OrderService orderService;
+    private final ProductService productService;
+    private final CartService cartService;
 
 
     @Autowired
-    public UserController(UserService userService, AuthService authService, OrderService orderService) {
+    public UserController(UserService userService, AuthService authService, OrderService orderService, CartService cartService, ProductService productService) {
         this.userService = userService;
         this.authService = authService;
         this.orderService = orderService;
+        this.cartService = cartService;
+        this.productService = productService;
     }
 
 
@@ -209,10 +208,64 @@ public class UserController {
         }
     }
 
-    @PostMapping("cart/checkout")
+    @PostMapping("/cart/checkout")
     @ResponseStatus(HttpStatus.OK)
-    public HttpResponseDto createOrder (@RequestBody CartDto cart, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws NotAuthorizedException, ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException {
+    public HttpResponseDto createOrder (@RequestBody CartDto cartDto, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws NotAuthorizedException, ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException, CreationFailedException, ItemHasNonNullIdException {
 
+        if(userSession == null){
+            res.setStatus(400);
+            return new HttpResponseDto(400, "Failed. You are not logged in", null);
+        }
+        Order order = new Order();
+        if (cartService.getCartbyId(userService.getById(cartDto.getUserId()).get().getActiveCartID()).isPresent()) {
+            Cart cart = cartService.getCartbyId(userService.getById(cartDto.getUserId()).get().getActiveCartID()).get();
+            order.setCart(cart);
+            order.setDateCreated(cartDto.getDateCreated());
+            orderService.createOrder(order);
+            res.setStatus(200);
+            return new HttpResponseDto(200, "Successfully checked out.", order);
+        }
+
+        return new HttpResponseDto(404, "Order creation failed. User not found.", null);
+
+    }
+
+    @GetMapping("/cart")
+    @ResponseStatus(HttpStatus.OK)
+    public HttpResponseDto viewCart (@RequestHeader Integer userId, @RequestHeader String dateCreated, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) {
+
+        if(userSession == null){
+            res.setStatus(400);
+            return new HttpResponseDto(400, "Failed. You are not logged in", null);
+        }
+    }
+
+    @PostMapping("/cart/add")
+    @ResponseStatus(HttpStatus.OK)
+    public HttpResponseDto addToCart (@RequestBody CartItemDto cartItemDto, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws ItemDoesNotExistException {
+
+        if(userSession == null){
+            res.setStatus(400);
+            return new HttpResponseDto(400, "Failed. You are not logged in", null);
+        }
+        if (userService.getById(cartItemDto.getUserId()).isPresent() && productService.getById(cartItemDto.getProductId()).isPresent()) {
+            User user = userService.getById(cartItemDto.getUserId()).get();
+            Cart cart = cartService.getCartbyId(user.getActiveCartID()).get();
+            CartItem cartItem = new CartItem(cart, productService.getById(cartItemDto.getProductId()).get(), cartItemDto.getQuantity());
+
+            cartService.addCartItem(cartItem);
+            res.setStatus(200);
+            return new HttpResponseDto(200, "Successfully added item to cart.", cartItem);
+
+        }
+
+        return new HttpResponseDto(404, "Add to cart failed. User or product not found", null);
+
+    }
+
+    @GetMapping("/cart/remove")
+    @ResponseStatus(HttpStatus.OK)
+    public HttpResponseDto removeFromCart () {
         return null;
     }
 }
