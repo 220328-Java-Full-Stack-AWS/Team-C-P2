@@ -7,8 +7,12 @@
 
 package com.revature.TeamCP2.beans.services;
 
+import com.revature.TeamCP2.beans.repositories.CartRepository;
 import com.revature.TeamCP2.beans.repositories.OrderRepository;
+import com.revature.TeamCP2.beans.repositories.UserRepository;
+import com.revature.TeamCP2.entities.Cart;
 import com.revature.TeamCP2.entities.Order;
+import com.revature.TeamCP2.entities.User;
 import com.revature.TeamCP2.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,15 +25,26 @@ import java.util.Optional;
 public class OrderService {
 
     private final OrderRepository orderRepository;
+    private final CartRepository cartRepository;
+    private final UserRepository userRepository;
 
     // constructor
 
     @Autowired
-    public OrderService (OrderRepository orderRepository) {
+    public OrderService (OrderRepository orderRepository, CartRepository cartRepository, UserRepository userRepository) {
         this.orderRepository = orderRepository;
+        this.cartRepository = cartRepository;
+        this.userRepository = userRepository;
     }
 
-    public Order createOrder(Order order) throws CreationFailedException, ItemHasNonNullIdException {
+    public Order createOrder(Order order) throws CreationFailedException, ItemHasNonNullIdException, ItemDoesNotExistException {
+
+
+        User user = userRepository.getById(order.getCart().getUser().getId()).get();
+        Cart cart = new Cart();
+        cart.setUser(user);
+        user.setActiveCartID(cartRepository.create(cart).getId());
+
         return orderRepository.create(order);
     }
 
