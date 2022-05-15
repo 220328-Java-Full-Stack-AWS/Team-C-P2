@@ -205,14 +205,13 @@ public class UserController {
             return new HttpResponseDto(200, "Successfully updated payment.", user);
         }
     }
-}
 
 
     @PostMapping("/cart/checkout")
     @ResponseStatus(HttpStatus.OK)
-    public HttpResponseDto createOrder (@RequestBody CartDto cartDto, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws NotAuthorizedException, ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException, CreationFailedException, ItemHasNonNullIdException {
+    public HttpResponseDto createOrder(@RequestBody CartDto cartDto, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws NotAuthorizedException, ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException, CreationFailedException, ItemHasNonNullIdException {
 
-        if(userSession == null){
+        if (userSession == null) {
             res.setStatus(400);
             return new HttpResponseDto(400, "Failed. You are not logged in", null);
         }
@@ -232,9 +231,9 @@ public class UserController {
 
     @GetMapping("/cart")
     @ResponseStatus(HttpStatus.OK)
-    public HttpResponseDto viewCart (@RequestHeader Integer userId, @RequestHeader String dateCreated, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws ItemDoesNotExistException {
+    public HttpResponseDto viewCart(@RequestHeader Integer userId, @RequestHeader String dateCreated, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws ItemDoesNotExistException {
 
-        if(userSession == null){
+        if (userSession == null) {
             res.setStatus(400);
             return new HttpResponseDto(400, "Failed. You are not logged in", null);
         }
@@ -251,9 +250,9 @@ public class UserController {
 
     @PostMapping("/cart/add")
     @ResponseStatus(HttpStatus.OK)
-    public HttpResponseDto addToCart (@RequestBody CartItemDto cartItemDto, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws ItemDoesNotExistException {
+    public HttpResponseDto addToCart(@RequestBody CartItemDto cartItemDto, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws ItemDoesNotExistException {
 
-        if(userSession == null){
+        if (userSession == null) {
             res.setStatus(400);
             return new HttpResponseDto(400, "Failed. You are not logged in", null);
         }
@@ -274,7 +273,7 @@ public class UserController {
 
     @GetMapping("/cart/remove")
     @ResponseStatus(HttpStatus.OK)
-    public HttpResponseDto removeFromCart () {
+    public HttpResponseDto removeFromCart() {
         return null;
     }
 }
