@@ -1,19 +1,32 @@
 /**
- * UserController is a test file still in progress to see the interactions between front end requests and responses.
+ * Author(s): @Brandon Le, @Arun Mohan
+ * Contributor(s):
+ * Purpose: UserController processes requests from the front end and interacts with services to formulate a response.
  */
 
 package com.revature.TeamCP2.beans.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.TeamCP2.beans.services.AuthService;
+import com.revature.TeamCP2.beans.services.BCryptHash;
+import com.revature.TeamCP2.beans.services.OrderService;
 import com.revature.TeamCP2.beans.services.UserService;
+import com.revature.TeamCP2.dtos.CookieDto;
+import com.revature.TeamCP2.dtos.HttpResponseDto;
+import com.revature.TeamCP2.dtos.UpdateAddressDto;
+import com.revature.TeamCP2.dtos.UpdatePaymentDto;
+import com.revature.TeamCP2.entities.Payment;
 import com.revature.TeamCP2.entities.User;
-import com.revature.TeamCP2.exceptions.CreationFailedException;
-import com.revature.TeamCP2.exceptions.ItemDoesNotExistException;
-import com.revature.TeamCP2.exceptions.ItemHasNonNullIdException;
-import com.revature.TeamCP2.exceptions.UsernameAlreadyExistsException;
+import com.revature.TeamCP2.entities.UserAddress;
+import com.revature.TeamCP2.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,10 +36,15 @@ import java.util.Optional;
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
+    private final AuthService authService;
+    private final OrderService orderService;
+
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, AuthService authService, OrderService orderService) {
         this.userService = userService;
+        this.authService = authService;
+        this.orderService = orderService;
     }
 
 
@@ -55,38 +73,139 @@ public class UserController {
         return null;
     }
 
-
-    //post a new user - auto generate the ID
-    @PostMapping()
+    @GetMapping("/{id}/profile")
     @ResponseStatus(HttpStatus.OK)
-    public User persistNewUser(@RequestBody User newUser) throws CreationFailedException, ItemHasNonNullIdException {
-        try {
-            return userService.create(newUser);
-        } catch (UsernameAlreadyExistsException e) {
-            e.printStackTrace();
-            System.out.println("Failed to create, username: " + newUser.getUsername() + ", already exists");
+    public HttpResponseDto getUserProfile(HttpServletResponse res, @PathVariable int id, @CookieValue(name = "user_session", required = false) String userSession) throws NotAuthorizedException, ItemDoesNotExistException {
+        if (userSession == null) {
+            res.setStatus(400);
+            return new HttpResponseDto(400, "Failed. You are not logged in", null);
         }
-        return null;
+
+        CookieDto cookie = authService.getCookieDto(userSession);
+
+        if (cookie.getUserId() != id) {
+            res.setStatus(403);
+            return new HttpResponseDto(403, "Forbidden access", null);
+        } else {
+            res.setStatus(200);
+            return new HttpResponseDto(200, "Success", userService.getById(id).get());
+        }
     }
 
-/*
-    //copied from kyle's example
-    @GetMapping("/auth")
+    @GetMapping("/{id}/orders")
     @ResponseStatus(HttpStatus.OK)
-    public User authorizeUSer(@RequestBody AuthDto authDto) throws Exception {
-        return userService.authenticateUser(authDto);
-        //TODO: ResponseEntity<User> use this object to send back a different response for unauthorized
+    public HttpResponseDto getAllOrders(HttpServletResponse res, @PathVariable int id, @CookieValue(name = "user_session", required = false) String userSession) throws NotAuthorizedException, ItemDoesNotExistException {
+        if (userSession == null) {
+            res.setStatus(400);
+            return new HttpResponseDto(400, "Failed. You are not logged in", null);
+        }
+
+        CookieDto cookie = authService.getCookieDto(userSession);
+
+        if (cookie.getUserId() != id) {
+            res.setStatus(403);
+            return new HttpResponseDto(403, "Forbidden access", null);
+        } else {
+            res.setStatus(200);
+            return new HttpResponseDto(200, "Success", orderService.getByUserId(id));
+        }
     }
 
-    //put (update) an existing user (based on id)
-    @PutMapping
+
+    @PutMapping("/update/password")
     @ResponseStatus(HttpStatus.OK)
-    public User updateUser(@RequestBody User user) {
-        return userService.update(user);
+    public HttpResponseDto updatePassword(HttpServletResponse res, HttpServletRequest req, @CookieValue(name = "user_session", required = false) String userSession) throws NotAuthorizedException, ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException, IOException {
+        Integer userID = req.getIntHeader("id");
+        String currentPassword = req.getHeader("currentPassword");
+        String newPassword = req.getHeader("newPassword");
+
+        User user = userService.getById(userID).get();
+
+        if (userService.updatePassword(user, currentPassword, newPassword) == null) {
+            res.setStatus(401);
+            return new HttpResponseDto(401, "Unauthorized. Incorrect password.", user);
+        } else {
+            res.setStatus(200);
+
+            //sets cookie to null
+            Cookie cookie = new Cookie("user_session", "");
+            cookie.setMaxAge(0);
+            cookie.setPath("/");
+            cookie.setHttpOnly(true);
+            res.addCookie(cookie);
+
+            return new HttpResponseDto(200, "Successfully changed password.", user);
+        }
     }
-*/
 
+    @PutMapping("/update/address")
+    @ResponseStatus(HttpStatus.OK)
+    public HttpResponseDto updateAddress(@RequestBody UpdateAddressDto newAddress, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws NotAuthorizedException, ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException {
+        if (userSession == null) {
+            res.setStatus(400);
+            return new HttpResponseDto(400, "Failed. You are not logged in", null);
+        }
 
-    //delete user by id
-    //TODO: add delete method.
+        CookieDto cookie = authService.getCookieDto(userSession);
+        System.out.println(newAddress);
+        User user = userService.getById(newAddress.getUserID()).get();
+        UserAddress address = new UserAddress();
+        address.setAddressLine1(newAddress.getAddressLine1());
+        address.setAddressLine2(newAddress.getAddressLine2());
+        address.setCity(newAddress.getCity());
+        address.setPhoneNumber(newAddress.getPhoneNumber());
+        address.setPostalCode(newAddress.getPostalCode());
+        address.setCountry(newAddress.getCountry());
+
+        if (cookie.getUserId() != user.getId()) {
+            res.setStatus(403);
+            return new HttpResponseDto(403, "Forbidden access", null);
+        } else {
+            if (user.getUserAddresses() == null) {
+                System.out.println("Address: " + address);
+                user = userService.createUserAddress(user, address);
+            } else {
+                address.setId(user.getUserAddresses().getId());
+                user = userService.updateUserAddress(user, address);
+            }
+
+            res.setStatus(200);
+            return new HttpResponseDto(200, "Successfully updated address.", user);
+        }
+    }
+
+    @PutMapping("/update/payment")
+    @ResponseStatus(HttpStatus.OK)
+    public HttpResponseDto updatePayment(@RequestBody UpdatePaymentDto newPayment, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws NotAuthorizedException, ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException {
+        if (userSession == null) {
+            res.setStatus(400);
+            return new HttpResponseDto(400, "Failed. You are not logged in", null);
+        }
+
+        CookieDto cookie = authService.getCookieDto(userSession);
+
+        User user = userService.getById(newPayment.getUserID()).get();
+        Payment payment = new Payment();
+        payment.setCardNumber(newPayment.getCardNumber());
+        payment.setIssuer(newPayment.getIssuer());
+        payment.setNetwork(newPayment.getNetwork());
+        payment.setExpirationDate(newPayment.getExpDate());
+        payment.setSecurityCode(newPayment.getSecurityCode());
+
+        if (cookie.getUserId() != user.getId()) {
+            res.setStatus(403);
+            return new HttpResponseDto(403, "Forbidden access", null);
+        } else {
+            if (user.getPayments() == null) {
+                user = userService.createUserPayment(user, payment);
+            } else {
+                payment.setId(user.getPayments().getId());
+                user = userService.updateUserPayment(user, payment);
+            }
+
+            res.setStatus(200);
+            return new HttpResponseDto(200, "Successfully updated payment.", user);
+        }
+    }
 }
+
