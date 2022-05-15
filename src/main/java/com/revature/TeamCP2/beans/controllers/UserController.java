@@ -30,15 +30,17 @@ public class UserController {
     private final OrderService orderService;
     private final ProductService productService;
     private final CartService cartService;
+    private final CartItemService cartItemService;
 
 
     @Autowired
-    public UserController(UserService userService, AuthService authService, OrderService orderService, CartService cartService, ProductService productService) {
+    public UserController(UserService userService, AuthService authService, OrderService orderService, CartService cartService, ProductService productService, CartItemService cartItemService) {
         this.userService = userService;
         this.authService = authService;
         this.orderService = orderService;
         this.cartService = cartService;
         this.productService = productService;
+        this.cartItemService = cartItemService;
     }
 
 
@@ -232,12 +234,21 @@ public class UserController {
 
     @GetMapping("/cart")
     @ResponseStatus(HttpStatus.OK)
-    public HttpResponseDto viewCart (@RequestHeader Integer userId, @RequestHeader String dateCreated, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) {
+    public HttpResponseDto viewCart (@RequestHeader Integer userId, @RequestHeader String dateCreated, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws ItemDoesNotExistException {
 
         if(userSession == null){
             res.setStatus(400);
             return new HttpResponseDto(400, "Failed. You are not logged in", null);
         }
+        if (userService.getById(userId).isPresent()) {
+            User user = userService.getById(userId).get();
+            List<CartItem> cartItemList = cartItemService.getAllCartItemsByCart(cartService.getCartbyId(user.getActiveCartID()).get());
+
+            res.setStatus(200);
+            return new HttpResponseDto(200, "Success. Viewing Cart.", cartItemList);
+        }
+
+        return new HttpResponseDto(404, "Failed. User not found.", null);
     }
 
     @PostMapping("/cart/add")
