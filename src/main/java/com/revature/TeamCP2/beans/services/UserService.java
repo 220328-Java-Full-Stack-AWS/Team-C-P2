@@ -78,23 +78,22 @@ public class UserService {
 
     public User createUserAddress(User user, UserAddress address) throws ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException {
         user.setUserAddresses(userAddressRepository.create(address));
-        return userRepository.update(user);
+        return user;
     }
 
     public User createUserPayment(User user, Payment payment) {
-        payment.setUser(user);
-        paymentRepository.create(payment);
+        user.setPayments(paymentRepository.create(payment));
         return user;
     }
 
     public User updateUserAddress(User user, UserAddress address) throws ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException {
-        user.setUserAddresses(userAddressRepository.update(address));
-        return userRepository.update(user);
+        userAddressRepository.update(address);
+        return user;
     }
 
-    public User updateUserPayment(Payment payment) {
+    public User updateUserPayment(User user, Payment payment) {
         paymentRepository.update(payment);
-        return payment.getUser();
+        return user;
     }
 
     public List<User> getAllUsers() {

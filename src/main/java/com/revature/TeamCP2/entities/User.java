@@ -32,12 +32,14 @@ public class User implements Entity {
     @Column(name = "role")
     private Role role;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne()
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
     private UserAddress userAddresses;
 
     //User one to many relationship with payment
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Payment> payments = new ArrayList<>();
+    @OneToOne()
+    @JoinColumn(name = "payment_id", referencedColumnName = "id")
+    private Payment payments;
     @Basic
     @Column(name = "date_created",updatable = false)
     private String dateCreated;
@@ -49,17 +51,18 @@ public class User implements Entity {
     private Collection<Cart> cartsById;
     @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
     private Collection<Order> orderById;
+
+
     //---------------------------------------------
     //User one to many relationship to Payment
-    public List<Payment> getPayments() {
-        return Collections.unmodifiableList(payments);
+    public Payment getPayments() {
+        return payments;
     }
 
-    public void addPayment(Payment payment) {
-        payments.add(payment);
+    public void setPayments(Payment payments) {
+        this.payments = payments;
     }
-
-   //----------------------------------------------------------------------
+//----------------------------------------------------------------------
 
 
     public Integer getId() {

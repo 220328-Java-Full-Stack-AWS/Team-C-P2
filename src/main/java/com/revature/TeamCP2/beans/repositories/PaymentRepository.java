@@ -77,15 +77,16 @@ public class PaymentRepository extends AbstractHibernateRepo<Payment> {
     @Override
     public Payment update(Payment payment) {
         Transaction transaction = session.beginTransaction();
-        Optional<Payment> updatePayment = (Optional<Payment>)
-                session.get(String.valueOf(Payment.class), payment.getId());
 
-        updatePayment.get().setUser(payment.getUser());
-        updatePayment.get().setIssuer(payment.getIssuer());
-        updatePayment.get().setNetwork(payment.getNetwork());
-        updatePayment.get().setCardNumber(payment.getCardNumber());
-        updatePayment.get().setSecurityCode(payment.getSecurityCode());
-        updatePayment.get().setExpirationDate(payment.getExpirationDate());
+        Payment updatePayment = session.get(Payment.class, payment.getId());
+
+        updatePayment.setIssuer(payment.getIssuer());
+        updatePayment.setNetwork(payment.getNetwork());
+        updatePayment.setCardNumber(payment.getCardNumber());
+        updatePayment.setSecurityCode(payment.getSecurityCode());
+        updatePayment.setExpirationDate(payment.getExpirationDate());
+
+        session.save(updatePayment);
 
         transaction.commit();
 

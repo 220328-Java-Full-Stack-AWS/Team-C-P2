@@ -49,7 +49,7 @@ public class OrderRepository extends AbstractHibernateRepo<Order> {
     public Order update(Order order) throws ItemHasNoIdException, ItemDoesNotExistException, UpdateFailedException {
         Transaction tran = session.beginTransaction();
         // create a new order to update db using given order model
-        Order updated = (Order) session.get(String.valueOf(Order.class), order.getId());
+        Order updated = session.get(Order.class, order.getId());
         // populate fields using given user
         updated.setCart(order.getCart());
         updated.setDateCreated(order.getDateCreated());
