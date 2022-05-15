@@ -6,10 +6,12 @@
 package com.revature.TeamCP2.beans.controllers;
 
 import com.revature.TeamCP2.beans.services.AuthService;
+import com.revature.TeamCP2.beans.services.CartService;
 import com.revature.TeamCP2.beans.services.JsonWebToken;
 import com.revature.TeamCP2.dtos.CookieDto;
 import com.revature.TeamCP2.dtos.HttpResponseDto;
 import com.revature.TeamCP2.dtos.LoginDto;
+import com.revature.TeamCP2.entities.Cart;
 import com.revature.TeamCP2.entities.User;
 import com.revature.TeamCP2.exceptions.CreationFailedException;
 import com.revature.TeamCP2.exceptions.ItemHasNonNullIdException;
@@ -26,11 +28,13 @@ import javax.servlet.http.HttpServletResponse;
 public class AuthController {
 
     AuthService authService;
+    CartService cartService;
     JsonWebToken jsonWebToken;
 
     @Autowired
-    public AuthController(AuthService authService, JsonWebToken jsonWebToken){
+    public AuthController(AuthService authService, CartService cartService, JsonWebToken jsonWebToken){
         this.authService = authService;
+        this.cartService = cartService;
         this.jsonWebToken = jsonWebToken;
     }
 
@@ -38,6 +42,10 @@ public class AuthController {
     public HttpResponseDto register(@RequestBody User user, HttpServletResponse res) {
         try {
             User registeredUser = authService.registerUser(user);
+
+            //Cart cart = new Cart();
+            //cart.setUser(user);
+            user.setActiveCartID(cartService.createCart(user).getId());
 
             String jwtCookieDto = jsonWebToken.sign(new CookieDto(registeredUser));
 
