@@ -37,7 +37,10 @@ public class OrderRepository extends AbstractHibernateRepo<Order> {
     // implement abstract class CRUD functions
 
     @Override
-    public Order create(Order order) throws ItemHasNonNullIdException, CreationFailedException {
+    public Order create(Order order) throws ItemHasNonNullIdException {
+        if(order.getId() == null)
+            throw new ItemHasNonNullIdException();
+
         Transaction tran = session.beginTransaction();
         session.save(order);
         // commit transaction and return saved order

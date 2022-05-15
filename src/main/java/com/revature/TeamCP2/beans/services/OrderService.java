@@ -29,7 +29,7 @@ public class OrderService {
         this.orderRepository = orderRepository;
     }
 
-    public Order createOrder(Order order) throws CreationFailedException, ItemHasNonNullIdException {
+    public Order createOrder(Order order) throws ItemHasNonNullIdException {
         return orderRepository.create(order);
     }
 
@@ -39,6 +39,10 @@ public class OrderService {
 
     public void deleteOrder(Order order) throws ItemDoesNotExistException, DeletionFailedException, ItemHasNoIdException {
         orderRepository.delete(order);
+    }
+
+    public void deleteOrder(Integer id) throws ItemDoesNotExistException, DeletionFailedException, ItemHasNoIdException {
+        orderRepository.deleteById(id);
     }
 
     public Optional<Order> getOrderById(Integer id) throws ItemDoesNotExistException {
