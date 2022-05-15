@@ -91,12 +91,14 @@ public class ProductController {
 
     //updateById(/{id})PUT ADMIN
     @PutMapping("/update")
-    @ResponseStatus(HttpStatus.CONTINUE)
+    @ResponseStatus(HttpStatus.OK)
     public HttpResponseDto updateById(@ModelAttribute Product updatedProduct, HttpServletResponse res) {
+
+//        return productService.update(updatedProduct);
         Product product = productService.update(updatedProduct);
 
 
-        if (product.getPrice() == updatedProduct.getPrice()) {
+        if (product.getPrice() != updatedProduct.getPrice()) {
             res.setStatus(400);
             return new HttpResponseDto(400, "Failed to updated product.", product);
         } else {
