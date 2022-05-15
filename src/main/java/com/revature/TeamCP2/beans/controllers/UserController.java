@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+
+//@RestController is a combination of @Controller and @ResponseBody
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -42,7 +44,7 @@ public class UserController {
         try {
             Optional<User> opUser = userService.getById(id);
 
-            if(!opUser.isPresent())
+            if (!opUser.isPresent())
                 throw new ItemDoesNotExistException();
 
             return opUser.get();
@@ -52,8 +54,6 @@ public class UserController {
         }
         return null;
     }
-
-
 
 
     //post a new user - auto generate the ID
@@ -85,7 +85,6 @@ public class UserController {
         return userService.update(user);
     }
 */
-
 
 
     //delete user by id
