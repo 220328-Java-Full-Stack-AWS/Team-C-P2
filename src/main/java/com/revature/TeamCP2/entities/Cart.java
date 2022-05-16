@@ -19,28 +19,18 @@ public class Cart implements Entity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
-    private List<CartItem> cartItems;
 
     @Column
     private Double total;
 
     public Cart() {
-        cartItems = new ArrayList<>();
     }
 
     public Cart(User user, Double total) {
         this.user = user;
-        this.total = total;
-    }
-
-    public Cart(User user, List<CartItem> cartItems, Double total) {
-        this.user = user;
-        this.cartItems = cartItems;
         this.total = total;
     }
 
@@ -50,27 +40,6 @@ public class Cart implements Entity {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public List<CartItem> getCartItems() {
-        return cartItems;
-    }
-
-    public void setCartItems(List<CartItem> cartItems) {
-        this.cartItems = cartItems;
-    }
-
-    public void addCartItem(CartItem cartItem) {
-        this.cartItems.add(cartItem);
-    }
-
-    public void removeCartItem(Integer id) {
-
-        for (CartItem c : this.cartItems) {
-            if (c.getId() == id) {
-                this.cartItems.remove(c);
-            }
-        }
     }
 
     public User getUser() {

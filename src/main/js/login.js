@@ -30,7 +30,7 @@ async function submitForm() {
         console.log("authToken received: ", token);//fact finding
         
         //navigate the window to the landing page
-
+        window.location.href = "../index.html";
     } 
     else if (response.status == 308) {
         alert("Username does not exist!");
