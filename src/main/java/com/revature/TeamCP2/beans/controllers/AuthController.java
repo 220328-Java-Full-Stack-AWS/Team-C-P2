@@ -69,6 +69,7 @@ public class AuthController {
         }
     }
 
+    @CrossOrigin()
     @PostMapping("/login")
     public HttpResponseDto login(@RequestBody LoginDto loginInfo, HttpServletResponse res) {
         try {

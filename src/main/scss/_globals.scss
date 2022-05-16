@@ -1,0 +1,222 @@
+html {
+    font-size: 100%;
+    box-sizing: border-box;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    
+}
+
+body, p, ul{
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    overflow-x: hidden;
+
+    &.no-scroll {
+        padding-right: 17px;
+        overflow: hidden;
+
+        .modals__item {
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+    }
+}
+
+//Text
+h1, h2, h3 {
+    line-height: 1.15;
+    color: $black;
+}
+
+.text-title, .text-header, .text-description {
+    overflow: hidden;
+    line-height: 1.75;
+    color: $black;
+}
+
+.text-title {
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.text-header {
+    font-size: 1.25rem;
+    font-weight: 400;
+}
+
+.text-description {
+    font-size: 1.25rem;
+    font-weight: 300;
+    letter-spacing: .05rem;
+}
+
+.highlighted {
+    color: $orange;
+}
+
+h1 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    font-size: 4rem;
+}
+
+h2 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+
+
+
+}
+
+//Links
+a, a:visited, a:hover {
+    text-decoration: none;
+}
+
+.link {
+    a {
+        color: $orange;
+        cursor: pointer;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+}
+
+//Buttons
+button, .button {
+    padding: 0.25rem 2rem;
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 0.5rem;
+    background-color: $white;
+    color: black;
+    font-weight: 700;
+    letter-spacing: 0.0875rem;
+    box-shadow: 0px 3px 12px rgba(0, 0, 0, 0.4);
+    transition: all 150ms ease-in-out;
+    border: 0;
+
+}
+
+//PDF files
+.pdf {
+    color: $white;
+    font-weight: 700;
+}
+
+//Spacing
+.container {
+    
+    max-width: 32.75rem;
+    margin: 0 auto;
+
+    max-width: 77.25rem;
+
+    &--pall {
+        padding-top: 4.375rem;
+        padding-bottom: 4.375rem;
+        padding-left: 5rem;
+        padding-right: 5rem;
+    }
+
+    &--px {
+        padding-left: 5rem;
+        padding-right: 5rem;
+        
+    }
+
+    &--py {
+        padding-top: 4.375rem;
+        padding-bottom: 4.375rem;
+    }
+
+    &--pt {
+        padding-top: 6rem;
+    }
+
+    &--pr {
+        padding-right: 1.5rem;
+    }
+
+    &--pb {
+        padding-bottom: 6rem;
+
+    }
+
+    &--pl {
+        padding-left: 1.5rem;
+    }
+}
+
+ul {
+    padding-left: 2rem;
+}
+
+li {
+    padding: 0.25rem 0rem;
+}
+
+
+//Flexbox
+.flex {
+    display: flex;
+
+
+    &-jc-sb {
+        justify-content: space-between;
+    }
+
+    &-jc-c {
+        justify-content: center;
+    }
+
+    &-ai-c {
+        align-items: center;
+    }
+}
+
+.forms {
+    margin-bottom: 2.35rem;
+    width: 100%;
+    
+    input {
+        font-family: 'Roboto', sans-serif;
+        font-size: 1rem;
+        font-weight: 500;
+        width: 20rem;
+        padding: 1.5rem;
+        border: 1px solid $white;
+        border-radius: 0.25rem;
+    }
+
+    textarea {
+        font-family: 'Roboto', sans-serif;
+        font-size: 1rem;
+        font-weight: 500;
+        width: 100%;
+        padding: 1.5rem;
+        border: 1px solid $white ;
+        border-radius: 0.25rem;
+    }
+
+    ::placeholder {
+        color: darkgray;
+        opacity: 0.8;
+    }
+
+    :focus {
+        border-color: $orange;
+        outline: none;
+    }
+}
