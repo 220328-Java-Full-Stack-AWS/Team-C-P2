@@ -7,6 +7,7 @@
 
 package com.revature.TeamCP2.beans.controllers;
 
+import com.revature.TeamCP2.beans.services.AuthService;
 import com.revature.TeamCP2.beans.services.ProductService;
 import com.revature.TeamCP2.dtos.HttpResponseDto;
 import com.revature.TeamCP2.entities.Product;
@@ -29,10 +30,12 @@ import java.util.Optional;
 @RequestMapping("/products")
 public class ProductController {
     private final ProductService productService;
+    private final AuthService authService;
 
     @Autowired
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService, AuthService authService) {
         this.productService = productService;
+        this.authService = authService;
 
 
     }
@@ -71,15 +74,19 @@ public class ProductController {
         }
     }
 
+
+
     //create(/)POST admin ONly
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public HttpResponseDto create(@ModelAttribute Product product, HttpServletResponse res) throws CreationFailedException, ItemHasNonNullIdException, ItemDoesNotExistException {
+    public HttpResponseDto create(@RequestBody Product product, HttpServletResponse res) throws CreationFailedException, ItemHasNonNullIdException, ItemDoesNotExistException {
+
+
         //tried using @RequestBody but was not able to make it work
         Product newProduct = productService.create(product);
 
-        if (productService.getById(newProduct.getId()).isPresent()) {
+        if (!productService.getById(newProduct.getId()).isPresent()) {
             res.setStatus(400);
             return new HttpResponseDto(400, "Failed to create product.", newProduct);
         } else {
@@ -92,11 +99,10 @@ public class ProductController {
     //updateById(/{id})PUT ADMIN
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.OK)
-    public HttpResponseDto updateById(@ModelAttribute Product updatedProduct, HttpServletResponse res) {
+    public HttpResponseDto updateById(@RequestBody Product updatedProduct, HttpServletResponse res) {
 
 //        return productService.update(updatedProduct);
         Product product = productService.update(updatedProduct);
-
 
         if (product.getPrice() != updatedProduct.getPrice()) {
             res.setStatus(400);
@@ -122,6 +128,4 @@ public class ProductController {
             return new HttpResponseDto(200, "Successfully deleted product.", null);
         }
     }
-
-
 }

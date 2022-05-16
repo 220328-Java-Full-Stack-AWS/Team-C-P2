@@ -42,10 +42,10 @@ public class CategoriesController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public HttpResponseDto create(@ModelAttribute ProductCategory category, HttpServletResponse res) throws ItemDoesNotExistException {
+    public HttpResponseDto create(@RequestBody ProductCategory category, HttpServletResponse res) throws ItemDoesNotExistException {
         ProductCategory newCategory = categoriesService.create(category);
 
-        if (categoriesService.getById(newCategory.getId()).isPresent()) {
+        if (!categoriesService.getById(newCategory.getId()).isPresent()) {
             res.setStatus(400);
             return new HttpResponseDto(400, "Failed to create category", newCategory);
         } else {
@@ -58,7 +58,7 @@ public class CategoriesController {
     public HttpResponseDto deleteCategory(@PathVariable("id") Integer id, HttpServletResponse res) throws ItemDoesNotExistException {
         categoriesService.deleteById(id);
 
-        if(categoriesService.getById(id).isPresent()) {
+        if(!categoriesService.getById(id).isPresent()) {
             res.setStatus(400);
             return new HttpResponseDto(400, "Failed to delete category", null);
         } else {
@@ -69,9 +69,9 @@ public class CategoriesController {
     }
 
 
-    @PutMapping("/{id}")
+    @PutMapping("/update")
     @ResponseStatus(HttpStatus.OK)
-    public HttpResponseDto updateById(@ModelAttribute ProductCategory updatedCategory, HttpServletResponse res) {
+    public HttpResponseDto updateById(@RequestBody ProductCategory updatedCategory, HttpServletResponse res) {
         ProductCategory category = categoriesService.update(updatedCategory);
 
         if(category.getDescription() != updatedCategory.getDescription()) {
