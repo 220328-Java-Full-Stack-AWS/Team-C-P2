@@ -39,9 +39,9 @@ public class CategoriesService {
     }
 
 
-    public ProductCategory deleteById(Integer productCategory) {
-        categoriesRepository.deleteById(productCategory.getId());
-        return productCategory;
+    public void deleteById(Integer id) {
+        categoriesRepository.deleteById(id);
+
     }
 
 
