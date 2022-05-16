@@ -6,6 +6,7 @@
 
 package com.revature.TeamCP2.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.revature.TeamCP2.interfaces.Entity;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @javax.persistence.Entity
+@JsonIgnoreProperties({"productsAssociated"})
 @Table(name = "product_categories", schema = "public")
 public class ProductCategory implements Entity {
 

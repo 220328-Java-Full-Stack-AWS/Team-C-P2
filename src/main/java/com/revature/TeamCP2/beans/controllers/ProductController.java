@@ -80,13 +80,13 @@ public class ProductController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public HttpResponseDto create(@ModelAttribute Product product, HttpServletResponse res) throws CreationFailedException, ItemHasNonNullIdException, ItemDoesNotExistException {
+    public HttpResponseDto create(@RequestBody Product product, HttpServletResponse res) throws CreationFailedException, ItemHasNonNullIdException, ItemDoesNotExistException {
 
 
         //tried using @RequestBody but was not able to make it work
         Product newProduct = productService.create(product);
 
-        if (productService.getById(newProduct.getId()).isPresent()) {
+        if (!productService.getById(newProduct.getId()).isPresent()) {
             res.setStatus(400);
             return new HttpResponseDto(400, "Failed to create product.", newProduct);
         } else {
@@ -99,7 +99,7 @@ public class ProductController {
     //updateById(/{id})PUT ADMIN
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.OK)
-    public HttpResponseDto updateById(@ModelAttribute Product updatedProduct, HttpServletResponse res) {
+    public HttpResponseDto updateById(@RequestBody Product updatedProduct, HttpServletResponse res) {
 
 //        return productService.update(updatedProduct);
         Product product = productService.update(updatedProduct);
