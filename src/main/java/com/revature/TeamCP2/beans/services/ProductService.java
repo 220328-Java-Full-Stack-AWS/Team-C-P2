@@ -9,6 +9,8 @@ import com.revature.TeamCP2.beans.repositories.ProductsRepository;
 import com.revature.TeamCP2.entities.Product;
 import com.revature.TeamCP2.exceptions.ItemDoesNotExistException;
 import com.revature.TeamCP2.exceptions.ItemHasNoIdException;
+import org.hibernate.event.spi.SaveOrUpdateEvent;
+import org.hibernate.tool.schema.internal.exec.ScriptTargetOutputToFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +43,9 @@ public class ProductService {
         productsRepository.delete(model);
     }
 
+    public void deletebyId(int id) throws ItemHasNoIdException {
+        productsRepository.deleteById(id);
+    }
 
     public Product update(Product product) {
         return productsRepository.update(product);
