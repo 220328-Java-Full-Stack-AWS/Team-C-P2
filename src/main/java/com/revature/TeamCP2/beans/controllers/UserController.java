@@ -234,7 +234,7 @@ public class UserController {
 
     @GetMapping("/cart")
     @ResponseStatus(HttpStatus.OK)
-    public HttpResponseDto viewCart (@RequestHeader Integer userId, @RequestHeader String dateCreated, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws ItemDoesNotExistException {
+    public HttpResponseDto viewCart (@RequestHeader Integer userId, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws ItemDoesNotExistException {
 
         if(userSession == null){
             res.setStatus(400);
@@ -274,9 +274,52 @@ public class UserController {
 
     }
 
-    @GetMapping("/cart/remove")
+    @DeleteMapping("/cart/remove")
     @ResponseStatus(HttpStatus.OK)
-    public HttpResponseDto removeFromCart () {
-        return null;
+    public HttpResponseDto removeFromCart (@RequestHeader Integer cartItemId, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws ItemHasNoIdException, ItemDoesNotExistException {
+
+        if(userSession == null){
+            res.setStatus(400);
+            return new HttpResponseDto(400, "Failed. You are not logged in", null);
+        }
+
+        if (cartItemService.getById(cartItemId).isPresent()) {
+            CartItem cartItem = cartItemService.getById(cartItemId).get();
+
+            Cart newCart = cartService.removeCartItem(cartItem);
+            User user = newCart.getUser();
+            List<CartItem> cartItemList = cartItemService.getAllCartItemsByCart(cartService.getCartbyId(user.getActiveCartID()).get());
+
+            res.setStatus(200);
+            return new HttpResponseDto(200, "Successfully removed item from cart", cartItemList);
+
+        }
+
+
+        return new HttpResponseDto(404, "Remove from cart failed. Cart item not found", null);
     }
-}
+
+    @PutMapping("/cart/update")
+    @ResponseStatus(HttpStatus.OK)
+    public HttpResponseDto updateCartItem (@RequestBody UpdateItemDto updateItemDto, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws ItemDoesNotExistException {
+
+        if(userSession == null){
+            res.setStatus(400);
+            return new HttpResponseDto(400, "Failed. You are not logged in", null);
+        }
+
+        if (cartItemService.getById(updateItemDto.getCartItemId()).isPresent()) {
+            CartItem cartItem = cartItemService.getById(updateItemDto.getCartItemId()).get();
+            cartItem.setQuantity(updateItemDto.getQuantity());
+
+            cartService.updateCartItem(cartItem);
+            res.setStatus(200);
+            return new HttpResponseDto(200, "Successfully updated cart item.", cartItem);
+
+        }
+
+        return new HttpResponseDto(404, "Failed. User or product not found.", null);
+
+    }
+
+    }

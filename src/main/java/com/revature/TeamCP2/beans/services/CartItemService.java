@@ -9,6 +9,7 @@ package com.revature.TeamCP2.beans.services;
 import com.revature.TeamCP2.beans.repositories.CartItemRepository;
 import com.revature.TeamCP2.entities.Cart;
 import com.revature.TeamCP2.entities.CartItem;
+import com.revature.TeamCP2.exceptions.ItemDoesNotExistException;
 import com.revature.TeamCP2.exceptions.ItemHasNoIdException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class CartItemService {
         return cartItemRepository.create(item);
     }
 
-    public Optional<CartItem> getById(int id) {
+    public Optional<CartItem> getById(int id) throws ItemDoesNotExistException {
         return cartItemRepository.getById(id);
     }
 
@@ -41,7 +42,7 @@ public class CartItemService {
         return cartItemRepository.getAllCartItemsByCart(cart);
     }
 
-    public void delete(CartItem model) throws ItemHasNoIdException {
+    public void delete(CartItem model) throws ItemHasNoIdException, ItemDoesNotExistException {
         cartItemRepository.delete(model);
     }
 
