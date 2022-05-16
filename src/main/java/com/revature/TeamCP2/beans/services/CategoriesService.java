@@ -1,14 +1,12 @@
 package com.revature.TeamCP2.beans.services;
 
 import com.revature.TeamCP2.beans.repositories.CategoriesRepository;
-import com.revature.TeamCP2.entities.Product;
 import com.revature.TeamCP2.entities.ProductCategory;
 
 import com.revature.TeamCP2.exceptions.ItemDoesNotExistException;
 import com.revature.TeamCP2.exceptions.ItemHasNoIdException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.List;
 import java.util.Optional;
@@ -41,7 +39,7 @@ public class CategoriesService {
     }
 
 
-    public ProductCategory deleteById(ProductCategory productCategory) {
+    public ProductCategory deleteById(Integer productCategory) {
         categoriesRepository.deleteById(productCategory.getId());
         return productCategory;
     }
