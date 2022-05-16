@@ -68,4 +68,18 @@ public class CategoriesController {
         }
     }
 
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public HttpResponseDto updateById(@ModelAttribute ProductCategory updatedCategory, HttpServletResponse res) {
+        ProductCategory category = categoriesService.update(updatedCategory);
+
+        if(category.getDescription() != updatedCategory.getDescription()) {
+            res.setStatus(400);
+            return new HttpResponseDto(400, "Failed to update category", category);
+        } else {
+            res.setStatus(200);
+            return new HttpResponseDto(200, "Successfully updated category" + category.getDescription(), category);
+        }
+    }
 }
