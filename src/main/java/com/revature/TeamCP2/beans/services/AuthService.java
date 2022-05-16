@@ -9,7 +9,6 @@ import com.revature.TeamCP2.beans.repositories.CartRepository;
 import com.revature.TeamCP2.beans.repositories.UserRepository;
 import com.revature.TeamCP2.dtos.CookieDto;
 import com.revature.TeamCP2.dtos.LoginDto;
-import com.revature.TeamCP2.entities.Cart;
 import com.revature.TeamCP2.entities.User;
 import com.revature.TeamCP2.exceptions.CreationFailedException;
 import com.revature.TeamCP2.exceptions.ItemHasNonNullIdException;
@@ -81,5 +80,15 @@ public class AuthService {
 
     public CookieDto getCookieDto(String cookieString) throws NotAuthorizedException {
         return jsonWebToken.verify(cookieString);
+    }
+    
+    public CookieDto getAdminCookie(String userSessionCookie) throws NotAuthorizedException {
+        if(userSessionCookie == null)
+            throw new NotAuthorizedException();
+        CookieDto userCookie = getCookieDto(userSessionCookie);
+        if(!isAdmin(userCookie))
+            throw new NotAuthorizedException();
+
+        return userCookie;
     }
 }
