@@ -11,6 +11,7 @@ import com.revature.TeamCP2.beans.repositories.CartRepository;
 import com.revature.TeamCP2.entities.Cart;
 import com.revature.TeamCP2.entities.CartItem;
 import com.revature.TeamCP2.entities.User;
+import com.revature.TeamCP2.exceptions.ItemDoesNotExistException;
 import com.revature.TeamCP2.exceptions.ItemHasNoIdException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,12 +40,20 @@ public class CartService {
     }
 
     public Cart addCartItem(CartItem cartItem) {
+
         cartItemService.createCartItem(cartItem);
         return cartItem.getCart();
     }
 
-    public Cart removeCartItem(CartItem cartItem) throws ItemHasNoIdException {
+    public Cart removeCartItem(CartItem cartItem) throws ItemHasNoIdException, ItemDoesNotExistException {
+
         cartItemService.delete(cartItem);
+        return cartItem.getCart();
+    }
+
+    public Cart updateCartItem(CartItem cartItem) {
+
+        cartItemService.update(cartItem);
         return cartItem.getCart();
     }
 

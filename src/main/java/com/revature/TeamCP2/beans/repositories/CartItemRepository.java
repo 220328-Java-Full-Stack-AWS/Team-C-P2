@@ -8,6 +8,7 @@ package com.revature.TeamCP2.beans.repositories;
 import com.revature.TeamCP2.beans.services.ConnectionManager;
 import com.revature.TeamCP2.entities.Cart;
 import com.revature.TeamCP2.entities.CartItem;
+import com.revature.TeamCP2.exceptions.ItemDoesNotExistException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,37 +51,44 @@ public class CartItemRepository extends AbstractHibernateRepo<CartItem> {
     }
 
     @Override
-    public void deleteById(int id) {
-        Optional<CartItem> cartItem = this.getById(id);
-        session.delete(cartItem);
+    public void deleteById(int id) throws ItemDoesNotExistException {
+        Transaction tx = session.beginTransaction();
+        if (this.getById(id).isPresent()) {
+            CartItem cartItem = this.getById(id).get();
+            session.delete(cartItem);
+        }
+        tx.commit();
     }
 
-    public void delete(CartItem cartItem) {
+    public void delete(CartItem cartItem) throws ItemDoesNotExistException {
+        Transaction tx = session.beginTransaction();
         session.delete(cartItem);
+        tx.commit();
+
     }
 
-    public Optional<CartItem> getById(int id) {
+    /*public Optional<CartItem> getById(int id) {
         TypedQuery<CartItem> query = session.createQuery("from CartItem where id = :id");
         query.setParameter("id", id);
 
         CartItem cartItem = query.getSingleResult();
 
         return Optional.ofNullable(cartItem);
-    }
+    }*/
 
     @Override
     public CartItem update(CartItem cartItem) {
         Transaction transaction = session.beginTransaction();
-        Optional<CartItem> updateCartItem = (Optional<CartItem>)
-                session.get(String.valueOf(CartItem.class), cartItem.getId());
+        CartItem updateCartItem = session.get(CartItem.class, cartItem.getId());
 
-        updateCartItem.get().setCart(cartItem.getCart());
-        updateCartItem.get().setProduct(cartItem.getProduct());
-        updateCartItem.get().setQuantity(cartItem.getQuantity());
+        updateCartItem.setCart(cartItem.getCart());
+        updateCartItem.setProduct(cartItem.getProduct());
+        updateCartItem.setQuantity(cartItem.getQuantity());
 
+        session.save(updateCartItem);
         transaction.commit();
 
-        return cartItem;
+        return updateCartItem;
     }
 
     public List<CartItem> getAll() {
