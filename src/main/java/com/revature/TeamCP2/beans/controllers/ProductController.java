@@ -7,6 +7,7 @@
 
 package com.revature.TeamCP2.beans.controllers;
 
+import com.revature.TeamCP2.beans.services.AuthService;
 import com.revature.TeamCP2.beans.services.ProductService;
 import com.revature.TeamCP2.dtos.HttpResponseDto;
 import com.revature.TeamCP2.entities.Product;
@@ -29,10 +30,12 @@ import java.util.Optional;
 @RequestMapping("/products")
 public class ProductController {
     private final ProductService productService;
+    private final AuthService authService;
 
     @Autowired
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService, AuthService authService) {
         this.productService = productService;
+        this.authService = authService;
 
 
     }
@@ -71,11 +74,15 @@ public class ProductController {
         }
     }
 
+
+
     //create(/)POST admin ONly
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public HttpResponseDto create(@ModelAttribute Product product, HttpServletResponse res) throws CreationFailedException, ItemHasNonNullIdException, ItemDoesNotExistException {
+
+
         //tried using @RequestBody but was not able to make it work
         Product newProduct = productService.create(product);
 
@@ -96,7 +103,6 @@ public class ProductController {
 
 //        return productService.update(updatedProduct);
         Product product = productService.update(updatedProduct);
-
 
         if (product.getPrice() != updatedProduct.getPrice()) {
             res.setStatus(400);
@@ -122,6 +128,4 @@ public class ProductController {
             return new HttpResponseDto(200, "Successfully deleted product.", null);
         }
     }
-
-
 }
