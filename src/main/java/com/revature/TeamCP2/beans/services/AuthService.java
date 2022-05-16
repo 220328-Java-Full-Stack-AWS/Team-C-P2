@@ -1,7 +1,7 @@
 /**
  * Author(s): @George Henderson
  * Contributor(s):
- * Purpose: Service to authenticate and register a user.
+ * Purpose: Service to log in, register and authorize a user.
  */
 package com.revature.TeamCP2.beans.services;
 
@@ -9,7 +9,6 @@ import com.revature.TeamCP2.beans.repositories.CartRepository;
 import com.revature.TeamCP2.beans.repositories.UserRepository;
 import com.revature.TeamCP2.dtos.CookieDto;
 import com.revature.TeamCP2.dtos.LoginDto;
-import com.revature.TeamCP2.entities.Cart;
 import com.revature.TeamCP2.entities.User;
 import com.revature.TeamCP2.exceptions.CreationFailedException;
 import com.revature.TeamCP2.exceptions.ItemHasNonNullIdException;
@@ -75,11 +74,33 @@ public class AuthService {
         return userRepository.create(user);
     }
 
+    /**
+     * Simple admin check on CookieDto
+     */
     public boolean isAdmin(CookieDto cookieDto) {
         return cookieDto.getUserRole() == Role.ADMIN;
     }
 
+    /**
+     * Verifies the cookie JWT and returns a CookieDto object
+     * @param cookieString The user_session cookie that is stored on the client containing a JWT
+     */
     public CookieDto getCookieDto(String cookieString) throws NotAuthorizedException {
         return jsonWebToken.verify(cookieString);
+    }
+
+    /**
+     * Verifies the cookie JWT & checks to see if user is admin
+     * @param userSessionCookie The user_session cookie that is stored on the client containing a JWT
+     * @return CookieDto
+     */
+    public CookieDto getAdminCookie(String userSessionCookie) throws NotAuthorizedException {
+        if(userSessionCookie == null)
+            throw new NotAuthorizedException();
+        CookieDto userCookie = getCookieDto(userSessionCookie);
+        if(!isAdmin(userCookie))
+            throw new NotAuthorizedException();
+
+        return userCookie;
     }
 }

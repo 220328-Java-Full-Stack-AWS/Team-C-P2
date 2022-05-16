@@ -56,6 +56,10 @@ public class OrderService {
         orderRepository.delete(order);
     }
 
+    public void deleteOrder(Integer id) throws ItemDoesNotExistException, DeletionFailedException, ItemHasNoIdException {
+        orderRepository.deleteById(id);
+    }
+
     public Optional<Order> getOrderById(Integer id) throws ItemDoesNotExistException {
         return orderRepository.getById(id);
     }
