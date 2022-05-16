@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+
+//@RestController is a combination of @Controller and @ResponseBody
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -58,7 +60,7 @@ public class UserController {
         try {
             Optional<User> opUser = userService.getById(id);
 
-            if(!opUser.isPresent())
+            if (!opUser.isPresent())
                 throw new ItemDoesNotExistException();
 
             return opUser.get();
@@ -71,8 +73,8 @@ public class UserController {
 
     @GetMapping("/{id}/profile")
     @ResponseStatus(HttpStatus.OK)
-    public HttpResponseDto getUserProfile (HttpServletResponse res, @PathVariable int id, @CookieValue(name = "user_session", required = false) String userSession) throws NotAuthorizedException, ItemDoesNotExistException {
-        if(userSession == null){
+    public HttpResponseDto getUserProfile(HttpServletResponse res, @PathVariable int id, @CookieValue(name = "user_session", required = false) String userSession) throws NotAuthorizedException, ItemDoesNotExistException {
+        if (userSession == null) {
             res.setStatus(400);
             return new HttpResponseDto(400, "Failed. You are not logged in", null);
         }
@@ -82,8 +84,7 @@ public class UserController {
         if (cookie.getUserId() != id) {
             res.setStatus(403);
             return new HttpResponseDto(403, "Forbidden access", null);
-        }
-        else {
+        } else {
             res.setStatus(200);
             return new HttpResponseDto(200, "Success", userService.getById(id).get());
         }
@@ -91,8 +92,8 @@ public class UserController {
 
     @GetMapping("/{id}/orders")
     @ResponseStatus(HttpStatus.OK)
-    public HttpResponseDto getAllOrders (HttpServletResponse res, @PathVariable int id, @CookieValue(name = "user_session", required = false) String userSession) throws NotAuthorizedException, ItemDoesNotExistException {
-        if(userSession == null){
+    public HttpResponseDto getAllOrders(HttpServletResponse res, @PathVariable int id, @CookieValue(name = "user_session", required = false) String userSession) throws NotAuthorizedException, ItemDoesNotExistException {
+        if (userSession == null) {
             res.setStatus(400);
             return new HttpResponseDto(400, "Failed. You are not logged in", null);
         }
@@ -102,16 +103,16 @@ public class UserController {
         if (cookie.getUserId() != id) {
             res.setStatus(403);
             return new HttpResponseDto(403, "Forbidden access", null);
-        }
-        else {
+        } else {
             res.setStatus(200);
             return new HttpResponseDto(200, "Success", orderService.getByUserId(id));
         }
     }
 
+
     @PutMapping("/update/password")
     @ResponseStatus(HttpStatus.OK)
-    public HttpResponseDto updatePassword (HttpServletResponse res, HttpServletRequest req, @CookieValue(name = "user_session", required = false) String userSession) throws NotAuthorizedException, ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException, IOException {
+    public HttpResponseDto updatePassword(HttpServletResponse res, HttpServletRequest req, @CookieValue(name = "user_session", required = false) String userSession) throws NotAuthorizedException, ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException, IOException {
         Integer userID = req.getIntHeader("id");
         String currentPassword = req.getHeader("currentPassword");
         String newPassword = req.getHeader("newPassword");
@@ -121,8 +122,7 @@ public class UserController {
         if (userService.updatePassword(user, currentPassword, newPassword) == null) {
             res.setStatus(401);
             return new HttpResponseDto(401, "Unauthorized. Incorrect password.", user);
-        }
-        else {
+        } else {
             res.setStatus(200);
 
             //sets cookie to null
@@ -138,8 +138,8 @@ public class UserController {
 
     @PutMapping("/update/address")
     @ResponseStatus(HttpStatus.OK)
-    public HttpResponseDto updateAddress (@RequestBody UpdateAddressDto newAddress, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws NotAuthorizedException, ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException {
-        if(userSession == null){
+    public HttpResponseDto updateAddress(@RequestBody UpdateAddressDto newAddress, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws NotAuthorizedException, ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException {
+        if (userSession == null) {
             res.setStatus(400);
             return new HttpResponseDto(400, "Failed. You are not logged in", null);
         }
@@ -158,13 +158,11 @@ public class UserController {
         if (cookie.getUserId() != user.getId()) {
             res.setStatus(403);
             return new HttpResponseDto(403, "Forbidden access", null);
-        }
-        else {
+        } else {
             if (user.getUserAddresses() == null) {
                 System.out.println("Address: " + address);
                 user = userService.createUserAddress(user, address);
-            }
-            else {
+            } else {
                 address.setId(user.getUserAddresses().getId());
                 user = userService.updateUserAddress(user, address);
             }
@@ -176,8 +174,8 @@ public class UserController {
 
     @PutMapping("/update/payment")
     @ResponseStatus(HttpStatus.OK)
-    public HttpResponseDto updatePayment (@RequestBody UpdatePaymentDto newPayment, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws NotAuthorizedException, ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException {
-        if(userSession == null){
+    public HttpResponseDto updatePayment(@RequestBody UpdatePaymentDto newPayment, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws NotAuthorizedException, ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException {
+        if (userSession == null) {
             res.setStatus(400);
             return new HttpResponseDto(400, "Failed. You are not logged in", null);
         }
@@ -195,12 +193,10 @@ public class UserController {
         if (cookie.getUserId() != user.getId()) {
             res.setStatus(403);
             return new HttpResponseDto(403, "Forbidden access", null);
-        }
-        else {
+        } else {
             if (user.getPayments() == null) {
                 user = userService.createUserPayment(user, payment);
-            }
-            else {
+            } else {
                 payment.setId(user.getPayments().getId());
                 user = userService.updateUserPayment(user, payment);
             }
@@ -210,11 +206,12 @@ public class UserController {
         }
     }
 
+
     @PostMapping("/cart/checkout")
     @ResponseStatus(HttpStatus.OK)
-    public HttpResponseDto createOrder (@RequestBody CartDto cartDto, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws NotAuthorizedException, ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException, CreationFailedException, ItemHasNonNullIdException {
+    public HttpResponseDto createOrder(@RequestBody CartDto cartDto, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws NotAuthorizedException, ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException, CreationFailedException, ItemHasNonNullIdException {
 
-        if(userSession == null){
+        if (userSession == null) {
             res.setStatus(400);
             return new HttpResponseDto(400, "Failed. You are not logged in", null);
         }
@@ -234,9 +231,9 @@ public class UserController {
 
     @GetMapping("/cart")
     @ResponseStatus(HttpStatus.OK)
-    public HttpResponseDto viewCart (@RequestHeader Integer userId, @RequestHeader String dateCreated, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws ItemDoesNotExistException {
+    public HttpResponseDto viewCart(@RequestHeader Integer userId, @RequestHeader String dateCreated, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws ItemDoesNotExistException {
 
-        if(userSession == null){
+        if (userSession == null) {
             res.setStatus(400);
             return new HttpResponseDto(400, "Failed. You are not logged in", null);
         }
@@ -253,9 +250,9 @@ public class UserController {
 
     @PostMapping("/cart/add")
     @ResponseStatus(HttpStatus.OK)
-    public HttpResponseDto addToCart (@RequestBody CartItemDto cartItemDto, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws ItemDoesNotExistException {
+    public HttpResponseDto addToCart(@RequestBody CartItemDto cartItemDto, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws ItemDoesNotExistException {
 
-        if(userSession == null){
+        if (userSession == null) {
             res.setStatus(400);
             return new HttpResponseDto(400, "Failed. You are not logged in", null);
         }
@@ -276,7 +273,8 @@ public class UserController {
 
     @GetMapping("/cart/remove")
     @ResponseStatus(HttpStatus.OK)
-    public HttpResponseDto removeFromCart () {
+    public HttpResponseDto removeFromCart() {
         return null;
     }
 }
+
