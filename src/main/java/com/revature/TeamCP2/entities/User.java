@@ -3,6 +3,8 @@ package com.revature.TeamCP2.entities;
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.revature.TeamCP2.interfaces.Entity;
 import com.revature.TeamCP2.interfaces.Role;
 
@@ -50,11 +52,6 @@ public class User implements Entity {
     @Column(name = "date_modifies")
     private Date dateModifies;
     //Both @OneToMany needs Testing------------
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
-    private Collection<Cart> cartsById;
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
-    private Collection<Order> orderById;
-
 
     public User() {
     }
@@ -72,8 +69,6 @@ public class User implements Entity {
         this.payments = payments;
         this.dateCreated = dateCreated;
         this.dateModifies = dateModifies;
-        this.cartsById = cartsById;
-        this.orderById = orderById;
     }
 
     //---------------------------------------------
@@ -234,21 +229,5 @@ public class User implements Entity {
         result = 31 * result + (dateCreated != null ? dateCreated.hashCode() : 0);
         result = 31 * result + (dateModifies != null ? dateModifies.hashCode() : 0);
         return result;
-    }
-
-    public Collection<Cart> getCartsById() {
-        return cartsById;
-    }
-
-    public void setCartsById(Collection<Cart> cartsById) {
-        this.cartsById = cartsById;
-    }
-
-    public Collection<Order> getOrderById() {
-        return orderById;
-    }
-
-    public void setOrderById(Collection<Order> orderById) {
-        this.orderById = orderById;
     }
 }

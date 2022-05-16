@@ -25,7 +25,7 @@ import java.util.Optional;
 
 //@RestController is a combination of @Controller and @ResponseBody
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UserController {
     private final UserService userService;
     private final AuthService authService;
@@ -89,6 +89,7 @@ public class UserController {
             return new HttpResponseDto(200, "Success", userService.getById(id).get());
         }
     }
+
 
     @GetMapping("/{id}/orders")
     @ResponseStatus(HttpStatus.OK)
@@ -232,7 +233,6 @@ public class UserController {
     @GetMapping("/cart")
     @ResponseStatus(HttpStatus.OK)
     public HttpResponseDto viewCart(@RequestHeader Integer userId, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws ItemDoesNotExistException {
-
         if (userSession == null) {
             res.setStatus(400);
             return new HttpResponseDto(400, "Failed. You are not logged in", null);
@@ -316,6 +316,5 @@ public class UserController {
         }
 
         return new HttpResponseDto(404, "Failed. User or product not found.", null);
-
     }
 }
