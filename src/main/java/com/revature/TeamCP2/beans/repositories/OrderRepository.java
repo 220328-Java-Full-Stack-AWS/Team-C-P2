@@ -10,6 +10,7 @@ package com.revature.TeamCP2.beans.repositories;
 
 
 import com.revature.TeamCP2.beans.services.ConnectionManager;
+import com.revature.TeamCP2.entities.Cart;
 import com.revature.TeamCP2.entities.Order;
 import com.revature.TeamCP2.exceptions.*;
 
@@ -45,6 +46,7 @@ public class OrderRepository extends AbstractHibernateRepo<Order> {
         session.save(order);
         // commit transaction and return saved order
         tran.commit();
+
         return order;
     }
 
@@ -52,7 +54,7 @@ public class OrderRepository extends AbstractHibernateRepo<Order> {
     public Order update(Order order) throws ItemHasNoIdException, ItemDoesNotExistException, UpdateFailedException {
         Transaction tran = session.beginTransaction();
         // create a new order to update db using given order model
-        Order updated = (Order) session.get(String.valueOf(Order.class), order.getId());
+        Order updated = session.get(Order.class, order.getId());
         // populate fields using given user
         updated.setCart(order.getCart());
         updated.setDateCreated(order.getDateCreated());

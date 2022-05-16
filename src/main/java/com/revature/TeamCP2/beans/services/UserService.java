@@ -29,15 +29,17 @@ public class UserService {
     private final UserAddressRepository userAddressRepository;
     private final PaymentRepository paymentRepository;
     private final CartService cartService;
+    private final BCryptHash bCryptHash;
 
     @Autowired
-    public UserService(UserRepository userRepository, BCryptHash bCrypt, AuthService authService, UserAddressRepository userAddressRepository, PaymentRepository paymentRepository, CartService cartService) {
+    public UserService(UserRepository userRepository, BCryptHash bCrypt, AuthService authService, UserAddressRepository userAddressRepository, PaymentRepository paymentRepository, CartService cartService, BCryptHash bCryptHash) {
         this.userRepository = userRepository;
         this.authService = authService;
         this.bCrypt = bCrypt;
         this.userAddressRepository = userAddressRepository;
         this.paymentRepository = paymentRepository;
         this.cartService = cartService;
+        this.bCryptHash = bCryptHash;
     }
 
     public User create(User user) throws CreationFailedException, ItemHasNonNullIdException, UsernameAlreadyExistsException {
@@ -65,34 +67,33 @@ public class UserService {
 
     //needs a bit more logic regarding exceptions
     public User updatePassword (User user, String currentPassword, String newPassword) throws ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException {
-        if (user.getPassword().equals(currentPassword)) {
-            user.setPassword(newPassword);
-            return userRepository.update(user);
+        if (!bCryptHash.verify(currentPassword, user.getPassword())) {
+            return null;
         }
         else {
-            return null;
+            user.setPassword(bCryptHash.hash(newPassword));
+            return user;
         }
     }
 
     public User createUserAddress(User user, UserAddress address) throws ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException {
         user.setUserAddresses(userAddressRepository.create(address));
-        return userRepository.update(user);
+        return user;
     }
 
     public User createUserPayment(User user, Payment payment) {
-        payment.setUser(user);
-        paymentRepository.create(payment);
+        user.setPayments(paymentRepository.create(payment));
         return user;
     }
 
     public User updateUserAddress(User user, UserAddress address) throws ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException {
-        user.setUserAddresses(userAddressRepository.update(address));
-        return userRepository.update(user);
+        userAddressRepository.update(address);
+        return user;
     }
 
-    public User updateUserPayment(Payment payment) {
+    public User updateUserPayment(User user, Payment payment) {
         paymentRepository.update(payment);
-        return payment.getUser();
+        return user;
     }
 
     public List<User> getAllUsers() {

@@ -81,18 +81,21 @@ public class UserAddressRepository extends AbstractHibernateRepo<UserAddress> {
     @Override
     public UserAddress update(UserAddress userAddress) {
         Transaction transaction = session.beginTransaction();
-        Optional<UserAddress> updateUserAddress = (Optional<UserAddress>)
-                session.get(String.valueOf(UserAddress.class), userAddress.getId());
-        updateUserAddress.get().setAddressLine2(userAddress.getAddressLine2());
-        updateUserAddress.get().setAddressLine1(userAddress.getAddressLine1());
-        updateUserAddress.get().setCity(userAddress.getCity());
-        updateUserAddress.get().setPostalCode(userAddress.getPostalCode());
-        updateUserAddress.get().setCountry(userAddress.getCountry());
-        updateUserAddress.get().setPhoneNumber(userAddress.getPhoneNumber());
+
+
+        UserAddress updateUserAddress = session.get(UserAddress.class, userAddress.getId());
+        updateUserAddress.setAddressLine2(userAddress.getAddressLine2());
+        updateUserAddress.setAddressLine1(userAddress.getAddressLine1());
+        updateUserAddress.setCity(userAddress.getCity());
+        updateUserAddress.setPostalCode(userAddress.getPostalCode());
+        updateUserAddress.setCountry(userAddress.getCountry());
+        updateUserAddress.setPhoneNumber(userAddress.getPhoneNumber());
+
+        session.save(updateUserAddress);
 
         transaction.commit();
 
-        return null;
+        return updateUserAddress;
     }
 
     @Override

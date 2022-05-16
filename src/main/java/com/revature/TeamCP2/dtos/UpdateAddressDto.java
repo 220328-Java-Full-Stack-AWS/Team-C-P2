@@ -1,40 +1,19 @@
-/**
- * Author(s): @Diego Leon
- * Contributor(s):
- * Purpose: UserAddress Entity
- */
+package com.revature.TeamCP2.dtos;
 
-package com.revature.TeamCP2.entities;
+public class UpdateAddressDto {
+    public Integer userID;
+    public String addressLine1;
+    public String addressLine2;
+    public String city;
+    public Long postalCode;
+    public String country;
+    public String phoneNumber;
 
-import com.revature.TeamCP2.interfaces.Entity;
-
-import javax.persistence.*;
-
-@javax.persistence.Entity
-@Table(name = "User_Address", schema = "public")
-public class UserAddress implements Entity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    @Column(name = "address_line1")
-    private String addressLine1;
-    @Column(name = "address_line2")
-    private String addressLine2;
-    @Column(name = "city")
-    private String city;
-    @Column(name = "postal_code")
-    private Long postalCode;
-    @Column(name = "country")
-    private String country;
-    @Column(name = "phone_number")
-    private String phoneNumber;
-
-    public UserAddress() {
+    public UpdateAddressDto() {
     }
 
-    public UserAddress(Integer id, String addressLine1, String addressLine2, String city, Long postalCode, String country, String phoneNumber) {
-        this.id = id;
+    public UpdateAddressDto(Integer userID, String addressLine1, String addressLine2, String city, Long postalCode, String country, String phoneNumber) {
+        this.userID = userID;
         this.addressLine1 = addressLine1;
         this.addressLine2 = addressLine2;
         this.city = city;
@@ -43,15 +22,17 @@ public class UserAddress implements Entity {
         this.phoneNumber = phoneNumber;
     }
 
-
-    public Integer getId() {
-        return id;
+    public String toString (){
+        return addressLine1;
     }
 
-    public void setId(Integer addressID) {
-        this.id = addressID;
+    public Integer getUserID() {
+        return userID;
     }
 
+    public void setUserID(Integer userID) {
+        this.userID = userID;
+    }
 
     public String getAddressLine1() {
         return addressLine1;
@@ -101,4 +82,3 @@ public class UserAddress implements Entity {
         this.phoneNumber = phoneNumber;
     }
 }
-

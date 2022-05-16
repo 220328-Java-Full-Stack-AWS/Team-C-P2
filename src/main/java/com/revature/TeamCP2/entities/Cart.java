@@ -34,8 +34,13 @@ public class Cart implements Entity {
     }
 
     public Cart(User user, Double total) {
-        cartItems = new ArrayList<>();
         this.user = user;
+        this.total = total;
+    }
+
+    public Cart(User user, List<CartItem> cartItems, Double total) {
+        this.user = user;
+        this.cartItems = cartItems;
         this.total = total;
     }
 
@@ -47,12 +52,25 @@ public class Cart implements Entity {
         this.id = id;
     }
 
+    public List<CartItem> getCartItems() {
+        return cartItems;
+    }
+
+    public void setCartItems(List<CartItem> cartItems) {
+        this.cartItems = cartItems;
+    }
+
     public void addCartItem(CartItem cartItem) {
         this.cartItems.add(cartItem);
     }
 
-    public void removeCartItem(CartItem cartItem) {
-        this.cartItems.remove(cartItem);
+    public void removeCartItem(Integer id) {
+
+        for (CartItem c : this.cartItems) {
+            if (c.getId() == id) {
+                this.cartItems.remove(c);
+            }
+        }
     }
 
     public User getUser() {

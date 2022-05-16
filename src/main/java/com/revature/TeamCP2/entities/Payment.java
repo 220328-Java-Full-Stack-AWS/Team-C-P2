@@ -11,16 +11,12 @@ import com.revature.TeamCP2.interfaces.Entity;
 import javax.persistence.*;
 
 @javax.persistence.Entity
-@Table(name = "saved_payments", schema = "public")
+@Table(name = "payments", schema = "public")
 public class Payment implements Entity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 
     @Column(name = "payment_type", nullable = false)
     // Visa, Amex, Discover, Mastercard, etc.
@@ -42,21 +38,12 @@ public class Payment implements Entity {
     public Payment() {
     }
 
-    public Payment(User user, String network, String issuer, Integer cardNumber, Short securityCode, String expirationDate) {
-        this.user = user;
+    public Payment(String network, String issuer, Integer cardNumber, Short securityCode, String expirationDate) {
         this.network = network;
         this.issuer = issuer;
         this.cardNumber = cardNumber;
         this.securityCode = securityCode;
         this.expirationDate = expirationDate;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public String getNetwork() {
