@@ -1,0 +1,26 @@
+.login {
+    text-align: center;
+    
+    &__inputs {
+        padding-bottom: 1rem;
+    }
+
+    &__form-header {
+        padding: 3rem 0rem;
+    }
+
+    &__button {
+        .button {
+            font-size: 1rem;
+            padding: 1rem 2.5rem;
+            color: $white;
+            background-color: $lightBlue;
+            letter-spacing: 0;
+            opacity: 0.8;
+        }
+
+        .button:hover {
+            opacity: 1;
+        }
+    }
+}
