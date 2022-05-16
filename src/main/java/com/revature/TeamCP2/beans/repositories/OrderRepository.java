@@ -1,6 +1,6 @@
 /**
  * Author(s): @Arun Mohan
- * Contributor(s):
+ * Contributor(s): @George Henderson
  * Purpose: Order Repository class used to implement CRUD functionality on Order
  * models that are persisted in the database
  */
@@ -39,7 +39,7 @@ public class OrderRepository extends AbstractHibernateRepo<Order> {
 
     @Override
     public Order create(Order order) throws ItemHasNonNullIdException {
-        if(order.getId() == null)
+        if(order.getId() != null)
             throw new ItemHasNonNullIdException();
 
         Transaction tran = session.beginTransaction();
@@ -71,7 +71,13 @@ public class OrderRepository extends AbstractHibernateRepo<Order> {
     public void deleteById(int id) throws ItemHasNoIdException, ItemDoesNotExistException, DeletionFailedException {
 
         Optional<Order> toDelete = this.getById(id);
-        session.delete(toDelete);
+        if(toDelete.isPresent()){
+            session.delete(toDelete.get());
+        }
+        else {
+            throw new ItemDoesNotExistException();
+        }
+
     }
 
     @Override
