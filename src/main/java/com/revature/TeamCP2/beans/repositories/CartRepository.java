@@ -62,12 +62,12 @@ public class CartRepository extends AbstractHibernateRepo<Cart> {
     @Override
     public Cart update(Cart cart) {
         Transaction transaction = session.beginTransaction();
-        Optional<Cart> updateCart = (Optional<Cart>)
-                session.get(String.valueOf(Cart.class), cart.getId());
+        Cart updateCart = session.get(Cart.class, cart.getId());
 
-        updateCart.get().setUser(cart.getUser());
-        updateCart.get().setTotal(cart.getTotal());
+        updateCart.setUser(cart.getUser());
+        updateCart.setTotal(cart.getTotal());
 
+        session.save(updateCart);
         transaction.commit();
 
         return cart;

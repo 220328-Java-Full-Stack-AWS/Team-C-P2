@@ -64,8 +64,13 @@ public class Cart implements Entity {
         this.cartItems.add(cartItem);
     }
 
-    public void removeCartItem(CartItem cartItem) {
-        this.cartItems.remove(cartItem);
+    public void removeCartItem(Integer id) {
+
+        for (CartItem c : this.cartItems) {
+            if (c.getId() == id) {
+                this.cartItems.remove(c);
+            }
+        }
     }
 
     public User getUser() {
