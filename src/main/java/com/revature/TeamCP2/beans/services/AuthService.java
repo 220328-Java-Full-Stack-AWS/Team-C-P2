@@ -5,7 +5,6 @@
  */
 package com.revature.TeamCP2.beans.services;
 
-import com.revature.TeamCP2.beans.repositories.CartRepository;
 import com.revature.TeamCP2.beans.repositories.UserRepository;
 import com.revature.TeamCP2.dtos.CookieDto;
 import com.revature.TeamCP2.dtos.LoginDto;
@@ -26,14 +25,12 @@ public class AuthService {
     BCryptHash bCryptHash;
     JsonWebToken jsonWebToken;
     UserRepository userRepository;
-    CartRepository cartRepository;
 
     @Autowired
-    public AuthService(BCryptHash bCryptHash, JsonWebToken jsonWebToken, UserRepository userRepository, CartRepository cartRepository) {
+    public AuthService(BCryptHash bCryptHash, JsonWebToken jsonWebToken, UserRepository userRepository) {
         this.bCryptHash = bCryptHash;
         this.jsonWebToken = jsonWebToken;
         this.userRepository = userRepository;
-        this.cartRepository = cartRepository;
     }
 
     /**
@@ -52,7 +49,6 @@ public class AuthService {
         if(!bCryptHash.verify(loginInfo.getPassword(), user.getPassword()))
             throw new NotAuthorizedException();
 
-        // Return JsonToken
         return user;
     }
 
