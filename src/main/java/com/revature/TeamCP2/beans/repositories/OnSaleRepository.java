@@ -18,12 +18,13 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Repository
 public class OnSaleRepository extends AbstractHibernateRepo<OnSale> {
     private ConnectionManager connectionManager;
     private Session session;
@@ -35,7 +36,7 @@ public class OnSaleRepository extends AbstractHibernateRepo<OnSale> {
     }
 
 
-    //@Override
+    @Override
     public OnSale create(OnSale onSale) {
         Transaction transaction = session.beginTransaction();
         session.save(onSale);

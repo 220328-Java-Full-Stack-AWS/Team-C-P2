@@ -73,26 +73,28 @@ public class OnSaleController {
     @GetMapping("/{id}/products")
     @ResponseStatus(HttpStatus.OK)
     public HttpResponseDto getProductsBySale(@PathVariable Integer id, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws ItemDoesNotExistException {
-
-        if (userSession == null) {
-            res.setStatus(400);
-            return new HttpResponseDto(400, "Failed. You are not logged in", null);
-        }
-        List<Product> saleProducts = new LinkedList<>();
-
-        if (onSaleService.getById(id).isPresent()) {
-            List<Product> products = productService.getAll();
-            for (Product p : products) {
-                if (p.getOnSale().getId() == id) {
-                    saleProducts.add(p);
-                }
+        try {
+            if (userSession == null) {
+                res.setStatus(400);
+                return new HttpResponseDto(400, "Failed. You are not logged in", null);
             }
-            res.setStatus(200);
-            return new HttpResponseDto(200, "Successfully retrieved products.", saleProducts);
-        }
-        res.setStatus(404);
-        return new HttpResponseDto(404, "Failed. Sale not found.", null);
+            List<Product> saleProducts = new LinkedList<>();
 
+            if (onSaleService.getById(id).isPresent()) {
+                OnSale sale = onSaleService.getById(id).get();
+                List<Product> products = productService.getAll();
+                for (Product p : products) {
+                    if (p.getOnSale() != null && p.getOnSale().equals(sale)) {
+                        saleProducts.add(p);
+                    }
+                }
+                res.setStatus(200);
+                return new HttpResponseDto(200, "Successfully retrieved products.", saleProducts);
+            }
+        } catch (ItemDoesNotExistException e) {
+            res.setStatus(404);
+        }
+        return new HttpResponseDto(404, "Failed. Sale not found.", null);
     }
 
 
