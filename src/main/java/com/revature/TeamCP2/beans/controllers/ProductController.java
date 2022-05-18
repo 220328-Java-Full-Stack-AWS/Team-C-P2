@@ -122,7 +122,7 @@ public class ProductController {
 
         if (productService.getById(id).isPresent()) {
             res.setStatus(400);
-            return new HttpResponseDto(400, "Successfully updated address.", null);
+            return new HttpResponseDto(400, "Failed to delete product.", null);
         } else {
             res.setStatus(200);
             return new HttpResponseDto(200, "Successfully deleted product.", null);

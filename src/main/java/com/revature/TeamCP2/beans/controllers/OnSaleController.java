@@ -13,6 +13,7 @@ import com.revature.TeamCP2.dtos.OnSaleDto;
 import com.revature.TeamCP2.entities.OnSale;
 import com.revature.TeamCP2.entities.Product;
 import com.revature.TeamCP2.exceptions.ItemDoesNotExistException;
+import com.revature.TeamCP2.exceptions.ItemHasNoIdException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,17 +53,20 @@ public class OnSaleController {
     // get sale by id
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public HttpResponseDto getSaleById(@PathVariable Integer id, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws ItemDoesNotExistException {
+    public HttpResponseDto getSaleById(@PathVariable Integer id, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) {
+        try {
+            if (userSession == null) {
+                res.setStatus(400);
+                return new HttpResponseDto(400, "Failed. You are not logged in", null);
+            }
 
-        if (userSession == null) {
-            res.setStatus(400);
-            return new HttpResponseDto(400, "Failed. You are not logged in", null);
-        }
-
-        if (onSaleService.getById(id).isPresent()) {
-            OnSale sale = onSaleService.getById(id).get();
-            res.setStatus(200);
-            return new HttpResponseDto(200, "Success.", sale);
+            if (onSaleService.getById(id).isPresent()) {
+                OnSale sale = onSaleService.getById(id).get();
+                res.setStatus(200);
+                return new HttpResponseDto(200, "Success.", sale);
+            }
+        } catch (ItemDoesNotExistException e) {
+            res.setStatus(404);
         }
         res.setStatus(404);
         return new HttpResponseDto(404, "Failed. Sale not found.", null);
@@ -72,7 +76,7 @@ public class OnSaleController {
     // get products by sale
     @GetMapping("/{id}/products")
     @ResponseStatus(HttpStatus.OK)
-    public HttpResponseDto getProductsBySale(@PathVariable Integer id, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws ItemDoesNotExistException {
+    public HttpResponseDto getProductsBySale(@PathVariable Integer id, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) {
         try {
             if (userSession == null) {
                 res.setStatus(400);
@@ -101,43 +105,71 @@ public class OnSaleController {
     // create sale
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public HttpResponseDto createSale(@RequestBody OnSaleDto onSaleDto, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws ItemDoesNotExistException {
-
-        if (userSession == null) {
+    public HttpResponseDto createSale(@RequestBody OnSaleDto onSaleDto, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) {
+        try {
+            if (userSession == null) {
+                res.setStatus(400);
+                return new HttpResponseDto(400, "Failed. You are not logged in", null);
+            }
+            OnSale sale = new OnSale();
+            sale.setDiscount(onSaleDto.getDiscount());
+            sale = onSaleService.createOnSale(sale);
+            if (onSaleService.getById(sale.getId()).isPresent()) {
+                res.setStatus(200);
+                return new HttpResponseDto(200, "Successfully created new sale.", sale);
+            }
+        } catch (ItemDoesNotExistException e) {
             res.setStatus(400);
-            return new HttpResponseDto(400, "Failed. You are not logged in", null);
         }
-
-        OnSale sale = new OnSale();
-        sale.setDiscount(onSaleDto.getDiscount());
-        sale = onSaleService.createOnSale(sale);
-        if (onSaleService.getById(sale.getId()).isPresent()) {
-            res.setStatus(200);
-            return new HttpResponseDto(200, "Successfully created new sale.", sale);
-        }
-        res.setStatus(400);
         return new HttpResponseDto(400, "Sale creation failed.", null);
     }
 
     // update sale
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.OK)
-    public HttpResponseDto updateSale(@RequestBody OnSaleDto onSaleDto, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws ItemDoesNotExistException {
+    public HttpResponseDto updateSale(@RequestBody OnSaleDto onSaleDto, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) {
+        try {
+            if (userSession == null) {
+                res.setStatus(400);
+                return new HttpResponseDto(400, "Failed. You are not logged in", null);
+            }
+            if (onSaleService.getById(onSaleDto.getId()).isPresent()) {
+                OnSale sale = onSaleService.getById(onSaleDto.getId()).get();
+                sale.setId(onSaleDto.getId());
+                sale.setDiscount(onSaleDto.getDiscount());
+                sale = onSaleService.update(sale);
+                res.setStatus(200);
+                return new HttpResponseDto(200, "Successfully updated sale.", sale);
+            }
+        } catch (ItemDoesNotExistException e) {
+            res.setStatus(400);
+        }
+        res.setStatus(404);
+        return new HttpResponseDto(404, "Sale update failed. Sale not found", null);
+
+    }
+
+    @DeleteMapping("/delete")
+    @ResponseStatus(HttpStatus.OK)
+    public HttpResponseDto deleteSale(@RequestHeader Integer onSaleId, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) {
 
         if (userSession == null) {
             res.setStatus(400);
             return new HttpResponseDto(400, "Failed. You are not logged in", null);
         }
-        if (onSaleService.getById(onSaleDto.getId()).isPresent()) {
-            OnSale sale = onSaleService.getById(onSaleDto.getId()).get();
-            sale.setId(onSaleDto.getId());
-            sale.setDiscount(onSaleDto.getDiscount());
-            sale = onSaleService.update(sale);
-            res.setStatus(200);
-            return new HttpResponseDto(200, "Successfully updated sale.", sale);
+
+        try {
+            if (onSaleService.getById(onSaleId).isPresent()) {
+                OnSale sale = onSaleService.getById(onSaleId).get();
+                onSaleService.delete(sale);
+                res.setStatus(200);
+                return new HttpResponseDto(200, "Successfully deleted sale.", null);
+            }
+        } catch (ItemDoesNotExistException | ItemHasNoIdException e) {
+            res.setStatus(400);
         }
-        res.setStatus(404);
-        return new HttpResponseDto(404, "Sale update failed. Sale not found", null);
+
+        return new HttpResponseDto(400, "Failed. Sale does not exist.", null);
 
     }
 

@@ -29,7 +29,7 @@ public class Product implements Entity {
     @Column(name = "price")
     private double price;
 
-    @ManyToOne()
+    @ManyToOne()//cascade = CascadeType.REMOVE
     @JoinColumn(name = "on_sale", nullable = true)
     private OnSale onSale;
 
