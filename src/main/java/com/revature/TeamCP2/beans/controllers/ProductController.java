@@ -10,6 +10,7 @@ package com.revature.TeamCP2.beans.controllers;
 import com.revature.TeamCP2.beans.services.AuthService;
 import com.revature.TeamCP2.beans.services.ProductService;
 import com.revature.TeamCP2.dtos.HttpResponseDto;
+import com.revature.TeamCP2.dtos.ProductNetPriceDto;
 import com.revature.TeamCP2.entities.Product;
 import com.revature.TeamCP2.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -43,15 +45,21 @@ public class ProductController {
     //
     @GetMapping()
     public HttpResponseDto getAll(HttpServletResponse res) throws ItemDoesNotExistException {
+
         //maybe just display the name and price of this product
         List<Product> productList = productService.getAll();
+        List<ProductNetPriceDto> dtoList = new LinkedList<>();
+        for (Product p : productList) {
+            ProductNetPriceDto netPriceDto = new ProductNetPriceDto(p, productService.getNetPrice(p));
+            dtoList.add(netPriceDto);
+        }
 
         if (productList.isEmpty()) {
             res.setStatus(400);
-            return new HttpResponseDto(400, "Failed to retrieve all products.", productList);
+            return new HttpResponseDto(400, "Failed to retrieve all products.", null);
         } else {
             res.setStatus(200);
-            return new HttpResponseDto(200, "Successfully retrieved all products.", productList);
+            return new HttpResponseDto(200, "Successfully retrieved all products.", dtoList);
         }
     }
 
@@ -60,14 +68,16 @@ public class ProductController {
     public HttpResponseDto getById(@PathVariable("id") int id, HttpServletResponse res) throws ItemDoesNotExistException {
         //display full item description and all
         Product product = productService.getById(id).get();
+        ProductNetPriceDto netPriceDto = new ProductNetPriceDto(product, productService.getNetPrice(product));
 
         if (product == null) {
             res.setStatus(400);
-            return new HttpResponseDto(400, "Failed to retrieve product.", product);
+            return new HttpResponseDto(400, "Failed to retrieve product.", null);
         } else {
             res.setStatus(200);
-            return new HttpResponseDto(200, "Successfully retrieved product.", product);
+            return new HttpResponseDto(200, "Successfully retrieved product.", netPriceDto);
         }
+
     }
 
 
@@ -130,6 +140,7 @@ public class ProductController {
         try {
             if (productService.getById(id).isPresent()) {
                 Product product = productService.getById(id).get();
+
                 Double price = product.getPrice();
                 // if the product is on discount, calculate new price
                 if (product.getOnSale() != null) {
@@ -152,13 +163,19 @@ public class ProductController {
     public HttpResponseDto getAllFeatured(HttpServletResponse res) throws ItemDoesNotExistException {
 
         List<Product> productList = productService.getAllFeatured();
+        List<ProductNetPriceDto> dtoList = new LinkedList<>();
+        for (Product p : productList) {
+            ProductNetPriceDto netPriceDto = new ProductNetPriceDto(p, productService.getNetPrice(p));
+            dtoList.add(netPriceDto);
+        }
+
 
         if (productList.isEmpty()) {
             res.setStatus(400);
-            return new HttpResponseDto(400, "Failed to retrieve all products.", productList);
+            return new HttpResponseDto(400, "Failed to retrieve all products.", null);
         } else {
             res.setStatus(200);
-            return new HttpResponseDto(200, "Successfully retrieved all products.", productList);
+            return new HttpResponseDto(200, "Successfully retrieved all products.", dtoList);
         }
     }
 

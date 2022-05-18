@@ -5,14 +5,16 @@ public class CartItemDto {
     public Integer userId;
     public Integer productId;
     public Integer quantity;
+    public Double netPrice;
 
     public CartItemDto() {
     }
 
-    public CartItemDto(Integer userId, Integer productId, Integer quantity) {
+    public CartItemDto(Integer userId, Integer productId, Integer quantity, Double netPrice) {
         this.userId = userId;
         this.productId = productId;
         this.quantity = quantity;
+        this.netPrice = netPrice;
     }
 
     public Integer getUserId() {
@@ -37,5 +39,13 @@ public class CartItemDto {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Double getNetPrice() {
+        return netPrice;
+    }
+
+    public void setNetPrice(Double netPrice) {
+        this.netPrice = netPrice;
     }
 }

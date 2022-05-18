@@ -1,4 +1,4 @@
-package com.revature.TeamCP2.beans.services;
+/*package com.revature.TeamCP2.beans.services;
 
 import com.revature.TeamCP2.beans.repositories.OnSaleRepository;
 import com.revature.TeamCP2.entities.OnSale;
@@ -94,4 +94,4 @@ public class OnSaleServiceTest {
 
         assertEquals(onSaleItem, returnedOnSaleItem);
     }
-}
+}*/
