@@ -13,6 +13,7 @@ const routes : Routes = [
     children: [
       { path: '', component: HomeComponent },
       { path: 'products', component: ProductsComponent },
+      { path: 'login', component: LoginComponent },
     ],
     canActivate: [ AuthGuard ] // Kicks us out to session/login possibly
   },
