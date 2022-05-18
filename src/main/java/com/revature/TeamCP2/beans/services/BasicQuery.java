@@ -84,4 +84,12 @@ public class BasicQuery<T> {
     public void setSession(ConnectionManager connectionManager) {
         this.session = connectionManager.getSession();
     }
+
+    public Class<T> getaClass() {
+        return aClass;
+    }
+
+    public void setaClass(Class<T> aClass) {
+        this.aClass = aClass;
+    }
 }
