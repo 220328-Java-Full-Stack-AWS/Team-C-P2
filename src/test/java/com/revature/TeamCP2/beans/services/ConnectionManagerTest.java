@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
+@SpringBootTest(classes = com.revature.TeamCP2.beans.services.ConnectionManager.class)
 @ExtendWith(MockitoExtension.class)
 public class ConnectionManagerTest {
 
