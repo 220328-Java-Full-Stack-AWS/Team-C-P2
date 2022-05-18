@@ -97,6 +97,4 @@ public class ConnectionManager implements Lifecycle {
     public void setConfig(Configuration config) {
         this.config = config;
     }
-
-
 }

@@ -1,3 +1,9 @@
+/**
+ * Author(s): @Brandon Le
+ * Contributor(s): @Tony Henderson
+ * Purpose: Junit testing for all methods in ConnectionManager service.
+ *
+ */
 package com.revature.TeamCP2.beans.services;
 
 import com.revature.TeamCP2.entities.*;
@@ -48,13 +54,13 @@ public class ConnectionManagerTest {
 
     @BeforeEach
     public void beforeEach() {
-            when(config.buildSessionFactory()).thenReturn(sessionFactory);
-            when(sessionFactory.openSession()).thenReturn(session);
     }
 
     @Test
     public void startTest(@Autowired ConnectionManager connectionManager) {
         connectionManager.setConfig(config);
+        when(config.buildSessionFactory()).thenReturn(sessionFactory);
+        when(sessionFactory.openSession()).thenReturn(session);
 
         connectionManager.start();
 
@@ -63,6 +69,15 @@ public class ConnectionManagerTest {
         verify(sessionFactory, times(1)).openSession();
         verify(config, times(1)).buildSessionFactory();
         verify(config, times(TEST_ENTITIES_LIST.size())).addAnnotatedClass(any());
+    }
+
+    @Test
+    public void stopTest(@Autowired ConnectionManager connectionManager) {
+        connectionManager.setSession(session);
+        connectionManager.stop();
+
+        assertEquals(connectionManager.isRunning(), false);
+        verify(session, times(1)).close();
     }
 
 
