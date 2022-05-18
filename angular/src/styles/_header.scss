@@ -1,0 +1,43 @@
+.header {
+    z-index: 2;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: transparent;
+
+    nav {
+        height: 6rem;
+        font-weight: 700;
+        padding-top: 0.875rem;
+        padding-bottom: 0.875rem;
+
+    }
+
+    //Navbar Logo
+    &__logo {
+        font-size: 2rem;
+        color: $black;
+
+        &:hover {
+            color: $orange;
+        }
+    }
+
+
+    //Desktop Links
+    &__links {
+        
+        a {
+            letter-spacing: .1rem;
+            padding-right: 2rem;
+            font-size: 1rem;
+            font-weight: 400;
+            color: $black;
+            text-transform: uppercase;
+
+            &:hover {
+                color: $orange;
+            }
+        }
+    }
+}
