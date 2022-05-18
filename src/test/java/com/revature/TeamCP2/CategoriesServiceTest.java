@@ -1,5 +1,3 @@
-package com.revature.TeamCP2;
-
 import com.revature.TeamCP2.beans.controllers.CategoriesController;
 import com.revature.TeamCP2.beans.repositories.CategoriesRepository;
 import com.revature.TeamCP2.beans.services.*;
@@ -25,8 +23,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 
-@RunWith(SpringRunner.class)
-@WebMvcTest(CategoriesController.class)
+@SpringBootApplication(classes = com.revature.TeamCP2.beans.services.CategoriesService.class)
+@ExtendWith(MockitoExtension.class)
 public class CategoriesServiceTest {
     ProductCategory Categories1;
     ProductCategory Categories2;
