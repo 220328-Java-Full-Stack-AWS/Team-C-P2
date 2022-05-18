@@ -17,15 +17,16 @@ import java.util.List;
 public class OnSale implements Entity {
 
     //This Class is the owning entity associated with the target entity (Product)
-    //The foreign key will be stored here
-    @OneToMany(mappedBy = "on_sale")
-    List<Product> productsOnSale = new ArrayList<>();
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private Integer id;
     @Column(name = "discount_percentage")
     private Double discount;
+
+    //The foreign key will be stored here
+    @OneToMany(mappedBy = "on_sale")
+    List<Product> productsOnSale = new ArrayList<>();
 
     public OnSale() {
     }
