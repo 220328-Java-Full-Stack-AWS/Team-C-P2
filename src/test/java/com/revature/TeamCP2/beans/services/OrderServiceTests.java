@@ -12,9 +12,10 @@ import com.revature.TeamCP2.interfaces.Role;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.*;
 
@@ -22,13 +23,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+@SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class OrderServiceTests {
 
-    @Mock OrderRepository orderRepositoryMock;
-    @Mock CartRepository cartRepositoryMock;
-    @Mock UserRepository userRepositoryMock;
-    @InjectMocks OrderService orderService;
+    @MockBean OrderRepository orderRepositoryMock;
+    @MockBean CartRepository cartRepositoryMock;
+    @MockBean UserRepository userRepositoryMock;
 
     User testUser;
     Cart testCart;
@@ -42,7 +43,7 @@ public class OrderServiceTests {
     }
 
     @Test
-    public void testCreateOrder() throws ItemDoesNotExistException, CreationFailedException, ItemHasNonNullIdException {
+    public void testCreateOrder(@Autowired OrderService orderService) throws ItemDoesNotExistException, CreationFailedException, ItemHasNonNullIdException {
 
 
         // mock repository methods used by OrderService createOrder with test objects
@@ -58,7 +59,7 @@ public class OrderServiceTests {
     }
 
     @Test
-    public void testUpdateOrder() throws ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException {
+    public void testUpdateOrder(@Autowired OrderService orderService) throws ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException {
 
         // mock repository methods used by OrderService updateOrder with test objects
         when(orderRepositoryMock.update(any())).thenReturn(testOrder);
@@ -75,7 +76,7 @@ public class OrderServiceTests {
     }
 
     @Test
-    public void testGetOrderByUserId() {
+    public void testGetOrderByUserId(@Autowired OrderService orderService) {
         // create test objects to interact with
         User user1 = new User();
         User user2 = new User();
@@ -112,7 +113,7 @@ public class OrderServiceTests {
     }
 
     @Test
-    public void testGetOrderByUserName() throws ItemDoesNotExistException {
+    public void testGetOrderByUserName(@Autowired OrderService orderService) throws ItemDoesNotExistException {
 
         testOrder.setId(1);
         String testUn = testOrder.getCart().getUser().getUsername();
@@ -128,7 +129,7 @@ public class OrderServiceTests {
     }
 
     @Test
-    public void testGetTotal() throws ItemDoesNotExistException {
+    public void testGetTotal(@Autowired OrderService orderService) throws ItemDoesNotExistException {
 
         testOrder.setId(1);
         Double total = testOrder.getCart().getTotal();
