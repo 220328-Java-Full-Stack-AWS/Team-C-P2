@@ -89,5 +89,18 @@ public class ProductService {
 
         return productsRepository.getAllFeatured();
     }
+
+    // net price of product
+
+    public Double getNetPrice(Product product) {
+
+        if (product.getOnSale() == null) {
+            return product.getPrice();
+        }
+        else {
+            return ((Double) (1.00 - product.getOnSale().getDiscount())) * product.getPrice();
+        }
+
+    }
 }
 

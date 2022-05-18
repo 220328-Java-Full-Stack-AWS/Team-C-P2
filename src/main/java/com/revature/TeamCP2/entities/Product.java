@@ -1,6 +1,6 @@
 /**
  * Author(s): @Brandon Le
- * Contributor(s):
+ * Contributor(s): @Arun Mohan
  * Purpose: Generates table model for Products.
  *          The table 'Products' has a many-to-one relation with 'Category' and 'On_sale'
  *          and a one-to-one relation with 'Cart_item'.
@@ -29,9 +29,9 @@ public class Product implements Entity {
     @Column(name = "price")
     private double price;
 
-    @ManyToOne()
+    @ManyToOne()//cascade = CascadeType.REMOVE
     @JoinColumn(name = "on_sale", nullable = true)
-    private OnSale on_sale;
+    private OnSale onSale;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
@@ -112,4 +112,8 @@ public class Product implements Entity {
     public void setCategory(ProductCategory category) {
         this.category = category;
     }
+
+    public OnSale getOnSale() { return this.onSale; }
+
+    public void setOnSale(OnSale onSale) { this.onSale = onSale; }
 }
