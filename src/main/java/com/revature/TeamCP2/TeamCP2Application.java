@@ -1,8 +1,11 @@
 package com.revature.TeamCP2;
 
 import com.revature.TeamCP2.beans.repositories.CategoriesRepository;
+import com.revature.TeamCP2.beans.repositories.OnSaleRepository;
 import com.revature.TeamCP2.beans.repositories.ProductsRepository;
+import com.revature.TeamCP2.beans.services.OnSaleService;
 import com.revature.TeamCP2.beans.services.ProductService;
+import com.revature.TeamCP2.entities.OnSale;
 import com.revature.TeamCP2.entities.Product;
 import com.revature.TeamCP2.exceptions.ItemDoesNotExistException;
 import com.revature.TeamCP2.exceptions.ItemHasNoIdException;
@@ -35,6 +38,8 @@ public class TeamCP2Application {
 
         ProductsRepository productsRepository = context.getBean(ProductsRepository.class);
         ProductService productService = new ProductService(productsRepository);
+        OnSaleRepository onSaleRepository = context.getBean(OnSaleRepository.class);
+        OnSaleService onSaleService = new OnSaleService(onSaleRepository);
 
         //Create
         Product product = new Product();
@@ -45,9 +50,15 @@ public class TeamCP2Application {
         productService.create(product);
 
         //Create
+        OnSale onSale = new OnSale();
+        onSale.setDiscount(0.25);
+        onSaleService.createOnSale(onSale);
+
+        //Create
         Product product1 = new Product();
         product1.setDescr("2 ");
         product1.setName("Test Featured");
+        product1.setOnSale(onSale);
         product1.setIs_featured(true);
         product1.setPrice(123);
         productService.create(product1);

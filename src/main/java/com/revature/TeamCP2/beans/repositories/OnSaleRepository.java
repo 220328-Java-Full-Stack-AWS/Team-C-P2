@@ -9,7 +9,9 @@ package com.revature.TeamCP2.beans.repositories;
 import com.revature.TeamCP2.beans.services.ConnectionManager;
 import com.revature.TeamCP2.entities.OnSale;
 
+import com.revature.TeamCP2.entities.Order;
 import com.revature.TeamCP2.entities.Product;
+import com.revature.TeamCP2.exceptions.ItemDoesNotExistException;
 import com.revature.TeamCP2.exceptions.ItemHasNoIdException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -43,39 +45,11 @@ public class OnSaleRepository extends AbstractHibernateRepo<OnSale> {
 
 
     @Override
-    public Optional<OnSale> getById(int id) {
+    public void deleteById(int id) throws ItemDoesNotExistException {
 
-        OnSale onSale = session.get(OnSale.class, id);
-
-        return Optional.ofNullable(onSale);
-    }
-
-
-    @Override
-    public List<OnSale> getAll() {
-        Query query = session.createQuery("from OnSale");
-
-        List<OnSale> results = query.list();
-
-        List<OnSale> onSaleList = new LinkedList<>();
-
-        for (OnSale result : results) {
-            OnSale onSale = new OnSale();
-            onSale.setId(result.getId());
-            onSale.setDiscount(result.getDiscount());
-            onSale.setProductsOnSale(result.getProductsOnSale());
-
-            onSaleList.add(onSale);
-        }
-
-        return onSaleList;
-    }
-
-    @Override
-    public void deleteById(int id) {
         Transaction transaction = session.beginTransaction();
-        OnSale onSale = (OnSale) session.get(OnSale.class, id);
-        session.delete(onSale);
+        Optional<OnSale> onSale = this.getById(id);
+        session.delete(onSale.get());
         transaction.commit();
     }
 
@@ -85,8 +59,8 @@ public class OnSaleRepository extends AbstractHibernateRepo<OnSale> {
         Transaction transaction = session.beginTransaction();
         OnSale updateOnSale = session.get(OnSale.class, onSale.getId());
 
+        updateOnSale.setId(onSale.getId());
         updateOnSale.setDiscount(onSale.getDiscount());
-        updateOnSale.setProductsOnSale(onSale.getProductsOnSale());
 
         session.saveOrUpdate(updateOnSale);
 
@@ -96,11 +70,8 @@ public class OnSaleRepository extends AbstractHibernateRepo<OnSale> {
     }
 
     @Override
-    public void delete(OnSale model) throws ItemHasNoIdException {
-        if (model.getId() == null)
-            throw new ItemHasNoIdException();
-
-        deleteById(model.getId().intValue());
+    public void delete(OnSale model) throws ItemDoesNotExistException {
+        deleteById(model.getId());
     }
 
     @Override

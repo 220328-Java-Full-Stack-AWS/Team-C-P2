@@ -31,7 +31,7 @@ public class OnSaleService {
         return onSaleRepository.create(saleToBeCreated);
     }
 
-    public Optional<OnSale> getById(int id) {
+    public Optional<OnSale> getById(int id) throws ItemDoesNotExistException {
         return onSaleRepository.getById(id);
     }
 
@@ -39,7 +39,7 @@ public class OnSaleService {
         return onSaleRepository.getAll();
     }
 
-    public void delete(OnSale model) throws ItemHasNoIdException {
+    public void delete(OnSale model) throws ItemHasNoIdException, ItemDoesNotExistException {
         onSaleRepository.delete(model);
     }
 

@@ -66,14 +66,14 @@ public class OrderRepository extends AbstractHibernateRepo<Order> {
 
     @Override
     public void deleteById(int id) throws ItemHasNoIdException, ItemDoesNotExistException, DeletionFailedException {
-
+        Transaction tran = session.beginTransaction();
         Optional<Order> toDelete = this.getById(id);
-        session.delete(toDelete);
+        session.delete(toDelete.get());
+        tran.commit();
     }
 
     @Override
     public void delete(Order order) throws ItemHasNoIdException, ItemDoesNotExistException, DeletionFailedException {
-
         deleteById(order.getId());
     }
 

@@ -31,7 +31,7 @@ public class Product implements Entity {
 
     @ManyToOne()
     @JoinColumn(name = "on_sale", nullable = true)
-    private OnSale on_sale;
+    private OnSale onSale;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
@@ -112,4 +112,8 @@ public class Product implements Entity {
     public void setCategory(ProductCategory category) {
         this.category = category;
     }
+
+    public OnSale getOnSale() { return this.onSale; }
+
+    public void setOnSale(OnSale onSale) { this.onSale = onSale; }
 }

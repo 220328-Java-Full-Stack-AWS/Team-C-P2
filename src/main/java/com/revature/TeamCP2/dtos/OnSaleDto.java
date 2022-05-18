@@ -13,10 +13,9 @@ public class OnSaleDto {
     public OnSaleDto() {
     }
 
-    public OnSaleDto(Integer id, Double discount, List<Product> productsOnSale) {
+    public OnSaleDto(Integer id, Double discount) {
         this.id = id;
         this.discount = discount;
-        this.productsOnSale = productsOnSale;
     }
 
     public Integer getId() {
@@ -35,11 +34,4 @@ public class OnSaleDto {
         this.discount = discount;
     }
 
-    public List<Product> getProductsOnSale() {
-        return productsOnSale;
-    }
-
-    public void setProductsOnSale(List<Product> productsOnSale) {
-        this.productsOnSale = productsOnSale;
-    }
 }
