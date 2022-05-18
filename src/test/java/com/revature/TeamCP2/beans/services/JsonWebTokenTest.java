@@ -29,7 +29,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
+@SpringBootTest(classes = com.revature.TeamCP2.beans.services.JsonWebToken.class)
 @ExtendWith(MockitoExtension.class)
 public class JsonWebTokenTest {
 

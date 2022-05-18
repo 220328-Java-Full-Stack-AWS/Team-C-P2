@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 
-@SpringBootTest
+@SpringBootTest(classes = com.revature.TeamCP2.beans.services.ProductService.class)
 @ExtendWith(MockitoExtension.class)
 class ProductServiceTest {
 

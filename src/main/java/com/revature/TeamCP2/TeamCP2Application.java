@@ -11,11 +11,13 @@ import com.revature.TeamCP2.exceptions.ItemHasNonNullIdException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.ImportResource;
 
 import java.util.List;
 import java.util.Optional;
 
 @SpringBootApplication(scanBasePackages = "com.revature.TeamCP2.beans")
+@ImportResource({"classpath*:application-context.xml"})
 public class TeamCP2Application {
 
     public static void main(String[] args) throws ItemDoesNotExistException, ItemHasNoIdException, CreationFailedException, ItemHasNonNullIdException {
