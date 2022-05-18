@@ -1,6 +1,5 @@
 package com.revature.TeamCP2.beans.services;
 
-import com.revature.TeamCP2.beans.repositories.CartRepository;
 import com.revature.TeamCP2.beans.repositories.UserRepository;
 import com.revature.TeamCP2.dtos.CookieDto;
 import com.revature.TeamCP2.dtos.LoginDto;
@@ -13,23 +12,24 @@ import com.revature.TeamCP2.interfaces.Role;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class AuthServiceTest {
 
-    @Mock BCryptHash bCryptHashMock;
-    @Mock JsonWebToken jsonWebTokenMock;
-    @Mock UserRepository userRepositoryMock;
-    @Mock CartRepository cartRepositoryMock;
-    @InjectMocks AuthService authService;
+    @MockBean BCryptHash bCryptHashMock;
+    @MockBean JsonWebToken jsonWebTokenMock;
+    @MockBean UserRepository userRepositoryMock;
+
 
     User USER_1;
     User ADMIN_USER;
@@ -41,7 +41,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    public void loginUserReturnsUserWhenAuthenticationPasses() throws NotAuthorizedException {
+    public void loginUserReturnsUserWhenAuthenticationPasses(@Autowired AuthService authService) throws NotAuthorizedException {
         String username = "us3rn4m3";
         String password = "p4ssw0rd";
         LoginDto loginInfo = new LoginDto(username, password);
@@ -54,7 +54,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    public void loginUserThrowsNotAuthorizedExceptionWhenUsernameDoesNotExist() {
+    public void loginUserThrowsNotAuthorizedExceptionWhenUsernameDoesNotExist(@Autowired AuthService authService) {
         String username = "username";
         String password = "snowBelly";
         LoginDto loginDto = new LoginDto(username, password);
@@ -68,7 +68,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    public void loginUserThrowsNotAuthorizedExceptionWhenThePasswordIsIncorrect() {
+    public void loginUserThrowsNotAuthorizedExceptionWhenThePasswordIsIncorrect(@Autowired AuthService authService) {
         String username = "myUserName";
         String password = "myPassWord";
         LoginDto loginDto = new LoginDto(username, password);
@@ -82,7 +82,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    public void registerUserReturnsUserAfterRegistration() throws UsernameAlreadyExistsException, CreationFailedException, ItemHasNonNullIdException {
+    public void registerUserReturnsUserAfterRegistration(@Autowired AuthService authService) throws UsernameAlreadyExistsException, CreationFailedException, ItemHasNonNullIdException {
         USER_1.setId(null);
         User USER_2 = USER_1;
         USER_2.setRole(Role.USER);
@@ -97,7 +97,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    public void registerUserThrowsItemHasNonNullIdExceptionWhenUserIdIsNull () {
+    public void registerUserThrowsItemHasNonNullIdExceptionWhenUserIdIsNull (@Autowired AuthService authService) {
         USER_1.setId(5);
 
         assertThrows(ItemHasNonNullIdException.class, () -> {
@@ -107,7 +107,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    public void registerUserThrowsUsernameAlreadyExists() {
+    public void registerUserThrowsUsernameAlreadyExists(@Autowired AuthService authService) {
         USER_1.setId(null);
         when(userRepositoryMock.getByUsername(USER_1.getUsername())).thenReturn(Optional.of(USER_1));
 
@@ -118,7 +118,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    public void isAdminReturnsTrueCorrectly() {
+    public void isAdminReturnsTrueCorrectly(@Autowired AuthService authService) {
         CookieDto nonAdminCookieDto = new CookieDto(USER_1);
 
         boolean isAdminCheck = authService.isAdmin(nonAdminCookieDto);
@@ -126,7 +126,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    public void isAdminReturnsFalseCorrectly() {
+    public void isAdminReturnsFalseCorrectly(@Autowired AuthService authService) {
         CookieDto adminCookieDto = new CookieDto(ADMIN_USER);
 
         boolean isAdminCheck = authService.isAdmin(adminCookieDto);
@@ -134,7 +134,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    public void getCookieDtoCallsJsonWebTokenVerify() throws NotAuthorizedException {
+    public void getCookieDtoCallsJsonWebTokenVerify(@Autowired AuthService authService) throws NotAuthorizedException {
         String cookieString = "al;ksdj;fklajs;dklfj;akf";
         CookieDto cookieDto = null;
         when(jsonWebTokenMock.verify(cookieString)).thenReturn(cookieDto);
@@ -145,7 +145,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    public void getAdminCookieReturnsUserCookie() throws NotAuthorizedException {
+    public void getAdminCookieReturnsUserCookie(@Autowired AuthService authService) throws NotAuthorizedException {
         String userSessionCookie = "MyUserSessionCookie";
         CookieDto adminCookieDto = new CookieDto(ADMIN_USER);
         AuthService authServiceMock = mock(AuthService.class);
@@ -159,7 +159,7 @@ public class AuthServiceTest {
         verify(authServiceMock, times(1)).getCookieDto(userSessionCookie);
     }
     @Test
-    public void getAdminCookieThrowsNotAuthorizedExceptionWhenUserSessionIsNull() {
+    public void getAdminCookieThrowsNotAuthorizedExceptionWhenUserSessionIsNull(@Autowired AuthService authService) {
         assertThrows(NotAuthorizedException.class, () -> {
            authService.getAdminCookie(null);
         });

@@ -1,22 +1,17 @@
 package com.revature.TeamCP2.beans.services;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 public class BCryptHashTest {
 
-    BCryptHash bCryptHash;
-
-    @BeforeEach
-    public void beforeEach() {
-        bCryptHash = new BCryptHash();
-    }
-
     @Test
-    public void hashSuccessfullyReturnsString() {
+    public void hashSuccessfullyReturnsString(@Autowired BCryptHash bCryptHash) {
         String passwordToHash = "myOtherPassword";
 
         String hashedPassword = bCryptHash.hash(passwordToHash);
@@ -26,7 +21,7 @@ public class BCryptHashTest {
     }
 
     @Test
-    public void verifyReturnsTrueOnMatchedPassword() {
+    public void verifyReturnsTrueOnMatchedPassword(@Autowired BCryptHash bCryptHash) {
         String unhashed = "un-hashed string";
         String hashed = BCrypt.withDefaults().hashToString(12, unhashed.toCharArray());
 
