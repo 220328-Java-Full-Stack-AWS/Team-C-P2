@@ -28,50 +28,41 @@ import static org.mockito.Mockito.*;
 public class ConnectionManagerTest {
 
     @Mock public SessionFactory sessionFactory;
-    @Mock public Session session;
-    @Mock static List<Class> TEST_ENTITIES_LIST = new ArrayList<>();
-    @Mock public Configuration config = new Configuration();
-    @MockBean ConnectionManager mockConnection;
+    @Mock public static Session session;
+    @Mock public Configuration config;
 
-    private List<Class> ENTITIES_LIST = new ArrayList<>();
-
-
+    static List<Class> TEST_ENTITIES_LIST = new ArrayList<>();
 
     @BeforeAll
     public static void beforeAll() {
-        when(TEST_ENTITIES_LIST.add(User.class)).thenReturn(TEST_ENTITIES_LIST.contains(User.class));
-        when(TEST_ENTITIES_LIST.add(Cart.class)).thenReturn(TEST_ENTITIES_LIST.contains(Cart.class));
-        when(TEST_ENTITIES_LIST.add(CartItem.class)).thenReturn(TEST_ENTITIES_LIST.contains(CartItem.class));
-        when(TEST_ENTITIES_LIST.add(OnSale.class)).thenReturn(TEST_ENTITIES_LIST.contains(OnSale.class));
-        when(TEST_ENTITIES_LIST.add(Order.class)).thenReturn(TEST_ENTITIES_LIST.contains(Order.class));
-        when(TEST_ENTITIES_LIST.add(Payment.class)).thenReturn(TEST_ENTITIES_LIST.contains(Payment.class));
-        when(TEST_ENTITIES_LIST.add(Product.class)).thenReturn(TEST_ENTITIES_LIST.contains(Product.class));
-        when(TEST_ENTITIES_LIST.add(ProductCategory.class)).thenReturn(TEST_ENTITIES_LIST.contains(ProductCategory.class));
-        when(TEST_ENTITIES_LIST.add(UserAddress.class)).thenReturn(TEST_ENTITIES_LIST.contains(UserAddress.class));
+        TEST_ENTITIES_LIST.add(User.class);
+        TEST_ENTITIES_LIST.add(Cart.class);
+        TEST_ENTITIES_LIST.add(CartItem.class);
+        TEST_ENTITIES_LIST.add(OnSale.class);
+        TEST_ENTITIES_LIST.add(Order.class);
+        TEST_ENTITIES_LIST.add(Payment.class);
+        TEST_ENTITIES_LIST.add(Product.class);
+        TEST_ENTITIES_LIST.add(ProductCategory.class);
+        TEST_ENTITIES_LIST.add(UserAddress.class);
+    }
 
-
+    @BeforeEach
+    public void beforeEach() {
+            when(config.buildSessionFactory()).thenReturn(sessionFactory);
+            when(sessionFactory.openSession()).thenReturn(session);
     }
 
     @Test
     public void startTest(@Autowired ConnectionManager connectionManager) {
-        connectionManager.setSession(session);
-        connectionManager.setSessionFactory(sessionFactory);
         connectionManager.setConfig(config);
 
         connectionManager.start();
 
-
-        for (Class entity : TEST_ENTITIES_LIST) {
-            config.addAnnotatedClass(entity);
-        }
-
-        System.out.println(3);
-        when(config.buildSessionFactory()).thenReturn(sessionFactory);
-        System.out.println(4);
-        when(sessionFactory.openSession()).thenReturn(session);
-        System.out.println(5);
         assertEquals(connectionManager.isRunning(), true);
-        verify(connectionManager, times(1)).start();
+        assertEquals(TEST_ENTITIES_LIST, connectionManager.getModels());
+        verify(sessionFactory, times(1)).openSession();
+        verify(config, times(1)).buildSessionFactory();
+        verify(config, times(TEST_ENTITIES_LIST.size())).addAnnotatedClass(any());
     }
 
 
