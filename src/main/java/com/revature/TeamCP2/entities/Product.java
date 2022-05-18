@@ -1,6 +1,6 @@
 /**
  * Author(s): @Brandon Le
- * Contributor(s):
+ * Contributor(s): @Arun Mohan
  * Purpose: Generates table model for Products.
  *          The table 'Products' has a many-to-one relation with 'Category' and 'On_sale'
  *          and a one-to-one relation with 'Cart_item'.

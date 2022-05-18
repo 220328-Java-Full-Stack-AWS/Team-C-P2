@@ -1,6 +1,6 @@
 /**
  * Author(s): @Diego Leon
- * Contributor(s):
+ * Contributor(s): @Arun Mohan
  * Purpose: ProductController
  */
 
@@ -127,5 +127,29 @@ public class ProductController {
             res.setStatus(200);
             return new HttpResponseDto(200, "Successfully deleted product.", null);
         }
+    }
+
+    @GetMapping("/{id}/price")
+    public HttpResponseDto getNetPrice(@PathVariable("id") Integer id,  HttpServletResponse res) throws ItemHasNoIdException, ItemDoesNotExistException {
+
+        try {
+            if (productService.getById(id).isPresent()) {
+                Product product = productService.getById(id).get();
+                Double price = product.getPrice();
+                // if the product is on discount, calculate new price
+                if (product.getOnSale() != null) {
+                    Double discount = product.getOnSale().getDiscount();
+                    price = ((Double) (1.00 - discount)) * price;
+
+                }
+                res.setStatus(200);
+                return new HttpResponseDto(200, "Success. Retrieved price.", price);
+            }
+        } catch (ItemDoesNotExistException e) {
+            res.setStatus(400);
+        }
+
+        return new HttpResponseDto(400, "Failed. Product does not exist.", null);
+
     }
 }
