@@ -72,7 +72,7 @@ public class ProductService {
     public Product update(Product product) throws ItemDoesNotExistException, UpdateFailedException {
 
         if ((!productsRepository.getById(product.getId()).isPresent())) {
-            throw new ItemDoesNotExistException();
+            throw new UpdateFailedException();
         }
 
         return productsRepository.update(product);

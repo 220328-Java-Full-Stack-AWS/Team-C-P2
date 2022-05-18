@@ -4,7 +4,6 @@ import com.revature.TeamCP2.beans.repositories.ProductsRepository;
 import com.revature.TeamCP2.entities.Product;
 import com.revature.TeamCP2.entities.ProductCategory;
 import com.revature.TeamCP2.exceptions.*;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -116,26 +115,27 @@ class ProductServiceTest {
 
 
     @Test
-    void delete() throws ItemHasNoIdException {
+    void delete() throws ItemHasNoIdException, ItemDoesNotExistException, DeletionFailedException {
         Product product = new Product(3, "Third Product", "Not Featured Product", 200, CATEGORY,
                 false, null);
 
-        productRepositoryMock.delete(product);
+        productService.delete(product);
         verify(productRepositoryMock, times(1)).delete(product);
     }
 
     @Test
-    void deletebyId() {
+    void deletebyId() throws ItemDoesNotExistException, DeletionFailedException, ItemHasNoIdException {
         Product product = new Product(3, "Third Product", "Not Featured Product", 200, CATEGORY,
                 false, null);
 
-        productRepositoryMock.deleteById(3);
+        productService.deletebyId(3);
         verify(productRepositoryMock, times(1)).deleteById(3);
     }
 
 
     @Test
-    void update() throws ItemDoesNotExistException, UpdateFailedException {
+    void update(@Autowired ProductService productService) throws ItemDoesNotExistException, UpdateFailedException {
+        List<Product> list = Arrays.asList(PRODUCT, PRODUCT_1, PRODUCT_2);
         PRODUCT_2.setDescr("Not Featured Update");
         PRODUCT_2.setName("Third Update");
         Product update = new Product();
@@ -147,26 +147,33 @@ class ProductServiceTest {
         update.setIs_featured(false);
         update.setImage(null);
 
-        when(productRepositoryMock.update(update)).thenReturn(update);
+        when(productRepositoryMock.update(update)).thenReturn(PRODUCT_2);
+        when(productRepositoryMock.getById(update.getId())).thenReturn(Optional.ofNullable(PRODUCT_2));
 
         Product updated = productService.update(update);
 
-        assertEquals(update.getName(), updated.getName());
+        assertEquals(PRODUCT_2, updated);
         verify(productRepositoryMock, times(1)).update(update);
 
     }
 
     @Test
-    void updateReturnsItemDoesNotExistException() throws ItemDoesNotExistException, UpdateFailedException {
-
+    void updateReturnsItemDoesNotExistException() {
+        Product update = PRODUCT_2;
+        update.setId(5);
+        assertThrows(UpdateFailedException.class,
+                () -> {
+                    productService.update(update);
+                });
+        verify(productRepositoryMock, times(0)).update(update);
     }
 
     @Test
     void getAllFeatured() throws ItemDoesNotExistException {
-        List<Product> list = Arrays.asList(PRODUCT_2);
+        List<Product> list = Arrays.asList(PRODUCT, PRODUCT_1);
 
         when(productRepositoryMock.getAllFeatured()).thenReturn(list);
-        assertEquals(1, productService.getAllFeatured().size());
+        assertEquals(2, productService.getAllFeatured().size());
     }
 
     @Test
