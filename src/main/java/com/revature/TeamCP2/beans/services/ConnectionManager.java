@@ -23,7 +23,7 @@ public class ConnectionManager implements Lifecycle {
     private boolean running = false;
 
     private final List<Class> models;
-    private final Configuration config;
+    private Configuration config;
     private SessionFactory sessionFactory;
     private Session session;
 
@@ -81,4 +81,22 @@ public class ConnectionManager implements Lifecycle {
     public void addModel(Class model) {
         models.add(model);
     }
+
+    public List<Class> getModels() {
+        return models;
+    }
+
+    public Configuration getConfig() {
+        return config;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    public void setConfig(Configuration config) {
+        this.config = config;
+    }
+
+
 }
