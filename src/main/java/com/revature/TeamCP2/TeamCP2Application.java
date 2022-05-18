@@ -4,8 +4,10 @@ import com.revature.TeamCP2.beans.repositories.CategoriesRepository;
 import com.revature.TeamCP2.beans.repositories.ProductsRepository;
 import com.revature.TeamCP2.beans.services.ProductService;
 import com.revature.TeamCP2.entities.Product;
+import com.revature.TeamCP2.exceptions.CreationFailedException;
 import com.revature.TeamCP2.exceptions.ItemDoesNotExistException;
 import com.revature.TeamCP2.exceptions.ItemHasNoIdException;
+import com.revature.TeamCP2.exceptions.ItemHasNonNullIdException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -16,7 +18,7 @@ import java.util.Optional;
 @SpringBootApplication(scanBasePackages = "com.revature.TeamCP2.beans")
 public class TeamCP2Application {
 
-    public static void main(String[] args) throws ItemDoesNotExistException, ItemHasNoIdException {
+    public static void main(String[] args) throws ItemDoesNotExistException, ItemHasNoIdException, CreationFailedException, ItemHasNonNullIdException {
         ConfigurableApplicationContext context = SpringApplication.run(TeamCP2Application.class, args);
         context.start();
 
