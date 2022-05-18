@@ -1,3 +1,5 @@
+package com.revature.TeamCP2.beans.services;
+
 import com.revature.TeamCP2.beans.controllers.CategoriesController;
 import com.revature.TeamCP2.beans.repositories.CategoriesRepository;
 import com.revature.TeamCP2.beans.services.*;
@@ -7,10 +9,14 @@ import com.revature.TeamCP2.exceptions.ItemHasNoIdException;
 import com.revature.TeamCP2.exceptions.UpdateFailedException;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -23,7 +29,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 
-@SpringBootApplication(classes = com.revature.TeamCP2.beans.services.CategoriesService.class)
+@SpringBootTest(classes = com.revature.TeamCP2.beans.services.CategoriesService.class)
 @ExtendWith(MockitoExtension.class)
 public class CategoriesServiceTest {
     ProductCategory Categories1;
