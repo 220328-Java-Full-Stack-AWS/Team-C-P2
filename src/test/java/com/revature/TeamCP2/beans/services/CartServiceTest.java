@@ -2,6 +2,8 @@ package com.revature.TeamCP2.beans.services;
 
 import com.revature.TeamCP2.beans.repositories.CartRepository;
 import com.revature.TeamCP2.entities.Cart;
+import com.revature.TeamCP2.entities.CartItem;
+import com.revature.TeamCP2.entities.Product;
 import com.revature.TeamCP2.entities.User;
 import com.revature.TeamCP2.interfaces.Role;
 import org.checkerframework.checker.units.qual.A;
@@ -25,29 +27,48 @@ public class CartServiceTest {
     @MockBean
     CartRepository cartRepositoryMock;
 
-    Cart testCart;
+
+
+
+    Cart CART_1;
+    User USER_1;
     User testUser;
+    Product testProduct;
+    CartItem CART_ITEM_1;
 
     @BeforeEach
     public void beforeEach() {
-        testUser = new User(1, "us3rn4m3", "p4ssw0rd", "Firstname", "Lastname", "email@email.com", Role.USER, null, null, null, null, null, null, null);
-        testCart = new Cart(testUser,99.99 );
+
+        USER_1 = new User(1, "us3rn4m3", "p4ssw0rd", "Firstname", "Lastname", "email@email.com", Role.USER, null, null, null, null, null, null, null);
+
+       //testCart = new Cart(testUser,99.99 );
+
+        testProduct = new Product(1, "testProduct","Test Description", 10.00, null, true, null);
+        CART_ITEM_1 = new CartItem(CART_1, testProduct, 9);
     }
 
     //test that cart gets created
     @Test
     public void cartGetsReturnedAfterCreation(@Autowired CartService cartService) {
-        assertEquals(99.99, testCart.getTotal());
+        Cart cartToCreate = CART_1;
+        when(cartRepositoryMock.create(cartToCreate)).thenReturn(cartToCreate);
+
+        Cart cart = cartService.createCart(USER_1);
+
+        assertEquals(cartToCreate, cart);
+       // verify(cartRepositoryMock, times(1)).create(cartToCreate);
     }
 
     //test that cart gets assigned to user
     @Test
     public void cartGetsAssignedToUser(@Autowired CartService cartService) {
-        assertEquals("us3rn4m3", testCart.getUser().getUsername());
     }
 
     //test that item gets added to cart
+    @Test
+    public void itemGetsAddedToCart(@Autowired CartService cartService) {
 
+    }
 
     //test that item gets removed from cart
 
@@ -65,6 +86,9 @@ public class CartServiceTest {
 
 
     //test that cart gets updated
+
+
+    //test that removeCartItem throws itemDoesNotExistException
 
 
 }
