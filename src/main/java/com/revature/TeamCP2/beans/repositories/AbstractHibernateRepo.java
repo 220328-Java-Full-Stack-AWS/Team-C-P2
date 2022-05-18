@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import com.revature.TeamCP2.exceptions.*;
 import com.revature.TeamCP2.beans.services.BasicQuery;
+import com.revature.TeamCP2.ultil.CORSFilter;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -18,7 +19,7 @@ import org.springframework.core.GenericTypeResolver;
 import org.springframework.stereotype.Service;
 
 @Service
-public abstract class AbstractHibernateRepo<T> implements Lifecycle, ApplicationContextAware {
+public abstract class AbstractHibernateRepo<T> extends CORSFilter implements Lifecycle, ApplicationContextAware {
 
     ApplicationContext context;
 
