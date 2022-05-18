@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
+@SpringBootTest(classes = com.revature.TeamCP2.beans.services.BasicQuery.class)
 @ExtendWith(MockitoExtension.class)
 public class BasicQueryTest {
 

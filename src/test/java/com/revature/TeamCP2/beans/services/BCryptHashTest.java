@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+@SpringBootTest(classes = com.revature.TeamCP2.beans.services.BCryptHash.class)
 public class BCryptHashTest {
 
     @Test

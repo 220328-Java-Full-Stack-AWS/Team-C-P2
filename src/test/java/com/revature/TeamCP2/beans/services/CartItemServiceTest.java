@@ -20,7 +20,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
+@SpringBootTest(classes = com.revature.TeamCP2.beans.services.CartItemService.class)
 public class CartItemServiceTest {
 
     List<CartItem> CART_ITEM_LIST;
