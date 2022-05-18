@@ -66,10 +66,7 @@ public class ProductService {
 
     public void deletebyId(int id) throws ItemHasNoIdException, ItemDoesNotExistException, DeletionFailedException {
 
-
         productsRepository.deleteById(id);
-
-
     }
 
     public Product update(Product product) throws ItemDoesNotExistException, UpdateFailedException {

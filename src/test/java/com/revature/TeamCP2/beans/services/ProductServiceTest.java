@@ -136,13 +136,29 @@ class ProductServiceTest {
 
     @Test
     void update() throws ItemDoesNotExistException, UpdateFailedException {
+        PRODUCT_2.setDescr("Not Featured Update");
+        PRODUCT_2.setName("Third Update");
+        Product update = new Product();
+        update.setId(3);
+        update.setName("Third Update");
+        update.setDescr("Not Featured Update");
+        update.setPrice(200);
+        update.setCategory(CATEGORY);
+        update.setIs_featured(false);
+        update.setImage(null);
 
+        when(productRepositoryMock.update(update)).thenReturn(update);
+
+        Product updated = productService.update(update);
+
+        assertEquals(update.getName(), updated.getName());
+        verify(productRepositoryMock, times(1)).update(update);
 
     }
 
     @Test
     void updateReturnsItemDoesNotExistException() throws ItemDoesNotExistException, UpdateFailedException {
-        
+
     }
 
     @Test

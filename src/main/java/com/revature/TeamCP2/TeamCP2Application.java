@@ -76,6 +76,9 @@ public class TeamCP2Application {
         for (Product result : test3) {
             System.out.println(result.getId());
         }
+
+
+        System.out.println(productService.getById(test.get().getId()));
     }
 
 }
