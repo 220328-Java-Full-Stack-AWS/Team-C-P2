@@ -11,17 +11,13 @@ import com.revature.TeamCP2.beans.services.AuthService;
 import com.revature.TeamCP2.beans.services.ProductService;
 import com.revature.TeamCP2.dtos.HttpResponseDto;
 import com.revature.TeamCP2.entities.Product;
-import com.revature.TeamCP2.exceptions.CreationFailedException;
-import com.revature.TeamCP2.exceptions.ItemDoesNotExistException;
-import com.revature.TeamCP2.exceptions.ItemHasNoIdException;
-import com.revature.TeamCP2.exceptions.ItemHasNonNullIdException;
+import com.revature.TeamCP2.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-import java.util.Optional;
 
 
 //annotation, a combination of @Controller and @ResponseBody.
@@ -46,7 +42,7 @@ public class ProductController {
 
     //
     @GetMapping()
-    public HttpResponseDto getAll(HttpServletResponse res) {
+    public HttpResponseDto getAll(HttpServletResponse res) throws ItemDoesNotExistException {
         //maybe just display the name and price of this product
         List<Product> productList = productService.getAll();
 
@@ -75,7 +71,6 @@ public class ProductController {
     }
 
 
-
     //create(/)POST admin ONly
 
     @PostMapping("/create")
@@ -99,7 +94,7 @@ public class ProductController {
     //updateById(/{id})PUT ADMIN
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.OK)
-    public HttpResponseDto updateById(@RequestBody Product updatedProduct, HttpServletResponse res) {
+    public HttpResponseDto updateById(@RequestBody Product updatedProduct, HttpServletResponse res) throws ItemDoesNotExistException, UpdateFailedException {
 
 //        return productService.update(updatedProduct);
         Product product = productService.update(updatedProduct);
@@ -117,7 +112,7 @@ public class ProductController {
     //deleteById(/{id})DELETE ADMIN
 
     @DeleteMapping("/delete/{id}")
-    public HttpResponseDto deleteProduct(@PathVariable("id") Integer id, HttpServletResponse res) throws ItemHasNoIdException, ItemDoesNotExistException {
+    public HttpResponseDto deleteProduct(@PathVariable("id") Integer id, HttpServletResponse res) throws ItemHasNoIdException, ItemDoesNotExistException, DeletionFailedException {
         productService.deletebyId(id);
 
         if (productService.getById(id).isPresent()) {
@@ -152,4 +147,19 @@ public class ProductController {
         return new HttpResponseDto(400, "Failed. Product does not exist.", null);
 
     }
+
+    @GetMapping("/featured")
+    public HttpResponseDto getAllFeatured(HttpServletResponse res) throws ItemDoesNotExistException {
+
+        List<Product> productList = productService.getAllFeatured();
+
+        if (productList.isEmpty()) {
+            res.setStatus(400);
+            return new HttpResponseDto(400, "Failed to retrieve all products.", productList);
+        } else {
+            res.setStatus(200);
+            return new HttpResponseDto(200, "Successfully retrieved all products.", productList);
+        }
+    }
+
 }

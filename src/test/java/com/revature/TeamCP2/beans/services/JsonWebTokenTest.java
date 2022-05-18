@@ -105,7 +105,6 @@ public class JsonWebTokenTest {
 
         assertThrows(JWTCreationException.class, () -> jsonWebToken.sign(cookieDto));
     }
-
 }
 
 // Classes used for mocks
