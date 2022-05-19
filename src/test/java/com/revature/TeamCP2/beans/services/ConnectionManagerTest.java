@@ -58,7 +58,7 @@ public class ConnectionManagerTest {
 
     @Test
     public void startTest(@Autowired ConnectionManager connectionManager) {
-        connectionManager.setConfig(config);
+        //connectionManager.setConfig(config);
         when(config.buildSessionFactory()).thenReturn(sessionFactory);
         when(sessionFactory.openSession()).thenReturn(session);
 
