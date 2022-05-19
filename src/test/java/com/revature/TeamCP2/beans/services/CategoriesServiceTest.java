@@ -29,7 +29,11 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 
+<<<<<<< HEAD
 @SpringBootTest(classes = com.revature.TeamCP2.beans.services.CategoriesService.class)
+=======
+@SpringBootTest()
+>>>>>>> 5924e735c55bdf712101de85186c56dbea4737f7
 @ExtendWith(MockitoExtension.class)
 public class CategoriesServiceTest {
     ProductCategory Categories1;
