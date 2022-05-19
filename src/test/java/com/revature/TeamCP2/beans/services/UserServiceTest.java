@@ -142,7 +142,7 @@ public class UserServiceTest {
 
         User updatedUser = userService.createUserAddress(user, userAddress);
 
-        assertEquals(updatedUser.getUserAddresses(), userAddress);
+        assertEquals(updatedUser.getUserAddress(), userAddress);
         verify(userAddressRepositoryMock, times(1)).create(userAddress);
     }
 
@@ -154,7 +154,7 @@ public class UserServiceTest {
 
         User retrieveduser = userService.createUserPayment(user, payment);
 
-        assertEquals(retrieveduser.getPayments(), payment);
+        assertEquals(retrieveduser.getPayment(), payment);
         verify(paymentRepositoryMock, times(1)).create(payment);
     }
 

@@ -19,6 +19,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -160,11 +161,11 @@ public class UserController {
             res.setStatus(403);
             return new HttpResponseDto(403, "Forbidden access", null);
         } else {
-            if (user.getUserAddresses() == null) {
+            if (user.getUserAddress() == null) {
                 System.out.println("Address: " + address);
                 user = userService.createUserAddress(user, address);
             } else {
-                address.setId(user.getUserAddresses().getId());
+                address.setId(user.getUserAddress().getId());
                 user = userService.updateUserAddress(user, address);
             }
 
@@ -195,10 +196,10 @@ public class UserController {
             res.setStatus(403);
             return new HttpResponseDto(403, "Forbidden access", null);
         } else {
-            if (user.getPayments() == null) {
+            if (user.getPayment() == null) {
                 user = userService.createUserPayment(user, payment);
             } else {
-                payment.setId(user.getPayments().getId());
+                payment.setId(user.getPayment().getId());
                 user = userService.updateUserPayment(user, payment);
             }
 
@@ -217,8 +218,8 @@ public class UserController {
             return new HttpResponseDto(400, "Failed. You are not logged in", null);
         }
         Order order = new Order();
-        if (cartService.getCartbyId(userService.getById(cartDto.getUserId()).get().getActiveCartID()).isPresent()) {
-            Cart cart = cartService.getCartbyId(userService.getById(cartDto.getUserId()).get().getActiveCartID()).get();
+        if (cartService.getCartbyId(userService.getById(cartDto.getUserId()).get().getActiveCartId()).isPresent()) {
+            Cart cart = cartService.getCartbyId(userService.getById(cartDto.getUserId()).get().getActiveCartId()).get();
             order.setCart(cart);
             order.setDateCreated(cartDto.getDateCreated());
             orderService.createOrder(order);
@@ -233,16 +234,26 @@ public class UserController {
     @GetMapping("/cart")
     @ResponseStatus(HttpStatus.OK)
     public HttpResponseDto viewCart(@RequestHeader Integer userId, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws ItemDoesNotExistException {
+
+        Double total = 0.00;
         if (userSession == null) {
             res.setStatus(400);
             return new HttpResponseDto(400, "Failed. You are not logged in", null);
         }
+
         if (userService.getById(userId).isPresent()) {
             User user = userService.getById(userId).get();
-            List<CartItem> cartItemList = cartItemService.getAllCartItemsByCart(cartService.getCartbyId(user.getActiveCartID()).get());
 
+            List<CartItem> cartItemList = cartItemService.getAllCartItemsByCart(cartService.getCartbyId(user.getActiveCartId()).get());
+            List<ItemNetPriceDto> dtoList = new LinkedList<>();
+            for (CartItem c : cartItemList) {
+                ItemNetPriceDto netPriceDto = new ItemNetPriceDto(c, productService.getNetPrice(c.getProduct()));
+                total += (netPriceDto.getNetPrice()*c.getQuantity());
+                dtoList.add(netPriceDto);
+            }
+            cartService.getCartbyId(user.getActiveCartId()).get().setTotal(total);
             res.setStatus(200);
-            return new HttpResponseDto(200, "Success. Viewing Cart.", cartItemList);
+            return new HttpResponseDto(200, "Success. Viewing Cart.", dtoList);
         }
 
         return new HttpResponseDto(404, "Failed. User not found.", null);
@@ -258,10 +269,11 @@ public class UserController {
         }
         if (userService.getById(cartItemDto.getUserId()).isPresent() && productService.getById(cartItemDto.getProductId()).isPresent()) {
             User user = userService.getById(cartItemDto.getUserId()).get();
-            Cart cart = cartService.getCartbyId(user.getActiveCartID()).get();
-            CartItem cartItem = new CartItem(cart, productService.getById(cartItemDto.getProductId()).get(), cartItemDto.getQuantity());
-
+            Cart cart = cartService.getCartbyId(user.getActiveCartId()).get();
+            Product product = productService.getById(cartItemDto.getProductId()).get();
+            CartItem cartItem = new CartItem(cart, product, cartItemDto.getQuantity(), productService.getNetPrice(product));
             cartService.addCartItem(cartItem);
+
             res.setStatus(200);
             return new HttpResponseDto(200, "Successfully added item to cart.", cartItem);
 
@@ -285,7 +297,7 @@ public class UserController {
 
             Cart newCart = cartService.removeCartItem(cartItem);
             User user = newCart.getUser();
-            List<CartItem> cartItemList = cartItemService.getAllCartItemsByCart(cartService.getCartbyId(user.getActiveCartID()).get());
+            List<CartItem> cartItemList = cartItemService.getAllCartItemsByCart(cartService.getCartbyId(user.getActiveCartId()).get());
 
             res.setStatus(200);
             return new HttpResponseDto(200, "Successfully removed item from cart", cartItemList);

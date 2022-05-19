@@ -42,10 +42,7 @@ public class AuthController {
     public HttpResponseDto register(@RequestBody User user, HttpServletResponse res) {
         try {
             User registeredUser = authService.registerUser(user);
-
-            //Cart cart = new Cart();
-            //cart.setUser(user);
-            user.setActiveCartID(cartService.createCart(user).getId());
+            user.setActiveCartId(cartService.createCart(user).getId());
 
             String jwtCookieDto = jsonWebToken.sign(new CookieDto(registeredUser));
 
@@ -69,7 +66,6 @@ public class AuthController {
         }
     }
 
-    @CrossOrigin()
     @PostMapping("/login")
     public HttpResponseDto login(@RequestBody LoginDto loginInfo, HttpServletResponse res) {
         try {

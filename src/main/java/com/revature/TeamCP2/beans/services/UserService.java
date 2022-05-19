@@ -75,12 +75,12 @@ public class UserService {
     }
 
     public User createUserAddress(User user, UserAddress address) throws ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException {
-        user.setUserAddresses(userAddressRepository.create(address));
+        user.setUserAddress(userAddressRepository.create(address));
         return user;
     }
 
     public User createUserPayment(User user, Payment payment) {
-        user.setPayments(paymentRepository.create(payment));
+        user.setPayment(paymentRepository.create(payment));
         return user;
     }
 

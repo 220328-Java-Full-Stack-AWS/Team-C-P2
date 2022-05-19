@@ -1,6 +1,6 @@
 /**
  * Author(s): @Brandon Le
- * Contributor(s):
+ * Contributor(s): @Arun Mohan
  * Purpose: Generates table model for Products.
  *          The table 'Products' has a many-to-one relation with 'Category' and 'On_sale'
  *          and a one-to-one relation with 'Cart_item'.
@@ -29,16 +29,16 @@ public class Product implements Entity {
     @Column(name = "price")
     private double price;
 
-    @ManyToOne()
+    @ManyToOne()//cascade = CascadeType.REMOVE
     @JoinColumn(name = "on_sale", nullable = true)
-    private OnSale on_sale;
+    private OnSale onSale;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
     private ProductCategory category;
 
     @Column(name = "is_featured")
-    private boolean is_featured;
+    private boolean isFeatured;
 
     @Column(name = "image")
     private byte[] image;
@@ -46,13 +46,13 @@ public class Product implements Entity {
     public Product() {
     }
 
-    public Product(Integer id, String name, String descr, double price, ProductCategory category, boolean is_featured, byte[] image) {
+    public Product(Integer id, String name, String descr, double price, ProductCategory category, boolean isFeatured, byte[] image) {
         this.id = id;
         this.name = name;
         this.descr = descr;
         this.price = price;
         this.category = category;
-        this.is_featured = is_featured;
+        this.isFeatured = isFeatured;
         this.image = image;
     }
 
@@ -88,13 +88,12 @@ public class Product implements Entity {
         this.price = price;
     }
 
-
-    public boolean isIs_featured() {
-        return is_featured;
+    public boolean isIsFeatured() {
+        return isFeatured;
     }
 
-    public void setIs_featured(boolean is_featured) {
-        this.is_featured = is_featured;
+    public void setIsFeatured(boolean isFeatured) {
+        this.isFeatured = isFeatured;
     }
 
     public byte[] getImage() {
@@ -112,4 +111,8 @@ public class Product implements Entity {
     public void setCategory(ProductCategory category) {
         this.category = category;
     }
+
+    public OnSale getOnSale() { return this.onSale; }
+
+    public void setOnSale(OnSale onSale) { this.onSale = onSale; }
 }

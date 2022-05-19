@@ -18,8 +18,6 @@ public class CartItem implements Entity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-
-
     @ManyToOne
     @JoinColumn (name = "cart_id")
     private Cart cart;
@@ -31,6 +29,9 @@ public class CartItem implements Entity {
     @Column
     private Integer quantity;
 
+    @Column
+    private Double netPrice;
+
     public CartItem() {
     }
 
@@ -38,6 +39,13 @@ public class CartItem implements Entity {
         this.cart = cart;
         this.product = product;
         this.quantity = quantity;
+    }
+
+    public CartItem(Cart cart, Product product, Integer quantity, Double netPrice) {
+        this.cart = cart;
+        this.product = product;
+        this.quantity = quantity;
+        this.netPrice = netPrice;
     }
 
     public Integer getId() {
@@ -70,6 +78,14 @@ public class CartItem implements Entity {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Double getNetPrice() {
+        return netPrice;
+    }
+
+    public void setNetPrice(Double netPrice) {
+        this.netPrice = netPrice;
     }
 }
 

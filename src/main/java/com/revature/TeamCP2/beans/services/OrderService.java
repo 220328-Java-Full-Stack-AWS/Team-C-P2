@@ -43,7 +43,7 @@ public class OrderService {
         User user = userRepository.getById(order.getCart().getUser().getId()).get();
         Cart cart = new Cart();
         cart.setUser(user);
-        user.setActiveCartID(cartRepository.create(cart).getId());
+        user.setActiveCartId(cartRepository.create(cart).getId());
 
         return orderRepository.create(order);
     }

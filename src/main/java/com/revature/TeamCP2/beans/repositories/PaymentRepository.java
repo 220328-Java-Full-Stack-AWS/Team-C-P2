@@ -99,7 +99,7 @@ public class PaymentRepository extends AbstractHibernateRepo<Payment> {
         if(model.getId() == null)
             throw new ItemHasNoIdException();
 
-        deleteById(model.getId().intValue());
+        deleteById(model.getId());
     }
 
     @Override

@@ -82,7 +82,6 @@ public class UserAddressRepository extends AbstractHibernateRepo<UserAddress> {
     public UserAddress update(UserAddress userAddress) {
         Transaction transaction = session.beginTransaction();
 
-
         UserAddress updateUserAddress = session.get(UserAddress.class, userAddress.getId());
         updateUserAddress.setAddressLine2(userAddress.getAddressLine2());
         updateUserAddress.setAddressLine1(userAddress.getAddressLine1());
@@ -103,7 +102,7 @@ public class UserAddressRepository extends AbstractHibernateRepo<UserAddress> {
         if (model.getId() == null)
             throw new ItemHasNoIdException();
 
-        deleteById(model.getId().intValue());
+        deleteById(model.getId());
     }
 
     @Override

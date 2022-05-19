@@ -46,7 +46,6 @@ public class CartItemService {
         cartItemRepository.delete(model);
     }
 
-
     public CartItem update(CartItem item) {
         return cartItemRepository.update(item);
     }
