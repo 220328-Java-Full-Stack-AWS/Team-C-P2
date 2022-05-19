@@ -38,7 +38,7 @@ public class Product implements Entity {
     private ProductCategory category;
 
     @Column(name = "is_featured")
-    private boolean is_featured;
+    private boolean isFeatured;
 
     @Column(name = "image")
     private byte[] image;
@@ -46,13 +46,13 @@ public class Product implements Entity {
     public Product() {
     }
 
-    public Product(Integer id, String name, String descr, double price, ProductCategory category, boolean is_featured, byte[] image) {
+    public Product(Integer id, String name, String descr, double price, ProductCategory category, boolean isFeatured, byte[] image) {
         this.id = id;
         this.name = name;
         this.descr = descr;
         this.price = price;
         this.category = category;
-        this.is_featured = is_featured;
+        this.isFeatured = isFeatured;
         this.image = image;
     }
 
@@ -88,13 +88,12 @@ public class Product implements Entity {
         this.price = price;
     }
 
-
-    public boolean isIs_featured() {
-        return is_featured;
+    public boolean isIsFeatured() {
+        return isFeatured;
     }
 
-    public void setIs_featured(boolean is_featured) {
-        this.is_featured = is_featured;
+    public void setIsFeatured(boolean isFeatured) {
+        this.isFeatured = isFeatured;
     }
 
     public byte[] getImage() {
