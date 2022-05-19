@@ -58,7 +58,7 @@ public class CartServiceTest {
 
         Cart cartToCreate = CART_2;
 
-        when(cartRepositoryMock.create(cartToCreate)).thenReturn(cartToCreate);
+        when(cartRepositoryMock.create(any())).thenReturn(cartToCreate);
         Cart cart = cartService.createCart(USER_1);
 
 
