@@ -24,7 +24,6 @@ public class OnSale implements Entity {
     @Column(name = "discount_percentage")
     private Double discount;
 
-
     public OnSale() {
     }
 

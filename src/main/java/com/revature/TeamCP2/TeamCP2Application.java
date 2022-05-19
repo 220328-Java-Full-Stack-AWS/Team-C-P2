@@ -47,7 +47,7 @@ public class TeamCP2Application {
         Product product = new Product();
         product.setDescr("Test ");
         product.setName("Test Name");
-        product.setIs_featured(true);
+        product.setIsFeatured(true);
         product.setPrice(200.25);
         productService.create(product);
 
@@ -61,7 +61,7 @@ public class TeamCP2Application {
         product1.setDescr("2 ");
         product1.setName("Test Featured");
         product1.setOnSale(onSale);
-        product1.setIs_featured(true);
+        product1.setIsFeatured(true);
         product1.setPrice(123);
         productService.create(product1);
 

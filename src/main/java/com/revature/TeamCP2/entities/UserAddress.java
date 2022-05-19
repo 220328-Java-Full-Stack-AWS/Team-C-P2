@@ -43,7 +43,6 @@ public class UserAddress implements Entity {
         this.phoneNumber = phoneNumber;
     }
 
-
     public Integer getId() {
         return id;
     }
@@ -51,7 +50,6 @@ public class UserAddress implements Entity {
     public void setId(Integer addressID) {
         this.id = addressID;
     }
-
 
     public String getAddressLine1() {
         return addressLine1;
