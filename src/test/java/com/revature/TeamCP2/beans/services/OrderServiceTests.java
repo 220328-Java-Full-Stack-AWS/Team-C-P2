@@ -21,7 +21,7 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
@@ -56,6 +56,10 @@ public class OrderServiceTests {
 
         assertEquals(returnedOrder, testOrder);
 
+        // verify cart and order create methods were called
+        verify(cartRepositoryMock, times(1)).create(any());
+        verify(orderRepositoryMock, times(1)).create(any());
+
     }
 
     @Test
@@ -71,6 +75,9 @@ public class OrderServiceTests {
         // update old order to be same as test order and compare results
         Order returnedOrder = orderService.updateOrder(oldOrder);
         assertEquals(returnedOrder, testOrder);
+
+        // verify  order repo update methods were called
+        verify(orderRepositoryMock, times(1)).update(any());
 
 
     }
@@ -110,10 +117,13 @@ public class OrderServiceTests {
         assertTrue(user2Orders.contains(order3) && user2Orders.contains(order4));
         assertTrue(user3Orders.isEmpty());
 
+        // verify order repo methods were called
+        verify(orderRepositoryMock, times(3)).getAll();
+
     }
 
     @Test
-    public void testGetOrderByUserName(@Autowired OrderService orderService) throws ItemDoesNotExistException {
+    public void testGetUserName(@Autowired OrderService orderService) throws ItemDoesNotExistException {
 
         testOrder.setId(1);
         String testUn = testOrder.getCart().getUser().getUsername();
@@ -123,8 +133,10 @@ public class OrderServiceTests {
 
         // call getUsername and compare results
         String returnedName = orderService.getUsername(1);
-
         assertEquals(returnedName, testUn);
+
+        // verify order repo methods were called
+        verify(orderRepositoryMock, times(2)).getById(1);
 
     }
 
@@ -141,6 +153,9 @@ public class OrderServiceTests {
         Double returnedTotal = orderService.getTotal(1);
 
         assertEquals(returnedTotal, total);
+
+        // verify order repo methods were called
+        verify(orderRepositoryMock, times(2)).getById(1);
 
     }
 
