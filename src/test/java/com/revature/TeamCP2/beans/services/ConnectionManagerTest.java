@@ -36,9 +36,8 @@ import static org.mockito.Mockito.*;
 * nested exception is org.hibernate.service.spi.ServiceException: Unable to create requested service
 */
 
-
-//@SpringBootTest(classes = com.revature.TeamCP2.beans.services.ConnectionManager.class)
-@SpringBootTest()
+/*
+@SpringBootTest(classes = com.revature.TeamCP2.beans.services.ConnectionManager.class)
 @ExtendWith(MockitoExtension.class)
 public class ConnectionManagerTest {
 
