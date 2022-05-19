@@ -11,7 +11,6 @@ import com.revature.TeamCP2.beans.services.JsonWebToken;
 import com.revature.TeamCP2.dtos.CookieDto;
 import com.revature.TeamCP2.dtos.HttpResponseDto;
 import com.revature.TeamCP2.dtos.LoginDto;
-import com.revature.TeamCP2.entities.Cart;
 import com.revature.TeamCP2.entities.User;
 import com.revature.TeamCP2.exceptions.CreationFailedException;
 import com.revature.TeamCP2.exceptions.ItemHasNonNullIdException;
@@ -47,7 +46,7 @@ public class AuthController {
             String jwtCookieDto = jsonWebToken.sign(new CookieDto(registeredUser));
 
             Cookie cookie = new Cookie("user_session", jwtCookieDto);
-            cookie.setHttpOnly(true);
+//            cookie.setHttpOnly(true);
             cookie.setPath("/");
 
             res.addCookie(cookie);
@@ -77,8 +76,8 @@ public class AuthController {
             String jwtCookieDto = jsonWebToken.sign(new CookieDto(loggedInUser));
 
             Cookie cookie = new Cookie("user_session", jwtCookieDto);
-            cookie.setHttpOnly(true);
             cookie.setPath("/");
+            //cookie.setHttpOnly(true);
             res.addCookie(cookie);
 
             res.setStatus(200);
@@ -99,7 +98,7 @@ public class AuthController {
         Cookie cookie = new Cookie("user_session", "");
         cookie.setMaxAge(0);
         cookie.setPath("/");
-        cookie.setHttpOnly(true);
+//        cookie.setHttpOnly(true);
 
         res.addCookie(cookie);
         res.setStatus(200);
