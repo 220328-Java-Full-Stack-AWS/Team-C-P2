@@ -84,6 +84,7 @@ public class CartItemRepository extends AbstractHibernateRepo<CartItem> {
         updateCartItem.setCart(cartItem.getCart());
         updateCartItem.setProduct(cartItem.getProduct());
         updateCartItem.setQuantity(cartItem.getQuantity());
+        updateCartItem.setNetPrice(cartItem.getNetPrice());
 
         session.save(updateCartItem);
         transaction.commit();
@@ -104,6 +105,7 @@ public class CartItemRepository extends AbstractHibernateRepo<CartItem> {
             cartItem.setCart(result.getCart());
             cartItem.setProduct(result.getProduct());
             cartItem.setQuantity(result.getQuantity());
+            cartItem.setNetPrice(result.getNetPrice());
 
             cartItemList.add(cartItem);
         }
@@ -123,6 +125,7 @@ public class CartItemRepository extends AbstractHibernateRepo<CartItem> {
             item.setId(cartItem.getId());
             item.setProduct(cartItem.getProduct());
             item.setQuantity(cartItem.getQuantity());
+            item.setNetPrice(cartItem.getNetPrice());
 
             list.add(item);
         }

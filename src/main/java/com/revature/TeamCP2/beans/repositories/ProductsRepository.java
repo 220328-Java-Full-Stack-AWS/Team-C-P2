@@ -65,6 +65,7 @@ public class ProductsRepository extends AbstractHibernateRepo<Product> {
             product.setName(result.getName());
             product.setPrice(result.getPrice());
             product.setCategory(result.getCategory());
+            product.setOnSale(result.getOnSale());
 
             productList.add(product);
         }
@@ -88,6 +89,7 @@ public class ProductsRepository extends AbstractHibernateRepo<Product> {
                 product.setName(result.getName());
                 product.setPrice(result.getPrice());
                 product.setCategory(result.getCategory());
+                product.setOnSale(result.getOnSale());
 
                 featuredList.add(product);
             }
@@ -116,6 +118,7 @@ public class ProductsRepository extends AbstractHibernateRepo<Product> {
         updateProduct.setName(product.getName());
         updateProduct.setPrice(product.getPrice());
         updateProduct.setCategory(product.getCategory());
+        updateProduct.setOnSale(product.getOnSale());
 
         session.saveOrUpdate(updateProduct);
 
