@@ -144,7 +144,7 @@ class ProductServiceTest {
         update.setDescr("Not Featured Update");
         update.setPrice(200);
         update.setCategory(CATEGORY);
-        update.setIs_featured(false);
+        update.setIsFeatured(false);
         update.setImage(null);
 
         when(productRepositoryMock.update(update)).thenReturn(PRODUCT_2);
