@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UserToRegister } from '../interfaces/user-to-register.interface';
+import { UserToRegister } from '../../interfaces/user-to-register.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -16,10 +16,10 @@ export class AuthService {
     return this.http.post(`${this.authRoute}/login`, {
       username: username,
       password: password
-    });
+    }, { withCredentials: true });
   };
 
   register(user: UserToRegister): Observable<any> {
-    return this.http.post(`${this.authRoute}/regiser`, user);
+    return this.http.post(`${this.authRoute}/register`, user, { withCredentials: true });
   };
 }
