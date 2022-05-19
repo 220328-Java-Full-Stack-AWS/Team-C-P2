@@ -18,8 +18,6 @@ public class CartItem implements Entity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-
-
     @ManyToOne
     @JoinColumn (name = "cart_id")
     private Cart cart;

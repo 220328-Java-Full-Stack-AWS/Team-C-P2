@@ -57,8 +57,7 @@ public class UserRepository extends AbstractHibernateRepo<User> {
         updated.setFirstName(user.getFirstName());
         updated.setLastName(user.getLastName());
         updated.setEmail(user.getEmail());
-        updated.setUserAddresses(user.getUserAddresses());
-        //updated.setUserPayments(user.getUserPayments());
+        updated.setUserAddress(user.getUserAddress());
         updated.setDateCreated(user.getDateCreated());
         updated.setDateModifies(user.getDateModifies());
 
@@ -82,7 +81,6 @@ public class UserRepository extends AbstractHibernateRepo<User> {
     public void delete(User user) throws ItemHasNoIdException, ItemDoesNotExistException, DeletionFailedException {
 
         deleteById(user.getId());
-
 
     }
 
