@@ -35,16 +35,16 @@ public class User implements Entity {
     private Role role;
 
     @Column(name = "activeCartID")
-    Integer activeCartID;
+    Integer activeCartId;
 
     @OneToOne()
     @JoinColumn(name = "address_id", referencedColumnName = "id")
-    private UserAddress userAddresses;
+    private UserAddress userAddress;
 
     //User one to many relationship with payment
     @OneToOne()
     @JoinColumn(name = "payment_id", referencedColumnName = "id")
-    private Payment payments;
+    private Payment payment;
     @Basic
     @Column(name = "date_created",updatable = false)
     private String dateCreated;
@@ -56,7 +56,7 @@ public class User implements Entity {
     public User() {
     }
 
-    public User(Integer id, String username, String password, String firstName, String lastName, String email, Role role, Integer activeCartID, UserAddress userAddresses, Payment payments, String dateCreated, Date dateModifies, Collection<Cart> cartsById, Collection<Order> orderById) {
+    public User(Integer id, String username, String password, String firstName, String lastName, String email, Role role, Integer activeCartId, UserAddress userAddress, Payment payment, String dateCreated, Date dateModifies, Collection<Cart> cartsById, Collection<Order> orderById) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -64,31 +64,31 @@ public class User implements Entity {
         this.lastName = lastName;
         this.email = email;
         this.role = role;
-        this.activeCartID = activeCartID;
-        this.userAddresses = userAddresses;
-        this.payments = payments;
+        this.activeCartId = activeCartId;
+        this.userAddress = userAddress;
+        this.payment = payment;
         this.dateCreated = dateCreated;
         this.dateModifies = dateModifies;
     }
 
     //---------------------------------------------
     //User one to many relationship to Payment
-    public Payment getPayments() {
-        return payments;
+    public Payment getPayment() {
+        return payment;
     }
 
-    public void setPayments(Payment payments) {
-        this.payments = payments;
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 //----------------------------------------------------------------------
 
 
-    public Integer getActiveCartID() {
-        return activeCartID;
+    public Integer getActiveCartId() {
+        return activeCartId;
     }
 
-    public void setActiveCartID(Integer activeCartID) {
-        this.activeCartID = activeCartID;
+    public void setActiveCartId(Integer activeCartId) {
+        this.activeCartId = activeCartId;
     }
 
     public Integer getId() {
@@ -147,21 +147,14 @@ public class User implements Entity {
         this.role = role;
     }
 
-    public UserAddress getUserAddresses() {
-        return userAddresses;
+    public UserAddress getUserAddress() {
+        return userAddress;
     }
 
-    public void setUserAddresses(UserAddress userAddresses) {
-        this.userAddresses = userAddresses;
+    public void setUserAddress(UserAddress userAddress) {
+        this.userAddress = userAddress;
     }
 
-    //    public Integer getAddressId() {
-//        return addressId;
-//    }
-//
-//    public void setAddressId(Integer addressId) {
-//        this.addressId = addressId;
-//    }
     public String getDateCreated() {
         return dateCreated;
     }
@@ -169,21 +162,6 @@ public class User implements Entity {
     public void setDateCreated(String dateCreated) {
         this.dateCreated = dateCreated;
     }
-//    public String getPaymentId() {
-//        return paymentId;
-//    }
-//
-//    public void setPaymentId(String paymentId) {
-//        this.paymentId = paymentId;
-//    }
-
-//    public Date getDateCreated() {
-//        return dateCreated;
-//    }
-//
-//    public void setDateCreated(Date dateCreated) {
-//        this.dateCreated = dateCreated;
-//    }
 
     public Date getDateModifies() {
         return dateModifies;
@@ -206,9 +184,6 @@ public class User implements Entity {
         if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
         if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
-//        if (addressId != null ? !addressId.equals(user.addressId) : user.addressId != null) return false;
-//        if (phone != null ? !phone.equals(user.phone) : user.phone != null) return false;
-//        if (paymentId != null ? !paymentId.equals(user.paymentId) : user.paymentId != null) return false;
         if (dateCreated != null ? !dateCreated.equals(user.dateCreated) : user.dateCreated != null) return false;
         if (dateModifies != null ? !dateModifies.equals(user.dateModifies) : user.dateModifies != null) return false;
 
@@ -223,9 +198,6 @@ public class User implements Entity {
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
-//        result = 31 * result + (addressId != null ? addressId.hashCode() : 0);
-//        result = 31 * result + (phone != null ? phone.hashCode() : 0);
-//        result = 31 * result + (paymentId != null ? paymentId.hashCode() : 0);
         result = 31 * result + (dateCreated != null ? dateCreated.hashCode() : 0);
         result = 31 * result + (dateModifies != null ? dateModifies.hashCode() : 0);
         return result;
