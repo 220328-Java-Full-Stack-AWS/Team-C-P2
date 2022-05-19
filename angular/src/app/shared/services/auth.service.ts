@@ -1,0 +1,25 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { UserToRegister } from '../interfaces/user-to-register.interface';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+
+  authRoute : string = "http://localhost:8080/auth";
+
+  constructor(private http: HttpClient) { }
+
+  login(username: string, password: string): Observable<any> {
+    return this.http.post(`${this.authRoute}/login`, {
+      username: username,
+      password: password
+    });
+  };
+
+  register(user: UserToRegister): Observable<any> {
+    return this.http.post(`${this.authRoute}/regiser`, user);
+  };
+}
