@@ -35,13 +35,6 @@ public class CartItemRepository extends AbstractHibernateRepo<CartItem> {
         this.connectionManager = connectionManager;
     }
 
-    /*
-  create(model) x
-  update(model) x
-  delete(model) x
-  getByID(int id) x
-  getAll() x
-     */
     public CartItem create(CartItem cartItem) {
         Transaction tx = session.beginTransaction();
         session.save(cartItem);
@@ -66,15 +59,6 @@ public class CartItemRepository extends AbstractHibernateRepo<CartItem> {
         tx.commit();
 
     }
-
-    /*public Optional<CartItem> getById(int id) {
-        TypedQuery<CartItem> query = session.createQuery("from CartItem where id = :id");
-        query.setParameter("id", id);
-
-        CartItem cartItem = query.getSingleResult();
-
-        return Optional.ofNullable(cartItem);
-    }*/
 
     @Override
     public CartItem update(CartItem cartItem) {

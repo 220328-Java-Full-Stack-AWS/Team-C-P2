@@ -61,7 +61,7 @@ public class ProductsRepository extends AbstractHibernateRepo<Product> {
             product.setId(result.getId());
             product.setDescr(result.getDescr());
             product.setImage(result.getImage());
-            product.setIs_featured(result.isIs_featured());
+            product.setIsFeatured(result.isIsFeatured());
             product.setName(result.getName());
             product.setPrice(result.getPrice());
             product.setCategory(result.getCategory());
@@ -80,12 +80,12 @@ public class ProductsRepository extends AbstractHibernateRepo<Product> {
         List<Product> featuredList = new LinkedList<>();
 
         for (Product result : results) {
-            if (result.isIs_featured()) {
+            if (result.isIsFeatured()) {
                 Product product = new Product();
                 product.setId(result.getId());
                 product.setDescr(result.getDescr());
                 product.setImage(result.getImage());
-                product.setIs_featured(result.isIs_featured());
+                product.setIsFeatured(result.isIsFeatured());
                 product.setName(result.getName());
                 product.setPrice(result.getPrice());
                 product.setCategory(result.getCategory());
@@ -114,7 +114,7 @@ public class ProductsRepository extends AbstractHibernateRepo<Product> {
         Product updateProduct = session.get(Product.class, product.getId());
         updateProduct.setDescr(product.getDescr());
         updateProduct.setImage(product.getImage());
-        updateProduct.setIs_featured(product.isIs_featured());
+        updateProduct.setIsFeatured(product.isIsFeatured());
         updateProduct.setName(product.getName());
         updateProduct.setPrice(product.getPrice());
         updateProduct.setCategory(product.getCategory());
