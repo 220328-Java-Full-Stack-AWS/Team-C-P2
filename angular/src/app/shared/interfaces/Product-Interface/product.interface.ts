@@ -1,3 +1,6 @@
+import { category } from "./category-interface";
+import { onSale } from "./onsale-interface";
+
 export interface Product {
 
   netPrice: number,
@@ -6,11 +9,8 @@ export interface Product {
   name: string,
   descr: string,
   price: number,
-  onSale: {
-    id: number,
-    discount: number
-  },
-  category: number,
+  onSale: onSale,
+  category: category,
   isFeatured: boolean
   //"image":
 

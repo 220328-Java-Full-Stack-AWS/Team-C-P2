@@ -1,9 +1,8 @@
 import { HttpClient } from "@angular/common/http";
-
-
+import { HttpHeaders } from "@angular/common/http";
+import { catchError, Observable, retry, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { CreateProduct } from "../../interfaces/Product-Interface/product-create.interface";
 import { Product } from "../../interfaces/Product-Interface/product.interface";
 
 
@@ -12,31 +11,44 @@ import { Product } from "../../interfaces/Product-Interface/product.interface";
 })
 export class ProductService {
 
+
   productsURL: string = "http://localhost:8080/products";
 
   constructor(private http: HttpClient) {
   }
 
-  // getAllProducts(): Observable<Product[]> {
-  //   return this.http.get<Product[]>(this.productsURL);
-  // }
+
   getAllProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.productsURL);
+    return this.http
+      .get<Product[]>(this.productsURL);
   }
 
   getProductById(id: number): Observable<Product> {
     console.log("in Service")
-    return this.http.get<Product>(this.productsURL + "/" + id);
+    return this.http
+      .get<Product>(this.productsURL + "/" + id);
   }
 
   getProductPrice(id: number): Observable<Product> {
     return this.http
-      .get<Product>(this.productsURL + "/" + id + "/price").pipe(
-        map(res => res));
+      .get<Product>(this.productsURL + "/" + id + "/price");
   }
 
-  getAllFeatured(): Observable<Product> {
-    return this.http.get<Product>(this.productsURL + "/featured");
+  getAllFeatured(): Observable<Product[]> {
+    return this.http
+      .get<Product[]>(this.productsURL + "/featured");
   }
+
+  create(product: CreateProduct): Observable<CreateProduct> {
+
+    return this.http.post<CreateProduct>(this.productsURL + "/create", product);
+  }
+
+  update(product: Product): Observable<Product> {
+
+    return this.http.put<Product>(this.productsURL + "/update", product);
+  }
+
+
 
 }

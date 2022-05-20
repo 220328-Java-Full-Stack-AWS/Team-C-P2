@@ -1,10 +1,10 @@
-import { identifierName } from '@angular/compiler';
-import { decimalDigest } from '@angular/compiler/src/i18n/digest';
-import { ANALYZE_FOR_ENTRY_COMPONENTS, Component, OnInit } from '@angular/core';
-import { flush } from '@angular/core/testing';
-import { Data } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/shared/interfaces/Product-Interface/product.interface';
 import { ProductService } from 'src/app/shared/services/product-service/product.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CreateProduct } from 'src/app/shared/interfaces/Product-Interface/product-create.interface';
+import { category } from 'src/app/shared/interfaces/Product-Interface/category-interface';
+import { onSale } from 'src/app/shared/interfaces/Product-Interface/onsale-interface';
 
 
 
@@ -18,18 +18,57 @@ export class ProductsComponent implements OnInit {
   id: number = 0;
 
   price: number = 0;
+  category: category = {
+    id: 1,
+    name: "Test Act",
+    description: "Test"
+  }
+
+
+  sale: onSale = {
+    id: 1,
+    discount: .25
+  }
 
   productById: Product = {
     netPrice: 0,
-    id: 0,
+    id: 6,
     name: "",
     descr: "",
     price: 0,
+    onSale: this.sale,
+    category: this.category,
+    isFeatured: false,
+    //"image":
+
+  }
+
+
+  product: any = {
+    id: 0,
+    netPrice: 55,
+    name: "",
+    descr: "",
+    price: 55,
     onSale: {
-      id: 0,
-      discount: 0
+      id: 1,
+      discount: .25
     },
-    category: 0,
+    category: this.category,
+    isFeatured: false,
+    //"image":
+
+  }
+
+
+  create: CreateProduct = {
+
+    netPrice: 55,
+    name: "",
+    descr: "",
+    price: 55,
+    onSale: this.sale,
+    category: this.category,
     isFeatured: false,
     //"image":
 
@@ -98,6 +137,33 @@ export class ProductsComponent implements OnInit {
         this.price = data.data
       })
 
+  }
+
+  createProduct(createProduct: CreateProduct) {
+    this.productService.create(createProduct).subscribe({
+
+    });
+    console.log(createProduct)
+  }
+
+  updatedProduct: Product = {
+    id: 1,
+    netPrice: .99,
+    name: "Upadting from Front End",
+    descr: "Updated",
+    price: .99,
+    onSale: this.sale,
+    category: this.category,
+    isFeatured: false,
+    //"image":
+
+  }
+
+  updateProduct(update: Product) {
+    this.productService.update(update).subscribe({
+
+    });
+    console.log(update)
   }
 
   constructor(private productService: ProductService) { }
