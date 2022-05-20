@@ -1,1 +1,14 @@
-<p>products works!</p>
+<button (click)='getAll()'>Get All</button>
+<p>{{result | json}}</p>
+
+<br>
+
+<input type="text" [(ngModel)]='id'>
+<button (click)='getByID(id)'>Get getByID</button>
+<p>{{result | json}}</p>
+
+<br>
+
+<input type="text" [(ngModel)]='id'>
+<button (click)='getProductPrice(id)'>Get getProductPrice</button>
+<p>{{result | json}}</p>
