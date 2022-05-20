@@ -161,10 +161,16 @@ export class ProductsComponent implements OnInit {
 
   updateProduct(update: Product) {
     this.productService.update(update).subscribe({
+    });
+  }
+
+
+  deleteByID(id: number) {
+    this.productService.deleteById(id).subscribe({
 
     });
-    console.log(update)
   }
+
 
   constructor(private productService: ProductService) { }
 
