@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Product } from "../../interfaces/Product-Interface/product.interface";
 
 
@@ -16,17 +17,26 @@ export class ProductService {
   constructor(private http: HttpClient) {
   }
 
-  getAllProducts(): Observable<any> {
-    return this.http.get<Product>(this.productsURL);
+  // getAllProducts(): Observable<Product[]> {
+  //   return this.http.get<Product[]>(this.productsURL);
+  // }
+  getAllProducts(): Observable<Product[]> {
+    return this.http.get<Product[]>(this.productsURL);
   }
 
-  getProductById(id: number): Observable<any> {
+  getProductById(id: number): Observable<Product> {
     console.log("in Service")
     return this.http.get<Product>(this.productsURL + "/" + id);
   }
 
-  getProductPrice(id: number): Observable<any> {
-    return this.http.get(this.productsURL + "/" + id + "/price");
+  getProductPrice(id: number): Observable<Product> {
+    return this.http
+      .get<Product>(this.productsURL + "/" + id + "/price").pipe(
+        map(res => res));
+  }
+
+  getAllFeatured(): Observable<Product> {
+    return this.http.get<Product>(this.productsURL + "/featured");
   }
 
 }

@@ -1,6 +1,6 @@
 import { identifierName } from '@angular/compiler';
 import { decimalDigest } from '@angular/compiler/src/i18n/digest';
-import { Component, OnInit } from '@angular/core';
+import { ANALYZE_FOR_ENTRY_COMPONENTS, Component, OnInit } from '@angular/core';
 import { flush } from '@angular/core/testing';
 import { Data } from '@angular/router';
 import { Product } from 'src/app/shared/interfaces/Product-Interface/product.interface';
@@ -19,47 +19,50 @@ export class ProductsComponent implements OnInit {
 
   price: number = 0;
 
-  result: Product = {
-    // netPrice: 0,
-
+  productById: Product = {
+    netPrice: 0,
     id: 0,
     name: "",
     descr: "",
     price: 0,
-    // onSale: {
-    //   id: 0,
-    //   discount: 0
-    // },
+    onSale: {
+      id: 0,
+      discount: 0
+    },
     category: 0,
     isFeatured: false,
     //"image":
 
   }
 
+  getAllProducts: Array<Product> = [];
+
+
+
   getAll() {
     this.productService.getAllProducts()
       .subscribe((data: any) => {
-        console.log(data.data.product)
-        this.result = {
 
-          // netPrice: data.netPrice,
-
-          "id": data.id,
-          "name": data.name,
-          "descr": data.descr,
-          "price": data.price,
-          // "onSale": {
-          //   "id": data.onSale.id,
-          //   "discount": data.onSale.discount
-          // },
-          "category": data.category,
-          "isFeatured": data.isFeatured,
-          //"image": 
+        for (var index in data) {
+          this.getAllProducts.push(data[index]);
         }
 
       })
-    console.log(this.result)
+
   }
+
+  getAllFeatured() {
+    this.productService.getAllFeatured()
+      .subscribe((data: any) => {
+
+        for (var index in data) {
+          this.getAllProducts.push(data[index]);
+        }
+
+      })
+
+  }
+
 
   getByID(id: number) {
 
@@ -67,34 +70,34 @@ export class ProductsComponent implements OnInit {
       .subscribe((data: any) => {
         // var test1: any = data.netPrice.map((d: any) => d.netPrice);
         // console.log("Data" + data.data.product.id)
-        this.result = {
-          // netPrice: data.netPrice,
+        this.productById = {
+          netPrice: data.data.netPrice,
 
           id: data.data.product.id,
           name: data.data.product.name,
           descr: data.data.product.descr,
           price: data.data.product.price,
-          // onSale: {
-          //   id: data.id,
-          //   discount: data.onSale.discount
-          // },
+          onSale: {
+            id: data.data.product.onSale.id,
+            discount: data.data.product.onSale.discount
+          },
           category: data.data.product.category,
           isFeatured: data.data.product.isFeatured,
           //"image": 
         }
 
       })
-    console.log(this.result.id)
+    console.log("Data" + this.productById)
   }
 
   getProductPrice(id: number) {
+
     this.productService.getProductPrice(id)
       .subscribe((data: any) => {
         console.log(data)
-        this.price = data.netPrice
-
+        this.price = data.data
       })
-    console.log("Price" + this.price)
+
   }
 
   constructor(private productService: ProductService) { }
