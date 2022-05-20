@@ -5,6 +5,7 @@ import { AuthGuard } from './shared/guards/auth.guard';
 import { BaseLayoutComponent } from './shared/components/base-layout/base-layout.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { LoginComponent } from './shared/components/login/login.component';
+import { RegisterComponent } from './shared/components/register/register.component';
 
 const routes : Routes = [
   {
@@ -13,16 +14,15 @@ const routes : Routes = [
     children: [
       { path: '', component: HomeComponent },
       { path: 'products', component: ProductsComponent },
-      { path: 'login', component: LoginComponent },
     ],
-    canActivate: [ AuthGuard ] // Kicks us out to session/login possibly
+    canActivate: [ AuthGuard ] // Kicks us out to login possibly
   },
   {
-    path: 'session',
+    path: '',
     component: BaseLayoutComponent,
     children: [
-      { path: '', component: LoginComponent },
-      // { path: 'register', component: RegisterComponent }
+      { path: 'login', component: LoginComponent },
+      { path: 'register', component: RegisterComponent }
     ]
   }
 ];
