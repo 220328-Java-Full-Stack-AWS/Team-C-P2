@@ -5,6 +5,7 @@ import { AuthGuard } from './shared/guards/auth.guard';
 import { BaseLayoutComponent } from './shared/components/base-layout/base-layout.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { LoginComponent } from './shared/components/login/login.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 const routes : Routes = [
   {
@@ -14,6 +15,7 @@ const routes : Routes = [
       { path: '', component: HomeComponent },
       { path: 'products', component: ProductsComponent },
       { path: 'login', component: LoginComponent },
+      { path: 'profile', component: ProfileComponent },
     ],
     canActivate: [ AuthGuard ] // Kicks us out to session/login possibly
   },
