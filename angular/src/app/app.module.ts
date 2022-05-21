@@ -9,6 +9,7 @@ import { BaseLayoutComponent } from './shared/components/base-layout/base-layout
 import { HomeComponent } from './pages/home/home.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { LoginComponent } from './shared/components/login/login.component';
+import { CategoriesComponent } from './categories/categories.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { LoginComponent } from './shared/components/login/login.component';
     BaseLayoutComponent,
     HomeComponent,
     ProductsComponent,
-    LoginComponent
+    LoginComponent,
+    CategoriesComponent
   ],
   imports: [
     AppRoutingModule,
