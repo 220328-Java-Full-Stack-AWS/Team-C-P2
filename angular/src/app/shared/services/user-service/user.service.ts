@@ -40,4 +40,8 @@ export class UserService {
 
     return this.http.get<UserProfile>(this.userURL + "/" + id + "/profile", {withCredentials:true});
   }
+
+  getUserCart(cartId: number): Observable<any> {
+    return this.http.get<UserProfile>(this.userURL + "/" + cartId + "/profile", {withCredentials:true}); 
+  }
 }
