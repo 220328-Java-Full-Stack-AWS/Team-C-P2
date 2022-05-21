@@ -7,7 +7,7 @@ html {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    
+
 }
 
 body, p, ul{
@@ -117,7 +117,7 @@ button, .button {
 
 //Spacing
 .container {
-    
+
     max-width: 32.75rem;
     margin: 0 auto;
 
@@ -133,7 +133,7 @@ button, .button {
     &--px {
         padding-left: 5rem;
         padding-right: 5rem;
-        
+
     }
 
     &--py {
@@ -189,7 +189,7 @@ li {
 .forms {
     margin-bottom: 2.35rem;
     width: 100%;
-    
+
     input {
         font-family: 'Roboto', sans-serif;
         font-size: 1rem;
@@ -198,6 +198,10 @@ li {
         padding: 1.5rem;
         border: 1px solid $white;
         border-radius: 0.25rem;
+
+        &.ng-invalid.ng-touched {
+          border: 1px solid rgba(219, 118, 118, .8);
+        }
     }
 
     textarea {

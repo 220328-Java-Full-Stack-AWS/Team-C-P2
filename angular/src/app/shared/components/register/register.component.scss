@@ -1,8 +1,47 @@
+@import "../../../../styles/variables";
+
 #registerStepper {
   width: 60%;
   margin: auto;
 }
+
+.error {
+  position: relative;
+  padding:0 25px;
+  height: 50px;
+  margin: auto;
+  width: 50%;
+  min-width: 325px;
+  max-width: 450px;
+  border-radius: 6px;
+  background-color: #FFE7E6;
+  color: red;
+  opacity: 1;
+  transition: opacity .1s ease-in-out;
+
+  &.hide {
+    opacity: 0;
+  }
+
+  .exit:hover {
+    cursor: pointer;
+  }
+
+  .stripe {
+    background-color: red;
+    position: absolute;
+    left: 0;
+    height: 100%;
+    width: 5px;
+  }
+}
+
 :host ::ng-deep {
+  .mat-icon.info {
+    margin-left: 10px;
+    color: $lightBlue;
+  }
+
   .mat-step-icon {
     box-shadow: 1px 3px 4px rgb(0 0 0 / 40%)
   }
@@ -11,20 +50,19 @@
     background-color: grey !important;
   }
   .mat-step-icon-selected {
-    background-color: #2988bc !important;
+    background-color: $lightBlue !important;
   }
 }
 
 input {
-
   margin-bottom: 10px;
 }
 
 button.button {
   font-size: 1rem;
   padding: 1rem 2.5rem;
-  color: #f7f5ed;
-  background-color: #2988bc;
+  color: $white;
+  background-color: $lightBlue;
   letter-spacing: 0;
   opacity: 0.8;
 

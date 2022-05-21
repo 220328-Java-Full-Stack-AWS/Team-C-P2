@@ -4,6 +4,13 @@
             <div class="login__form-header">
                 <h1>Login</h1>
             </div>
+
+            <div class="error hide" fxLayoutAlign="space-between center">
+              <div class="stripe"></div>
+              <div class="message">{{error}}</div>
+              <mat-icon class="exit" style="color: red" (click)="closeError()">close</mat-icon>
+            </div>
+
             <form [formGroup]="loginForm" (ngSubmit)="submitForm()">
               <div class="login__inputs">
                   <div>

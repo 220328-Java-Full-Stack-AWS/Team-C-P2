@@ -13,7 +13,9 @@ import { LoginComponent } from './shared/components/login/login.component';
 import { RegisterComponent } from './shared/components/register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import {MatStepperModule} from '@angular/material/stepper';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import {MatStepperModule} from '@angular/material/stepper';
     HttpClientModule,
     BrowserAnimationsModule,
     MatStepperModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatTooltipModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]
