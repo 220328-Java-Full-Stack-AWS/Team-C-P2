@@ -24,7 +24,10 @@ export class BaseLayoutComponent implements OnInit {
     ){ 
   };
 
-  userId = 0;
+  private user: UserInfo = {
+    userId: 0,
+    activeCartId: 0
+  }
 
   
 
@@ -54,14 +57,10 @@ export class BaseLayoutComponent implements OnInit {
       this.isLoggedIn = false;
     }
 
-    this.userSubscription = this.userService.getInstance().subscribe({
-      next: 
-      (data: UserInfo) => {
-        this.userId = data.userId;
-      }
-      
-    });
-
-    console.log(this.userId);
+    this.userService.getCurrentUser().subscribe((user) => (
+      this.user = user
+    ));
+    
+    console.log(this.user);
   }
 }

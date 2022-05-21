@@ -83,7 +83,7 @@ export class ProfileComponent implements OnInit {
     })
   }
 
-  userInfo: UserInfo = {
+  private user: UserInfo = {
     userId: 0,
     activeCartId: 0
   }
@@ -92,16 +92,9 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.cookie.getCookie('user_session');
-    this.userSubscription = this.userService.getInstance().subscribe({
-      next: 
-      (data: UserInfo) => {
-        this.userId = data.userId;
-        console.log(this.userId);
-      }
-      
-    });
-    this.userService.getInstance().next(this.userInfo);
+    this.userService.getCurrentUser().subscribe((user) => (
+      this.user = user
+    ));
+    this.getUserById(this.user.userId);
   }
-
-
 }

@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HomeComponent } from 'src/app/pages/home/home.component';
+import { UserInfo } from '../../interfaces/User-Interface/User-info.interface';
 import { AuthService } from '../../services/auth-service/auth.service';
 import { UserService } from '../../services/user-service/user.service';
 import { BaseLayoutComponent } from '../base-layout/base-layout.component';
-import { UserInfo } from '../../interfaces/User-Interface/User-info.interface';
-import { Observable, of } from 'rxjs';
-import { ProfileComponent } from 'src/app/pages/profile/profile.component';
 
 @Component({
   selector: 'app-login',
@@ -32,14 +29,10 @@ export class LoginComponent implements OnInit {
       "password": ["", Validators.compose([Validators.required, Validators.pattern("")])] // Add minimum requirement check?
     });
   }
-  userInfo: UserInfo = {
+
+  private user: UserInfo = {
     userId: 0,
     activeCartId: 0
-  }
-
-  sendMessage(info: UserInfo) {
-    this.userService.getInstance().next({userId: info.userId, activeCartId: info.activeCartId});
-
   }
 
 
@@ -49,14 +42,14 @@ export class LoginComponent implements OnInit {
       next: response => {
         // Success response
         console.log(`Hello ${response.data.firstName} ${response.data.lastName}`);
-        this.baseLayout.isLoggedIn = true;
         
-        this.userInfo = {
-          userId: response.data.id,
-          activeCartId: response.data.activeCartId
-        }
-        console.log("login userID:" + this.userInfo.userId);
-
+        // Sets current user info to behavior service and sets logged in to true
+        this.baseLayout.isLoggedIn = true;
+        this.user.userId = response.data.id;
+        this.user.activeCartId = response.data.activeCartId;
+        this.userService.setUserId(response.data.id);
+        this.userService.setActiveCartId(response.data.activeCartId);
+        localStorage.setItem('userInfo', JSON.stringify(this.user));
         
         this.router.navigate(['/']);
       },

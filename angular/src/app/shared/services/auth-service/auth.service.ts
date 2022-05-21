@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
 import { Observable } from 'rxjs';
+import { UserInfo } from '../../interfaces/User-Interface/User-info.interface';
 import { UserToRegister } from '../../interfaces/user-to-register.interface';
 
 @Injectable({
@@ -9,6 +11,10 @@ import { UserToRegister } from '../../interfaces/user-to-register.interface';
 export class AuthService {
 
   authRoute : string = "http://localhost:8080/auth";
+  private userInfo: UserInfo = {
+    userId: 0,
+    activeCartId: 0
+  }
 
   constructor(private http: HttpClient) { }
 
@@ -24,6 +30,7 @@ export class AuthService {
   };
 
   logout():Observable<any> {
+    localStorage.setItem('userInfo', JSON.stringify(this.userInfo));
     return this.http.post(`${this.authRoute}/logout`, null, {observe: 'response', withCredentials: true});
   }
 }
