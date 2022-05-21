@@ -25,6 +25,12 @@ export class AuthService {
     }, { withCredentials: true });
   };
 
+  checkUsername(username: string): Observable<any> {
+    return this.http.post("http://localhost:8080/user/registrations", {
+      username: username
+    }, { withCredentials: true });
+  }
+
   register(user: UserToRegister): Observable<any> {
     return this.http.post(`${this.authRoute}/register`, user, { withCredentials: true });
   };

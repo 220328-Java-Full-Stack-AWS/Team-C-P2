@@ -1,7 +1,7 @@
 export interface UserPayment {
-  id?: number,
+  id?: number | null,
   network: string,
-  issuer?: string,
+  issuer?: string | null,
   cardNumber: number,
   securityCode: number,
   expirationDate: string

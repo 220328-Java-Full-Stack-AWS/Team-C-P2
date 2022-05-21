@@ -4,3 +4,34 @@
   cursor: default;
   opacity: .8;
 }
+
+.error {
+  position: relative;
+  padding:0 25px;
+  height: 50px;
+  margin: auto;
+  width: 50%;
+  min-width: 325px;
+  max-width: 450px;
+  border-radius: 6px;
+  background-color: #FFE7E6;
+  color: red;
+  opacity: 1;
+  transition: opacity .1s ease-in-out;
+
+  &.hide {
+    opacity: 0;
+  }
+
+  .exit:hover {
+    cursor: pointer;
+  }
+
+  .stripe {
+    background-color: red;
+    position: absolute;
+    left: 0;
+    height: 100%;
+    width: 5px;
+  }
+}
