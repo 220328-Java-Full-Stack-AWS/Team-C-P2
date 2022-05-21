@@ -9,7 +9,6 @@ export class CookieService {
 
   public getCookie(name: string) {
     let ca: Array<string> = document.cookie.split(';');
-    console.log(document.cookie);
     let caLen: number = ca.length;
     let cookieName = `${name}=`;
     let c: string;
@@ -21,7 +20,13 @@ export class CookieService {
       }
     }
     return '';
+  
   }
+
+  public deleteCookie(cookieName: string) {
+    this.setCookie({ name: cookieName, value: '', expireDays: -1 });
+  }
+
   public setCookie(params: any) {
     let d: Date = new Date();
     d.setTime(
@@ -43,4 +48,5 @@ export class CookieService {
         ? 'secure'
         : '');
   }
+
 }

@@ -22,4 +22,8 @@ export class AuthService {
   register(user: UserToRegister): Observable<any> {
     return this.http.post(`${this.authRoute}/register`, user, { withCredentials: true });
   };
+
+  logout():Observable<any> {
+    return this.http.post(`${this.authRoute}/logout`, null, {observe: 'response', withCredentials: true});
+  }
 }

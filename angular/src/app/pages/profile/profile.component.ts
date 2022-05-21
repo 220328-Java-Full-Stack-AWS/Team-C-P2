@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginComponent } from 'src/app/shared/components/login/login.component';
+import { UserInfo } from 'src/app/shared/interfaces/User-Interface/User-info.interface';
 import { UserProfile } from 'src/app/shared/interfaces/User-Interface/user-profile.interface';
 import { CookieService } from 'src/app/shared/services/cookie-service/cookie.service';
 import { UserService } from 'src/app/shared/services/user-service/user.service';
@@ -10,7 +12,13 @@ import { UserService } from 'src/app/shared/services/user-service/user.service';
 })
 export class ProfileComponent implements OnInit {
 
-  id: number = 0;
+  userId: number = 0;
+  
+  constructor(
+    private userService: UserService,
+    public cookie:CookieService
+    ) {
+     }
 
   userQuery: UserProfile = {
     id: 0,
@@ -42,7 +50,7 @@ export class ProfileComponent implements OnInit {
   }
 
   getUserById(id:number) {
-    this.UserService.getUser(id).subscribe((json: any) => {
+    this.userService.getUser(id).subscribe((json: any) => {
       console.log(json);
       this.userQuery = {
         id: json.data.id,
@@ -74,11 +82,26 @@ export class ProfileComponent implements OnInit {
       }
     })
   }
-  constructor(private UserService: UserService, public cookie:CookieService) { }
 
-  ngOnInit() {
-    this.cookie.getCookie('user_session');
-    console.log(this.cookie);
+  userInfo: UserInfo = {
+    userId: 0,
+    activeCartId: 0
   }
+
+  userSubscription: any;
+
+  ngOnInit(): void {
+    this.cookie.getCookie('user_session');
+    this.userSubscription = this.userService.getInstance().subscribe({
+      next: 
+      (data: UserInfo) => {
+        this.userId = data.userId;
+        console.log(this.userId);
+      }
+      
+    });
+    this.userService.getInstance().next(this.userInfo);
+  }
+
 
 }
