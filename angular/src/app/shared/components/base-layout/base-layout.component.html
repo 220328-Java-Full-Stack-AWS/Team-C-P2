@@ -1,15 +1,21 @@
 <!-- NavBar -->
 <header class="header">
     <nav class="container container--pall flex flex-jc-sb flex-ai-c">
-        <a href="" class="header__logo">Home</a>
+        <a routerLink="/" class="header__logo">Home</a>
 
-        <div class="header__links">
+        <div class="header__links" *ngIf="(isLoggedIn)">
+            <a class="scroll">Categories</a>
+            <a routerLink="/products" class="scroll">Products</a>
+            <a routerLink="/cart" class="scroll">Cart</a>
+            <a routerLink="/profile">Profile</a>
+            <a (click)='logout()'>Logout</a>
+        </div>
+
+        <div class="header__links" *ngIf="!(isLoggedIn)">
             <a href="" class="scroll">Categories</a>
-            <a href="" class="scroll">Products</a>
-            <a href="" class="scroll">Cart</a>
-            <a href="" class="scroll">Profile</a>
+            <a href="" routerLink="/products" class="scroll">Products</a>
             <a href="" routerLink="/login">Login</a>
-            <a href="../html/templates/register.html">Register</a>
+            <a href="" routerLink="/register">Register</a>
         </div>
     </nav>
 </header>

@@ -65,16 +65,19 @@ h1 {
     font-family: 'Roboto', sans-serif;
     font-size: 2rem;
     font-weight: 700;
-    font-size: 4rem;
 }
 
 h2 {
     font-family: 'Roboto', sans-serif;
-    font-size: 1rem;
+    font-size: 1.5rem;
     font-weight: 500;
 
+}
 
-
+h3 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
 }
 
 //Links
@@ -95,7 +98,7 @@ a, a:visited, a:hover {
 
 //Buttons
 button, .button {
-    padding: 0.25rem 2rem;
+    padding: 0.25rem 1rem;
     cursor: pointer;
     display: inline-block;
     border-radius: 0.5rem;
@@ -118,7 +121,6 @@ button, .button {
 //Spacing
 .container {
     
-    max-width: 32.75rem;
     margin: 0 auto;
 
     max-width: 77.25rem;
@@ -219,4 +221,9 @@ li {
         border-color: $orange;
         outline: none;
     }
+}
+
+.item-container {
+    border: 1px solid darkgray;
+    border-radius: 0.5rem;
 }
