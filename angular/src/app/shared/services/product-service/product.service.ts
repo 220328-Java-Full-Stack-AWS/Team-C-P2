@@ -39,6 +39,11 @@ export class ProductService {
       .get<Product[]>(this.productsURL + "/featured");
   }
 
+  getByCategoryId(id: number): Observable<Product[]> {
+    return this.http
+      .get<Product[]>(this.productsURL + "/category/" + id);
+  }
+
   create(product: CreateProduct): Observable<CreateProduct> {
 
     return this.http.post<CreateProduct>(this.productsURL + "/create", product);

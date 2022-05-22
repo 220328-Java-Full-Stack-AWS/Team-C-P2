@@ -94,24 +94,18 @@ export class ProductsComponent implements OnInit {
   i: number = 0;
 
   getByCategory(id: number) {
-    this.productService.getAllProducts()
+    this.productService.getByCategoryId(id)
       .subscribe((data: any) => {
-        // console.log(data.data[2].product.category.id)
-        // for (const index in data) {
-        //   console.log(index)
-        //   //console.log(data[index])
-        //   // this.getAllProducts.push(data[index]);
-        // }
-        let dtaP = JSON.parse(data);
 
-        for (var index in dtaP) {
-          console.log(dtaP[index])
-          this.getAllProducts.push(dtaP[index]);
+        for (var index in data) {
+          console.log(data[index])
+          this.getAllProducts.push(data[index]);
         }
 
       })
 
   }
+
 
   getAllFeatured() {
     this.productService.getAllFeatured()
