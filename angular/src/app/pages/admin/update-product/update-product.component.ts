@@ -54,6 +54,47 @@ export class UpdateProductComponent implements OnInit {
 
   }
 
+  productById: Product = {
+    netPrice: 0,
+    id: 0,
+    name: "",
+    descr: "",
+    price: 0,
+    onSale: this.sale,
+    category: this.category,
+    isFeatured: false,
+    //"image":
+
+  }
+
+  id: number = 0; 
+
+
+  getByID(id: number) {
+
+    this.productService.getProductById(id)
+      .subscribe((data: any) => {
+        // var test1: any = data.netPrice.map((d: any) => d.netPrice);
+        // console.log("Data" + data.data.product.id)
+        this.productById = {
+          netPrice: data.data.netPrice,
+
+          id: data.data.product.id,
+          name: data.data.product.name,
+          descr: data.data.product.descr,
+          price: data.data.product.price,
+          onSale: {
+            id: data.data.product.onSale.id,
+            discount: data.data.product.onSale.discount
+          },
+          category: data.data.product.category,
+          isFeatured: data.data.product.isFeatured,
+          //"image": 
+        }
+
+      })
+    console.log("Data" + this.productById)
+  }
 
 
   updateProduct(update: Product) {

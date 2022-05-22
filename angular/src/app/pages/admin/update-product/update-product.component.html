@@ -7,34 +7,70 @@
                 </div>
                 <div class="profile__item-content">
                     <div class="profile__item-content-header">
+                        <h3><strong>Product Id</strong></h3>
+                    </div>
+                    <div class="profile__item-content-info">
+                        <input type="text" [(ngModel)]='id'>
+                    </div>
+                    <div class="profile__button">
+                        <button (click)='getByID(id)'>Get Product Information</button>
+                    </div>
+                </div>
+
+                <div class="profile__item-content">
+                    <div class="profile__item-content-header">
                         <h3><strong>Product Name</strong></h3>
                     </div>
                     <div class="profile__item-content-info">
-                        <!-- <h3>{{firstName}}</h3> -->
+                        <h3>{{productById.name}}</h3>
                     </div>
                 </div>
                 <div class="profile__item-content">
                     <div class="profile__item-content-header">
-                        <h3><strong>Username</strong></h3>
+                        <h3><strong>Description</strong></h3>
                     </div>
                     <div class="profile__item-content-info">
-                        <!-- <h3>{{username}}</h3> -->
+                        <h3>{{productById.descr}}</h3>
                     </div>
                 </div>
                 <div class="profile__item-content">
                     <div class="profile__item-content-header">
-                        <h3><strong>Email</strong></h3>
+                        <h3><strong>Price</strong></h3>
                     </div>
                     <div class="profile__item-content-info">
-                        <!-- <h3>{{email}}</h3> -->
+                        <h3>${{productById.price}}</h3>
                     </div>
                 </div>
                 <div class="profile__item-content">
                     <div class="profile__item-content-header">
-                        <h3><strong>Phone Number</strong></h3>
+                        <h3><strong>Category Name</strong></h3>
                     </div>
                     <div class="profile__item-content-info">
-                        <!-- <h3>{{phoneNumber}}</h3> -->
+                        <h3>{{productById.category.name}}</h3>
+                    </div>
+                </div>
+                <div class="profile__item-content">
+                    <div class="profile__item-content-header">
+                        <h3><strong>Category Id</strong></h3>
+                    </div>
+                    <div class="profile__item-content-info">
+                        <h3>{{productById.category.id}}</h3>
+                    </div>
+                </div>
+                <div class="profile__item-content">
+                    <div class="profile__item-content-header">
+                        <h3><strong>Sale Id</strong></h3>
+                    </div>
+                    <div class="profile__item-content-info">
+                        <h3>{{productById.onSale.id}}</h3>
+                    </div>
+                </div>
+                <div class="profile__item-content">
+                    <div class="profile__item-content-header">
+                        <h3><strong>Discount</strong></h3>
+                    </div>
+                    <div class="profile__item-content-info">
+                        <h3>{{productById.onSale.discount}}</h3>
                     </div>
                 </div>
                 <div class="profile__button">
