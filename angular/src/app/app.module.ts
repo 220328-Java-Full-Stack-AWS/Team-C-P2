@@ -16,6 +16,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { CartComponent } from './pages/cart/cart.component';
+import { UpdatePasswordComponent } from './pages/update-password/update-password.component';
+import { UpdateAddressComponent } from './pages/update-address/update-address.component';
+import { UpdatePaymentComponent } from './pages/update-payment/update-payment.component';
+import { UpdateProfileComponent } from './pages/update-profile/update-profile.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +30,13 @@ import { MatIconModule } from '@angular/material/icon';
     HomeComponent,
     ProductsComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ProfileComponent,
+    CartComponent,
+    UpdatePasswordComponent,
+    UpdateAddressComponent,
+    UpdatePaymentComponent,
+    UpdateProfileComponent
   ],
   imports: [
     AppRoutingModule,

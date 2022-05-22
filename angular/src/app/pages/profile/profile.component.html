@@ -1,0 +1,179 @@
+<section class="profile">
+    <div class="container container--pall">
+        <div class="profile__header item-container">
+            <div class="profile__header-content">
+                <h1>{{userQuery.firstName + " " + userQuery.lastName}}</h1>
+                <h3>{{userQuery.role}}</h3>
+            </div>
+            <div class="profile__button">
+                <button routerLink="updatePassword" class="button">Update Password</button>
+            </div>
+        </div>
+        <div class="profile__content">
+            <div class="profile__item item-container">
+                <div class="profile__item-header">
+                    <h2>Profile Information</h2>
+                </div>
+                <div class="profile__item-content">
+                    <div class="profile__item-content-header">
+                        <h3><strong>First Name</strong></h3>
+                    </div>
+                    <div class="profile__item-content-info">
+                        <h3>{{userQuery.firstName}}</h3>
+                    </div>
+                </div>
+                <div class="profile__item-content">
+                    <div class="profile__item-content-header">
+                        <h3><strong>Last Name</strong></h3>
+                    </div>
+                    <div class="profile__item-content-info">
+                        <h3>{{userQuery.lastName}}</h3>
+                    </div>
+                </div>
+                <div class="profile__item-content">
+                    <div class="profile__item-content-header">
+                        <h3><strong>Username</strong></h3>
+                    </div>
+                    <div class="profile__item-content-info">
+                        <h3>{{userQuery.username}}</h3>
+                    </div>
+                </div>
+                <div class="profile__item-content">
+                    <div class="profile__item-content-header">
+                        <h3><strong>Email</strong></h3>
+                    </div>
+                    <div class="profile__item-content-info">
+                        <h3>{{userQuery.email}}</h3>
+                    </div>
+                </div>
+                <div class="profile__item-content">
+                    <div class="profile__item-content-header">
+                        <h3><strong>Phone Number</strong></h3>
+                    </div>
+                    <div class="profile__item-content-info">
+                        <h3>{{userQuery.userAddress.phoneNumber}}</h3>
+                    </div>
+                </div>
+                <div class="profile__button">
+                    <button routerLink="updateProfile" class="button">Update Profile</button>
+                </div>
+            </div>
+
+            <div class="profile__item item-container" *ngIf="(userQuery.userAddress.id != null)">
+                <div class="profile__item-header">
+                    <h2>Address Information</h2>
+                </div>
+                <div class="profile__item-content">
+                    <div class="profile__item-content-header">
+                        <h3><strong>Address Line 1</strong></h3>
+                    </div>
+                    <div class="profile__item-content-info">
+                        <h3>{{userQuery.userAddress.addressLine1}}</h3>
+                    </div>
+                </div>
+                <div class="profile__item-content">
+                    <div class="profile__item-content-header">
+                        <h3><strong>Address Line 2</strong></h3>
+                    </div>
+                    <div class="profile__item-content-info">
+                        <h3>{{userQuery.userAddress.addressLine2}}</h3>
+                    </div>
+                </div>
+                <div class="profile__item-content">
+                    <div class="profile__item-content-header">
+                        <h3><strong>City</strong></h3>
+                    </div>
+                    <div class="profile__item-content-info">
+                        <h3>{{userQuery.userAddress.city}}</h3>
+                    </div>
+                </div>
+                <div class="profile__item-content">
+                    <div class="profile__item-content-header">
+                        <h3><strong>Postal Code</strong></h3>
+                    </div>
+                    <div class="profile__item-content-info">
+                        <h3>{{userQuery.userAddress.postalCode}}</h3>
+                    </div>
+                </div>
+                <div class="profile__item-content">
+                    <div class="profile__item-content-header">
+                        <h3><strong>Country</strong></h3>
+                    </div>
+                    <div class="profile__item-content-info">
+                        <h3>{{userQuery.userAddress.country}}</h3>
+                    </div>
+                </div>
+                <div class="profile__button">
+                    <button routerLink="updateAddress" class="button">Update Address</button>
+                </div>
+            </div>
+
+            <div class="profile__item item-container" *ngIf="(userQuery.userAddress.id == null)">
+                <div class="profile__item-header">
+                    <h2>Address Information</h2>
+                </div>
+                <div class="profile__button">
+                    <button routerLink="updateAddress" class="button">Add Address</button>
+                </div>
+            </div>
+
+            <div class="profile__item item-container" *ngIf="(userQuery.payment.id != null)">
+                <div class="profile__item-header">
+                    <h2>Payment Information</h2>
+                </div>
+                <div class="profile__item-content">
+                    <div class="profile__item-content-header">
+                        <h3><strong>Network</strong></h3>
+                    </div>
+                    <div class="profile__item-content-info">
+                        <h3>{{userQuery.payment.network}}</h3>
+                    </div>
+                </div>
+                <div class="profile__item-content">
+                    <div class="profile__item-content-header">
+                        <h3><strong>Issuer</strong></h3>
+                    </div>
+                    <div class="profile__item-content-info">
+                        <h3>{{userQuery.payment.issuer}}</h3>
+                    </div>
+                </div>
+                <div class="profile__item-content">
+                    <div class="profile__item-content-header">
+                        <h3><strong>Card Number</strong></h3>
+                    </div>
+                    <div class="profile__item-content-info">
+                        <h3>{{userQuery.payment.cardNumber}}</h3>
+                    </div>
+                </div>
+                <div class="profile__item-content">
+                    <div class="profile__item-content-header">
+                        <h3><strong>Security Code</strong></h3>
+                    </div>
+                    <div class="profile__item-content-info">
+                        <h3>{{userQuery.payment.securityCode}}</h3>
+                    </div>
+                </div>
+                <div class="profile__item-content">
+                    <div class="profile__item-content-header">
+                        <h3><strong>Expiration Date</strong></h3>
+                    </div>
+                    <div class="profile__item-content-info">
+                        <h3>{{userQuery.payment.expirationDate}}</h3>
+                    </div>
+                </div>
+                <div class="profile__button">
+                    <button routerLink="updatePayment" class="button">Update Payment</button>
+                </div>
+            </div>
+
+            <div class="profile__item item-container" *ngIf="(userQuery.payment.id == null)">
+                <div class="profile__item-header">
+                    <h2>Payment Information</h2>
+                </div>
+                <div class="profile__button">
+                    <button routerLink="updatePayment" class="button">Add Payment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
