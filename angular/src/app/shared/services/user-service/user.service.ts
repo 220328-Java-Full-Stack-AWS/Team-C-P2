@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { UserInfo } from '../../interfaces/User-Interface/User-info.interface';
+import { UserInfo } from '../../interfaces/User-Interface/user-info.interface';
 
 import { UserProfile } from '../../interfaces/User-Interface/user-profile.interface';
 
@@ -42,6 +42,6 @@ export class UserService {
   }
 
   getUserCart(cartId: number): Observable<any> {
-    return this.http.get<UserProfile>(this.userURL + "/" + cartId + "/profile", {withCredentials:true}); 
+    return this.http.get<UserProfile>(this.userURL + "/" + cartId + "/profile", {withCredentials:true});
   }
 }

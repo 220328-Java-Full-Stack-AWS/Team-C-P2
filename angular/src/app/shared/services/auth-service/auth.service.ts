@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
 import { Observable } from 'rxjs';
-import { UserInfo } from '../../interfaces/User-Interface/User-info.interface';
 import { UserToRegister } from '../../interfaces/user-to-register.interface';
+import {UserInfo} from "../../interfaces/User-Interface/user-info.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +23,12 @@ export class AuthService {
       password: password
     }, { withCredentials: true });
   };
+
+  checkUsername(username: string): Observable<any> {
+    return this.http.post("http://localhost:8080/user/registrations", {
+      username: username
+    }, { withCredentials: true });
+  }
 
   register(user: UserToRegister): Observable<any> {
     return this.http.post(`${this.authRoute}/register`, user, { withCredentials: true });

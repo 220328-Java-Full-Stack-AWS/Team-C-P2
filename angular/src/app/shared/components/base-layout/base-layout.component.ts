@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProfileComponent } from 'src/app/pages/profile/profile.component';
-import { UserInfo } from '../../interfaces/User-Interface/User-info.interface';
+import { UserInfo } from '../../interfaces/User-Interface/user-info.interface';
 import { UserProfile } from '../../interfaces/User-Interface/user-profile.interface';
 import { AuthService } from '../../services/auth-service/auth.service';
 import { CookieService } from '../../services/cookie-service/cookie.service';
@@ -20,8 +20,8 @@ export class BaseLayoutComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private userService: UserService,
-    
-    ){ 
+
+    ){
   };
 
   private user: UserInfo = {
@@ -29,7 +29,7 @@ export class BaseLayoutComponent implements OnInit {
     activeCartId: 0
   }
 
-  
+
 
 
 
@@ -60,7 +60,7 @@ export class BaseLayoutComponent implements OnInit {
     this.userService.getCurrentUser().subscribe((user) => (
       this.user = user
     ));
-    
+
     console.log(this.user);
   }
 }
