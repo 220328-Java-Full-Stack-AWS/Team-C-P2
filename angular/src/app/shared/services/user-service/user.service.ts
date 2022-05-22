@@ -1,10 +1,9 @@
 import { NgIf } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { UserInfo } from '../../interfaces/User-Interface/user-info.interface';
-
+import { Cart } from '../../interfaces/Cart-Interface/cart.interface';
 import { UserProfile } from '../../interfaces/User-Interface/user-profile.interface';
 
 @Injectable({
@@ -41,7 +40,8 @@ export class UserService {
     return this.http.get<UserProfile>(this.userURL + "/" + id + "/profile", {withCredentials:true});
   }
 
-  getUserCart(cartId: number): Observable<any> {
-    return this.http.get<UserProfile>(this.userURL + "/" + cartId + "/profile", {withCredentials:true});
+  getUserActiveCart(id:number): Observable<any> {
+    console.log(this.userURL + "/" + id + "/cart");
+    return this.http.get<Cart>(this.userURL + "/" + id + "/cart", {withCredentials:true});
   }
 }
