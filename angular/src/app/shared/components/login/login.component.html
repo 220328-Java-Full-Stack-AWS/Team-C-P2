@@ -13,11 +13,23 @@
 
             <form [formGroup]="loginForm" (ngSubmit)="submitForm()">
               <div class="login__inputs">
-                  <div>
-                      <input type="text" name="username" id="username" placeholder="Enter username" formControlName="username">
+                  <div fxLayoutAlign="center center">
+                      <input type="text" name="username" id="username" placeholder="Enter username" formControlName="username" (blur)="checkInput(loginForm.get('username'), usernameTooltip)">
+                      <mat-icon
+                        class="info"
+                        #usernameTooltip="matTooltip"
+                        matTooltip="Username must be alphanumeric, may include '$' and be between 8-20 characters long."
+                        matTooltipPosition="after">info
+                      </mat-icon>
                   </div>
-                  <div>
-                      <input type="password" name="password" id="password" placeholder="Enter password" formControlName="password">
+                  <div fxLayoutAlign="center center">
+                      <input type="password" name="password" id="password" placeholder="Enter password" formControlName="password" (blur)="checkInput(loginForm.get('password'), passwordTooltip)">
+                      <mat-icon
+                        class="info"
+                        #passwordTooltip="matTooltip"
+                        matTooltip="Password must be 8-20 characters, have one or more capital letters and one or more special characters."
+                        matTooltipPosition="after">info
+                      </mat-icon>
                   </div>
               </div>
               <div class="login__button">

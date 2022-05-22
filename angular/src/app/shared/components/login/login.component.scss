@@ -1,8 +1,19 @@
+@import '../../../../styles/variables';
+
 .button:disabled, .button:disabled:hover {
   background-color: grey;
   transition: none;
   cursor: default;
   opacity: .8;
+}
+
+.mat-icon.info {
+  margin-left: 10px;
+  color: $lightBlue;
+}
+
+input {
+  margin-bottom: 10px;
 }
 
 .error {
