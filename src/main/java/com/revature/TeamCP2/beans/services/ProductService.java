@@ -47,6 +47,17 @@ public class ProductService {
         return productsRepository.getById(id);
     }
 
+    public List<Product> getByCategoryId(int id) throws ItemDoesNotExistException {
+
+        List<Product> ProductList = productsRepository.getByCategoryId(id);
+        if (ProductList.isEmpty()) {
+            throw new ItemDoesNotExistException("No Items to retrieve");
+        }
+
+        return productsRepository.getByCategoryId(id);
+    }
+
+
     public List<Product> getAll() throws ItemDoesNotExistException {
 
         List<Product> ProductList = productsRepository.getAll();
@@ -96,8 +107,7 @@ public class ProductService {
 
         if (product.getOnSale() == null) {
             return product.getPrice();
-        }
-        else {
+        } else {
             return ((Double) (1.00 - product.getOnSale().getDiscount())) * product.getPrice();
         }
 

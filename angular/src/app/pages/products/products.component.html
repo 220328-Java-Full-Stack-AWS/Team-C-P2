@@ -1,7 +1,7 @@
 <button (click)='getAll()'>Get All</button>
 <p>{{getAllProducts | json}}</p>
 
-<br>
+<!-- <br>
 
 <button (click)='getAllFeatured()'>Get All</button>
 <p>{{getAllProducts | json}}</p>
@@ -27,4 +27,9 @@
 <br>
 <br>
 <input type="text" [(ngModel)]='id'>
-<button (click)='deleteByID(id)'>Delete by ID</button>
+<button (click)='deleteByID(id)'>Delete by ID</button> --> -->
+
+
+<input type="text" [(ngModel)]='id'>
+<button (click)='getByCategory(id)'>Get by Category</button>
+<p>{{getAllProducts | json}}</p>

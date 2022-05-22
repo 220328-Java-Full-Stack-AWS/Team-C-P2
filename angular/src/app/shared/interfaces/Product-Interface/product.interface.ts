@@ -4,16 +4,13 @@ import { onSale } from "./onsale-interface";
 export interface Product {
 
   netPrice: number,
-
-  id: number,
+  id?: number,
   name: string,
   descr: string,
   price: number,
   onSale: onSale,
   category: category,
   isFeatured: boolean
-  //"image":
-
-
+  image?: Blob
 }
 

@@ -18,6 +18,9 @@ import {UpdatePasswordComponent} from './pages/update-password/update-password.c
 import {UpdateAddressComponent} from './pages/update-address/update-address.component';
 import {UpdatePaymentComponent} from './pages/update-payment/update-payment.component';
 import {UpdateProfileComponent} from './pages/update-profile/update-profile.component';
+import { UpdateProductComponent } from './pages/admin/update-product/update-product.component';
+import { CreateProductComponent } from './pages/admin/create-product/create-product.component';
+
 
 
 @NgModule({
@@ -32,7 +35,9 @@ import {UpdateProfileComponent} from './pages/update-profile/update-profile.comp
     UpdatePasswordComponent,
     UpdateAddressComponent,
     UpdatePaymentComponent,
-    UpdateProfileComponent
+    UpdateProfileComponent,
+    UpdateProductComponent,
+    CreateProductComponent
   ],
   imports: [
     AppRoutingModule,
