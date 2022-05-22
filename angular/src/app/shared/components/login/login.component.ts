@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
-import { UserInfo } from '../../interfaces/User-Interface/User-info.interface';
+import { UserInfo } from '../../interfaces/User-Interface/user-info.interface';
 import { AuthService } from '../../services/auth-service/auth.service';
 import { UserService } from '../../services/user-service/user.service';
 import { BaseLayoutComponent } from '../base-layout/base-layout.component';
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
       // Matches alphanumeric string that may include '$' & 8-20 characters long
       "username": ["", Validators.compose([Validators.required, Validators.pattern(/^[0-9a-z$]{8,20}$/i)])],
       // Password must: Have 8-20 characters, Include at least one capital letter, Include at least one special character.
-      "password": ["", Validators.compose([Validators.required, Validators.pattern(/^(?=.*[A-Z]+)(?=.*[!\"#$%&'()*+,\-.\/:;<=>?@[\]^_`{|}~]).{8,20}$/)])]
+      "password": ["", Validators.compose([Validators.required, Validators.pattern(/^(?=.*[A-Z]+)(?=.*[!"#$%&'()*+,\-.\/:;<=>?@[\]^_`{|}~]).{8,20}$/)])]
     });
   }
 
@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
       next: response => {
         // Success response
         console.log(`Hello ${response.data.firstName} ${response.data.lastName}`);
-        
+
         // Sets current user info to behavior service and sets logged in to true
         this.baseLayout.isLoggedIn = true;
         this.user.userId = response.data.id;
@@ -54,12 +54,11 @@ export class LoginComponent implements OnInit {
         this.userService.setUserId(response.data.id);
         this.userService.setActiveCartId(response.data.activeCartId);
         localStorage.setItem('userInfo', JSON.stringify(this.user));
-        
+
         this.router.navigate(['/']);
       },
       error: err => {
-        // Notify the user username or password was incorrect
-        //TODO: Display error
+        this.showError("The username or password is incorrect")
         console.error(err.error.message);
       }
     });

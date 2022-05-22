@@ -10,6 +10,11 @@ import { BaseLayoutComponent } from './shared/components/base-layout/base-layout
 import { HomeComponent } from './pages/home/home.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { LoginComponent } from './shared/components/login/login.component';
+import { RegisterComponent } from './shared/components/register/register.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatIconModule } from '@angular/material/icon';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { UpdatePasswordComponent } from './pages/update-password/update-password.component';
@@ -22,6 +27,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,13 +35,16 @@ import { MatIconModule } from '@angular/material/icon';
     HomeComponent,
     ProductsComponent,
     LoginComponent,
+    RegisterComponent,
     ProfileComponent,
     CartComponent,
     UpdatePasswordComponent,
     UpdateAddressComponent,
     UpdatePaymentComponent,
     UpdateProfileComponent,
-    RegisterComponent
+    RegisterComponent,
+    UpdateProfileComponent
+
   ],
   imports: [
     AppRoutingModule,
