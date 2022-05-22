@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserInfo } from 'src/app/shared/interfaces/User-Interface/User-info.interface';
+import { UserInfo } from 'src/app/shared/interfaces/User-Interface/user-info.interface';
 import { CookieService } from 'src/app/shared/services/cookie-service/cookie.service';
 import { UserService } from 'src/app/shared/services/user-service/user.service';
 
@@ -13,7 +13,7 @@ export class CartComponent implements OnInit {
   constructor(
     private userService: UserService,
     private cookie: CookieService,
-    
+
   ) { }
 
   private user: UserInfo = {
@@ -21,7 +21,7 @@ export class CartComponent implements OnInit {
     activeCartId: 0
   }
 
-  
+
 
   ngOnInit(): void {
     this.cookie.getCookie('user_session');
