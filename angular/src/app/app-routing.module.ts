@@ -11,6 +11,7 @@ import { UpdatePasswordComponent } from './pages/update-password/update-password
 import { UpdateAddressComponent } from './pages/update-address/update-address.component';
 import { UpdatePaymentComponent } from './pages/update-payment/update-payment.component';
 import { UpdateProfileComponent } from './pages/update-profile/update-profile.component';
+import { RegisterComponent } from './shared/components/register/register.component';
 
 const routes : Routes = [
   {
@@ -27,14 +28,14 @@ const routes : Routes = [
       { path: 'profile/updateAddress', component: UpdateAddressComponent },
       { path: 'profile/updatePayment', component: UpdatePaymentComponent },
     ],
-    canActivate: [ AuthGuard ] // Kicks us out to session/login possibly
+    canActivate: [ AuthGuard ] // Kicks us out to login possibly
   },
   {
-    path: 'session',
+    path: '',
     component: BaseLayoutComponent,
     children: [
-      { path: '', component: LoginComponent },
-      // { path: 'register', component: RegisterComponent }
+      { path: 'login', component: LoginComponent },
+      { path: 'register', component: RegisterComponent }
     ]
   }
 ];

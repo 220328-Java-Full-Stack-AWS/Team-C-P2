@@ -60,7 +60,7 @@ public class UserService {
     }
 
     public User getByUsername(String username) {
-        return userRepository.getByUsername(username).get();
+        return userRepository.getByUsername(username).orElse(null);
     }
 
     //needs a bit more logic regarding exceptions

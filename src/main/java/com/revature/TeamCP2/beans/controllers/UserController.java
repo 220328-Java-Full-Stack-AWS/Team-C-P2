@@ -26,7 +26,7 @@ import java.util.Optional;
 
 //@RestController is a combination of @Controller and @ResponseBody
 @RestController
-@RequestMapping("/user")
+@RequestMapping(value = "/user", produces = "application/json")
 public class UserController {
     private final UserService userService;
     private final AuthService authService;
@@ -90,7 +90,6 @@ public class UserController {
             return new HttpResponseDto(200, "Success", userService.getById(id).get());
         }
     }
-
 
     @GetMapping("/{id}/orders")
     @ResponseStatus(HttpStatus.OK)
@@ -328,5 +327,26 @@ public class UserController {
         }
 
         return new HttpResponseDto(404, "Failed. User or product not found.", null);
+    }
+
+    @PostMapping("/registrations")
+    public HttpResponseDto registrations(@RequestBody User user, HttpServletResponse response) {
+        String usernameToCheck = user.getUsername();
+
+        if(usernameToCheck != null) {
+            User retrievedUser = userService.getByUsername(usernameToCheck);
+
+            if(retrievedUser != null) {
+                response.setStatus(406);
+                return new HttpResponseDto(406, "There is someone registered with that username", null);
+            }
+
+            response.setStatus(200);
+            return new HttpResponseDto(200, "Nobody owns that username", null);
+        }
+        else {
+            response.setStatus(400);
+            return new HttpResponseDto(400, "Required fields not present", null);
+        }
     }
 }
