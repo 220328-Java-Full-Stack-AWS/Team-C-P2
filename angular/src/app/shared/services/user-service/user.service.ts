@@ -6,6 +6,7 @@ import { UserInfo } from '../../interfaces/User-Interface/user-info.interface';
 import { Cart } from '../../interfaces/Cart-Interface/cart.interface';
 import { UserProfile } from '../../interfaces/User-Interface/user-profile.interface';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -44,4 +45,5 @@ export class UserService {
     console.log(this.userURL + "/" + id + "/cart");
     return this.http.get<Cart>(this.userURL + "/" + id + "/cart", {withCredentials:true});
   }
+
 }

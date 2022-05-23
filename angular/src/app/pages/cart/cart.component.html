@@ -1,2 +1,48 @@
-<p>cart works!</p>
-<p *ngFor="let cart of cartArray">{{cart | json}}</p>
+<section class="cart">
+    <div class="cart__container container container--pall" *ngIf="cartArray != null">
+        <div class="cart__header">
+            <h1>Shopping Cart</h1>
+        </div>
+        <div class="cart__item-container" *ngFor="let cart of cartArray">
+            <div class="cart__item item-container">
+                <div class="cart__item-image">
+                    <img src="data:image/png;base64,{{cart.cartItem?.product?.image}}" alt="">
+                </div>
+                <div class="cart__item-content">
+                    <div class="cart__item-header">
+                        <div class="cart__item-title">
+                            <h3>{{cart.cartItem?.product?.name + " " + cart.cartItem?.product?.descr}}</h3>
+                        </div>
+                        <div class="cart__item-price">
+                            <h3>${{cart.cartItem?.product?.price}}</h3>
+                        </div>
+                    </div>
+                    <div class="cart__item-footer">
+                        <div class="cart__item-quantity"> 
+                            <select name="quantity" id="" (change)="updateCart(cart.cartItem?.id, $event)">
+                                <ng-container *ngFor="let num of quantity">
+                                        <option [value]="cart.cartItem?.quantity" *ngIf="cart.cartItem?.quantity == num" selected>
+                                            Qty: {{cart.cartItem?.quantity}}
+                                        </option>
+                                        <option [value]="cart.cartItem?.quantity" *ngIf="cart.cartItem?.quantity != num">
+                                            Qty: {{num}}
+                                        </option>
+                                </ng-container>
+                            </select>
+                        </div>
+                        <div class="cart__item-delete">
+                            <button>Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cart__total">
+            <h2>SubTotal: ${{cartTotal}}</h2>
+        </div>
+        <div class="cart__checkout">
+            <button>Checkout</button>
+        </div>
+    </div>
+</section>

@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Cart } from 'src/app/shared/interfaces/Cart-Interface/cart.interface';
+import { UpdateCartItem } from 'src/app/shared/interfaces/Cart-Interface/update-cart-item.interface';
 import { UserInfo } from 'src/app/shared/interfaces/User-Interface/user-info.interface';
 import { CookieService } from 'src/app/shared/services/cookie-service/cookie.service';
 import { UserService } from 'src/app/shared/services/user-service/user.service';
+
 
 @Component({
   selector: 'app-cart',
@@ -14,6 +17,7 @@ export class CartComponent implements OnInit {
   constructor(
     private userService: UserService,
     private cookie: CookieService,
+    private sanitizer: DomSanitizer
 
   ) { }
 
@@ -43,17 +47,19 @@ export class CartComponent implements OnInit {
           image: undefined,
         },
         isFeatured: false,
-        image: undefined
+        image: undefined,
       },
       quantity: 0,
       netPrice: 0,
     },
     netPrice: 0
   };
+
+  cartTotal: number = 0;
   
   getActiveCartByUserId(id:number) {
     this.userService.getUserActiveCart(id).subscribe((json: any) => {
-      console.log(json.data);
+      console.log(json);
       for (let e of json.data) {
         this.cartQuery = {
           cartItem: {
@@ -75,19 +81,31 @@ export class CartComponent implements OnInit {
                 image: e.product?.category.image,
               },
               isFeatured: e.cartItem?.product.isFeatured,
-              image: e.cartItem?.product.image
+              image: e.cartItem?.product.image,
             },
             quantity: e.cartItem?.quantity,
             netPrice: e.cartItem?.netPrice,
           },
           netPrice: e?.netPrice
         }
+        this.cartTotal += e?.netPrice;
         this.cartArray.push(this.cartQuery);
       }
     })
   }
 
+  updateCart(cartItemId: any, quantity: any){
+    this.updateCartItem.id = cartItemId;
+    this.updateCartItem.quantity = quantity.value;
+    console.log(this.updateCartItem);
+  }
 
+  updateCartItem: UpdateCartItem = {
+    id: 0,
+    quantity: 0
+  }
+
+  quantity: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   ngOnInit(): void {
     this.cookie.getCookie('user_session');

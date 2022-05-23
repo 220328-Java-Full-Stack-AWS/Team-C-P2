@@ -11,5 +11,5 @@ export interface Product {
   onSale: onSale,
   category: category,
   isFeatured: boolean
-  image?: Blob
+  image?: Blob,
 }
