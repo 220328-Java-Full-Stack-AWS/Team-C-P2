@@ -94,6 +94,10 @@ public class UserService {
         return user;
     }
 
+    public User updateUserActiveCartId(User user) throws ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException {
+        return userRepository.update(user);
+    }
+
     public List<User> getAllUsers() {
         return userRepository.getAll();
     }

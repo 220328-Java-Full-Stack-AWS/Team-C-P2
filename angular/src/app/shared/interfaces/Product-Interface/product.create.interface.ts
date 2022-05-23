@@ -9,5 +9,5 @@ export interface CreateProduct {
   onSale: onSale,
   category: category,
   isFeatured: boolean,
-  image?: Blob,
+  image?: any,
 }

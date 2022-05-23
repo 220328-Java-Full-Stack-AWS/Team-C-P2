@@ -8,6 +8,7 @@
 package com.revature.TeamCP2.beans.repositories;
 
 import com.revature.TeamCP2.beans.services.ConnectionManager;
+import com.revature.TeamCP2.entities.CartItem;
 import com.revature.TeamCP2.entities.User;
 import com.revature.TeamCP2.exceptions.*;
 
@@ -50,7 +51,7 @@ public class UserRepository extends AbstractHibernateRepo<User> {
 
         Transaction tran = session.beginTransaction();
         // create a new user to update db using given user model
-        User updated = (User) session.get(String.valueOf(User.class), user.getId());
+        User updated = session.get(User.class, user.getId());
         // populate fields using given user
         updated.setUsername(user.getUsername());
         updated.setPassword(user.getPassword());
@@ -60,6 +61,7 @@ public class UserRepository extends AbstractHibernateRepo<User> {
         updated.setUserAddress(user.getUserAddress());
         updated.setDateCreated(user.getDateCreated());
         updated.setDateModifies(user.getDateModifies());
+        updated.setActiveCartId(user.getActiveCartId());
 
         // save to session, commit, and return updated user
         session.save(updated);
