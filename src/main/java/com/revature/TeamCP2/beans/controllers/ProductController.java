@@ -63,6 +63,28 @@ public class ProductController {
         }
     }
 
+
+    @GetMapping("/category/{id}")
+    public HttpResponseDto getByCategoryId(@PathVariable("id") int id, HttpServletResponse res) throws ItemDoesNotExistException {
+
+        //maybe just display the name and price of this product
+        List<Product> productList = productService.getByCategoryId(id);
+        List<ProductNetPriceDto> dtoList = new LinkedList<>();
+        for (Product p : productList) {
+            ProductNetPriceDto netPriceDto = new ProductNetPriceDto(p, productService.getNetPrice(p));
+            dtoList.add(netPriceDto);
+        }
+
+        if (productList.isEmpty()) {
+            res.setStatus(400);
+            return new HttpResponseDto(400, "Failed to retrieve all products.", null);
+        } else {
+            res.setStatus(200);
+            return new HttpResponseDto(200, "Successfully retrieved all products.", dtoList);
+        }
+    }
+
+
     //getById(/{id}) GET
     @GetMapping("/{id}")
     public HttpResponseDto getById(@PathVariable("id") int id, HttpServletResponse res) throws ItemDoesNotExistException {
@@ -135,7 +157,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}/price")
-    public HttpResponseDto getNetPrice(@PathVariable("id") Integer id,  HttpServletResponse res) throws ItemHasNoIdException, ItemDoesNotExistException {
+    public HttpResponseDto getNetPrice(@PathVariable("id") Integer id, HttpServletResponse res) throws ItemHasNoIdException, ItemDoesNotExistException {
 
         try {
             if (productService.getById(id).isPresent()) {

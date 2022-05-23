@@ -1,5 +1,5 @@
-import { category } from "./category.interface"
-import { onSale } from "./onsale.interface"
+import {category} from "./category.interface";
+import {onSale} from "./onsale.interface";
 
 
 export interface Product {
@@ -11,5 +11,6 @@ export interface Product {
   onSale: onSale,
   category: category,
   isFeatured: boolean
-  image?: Blob,
+  image?: Blob
 }
+

@@ -11,15 +11,19 @@ import { UpdatePasswordComponent } from './pages/update-password/update-password
 import { UpdateAddressComponent } from './pages/update-address/update-address.component';
 import { UpdatePaymentComponent } from './pages/update-payment/update-payment.component';
 import { UpdateProfileComponent } from './pages/update-profile/update-profile.component';
+import { UpdateProductComponent } from './pages/admin/update-product/update-product.component';
+import { CreateProductComponent } from './pages/admin/create-product/create-product.component';
 import { RegisterComponent } from './shared/components/register/register.component';
 
-const routes : Routes = [
+const routes: Routes = [
   {
     path: '',
     component: BaseLayoutComponent,
     children: [
       { path: '', component: HomeComponent },
       { path: 'products', component: ProductsComponent },
+      { path: 'products/update', component: UpdateProductComponent },
+      { path: 'products/create', component: CreateProductComponent },
       { path: 'cart', component: CartComponent },
       { path: 'login', component: LoginComponent },
       { path: 'profile', component: ProfileComponent },
@@ -28,7 +32,7 @@ const routes : Routes = [
       { path: 'profile/updateAddress', component: UpdateAddressComponent },
       { path: 'profile/updatePayment', component: UpdatePaymentComponent },
     ],
-    canActivate: [ AuthGuard ] // Kicks us out to login possibly
+    canActivate: [AuthGuard], // Kicks us out to session/login possibly
   },
   {
     path: '',
@@ -41,7 +45,7 @@ const routes : Routes = [
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes) ],
-  exports: [ RouterModule ]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }
