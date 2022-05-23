@@ -22,7 +22,7 @@ export class UpdateAddressComponent implements OnInit {
   addressInfoForm : FormGroup = {} as FormGroup;
   error?: string = "Error.";
   
-  private address : UserAddress = {
+  public address : UserAddress = {
     id : 0,
     addressLine1: " ",
     addressLine2: " ",
