@@ -1,7 +1,7 @@
 package com.revature.TeamCP2.dtos;
 
 public class UpdatePaymentDto {
-    public Integer userID;
+    public Integer userId;
     public String network;
     public String issuer;
     public Integer cardNumber;
@@ -11,8 +11,8 @@ public class UpdatePaymentDto {
     public UpdatePaymentDto() {
     }
 
-    public UpdatePaymentDto(Integer userID, String network, String issuer, Integer cardNumber, Short securityCode, String expDate) {
-        this.userID = userID;
+    public UpdatePaymentDto(Integer userId, String network, String issuer, Integer cardNumber, Short securityCode, String expDate) {
+        this.userId = userId;
         this.network = network;
         this.issuer = issuer;
         this.cardNumber = cardNumber;
@@ -20,12 +20,12 @@ public class UpdatePaymentDto {
         this.expDate = expDate;
     }
 
-    public Integer getUserID() {
-        return userID;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUserID(Integer userID) {
-        this.userID = userID;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getNetwork() {
