@@ -30,6 +30,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { FeaturedProductsComponent } from './shared/components/featured-products/featured-products.component';
+import { CategoriesNavComponent } from './shared/components/categories-nav/categories-nav.component';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { FeaturedProductsComponent } from './shared/components/featured-products
     CreateProductComponent,
     RegisterComponent,
     UpdateProfileComponent,
-    FeaturedProductsComponent
+    FeaturedProductsComponent,
+    CategoriesNavComponent
 
   ],
   imports: [

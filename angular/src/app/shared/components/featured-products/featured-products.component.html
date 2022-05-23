@@ -1,7 +1,6 @@
 <div>
   <h1>Featured Products</h1>
   <br>
-  <b>{{products.length}} products found</b>
   <div fxLayout="row wrap" fxLayoutAlign="space-between" *ngIf="products.length > 0">
     <div fxFlex="24%" fxFlex.lt-lg="32%" fxFlex.lt-md="48%" fxLayout="column" class="product" *ngFor="let item of products">
       <!-- Add to cart icon -->
