@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginComponent } from 'src/app/shared/components/login/login.component';
-import { UserInfo } from 'src/app/shared/interfaces/User-Interface/User-info.interface';
+import { UserInfo } from 'src/app/shared/interfaces/User-Interface/user-info.interface';
 import { UserProfile } from 'src/app/shared/interfaces/User-Interface/user-profile.interface';
 import { CookieService } from 'src/app/shared/services/cookie-service/cookie.service';
 import { UserService } from 'src/app/shared/services/user-service/user.service';
@@ -13,7 +13,7 @@ import { UserService } from 'src/app/shared/services/user-service/user.service';
 export class ProfileComponent implements OnInit {
 
   userId: number = 0;
-  
+
   constructor(
     private userService: UserService,
     public cookie:CookieService

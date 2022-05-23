@@ -22,6 +22,16 @@ import { UpdateProductComponent } from './pages/admin/update-product/update-prod
 import { CreateProductComponent } from './pages/admin/create-product/create-product.component';
 
 
+import { RegisterComponent } from './shared/components/register/register.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+// @ts-ignore
+import { MatStepperModule } from '@angular/material/stepper';
+// @ts-ignore
+import { MatTooltipModule } from '@angular/material/tooltip';
+// @ts-ignore
+import { MatIconModule } from '@angular/material/icon';
+import { FlexLayoutModule } from '@angular/flex-layout/module';
+
 
 @NgModule({
   declarations: [
@@ -30,6 +40,7 @@ import { CreateProductComponent } from './pages/admin/create-product/create-prod
     HomeComponent,
     ProductsComponent,
     LoginComponent,
+    RegisterComponent,
     ProfileComponent,
     CartComponent,
     UpdatePasswordComponent,
@@ -37,14 +48,22 @@ import { CreateProductComponent } from './pages/admin/create-product/create-prod
     UpdatePaymentComponent,
     UpdateProfileComponent,
     UpdateProductComponent,
-    CreateProductComponent
+    CreateProductComponent,
+    RegisterComponent,
+    UpdateProfileComponent
+
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatStepperModule,
+    FlexLayoutModule,
+    MatTooltipModule,
+    MatIconModule
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]

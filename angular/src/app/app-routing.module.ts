@@ -13,7 +13,9 @@ import { UpdatePaymentComponent } from './pages/update-payment/update-payment.co
 import { UpdateProfileComponent } from './pages/update-profile/update-profile.component';
 import { UpdateProductComponent } from './pages/admin/update-product/update-product.component';
 import { CreateProductComponent } from './pages/admin/create-product/create-product.component';
+import { RegisterComponent } from './shared/components/register/register.component';
 
+// @ts-ignore
 const routes: Routes = [
   {
     path: '',
@@ -31,14 +33,14 @@ const routes: Routes = [
       { path: 'profile/updateAddress', component: UpdateAddressComponent },
       { path: 'profile/updatePayment', component: UpdatePaymentComponent },
     ],
-    canActivate: [AuthGuard] // Kicks us out to session/login possibly
-  },
+    canActivate: [AuthGuard], // Kicks us out to session/login possibly
+
   {
-    path: 'session',
+    path: '',
     component: BaseLayoutComponent,
     children: [
-      { path: '', component: LoginComponent },
-      // { path: 'register', component: RegisterComponent }
+      { path: 'login', component: LoginComponent },
+      { path: 'register', component: RegisterComponent }
     ]
   }
 ];
