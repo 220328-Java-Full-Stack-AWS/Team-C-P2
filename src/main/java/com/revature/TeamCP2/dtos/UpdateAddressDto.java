@@ -1,7 +1,7 @@
 package com.revature.TeamCP2.dtos;
 
 public class UpdateAddressDto {
-    public Integer userID;
+    public Integer userId;
     public String addressLine1;
     public String addressLine2;
     public String city;
@@ -12,8 +12,8 @@ public class UpdateAddressDto {
     public UpdateAddressDto() {
     }
 
-    public UpdateAddressDto(Integer userID, String addressLine1, String addressLine2, String city, Long postalCode, String country, String phoneNumber) {
-        this.userID = userID;
+    public UpdateAddressDto(Integer userId, String addressLine1, String addressLine2, String city, Long postalCode, String country, String phoneNumber) {
+        this.userId = userId;
         this.addressLine1 = addressLine1;
         this.addressLine2 = addressLine2;
         this.city = city;
@@ -23,15 +23,15 @@ public class UpdateAddressDto {
     }
 
     public String toString (){
-        return addressLine1;
+        return userId + "\n" + addressLine1 + "\n" + addressLine2 + "\n" + addressLine2;
     }
 
-    public Integer getUserID() {
-        return userID;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUserID(Integer userID) {
-        this.userID = userID;
+    public void setUserId(Integer userID) {
+        this.userId = userID;
     }
 
     public String getAddressLine1() {

@@ -8,6 +8,8 @@ import { UserProfile } from '../../interfaces/User-Interface/user-profile.interf
 import { CartItem } from '../../interfaces/Cart-Interface/cart-item.interface';
 import { UpdateCartItem } from '../../interfaces/Cart-Interface/update-cart-item.interface';
 import { CookieService } from '../cookie-service/cookie.service';
+import { UserAddress } from '../../interfaces/user-address.interface';
+import { UserPayment } from '../../interfaces/user-payment.interface';
 
 
 @Injectable({
@@ -153,6 +155,17 @@ export class UserService {
     console.log(cartItem);
     this.cookie.getCookie('user_session');
     return this.http.put<UpdateCartItem>(`${this.userURL}/cart/update`, cartItem, {withCredentials:true});
+  }
+
+  updateUserAddress(address : UserAddress) : Observable<any> {
+    console.log(address);
+    this.cookie.getCookie('user_session');
+    return this.http.put<UserAddress>(`${this.userURL}/profile/update/address`, address, {withCredentials : true});
+  }
+
+  updateUserPayment(payment : UserPayment): Observable<any> {
+    this.cookie.getCookie('user_session');
+    return this.http.put<UserPayment>(`${this.userURL}/profile/update/payment`, payment, {withCredentials : true});
   }
 
   removeCartItem(id:number): Observable<any> {

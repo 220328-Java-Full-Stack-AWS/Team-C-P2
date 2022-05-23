@@ -1,5 +1,5 @@
 export interface UserAddress {
-  id?: number | null,
+  userId: number,
   addressLine1: string,
   addressLine2?: string,
   city: string,
