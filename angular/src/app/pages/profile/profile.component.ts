@@ -41,7 +41,7 @@ export class ProfileComponent implements OnInit {
       userId: 0,
       network: "",
       issuer: "",
-      cardNumber: 0,
+      cardNumber: "",
       securityCode: 0,
       expDate: ""
     },
