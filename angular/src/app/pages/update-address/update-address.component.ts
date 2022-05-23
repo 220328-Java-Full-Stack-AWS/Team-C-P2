@@ -65,6 +65,15 @@ export class UpdateAddressComponent implements OnInit {
   }
 
   updateAddress(): void {
+    // subscribe to update payment method and route to user profile
+    this.userService.updateUserAddress(this.address).subscribe((json : any) => {
+      console.log(json);
+      this.router.navigate(["../profile/profile-component.html"])
+    });
+
+  }
+
+  confirmAddress() : void {
     // create new address to update user
     const newAddress : UserAddress = {
       id : this.user.userId,
@@ -75,16 +84,11 @@ export class UpdateAddressComponent implements OnInit {
       country: this.addressInfoForm.value.country,
       phoneNumber: this.addressInfoForm.value.phone
     };
-
-    // subscribe to update payment method and route to user profile
-    this.userService.updateUserAddress(newAddress).subscribe((json : any) => {
-      console.log(json);
-      this.router.navigate(["../profile/profile-component.html"])
-    });
-
-
-
+    this.address = newAddress;
+    // go to confirm address step
+    this.stepper.next();
   }
+
   // function to compare input and display tooltip
   /*checkInput(control: AbstractControl | null, tooltip: MatTooltip) {
     if (!control!.valid) {
