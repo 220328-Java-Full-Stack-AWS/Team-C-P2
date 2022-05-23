@@ -88,8 +88,6 @@ export class ProfileComponent implements OnInit {
     activeCartId: 0
   }
 
-  userSubscription: any;
-
   ngOnInit(): void {
     this.cookie.getCookie('user_session');
     this.userService.getCurrentUser().subscribe((user) => (

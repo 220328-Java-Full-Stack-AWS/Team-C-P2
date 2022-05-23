@@ -1,5 +1,6 @@
-import { category } from "./category.interface";
-import { onSale } from "./onsale.interface";
+import {category} from "./category.interface";
+import {onSale} from "./onsale.interface";
+
 
 export interface Product {
 
