@@ -38,12 +38,12 @@ export class ProfileComponent implements OnInit {
       phoneNumber: ""
     },
     payment: {
-      id: 0,
+      userId: 0,
       network: "",
       issuer: "",
       cardNumber: 0,
       securityCode: 0,
-      expirationDate: ""
+      expDate: ""
     },
     dateCreated: "",
     dateModifies: ""
@@ -70,12 +70,12 @@ export class ProfileComponent implements OnInit {
           phoneNumber: json.data.userAddress?.phoneNumber
         },
         payment: {
-          id: json.data.payment?.id,
+          userId: json.data.payment?.userId,
           network: json.data.payment?.network,
           issuer: json.data.payment?.issuer,
           cardNumber: json.data.payment?.cardNumber,
           securityCode: json.data.payment?.securityCode,
-          expirationDate: json.data.payment?.expirationDate
+          expDate: json.data.payment?.expDate
         },
         dateCreated: json.data?.dateCreated,
         dateModifies: json.data?.dateModifies
