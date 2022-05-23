@@ -67,6 +67,7 @@
                     </form>
                 </mat-step>
                 <mat-step>
+                    <ng-template matStepLabel>Confirm Address</ng-template>
                     <div class="profile__item item-container">
                         <div class="profile__item-header">
                             <h2>Confirm Address Information</h2>
@@ -109,6 +110,14 @@
                             </div>
                             <div class="profile__item-content-info">
                                 <h3>{{address.country}}</h3>
+                            </div>
+                        </div>
+                        <div class="profile__item-content">
+                            <div class="profile__item-content-header">
+                                <h3><strong>Phone Number</strong></h3>
+                            </div>
+                            <div class="profile__item-content-info">
+                                <h3>{{address.phoneNumber}}</h3>
                             </div>
                         </div>
                         <!-- Buttons -->
