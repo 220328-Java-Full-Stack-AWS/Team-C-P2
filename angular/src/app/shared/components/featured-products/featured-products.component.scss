@@ -1,0 +1,49 @@
+.product {
+  position: relative;
+  margin-top: 10px;
+  padding: 5px;
+  border: 1px solid green; //! Filler
+
+
+  .addToCartButton {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: white;
+
+     &.addCartIcon {
+
+    }
+
+    &.checkIcon {
+      color: green;
+    }
+
+  }
+
+  .productImage {
+    margin: auto;
+    width: 200px; //! Fiiller
+    height: 200px; //! Fiiller
+    border: 1px solid black; //! Fiiller
+  }
+
+  .productInfo {
+
+    .productName {
+
+    }
+
+    .productPricing {
+
+      .originalPrice {
+        text-decoration: line-through;
+        color: red;
+      }
+
+      .currentPrice {
+
+      }
+    }
+  }
+}
