@@ -29,7 +29,7 @@ export class ProfileComponent implements OnInit {
     role: "",
     activeCartId: 0,
     userAddress: {
-      id: 0,
+      userId: 0,
       addressLine1: "",
       addressLine2: "string",
       city: "",
@@ -61,7 +61,7 @@ export class ProfileComponent implements OnInit {
         role: json.data?.role,
         activeCartId: json.data?.activeCartId,
         userAddress: {
-          id: json.data.userAddress?.id,
+          userId: json.data.userAddress?.id,
           addressLine1: json.data.userAddress?.addressLine1,
           addressLine2: json.data.userAddress?.addressLine2,
           city: json.data.userAddress?.city,
