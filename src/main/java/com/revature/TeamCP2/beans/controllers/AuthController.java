@@ -8,14 +8,12 @@ package com.revature.TeamCP2.beans.controllers;
 import com.revature.TeamCP2.beans.services.AuthService;
 import com.revature.TeamCP2.beans.services.CartService;
 import com.revature.TeamCP2.beans.services.JsonWebToken;
+import com.revature.TeamCP2.beans.services.UserService;
 import com.revature.TeamCP2.dtos.CookieDto;
 import com.revature.TeamCP2.dtos.HttpResponseDto;
 import com.revature.TeamCP2.dtos.LoginDto;
 import com.revature.TeamCP2.entities.User;
-import com.revature.TeamCP2.exceptions.CreationFailedException;
-import com.revature.TeamCP2.exceptions.ItemHasNonNullIdException;
-import com.revature.TeamCP2.exceptions.NotAuthorizedException;
-import com.revature.TeamCP2.exceptions.UsernameAlreadyExistsException;
+import com.revature.TeamCP2.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,19 +27,22 @@ public class AuthController {
     AuthService authService;
     CartService cartService;
     JsonWebToken jsonWebToken;
+    UserService userService;
 
     @Autowired
-    public AuthController(AuthService authService, CartService cartService, JsonWebToken jsonWebToken){
+    public AuthController(AuthService authService, CartService cartService, JsonWebToken jsonWebToken, UserService userService){
         this.authService = authService;
         this.cartService = cartService;
         this.jsonWebToken = jsonWebToken;
+        this.userService = userService;
     }
 
     @PostMapping("/register")
     public HttpResponseDto register(@RequestBody User user, HttpServletResponse res) {
         try {
             User registeredUser = authService.registerUser(user);
-            user.setActiveCartId(cartService.createCart(user).getId());
+            registeredUser.setActiveCartId(cartService.createCart(registeredUser).getId());
+            userService.updateUserActiveCartId(registeredUser);
 
             String jwtCookieDto = jsonWebToken.sign(new CookieDto(registeredUser));
 
@@ -62,6 +63,12 @@ public class AuthController {
             e.printStackTrace();
             res.setStatus(400);
             return new HttpResponseDto(400, "Username already exists", null);
+        } catch (ItemDoesNotExistException e) {
+            throw new RuntimeException(e);
+        } catch (UpdateFailedException e) {
+            throw new RuntimeException(e);
+        } catch (ItemHasNoIdException e) {
+            throw new RuntimeException(e);
         }
     }
 
