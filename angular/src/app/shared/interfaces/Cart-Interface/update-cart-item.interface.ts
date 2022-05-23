@@ -1,4 +1,4 @@
 export interface UpdateCartItem {
-    id?: number,
+    cartItemId?: number,
     quantity?: number
   }
