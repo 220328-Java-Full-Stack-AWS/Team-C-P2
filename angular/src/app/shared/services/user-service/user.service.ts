@@ -58,7 +58,9 @@ export class UserService {
 
 
   getCurrentActiveCart(): BehaviorSubject<Cart[]> {
+    this.cartArray = []
     this.getActiveCartByUserId(this.user.userId);
+    this.currentCartItems.next(this.cartArray);
     return this.currentCartItems;
   }
 
