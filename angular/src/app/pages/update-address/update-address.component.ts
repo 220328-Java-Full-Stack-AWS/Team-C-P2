@@ -61,8 +61,8 @@ export class UpdateAddressComponent implements OnInit {
 
   }
 
-  // function to confirm the new address information and update the address
-  confirmAddress() : void {
+  // function to input the new address information and move to the next step
+  inputAddress() : void {
     // create new address to update user
     const address : UserAddress = {
       id : this.user.userId,
@@ -78,8 +78,8 @@ export class UpdateAddressComponent implements OnInit {
     this.stepper.next();
   }
 
-  // function to input new address information
-  inputAddress(): void {
+  // function to confirm new address information and update address
+  confirmAddress(): void {
     // subscribe to update payment method and route to user profile
     console.log(this.newAddress);
     this.userService.updateUserAddress(this.newAddress).subscribe((json : any) => {
