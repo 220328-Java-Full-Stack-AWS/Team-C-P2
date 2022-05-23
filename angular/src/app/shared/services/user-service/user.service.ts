@@ -5,16 +5,13 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { UserInfo } from '../../interfaces/User-Interface/user-info.interface';
 import { Cart } from '../../interfaces/Cart-Interface/cart.interface';
 import { UserProfile } from '../../interfaces/User-Interface/user-profile.interface';
-<<<<<<< HEAD
 import { UserAddress } from '../../interfaces/user-address.interface';
 import { UserPayment } from '../../interfaces/user-payment.interface';
-=======
 import { CartItem } from '../../interfaces/Cart-Interface/cart-item.interface';
 import { UpdateCartItem } from '../../interfaces/Cart-Interface/update-cart-item.interface';
 import { CookieService } from '../cookie-service/cookie.service';
 
 
->>>>>>> a224f783aebb1cc4039ec6ce6fe1a0d7823e7d9e
 @Injectable({
   providedIn: 'root'
 })
@@ -55,7 +52,6 @@ export class UserService {
     return this.http.get<Cart>(this.userURL + "/" + id + "/cart", {withCredentials:true});
   }
 
-<<<<<<< HEAD
   updateUserAddress(address : UserAddress): Observable<any> {
     return this.http.put<UserAddress>(this.userURL + "/update/address", {withCredentials:true});
   }
@@ -64,8 +60,6 @@ export class UserService {
     return this.http.put<UserPayment>(this.userURL + "/update/payment", {withCredentials:true});
   }
 
-
-=======
   updateCartItem(cartItem: UpdateCartItem): Observable<any> {
     console.log(`${this.userURL}/cart/update`)
     console.log(cartItem);
@@ -73,5 +67,4 @@ export class UserService {
     return this.http.put<UpdateCartItem>(`${this.userURL}/cart/update`, cartItem, {withCredentials:true});
   }
 
->>>>>>> a224f783aebb1cc4039ec6ce6fe1a0d7823e7d9e
 }
