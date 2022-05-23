@@ -35,7 +35,7 @@
                             <mat-icon
                                 class="info"
                                 #address1Tooltip="matTooltip"
-                                matTooltip="Card Number must be exactly 12 digits."
+                                matTooltip="Card Number must be numeric and exactly 12 digits."
                                 matTooltipPosition="after">info
                             </mat-icon>
                         </div>
@@ -46,7 +46,7 @@
                             <mat-icon
                                 class="info"
                                 #address1Tooltip="matTooltip"
-                                matTooltip="Security Code must be exactly 3 digits."
+                                matTooltip="Security Code must be numeric and exactly 3 digits."
                                 matTooltipPosition="after">info
                             </mat-icon>
                         </div>
@@ -57,7 +57,7 @@
                             <mat-icon
                                 class="info"
                                 #address1Tooltip="matTooltip"
-                                matTooltip="Expiration Date must be in alphabetic form (YYYY-MM-DD)."
+                                matTooltip="Expiration Date must be in form (MM/YYYY)."
                                 matTooltipPosition="after">info
                             </mat-icon>
                         </div>
@@ -103,7 +103,7 @@
                                 <h3><strong>Security Code</strong></h3>
                             </div>
                             <div class="profile__item-content-info">
-                                <h3>{{newPayment.securityCode}</h3>
+                                <h3>{{newPayment.securityCode}}</h3>
                             </div>
                         </div>
                         <div class="profile__item-content">
