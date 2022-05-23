@@ -230,9 +230,9 @@ public class UserController {
 
     }
 
-    @GetMapping("/cart")
+    @GetMapping("/{userId}/cart")
     @ResponseStatus(HttpStatus.OK)
-    public HttpResponseDto viewCart(@RequestHeader Integer userId, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws ItemDoesNotExistException {
+    public HttpResponseDto viewCart(@PathVariable int userId, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws ItemDoesNotExistException {
 
         Double total = 0.00;
         if (userSession == null) {
@@ -332,6 +332,7 @@ public class UserController {
     @PostMapping("/registrations")
     public HttpResponseDto registrations(@RequestBody User user, HttpServletResponse response) {
         String usernameToCheck = user.getUsername();
+        user.setActiveCartId(cartService.createCart(user).getId());
 
         if(usernameToCheck != null) {
             User retrievedUser = userService.getByUsername(usernameToCheck);
