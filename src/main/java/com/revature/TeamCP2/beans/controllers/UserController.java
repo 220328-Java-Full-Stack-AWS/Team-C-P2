@@ -332,7 +332,6 @@ public class UserController {
     @PostMapping("/registrations")
     public HttpResponseDto registrations(@RequestBody User user, HttpServletResponse response) {
         String usernameToCheck = user.getUsername();
-        user.setActiveCartId(cartService.createCart(user).getId());
 
         if(usernameToCheck != null) {
             User retrievedUser = userService.getByUsername(usernameToCheck);
