@@ -1,6 +1,6 @@
 export interface category {
 
-  id: number,
+  id?: number,
   description?: string,
   name?: string,
   image?: Blob,

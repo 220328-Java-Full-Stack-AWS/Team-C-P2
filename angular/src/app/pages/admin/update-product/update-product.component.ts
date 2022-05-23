@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { category } from 'src/app/shared/interfaces/Product-Interface/category-interface';
-import { onSale } from 'src/app/shared/interfaces/Product-Interface/onsale-interface';
-import { CreateProduct } from 'src/app/shared/interfaces/Product-Interface/product-create.interface';
+import { category } from 'src/app/shared/interfaces/Product-Interface/category.interface';
+import { onSale } from 'src/app/shared/interfaces/Product-Interface/onsale.interface';
+import { CreateProduct } from 'src/app/shared/interfaces/Product-Interface/product.create.interface';
 import { Product } from 'src/app/shared/interfaces/Product-Interface/product.interface';
 import { ProductService } from 'src/app/shared/services/product-service/product.service';
 
@@ -31,7 +31,6 @@ export class UpdateProductComponent implements OnInit {
 
   updatedProduct: Product = {
     id: 1,
-    netPrice: .99,
     name: "Upadting from Front End",
     descr: "Updated",
     price: .99,
@@ -44,7 +43,6 @@ export class UpdateProductComponent implements OnInit {
 
   create: Product = {
 
-    netPrice: 55,
     name: "",
     descr: "",
     price: 0,
@@ -55,7 +53,6 @@ export class UpdateProductComponent implements OnInit {
   }
 
   productById: Product = {
-    netPrice: 0,
     id: 0,
     name: "",
     descr: "",
@@ -77,7 +74,6 @@ export class UpdateProductComponent implements OnInit {
         // var test1: any = data.netPrice.map((d: any) => d.netPrice);
         // console.log("Data" + data.data.product.id)
         this.productById = {
-          netPrice: data.data.netPrice,
 
           id: data.data.product.id,
           name: data.data.product.name,

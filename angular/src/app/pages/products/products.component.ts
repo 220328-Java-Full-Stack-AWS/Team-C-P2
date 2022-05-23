@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/shared/interfaces/Product-Interface/product.interface';
 import { ProductService } from 'src/app/shared/services/product-service/product.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CreateProduct } from 'src/app/shared/interfaces/Product-Interface/product-create.interface';
-import { category } from 'src/app/shared/interfaces/Product-Interface/category-interface';
-import { onSale } from 'src/app/shared/interfaces/Product-Interface/onsale-interface';
+import { CreateProduct } from 'src/app/shared/interfaces/Product-Interface/product.create.interface';
+import { category } from 'src/app/shared/interfaces/Product-Interface/category.interface';
+import { onSale } from 'src/app/shared/interfaces/Product-Interface/onsale.interface';
 
 
 
@@ -31,7 +31,6 @@ export class ProductsComponent implements OnInit {
   }
 
   productById: Product = {
-    netPrice: 0,
     id: 0,
     name: "",
     descr: "",
@@ -49,7 +48,6 @@ export class ProductsComponent implements OnInit {
 
   create: CreateProduct = {
 
-    netPrice: 55,
     name: "",
     descr: "",
     price: 55,
@@ -126,7 +124,6 @@ export class ProductsComponent implements OnInit {
 
   updatedProduct: Product = {
     id: 1,
-    netPrice: .99,
     name: "Upadting from Front End",
     descr: "Updated",
     price: .99,

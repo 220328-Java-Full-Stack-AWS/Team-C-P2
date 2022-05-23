@@ -15,7 +15,6 @@ import { UpdateProductComponent } from './pages/admin/update-product/update-prod
 import { CreateProductComponent } from './pages/admin/create-product/create-product.component';
 import { RegisterComponent } from './shared/components/register/register.component';
 
-// @ts-ignore
 const routes: Routes = [
   {
     path: '',
@@ -34,7 +33,7 @@ const routes: Routes = [
       { path: 'profile/updatePayment', component: UpdatePaymentComponent },
     ],
     canActivate: [AuthGuard], // Kicks us out to session/login possibly
-
+  },
   {
     path: '',
     component: BaseLayoutComponent,
