@@ -5,6 +5,9 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { UserInfo } from '../../interfaces/User-Interface/user-info.interface';
 import { Cart } from '../../interfaces/Cart-Interface/cart.interface';
 import { UserProfile } from '../../interfaces/User-Interface/user-profile.interface';
+import { CartItem } from '../../interfaces/Cart-Interface/cart-item.interface';
+import { UpdateCartItem } from '../../interfaces/Cart-Interface/update-cart-item.interface';
+import { CookieService } from '../cookie-service/cookie.service';
 
 
 @Injectable({
@@ -33,7 +36,9 @@ export class UserService {
   }
 
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private cookie: CookieService) {
   }
 
   getUser(id: number): Observable<any> {
@@ -42,8 +47,14 @@ export class UserService {
   }
 
   getUserActiveCart(id:number): Observable<any> {
-    console.log(this.userURL + "/" + id + "/cart");
     return this.http.get<Cart>(this.userURL + "/" + id + "/cart", {withCredentials:true});
+  }
+
+  updateCartItem(cartItem: UpdateCartItem): Observable<any> {
+    console.log(`${this.userURL}/cart/update`)
+    console.log(cartItem);
+    this.cookie.getCookie('user_session');
+    return this.http.put<UpdateCartItem>(`${this.userURL}/cart/update`, cartItem, {withCredentials:true});
   }
 
 }

@@ -48,6 +48,30 @@ public class ProductsRepository extends AbstractHibernateRepo<Product> {
         return Optional.ofNullable(product);
     }
 
+
+    public List<Product> getByCategoryId(int id) {
+        Query query = session.createQuery("from Products where category_id = :id");
+        query.setParameter("id", id);
+        List<Product> results = query.list();
+
+        List<Product> productList = new LinkedList<>();
+
+        for (Product result : results) {
+            Product product = new Product();
+            product.setId(result.getId());
+            product.setDescr(result.getDescr());
+            product.setImage(result.getImage());
+            product.setIsFeatured(result.isIsFeatured());
+            product.setName(result.getName());
+            product.setPrice(result.getPrice());
+            product.setCategory(result.getCategory());
+            product.setOnSale(result.getOnSale());
+
+            productList.add(product);
+        }
+        return productList;
+    }
+
     @Override
     public List<Product> getAll() {
         Query query = session.createQuery("from Products ");
