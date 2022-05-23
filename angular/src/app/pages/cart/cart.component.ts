@@ -29,7 +29,7 @@ export class CartComponent implements OnInit {
   }
   cartArray: Cart[] = [];
 
-  cartTotal: number = 0;
+  cartTotal: number[] = [];
 
 
   updateCart(cartItemId: any, quantity: any){
@@ -39,6 +39,8 @@ export class CartComponent implements OnInit {
     this.userService.updateCartItem(this.updateCartItem).subscribe((json:any) => {
       console.log(json);
       this.cartArray = [];
+      this.cartTotal = [];
+      this.userService.setCartTotal(this.cartTotal);
       this.ngOnInit();
     });
   }
