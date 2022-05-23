@@ -1,1 +1,63 @@
-<p>onsale works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  <title>Title</title>
+</head>
+<body>
+<div class='card'>
+  <div class='card-header' style="background-color: lightgray">
+    {{onSalePageTitle}}
+  </div>
+  <div class='card-body'>
+    <div class='row'>
+      <div class='col-md-2'><h2>Filter The Selection:</h2></div>
+      <div class='col-md-4'>
+        <input type='text'
+               [(ngModel)]="listFilter"/>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='col-md-6'>
+        <h4 style="color:rebeccapurple">{{listFilter}}</h4>
+      </div>
+    </div>
+    <div class='table-responsive'>
+      <table class='table' *ngIf='onSaleproducts.length'>
+        <thead>
+        <tr>
+          <th>
+            <button class='btn btn-success'
+                    (click)="toggleImage()"> {{showImage ? 'Hide' : 'Show'}} Image
+            </button>
+          </th>
+          <th>Product</th>
+          <th>Featured</th>
+          <th>Price</th>
+          <th>On Sale Price</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let onSaleproduct of filteredOnsaleProducts">
+          <td>
+            <img *ngIf="showImage"
+                 [src]="onSaleproduct.image"
+                 [title]="onSaleproduct.name"
+                 [style.width.px]="imageWidth"
+                 [style.margin.px]="imageMargin">
+          </td>
+          <td>{{onSaleproduct.name}}</td>
+          <td>{{onSaleproduct.is_featured | lowercase }}</td>
+          <td>{{onSaleproduct.price | currency}}</td>
+          <td>{{onSaleproduct.on_sale | currency}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

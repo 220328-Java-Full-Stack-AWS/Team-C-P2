@@ -9,6 +9,8 @@ import { BaseLayoutComponent } from './shared/components/base-layout/base-layout
 import { HomeComponent } from './pages/home/home.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { LoginComponent } from './shared/components/login/login.component';
+import { OnSaleComponent } from './pages/onsale/onsale.component';
+import {RouterModule} from "@angular/router";
 
 @NgModule({
   declarations: [
@@ -16,14 +18,21 @@ import { LoginComponent } from './shared/components/login/login.component';
     BaseLayoutComponent,
     HomeComponent,
     ProductsComponent,
-    LoginComponent
+    LoginComponent,
+    OnSaleComponent
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot([
+      {path: 'login',component: LoginComponent },
+      {path: 'home', component: HomeComponent },
+      {path: 'products',component: ProductsComponent},
+      {path: 'onsale',component:OnSaleComponent}
+    ])
   ],
   providers: [],
   bootstrap: [AppComponent]

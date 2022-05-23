@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OnsaleComponent } from './onsale.component';
+import { OnSaleComponent } from './onsale.component';
 
-describe('OnsaleComponent', () => {
-  let component: OnsaleComponent;
-  let fixture: ComponentFixture<OnsaleComponent>;
+describe('OnSaleComponent', () => {
+  let component: OnSaleComponent;
+  let fixture: ComponentFixture<OnSaleComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OnsaleComponent ]
+      declarations: [ OnSaleComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OnsaleComponent);
+    fixture = TestBed.createComponent(OnSaleComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

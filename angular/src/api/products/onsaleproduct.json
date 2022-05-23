@@ -1,0 +1,39 @@
+[
+  {
+    "id": 1,
+    "image": "assets/images/yankees cap.jpg",
+    "name": "Yankees Cap",
+    "is_featured": "March 19, 2021",
+    "descr": "Nice Cap for Yankees Fans.",
+    "price": 19.95,
+    "on_sale": 16.95
+
+  },
+  {
+    "id": 2,
+    "image": "assets/images/football.jpg",
+    "name": "FootBall",
+    "is_featured": "Jan 19, 2022",
+    "descr": "For the Football Fan",
+    "price": 30.95,
+    "on_sale": 20.95
+  },
+  {
+    "id": 3,
+    "image": "assets/images/bat.jpg",
+    "name": "Slugger",
+    "is_featured": "March 25, 2021",
+    "descr": "Hit a Home Run",
+    "price": 19.95,
+    "on_sale": 26.95
+  },
+  {
+    "id": 1,
+    "image": "assets/images/basketball.jpg",
+    "name": "Shoot some Hoops",
+    "is_featured": "November 19, 2021",
+    "descr": "Lets shoot some hoops.",
+    "price": 37.95,
+    "on_sale": 19.95
+  }
+]
