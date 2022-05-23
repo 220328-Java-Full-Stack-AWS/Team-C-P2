@@ -41,8 +41,6 @@ export class CartComponent implements OnInit {
       this.cartArray = [];
       this.ngOnInit();
     });
-  
-    
   }
 
   removeCartItem(id: any) {
