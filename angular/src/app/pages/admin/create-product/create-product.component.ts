@@ -44,13 +44,13 @@ export class CreateProductComponent implements OnInit {
 
 
   createProduct(productToCreate: CreateProduct) {
-    const fd = new FormData();
-    fd.append('image', this.productToCreate.image, this.productToCreate.image.name)
+    // const fd = new FormData();
+    // fd.append('image', this.productToCreate.image, this.productToCreate.image.name)
+    // // console.log(this.productToCreate)
+    // this.productToCreate.image = fd;
     // console.log(this.productToCreate)
-    this.productToCreate.image = fd;
-    console.log(this.productToCreate)
-    // this.productService.create(productToCreate).subscribe({
-    // });
+    this.productService.create(productToCreate).subscribe({
+    });
   }
 
   ngOnInit(): void {

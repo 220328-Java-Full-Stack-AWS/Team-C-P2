@@ -117,7 +117,7 @@ public class ProductController {
 
         //tried using @RequestBody but was not able to make it wor
 
-        //make dto to prodcut
+        //make dto to p
         //
 
         Product newProduct = productService.create(product);

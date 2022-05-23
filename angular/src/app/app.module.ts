@@ -40,12 +40,12 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     RegisterComponent,
     ProfileComponent,
     CartComponent,
+    CreateProductComponent,
     UpdatePasswordComponent,
     UpdateAddressComponent,
     UpdatePaymentComponent,
     UpdateProfileComponent,
     UpdateProductComponent,
-    CreateProductComponent,
     RegisterComponent,
     UpdateProfileComponent
 
