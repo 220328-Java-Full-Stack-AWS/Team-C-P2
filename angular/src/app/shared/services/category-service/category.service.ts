@@ -21,12 +21,12 @@ export class CategoriesService {
         .get<Category[]>(this.categoriesURL);
     } 
 
-    create(data: any): Observable<any> {
-        return this.http.post(this.categoriesURL + "/create", data);
+    create(category: Category): Observable<any> {
+        return this.http.post(this.categoriesURL + "/create", category);
     }
 
-    update(data: any): Observable<any> {
-        return this.http.put<Category>(this.categoriesURL + "/update/", data);
+    update(category: Category): Observable<any> {
+        return this.http.put<Category>(this.categoriesURL + "/update/", category);
     }
 
     deleteById(id: number): Observable<any> {
