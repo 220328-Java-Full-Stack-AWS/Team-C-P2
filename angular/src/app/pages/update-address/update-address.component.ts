@@ -20,7 +20,6 @@ export class UpdateAddressComponent implements OnInit {
 
   @ViewChild("stepper") stepper! : MatStepper;
   addressInfoForm : FormGroup = {} as FormGroup;
-  addressConForm : FormGroup = {} as FormGroup;
   error?: string = "Error.";
   
   private address : UserAddress = {
@@ -77,21 +76,26 @@ export class UpdateAddressComponent implements OnInit {
       phoneNumber: this.addressInfoForm.value.phone
     };
 
-    // subscribe to update payment method and store user response
+    // subscribe to update payment method and route to user profile
+    this.userService.updateUserAddress(newAddress).subscribe((json : any) => {
+      console.log(json);
+      this.router.navigate(["../profile/profile-component.html"])
+    });
 
 
 
   }
-  // function to compare input vs 
-  checkInput(control: AbstractControl | null, tooltip: MatTooltip) {
+  // function to compare input and display tooltip
+  /*checkInput(control: AbstractControl | null, tooltip: MatTooltip) {
     if (!control!.valid) {
       tooltip.show();
     }
     else {
       tooltip.hide();
     }
-  }
+  }*/
 
+  // function to close error window
   closeError(): void {
     const el = document.querySelector(".error") as HTMLElement;
 
@@ -101,6 +105,7 @@ export class UpdateAddressComponent implements OnInit {
     }
   }
 
+  // function to show errors
   showError(errorMessage: string): void {
     const el = document.querySelector('.error') as HTMLElement;
 

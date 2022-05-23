@@ -6,7 +6,8 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { UserInfo } from '../../interfaces/User-Interface/user-info.interface';
 
 import { UserProfile } from '../../interfaces/User-Interface/user-profile.interface';
-
+import { UserAddress } from '../../interfaces/user-address.interface';
+import { UserPayment } from '../../interfaces/user-payment.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -44,4 +45,14 @@ export class UserService {
   getUserCart(cartId: number): Observable<any> {
     return this.http.get<UserProfile>(this.userURL + "/" + cartId + "/profile", {withCredentials:true});
   }
+
+  updateUserAddress(address : UserAddress): Observable<any> {
+    return this.http.put<UserAddress>(this.userURL + "/update/address", {withCredentials:true});
+  }
+
+  updateUserPayment(payment : UserPayment): Observable<any> {
+    return this.http.put<UserPayment>(this.userURL + "/update/payment", {withCredentials:true});
+  }
+
+
 }

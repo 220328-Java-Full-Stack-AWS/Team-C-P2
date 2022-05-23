@@ -1,1 +1,103 @@
-<p>update-address works!</p>
+<section class="login">
+    <div class="container">
+      <div class="login__form forms">
+          <div class="login__form-header">
+              <h1>Add an Address</h1>
+          </div>
+  
+          <div class="error hide" fxLayoutAlign="space-between center">
+            <div class="stripe"></div>
+            <div class="message">{{error}}</div>
+            <mat-icon class="exit" style="color: red" (click)="closeError()">close</mat-icon>
+          </div>
+          <mat-stepper linear="true" id="updatePassStepper" #stepper>
+  
+            <!-- Update Password Form -->
+            <mat-step [stepControl]="addressInfoForm">
+              <form [formGroup]="addressInfoForm">
+                <ng-template matStepLabel>Add Information</ng-template>
+  
+                <!-- Username -->
+                <div fxLayoutAlign="center center">
+                  <input type="text" name="username" id="username" placeholder="Enter username" formControlName="username" (blur)="checkInput(credentialsForm.get('username'), usernameTooltip)">
+                  <mat-icon
+                    class="info"
+                    #usernameTooltip="matTooltip"
+                    matTooltip="Username must be alphanumeric, may include '$' and be between 8-20 characters long."
+                    matTooltipPosition="after">info
+                  </mat-icon>
+                </div>
+  
+                <!-- Password -->
+                <div fxLayoutAlign="center center">
+                  <input type="password" name="password" id="password" placeholder="Enter password" formControlName="password" (blur)="checkInput(credentialsForm.get('password'), passwordTooltip)">
+                  <mat-icon
+                    class="info"
+                    #passwordTooltip="matTooltip"
+                    matTooltip="Password must be 8-20 characters, have one or more capital letters and one or more special characters."
+                    matTooltipPosition="after">info
+                  </mat-icon>
+                </div>
+  
+                <!-- Password check -->
+                <div fxLayoutAlign="center center">
+                  <input type="password" name="passwordCheck" id="passwordCheck" placeholder="Re-enter password" formControlName="passwordCheck" (blur)="checkInput(credentialsForm.get('passwordCheck'), passwordTooltip)">
+                  <mat-icon class="info"></mat-icon>
+                </div>
+  
+                <!-- Button -->
+                <div>
+                  <button class="button" [disabled]="!credentialsForm.valid" (click)="checkUsername()">Next</button>
+                </div>
+              </form>
+            </mat-step>
+  
+            <!-- User Info Form (name, email, address, etc.) -->
+            <mat-step [stepControl]="userInfoForm" label="Add Information">
+              <form [formGroup]="userInfoForm">
+  
+                <!-- First name -->
+                <div fxLayoutAlign="center center">
+                  <input type="text" name="firstName" id="firstName" placeholder="First name" formControlName="firstName" (blur)="checkInput(userInfoForm.get('firstName'), firstNameTooltip)">
+                  <mat-icon
+                    class="info"
+                    #firstNameTooltip="matTooltip"
+                    matTooltip="First name must have no spaces, numbers or special chars and be shorter than 60 characters."
+                    matTooltipPosition="after">info
+                  </mat-icon>
+                </div>
+  
+                <!-- Last name -->
+                <div fxLayoutAlign="center center">
+                  <input type="text" name="lastName" id="lastName" placeholder="Last name" formControlName="lastName" (blur)="checkInput(userInfoForm.get('lastName'), lastNameTooltip)">
+                  <mat-icon
+                    class="info"
+                    #lastNameTooltip="matTooltip"
+                    matTooltip="Last name must have no spaces, numbers or special chars and be shorter than 60 characters."
+                    matTooltipPosition="after">info
+                  </mat-icon>
+                </div>
+  
+                <!-- Email -->
+                <div fxLayoutAlign="center center">
+                  <input type="text" name="email" id="email" placeholder="Enter email" formControlName="email" (blur)="checkInput(userInfoForm.get('email'), emailTooltip)">
+                  <mat-icon
+                    class="info"
+                    #emailTooltip="matTooltip"
+                    matTooltip="Must be a valid email address."
+                    matTooltipPosition="after">info
+                  </mat-icon>
+                </div>
+  
+                <!-- Buttons -->
+                <div fxLayoutGap="25px">
+                  <button class="button" matStepperPrevious>Back</button>
+                  <button class="button" (click)="registerUser()" [disabled]="!userInfoForm.valid">Register</button>
+                </div>
+              </form>
+            </mat-step>
+  
+          </mat-stepper>
+      </div>
+    </div>
+  </section>
