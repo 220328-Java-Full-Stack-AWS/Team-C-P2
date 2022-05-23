@@ -146,8 +146,7 @@ public class UserController {
         }
 
         CookieDto cookie = authService.getCookieDto(userSession);
-        System.out.println(newAddress);
-        User user = userService.getById(newAddress.getUserID()).get();
+        User user = userService.getById(newAddress.getUserId()).get();
         UserAddress address = new UserAddress();
         address.setAddressLine1(newAddress.getAddressLine1());
         address.setAddressLine2(newAddress.getAddressLine2());
@@ -155,6 +154,7 @@ public class UserController {
         address.setPhoneNumber(newAddress.getPhoneNumber());
         address.setPostalCode(newAddress.getPostalCode());
         address.setCountry(newAddress.getCountry());
+        System.out.println(address);
 
         if (cookie.getUserId() != user.getId()) {
             res.setStatus(403);
