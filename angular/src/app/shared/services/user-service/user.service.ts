@@ -157,17 +157,17 @@ export class UserService {
     return this.http.put<UpdateCartItem>(`${this.userURL}/cart/update`, cartItem, {withCredentials:true});
   }
 
-<<<<<<< HEAD
   updateUserAddress(address : UserAddress) : Observable<any> {
+    this.cookie.getCookie('user_session');
     return this.http.put<UserAddress>(this.userURL + "/update/address", {withCredentials : true});
   }
 
   updateUserPayment(payment : UserPayment): Observable<any> {
     this.cookie.getCookie('user_session');
     return this.http.put<UserPayment>(`${this.userURL}/update/payment`, {withCredentials:true});
-=======
+  }
+
   removeCartItem(id:number): Observable<any> {
     return this.http.delete(`${this.userURL}/cart/remove/` + id, {withCredentials:true});
->>>>>>> c450afa2450e9cbb5918892581799dc9a9a186b5
   }
 }
