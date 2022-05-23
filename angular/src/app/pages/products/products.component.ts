@@ -22,14 +22,21 @@ export class ProductsComponent implements OnInit {
   products: Product[] = [];
   //Adding parameter value to extarct parameter 
   sub: any = null;
+  category: any ={
+    1: "Soccer",
+    2: "Football",
+    3: "Tenniss",
+    4: "Test"
+  }
 
+  id: any = "";
   constructor(private productService: ProductService, private userService: UserService, private route: ActivatedRoute) { }
   //
   ngOnInit(): void {
-    let id: any;
+    // let id: any;
     this.sub = this.route.paramMap.subscribe(params => {
-      id = params.get("id");
-      this.productService.getByCategoryId(id).subscribe({
+      this.id = params.get("id");
+      this.productService.getByCategoryId(this.id).subscribe({
         next: response => {
           console.log(response)
           this.products = (response as any).data;
