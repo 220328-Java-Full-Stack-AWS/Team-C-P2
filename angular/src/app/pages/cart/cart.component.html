@@ -31,7 +31,7 @@
                             </select>
                         </div>
                         <div class="cart__item-delete">
-                            <button>Delete</button>
+                            <button (click)='removeCartItem(cart.cartItem?.id)'>Delete</button>
                         </div>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
             <h2>SubTotal: ${{cartTotal}}</h2>
         </div>
         <div class="cart__checkout">
-            <button>Checkout</button>
+            <button >Checkout</button>
         </div>
     </div>
 </section>
