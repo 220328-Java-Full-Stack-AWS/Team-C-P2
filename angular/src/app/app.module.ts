@@ -28,6 +28,8 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatButtonModule } from '@angular/material/button';
+import { FeaturedProductsComponent } from './shared/components/featured-products/featured-products.component';
 
 
 @NgModule({
@@ -47,7 +49,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     UpdateProductComponent,
     CreateProductComponent,
     RegisterComponent,
-    UpdateProfileComponent
+    UpdateProfileComponent,
+    FeaturedProductsComponent
 
   ],
   imports: [
@@ -60,7 +63,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatStepperModule,
     FlexLayoutModule,
     MatTooltipModule,
-    MatIconModule
+    MatIconModule,
+    MatButtonModule
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]
