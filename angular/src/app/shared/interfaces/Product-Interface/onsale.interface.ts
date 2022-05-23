@@ -1,6 +1,7 @@
 export interface onSale {
 
-    id?: number,
-    discount?: number
-  
-  }
+  id?: number,
+  discount?: number
+
+}
+
