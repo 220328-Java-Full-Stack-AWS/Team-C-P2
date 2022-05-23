@@ -15,13 +15,16 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.util.List;
 import java.util.Optional;
 
 @SpringBootApplication(scanBasePackages = "com.revature.TeamCP2.beans")
 public class TeamCP2Application {
 
-    public static void main(String[] args) throws ItemDoesNotExistException, ItemHasNoIdException, CreationFailedException, ItemHasNonNullIdException {
+    public static void main(String[] args) throws ItemDoesNotExistException, ItemHasNoIdException, CreationFailedException, ItemHasNonNullIdException, IOException {
         ConfigurableApplicationContext context = SpringApplication.run(TeamCP2Application.class, args);
         context.start();
 
@@ -58,13 +61,18 @@ public class TeamCP2Application {
 
         //Create
         Product product1 = new Product();
-        product1.setDescr("2 ");
-        product1.setName("Test Featured");
+        product1.setDescr("Image of cat");
+        product1.setName("Cat");
         product1.setOnSale(onSale);
         product1.setIsFeatured(true);
-        product1.setPrice(123);
-        productService.create(product1);
+        product1.setPrice(20);
 
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        BufferedImage img = ImageIO.read(new File("src/main/images/cat.png"));
+        ImageIO.write(img, "png", baos);
+        byte[] bytes = baos.toByteArray();
+        product1.setImage(bytes);
+        productService.create(product1);
 //        //update
 //        Product update = new Product();
 //        product.setDescr("Update");
