@@ -16,11 +16,115 @@ import { CookieService } from '../cookie-service/cookie.service';
 export class UserService {
   userURL: string = "http://localhost:8080/user";
 
+  constructor(
+    private http: HttpClient,
+    private cookie: CookieService) {
+  }
+
   private user: UserInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
 
   private currentUserSubject: BehaviorSubject<UserInfo> = new BehaviorSubject(
     this.user
   );
+
+  cartQuery: Cart = {
+    cartItem: {
+      id: 0,
+      cartId: 0,
+      product: {
+        id: 0,
+        name: "",
+        descr: "",
+        price: 0,
+        onSale: {
+          id: 0,
+          discount: 0
+        },
+        category: {
+          id: 0,
+          description: "",
+          name: "",
+          image: undefined,
+        },
+        isFeatured: false,
+        image: undefined,
+      },
+      quantity: 0,
+      netPrice: 0,
+    },
+    netPrice: 0
+  };
+
+
+
+  getCurrentActiveCart(): BehaviorSubject<Cart[]> {
+    this.getActiveCartByUserId(this.user.userId);
+    return this.currentCartItems;
+  }
+
+  total: number = 0;
+
+  getTotalByUserId(id:number) {
+    this.getUserActiveCart(id).subscribe((json: any) => {
+      console.log(json);
+      for (let e of json.data) {
+        this.total += (e?.netPrice * e?.cartItem.quantity);
+      }
+    })
+  }
+
+  getActiveCartByUserId(id:number) {
+    this.getUserActiveCart(id).subscribe((json: any) => {
+      console.log(json);
+      for (let e of json.data) {
+        this.cartQuery = {
+          cartItem: {
+            id: e.cartItem?.id,
+            cartId: e.cartItem?.cartId,
+            product: {
+              id: e.cartItem?.product.id,
+              name: e.cartItem?.product.name,
+              descr: e.cartItem?.product.descr,
+              price: e.cartItem?.product.price,
+              onSale: {
+                id: e.product?.onSale.id,
+                discount: e.product?.onSale.discount
+              },
+              category: {
+                id: e.product?.category.id,
+                description: e.product?.category.description,
+                name: e.product?.category.name,
+                image: e.product?.category.image,
+              },
+              isFeatured: e.cartItem?.product.isFeatured,
+              image: e.cartItem?.product.image,
+            },
+            quantity: e.cartItem?.quantity,
+            netPrice: e.cartItem?.netPrice,
+          },
+          netPrice: e?.netPrice
+        }
+        this.total += (e?.netPrice * e?.cartItem.quantity);
+        this.cartArray.push(this.cartQuery);
+      }
+    })
+  }
+  
+  cartArray: Cart[] = [];
+
+  private cartItems: Cart[] = this.cartArray;
+  private cartTotal: BehaviorSubject<number> = new BehaviorSubject(
+    this.total
+  );
+
+  private currentCartItems: BehaviorSubject<Cart[]> = new BehaviorSubject(
+    this.cartItems
+  );
+
+  getCartTotal(): BehaviorSubject<number> {
+    this.getTotalByUserId(this.user.userId);
+    return this.cartTotal;
+  }
 
   getCurrentUser(): BehaviorSubject<UserInfo> {
 
@@ -33,12 +137,6 @@ export class UserService {
 
   setActiveCartId(cartId:number) {
     this.user.activeCartId = cartId;
-  }
-
-
-  constructor(
-    private http: HttpClient,
-    private cookie: CookieService) {
   }
 
   getUser(id: number): Observable<any> {
@@ -57,4 +155,7 @@ export class UserService {
     return this.http.put<UpdateCartItem>(`${this.userURL}/cart/update`, cartItem, {withCredentials:true});
   }
 
+  removeCartItem(id:number): Observable<any> {
+    return this.http.delete(`${this.userURL}/cart/remove/` + id, {withCredentials:true});
+  }
 }
