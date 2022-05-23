@@ -81,7 +81,9 @@ export class UpdateAddressComponent implements OnInit {
   // function to confirm new address information and update address
   confirmAddress(): void {
     // subscribe to update payment method and route to user profile
+    this.newAddress.id = this.user.userId;
     console.log(this.newAddress);
+    this.cookie.getCookie('user_session');
     this.userService.updateUserAddress(this.newAddress).subscribe((json) => {
       console.log(json);
       this.router.navigate(["/profile"])

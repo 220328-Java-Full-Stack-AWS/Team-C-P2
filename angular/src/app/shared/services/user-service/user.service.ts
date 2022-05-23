@@ -159,12 +159,12 @@ export class UserService {
 
   updateUserAddress(address : UserAddress) : Observable<any> {
     this.cookie.getCookie('user_session');
-    return this.http.put<UserAddress>(this.userURL + "/profile/update/address", {withCredentials : true});
+    return this.http.put<UserAddress>(`${this.userURL}/profile/update/address`, address, {withCredentials : true});
   }
 
   updateUserPayment(payment : UserPayment): Observable<any> {
     this.cookie.getCookie('user_session');
-    return this.http.put<UserPayment>(`${this.userURL}/profile/update/payment`, {withCredentials:true});
+    return this.http.put<UserPayment>(`${this.userURL}/profile/update/payment`, payment, {withCredentials : true});
   }
 
   removeCartItem(id:number): Observable<any> {
