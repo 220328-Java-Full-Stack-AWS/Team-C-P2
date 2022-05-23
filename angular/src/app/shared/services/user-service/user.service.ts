@@ -23,11 +23,26 @@ export class UserService {
     private cookie: CookieService) {
   }
 
+  cartArray: Cart[] = [];
+  num: number = 0;
+  total: number[] = [];
+
+  private cartItems: Cart[] = this.cartArray;
+  private totalNum: number[] = this.total;
   private user: UserInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
 
   private currentUserSubject: BehaviorSubject<UserInfo> = new BehaviorSubject(
     this.user
   );
+  
+  private cartTotal: BehaviorSubject<number[]> = new BehaviorSubject(
+    this.totalNum
+  );
+
+  private currentCartItems: BehaviorSubject<Cart[]> = new BehaviorSubject(
+    this.cartItems
+  );
+  
 
   cartQuery: Cart = {
     cartItem: {
@@ -57,22 +72,11 @@ export class UserService {
     netPrice: 0
   };
 
-
-
   getCurrentActiveCart(): BehaviorSubject<Cart[]> {
+    this.cartArray = []
     this.getActiveCartByUserId(this.user.userId);
+    this.currentCartItems.next(this.cartArray);
     return this.currentCartItems;
-  }
-
-  total: number = 0;
-
-  getTotalByUserId(id:number) {
-    this.getUserActiveCart(id).subscribe((json: any) => {
-      console.log(json);
-      for (let e of json.data) {
-        this.total += (e?.netPrice * e?.cartItem.quantity);
-      }
-    })
   }
 
   getActiveCartByUserId(id:number) {
@@ -106,26 +110,31 @@ export class UserService {
           },
           netPrice: e?.netPrice
         }
-        this.total += (e?.netPrice * e?.cartItem.quantity);
         this.cartArray.push(this.cartQuery);
       }
     })
   }
-  
-  cartArray: Cart[] = [];
 
-  private cartItems: Cart[] = this.cartArray;
-  private cartTotal: BehaviorSubject<number> = new BehaviorSubject(
-    this.total
-  );
+  getTotalByUserId(id:number) {
+    this.getUserActiveCart(id).subscribe((json: any) => {
+      for (let e of json.data) {
+        this.num += (e?.netPrice * e?.cartItem.quantity);
+      }
+      this.total.push(this.num);
+    })
+  }
 
-  private currentCartItems: BehaviorSubject<Cart[]> = new BehaviorSubject(
-    this.cartItems
-  );
 
-  getCartTotal(): BehaviorSubject<number> {
+  getCartTotal(): BehaviorSubject<number[]> {
+    this.total = [];
+    this.num = 0;
     this.getTotalByUserId(this.user.userId);
+    this.cartTotal.next(this.total);
     return this.cartTotal;
+  }
+
+  setCartTotal(num: number[]) {
+    this.totalNum = num;
   }
 
   getCurrentUser(): BehaviorSubject<UserInfo> {
