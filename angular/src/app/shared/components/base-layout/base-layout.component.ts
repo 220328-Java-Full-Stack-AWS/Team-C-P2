@@ -29,10 +29,6 @@ export class BaseLayoutComponent implements OnInit {
     activeCartId: 0
   }
 
-
-
-
-
   logout() {
     this.authService.logout().subscribe(
       (res) => {

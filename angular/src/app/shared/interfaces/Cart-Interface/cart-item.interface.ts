@@ -7,4 +7,3 @@ export interface CartItem {
     quantity?: number,
     netPrice?: number,
   }
-  
