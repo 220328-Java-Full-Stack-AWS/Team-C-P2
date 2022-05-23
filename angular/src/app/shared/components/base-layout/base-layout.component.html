@@ -12,7 +12,15 @@
         </div>
 
         <div class="header__links" *ngIf="!(isLoggedIn)">
-            <a href="" class="scroll">Categories</a>
+            <div class = "dropdown">
+                <button class="dropbtn">Categorie</button>
+                <div class = "dropdown-content">
+                    <a href="#">Basketball</a>
+                    <a href="#">Baseball</a>
+                    <a href="#">Soccer</a>
+                </div>
+            
+            </div>
             <a href="" routerLink="/products" class="scroll">Products</a>
             <a href="" routerLink="/login">Login</a>
             <a href="" routerLink="/register">Register</a>
