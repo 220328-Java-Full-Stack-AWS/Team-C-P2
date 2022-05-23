@@ -21,15 +21,15 @@ export class CategoriesService {
         .get<Category[]>(this.categoriesURL);
     } 
 
-    createCategory(data: any): Observable<any> {
-        return this.http.post(`${this.categoriesURL}/create`, data)
+    create(data: any): Observable<any> {
+        return this.http.post(this.categoriesURL + "/create", data);
     }
 
-    updateCategory(data: any): Observable<any> {
-        return this.http.patch(`${this.categoriesURL}/update/`, data)
+    update(data: any): Observable<any> {
+        return this.http.put<Category>(this.categoriesURL + "/update/", data);
     }
 
-    deleteCategory(id: number): Observable<any> {
-        return this.http.delete(`${this.categoriesURL}/delete/${id}`)
+    deleteById(id: number): Observable<any> {
+        return this.http.delete(this.categoriesURL + "/delete/" +id);
     }
 }
