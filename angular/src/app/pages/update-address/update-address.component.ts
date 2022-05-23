@@ -3,11 +3,13 @@ import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from
 import { MatStepper } from '@angular/material/stepper';
 import { MatTooltip } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
-import { UserInfo } from '../../interfaces/User-Interface/user-info.interface';
-import { UserToRegister } from '../../interfaces/user-to-register.interface';
-import { AuthService } from '../../services/auth-service/auth.service';
-import { UserService } from '../../services/user-service/user.service';
-import { BaseLayoutComponent } from '../base-layout/base-layout.component';
+import { UserInfo } from '../../shared/interfaces/User-Interface/user-info.interface';
+import { UserToRegister } from '../../shared/interfaces/user-to-register.interface';
+import { AuthService } from '../../shared/services/auth-service/auth.service';
+import { UserService } from '../../shared/services/user-service/user.service';
+import { BaseLayoutComponent } from '../../shared/components/base-layout/base-layout.component';
+import { UserAddress } from '../../shared/interfaces/user-address.interface';
+import { CookieService } from '../../shared/services/cookie-service/cookie.service';
 
 @Component({
   selector: 'app-update-address',
@@ -16,9 +18,97 @@ import { BaseLayoutComponent } from '../base-layout/base-layout.component';
 })
 export class UpdateAddressComponent implements OnInit {
 
-  constructor() { }
+  @ViewChild("stepper") stepper! : MatStepper;
+  addressInfoForm : FormGroup = {} as FormGroup;
+  addressConForm : FormGroup = {} as FormGroup;
+  error?: string = "Error.";
+  
+  private address : UserAddress = {
+    id : 0,
+    addressLine1: " ",
+    addressLine2: " ",
+    city: " ",
+    postalCode: 0,
+    country: " ",
+    phoneNumber: " "
+  }
+
+  private user: UserInfo = {
+    userId: 0,
+    activeCartId: 0
+  }
+
+
+  constructor(private fb : FormBuilder, private router : Router, private userService : UserService, public cookie : CookieService) { }
 
   ngOnInit(): void {
+    // store the user cookie and info
+    this.cookie.getCookie('user_session');
+    this.userService.getCurrentUser().subscribe((user) => (
+      this.user = user
+    ));
+
+    // build the address info form
+    this.addressInfoForm = this.fb.group({
+      // check for alphanumeric string that has at least one number
+      "addressLine1" : [""],
+      "addressLine2" : [""],
+      // check for A-z only
+      "city" : [""],
+      // check for numeric only
+      "postalCode" : [""],
+      // A-z only
+      "country" : [""],
+      // numeric only, 10 digits long, maybe phone number (xxx-xxx-xxxx) layout?
+      "phoneNumber" : [""]      
+    });
+
+  }
+
+  updateAddress(): void {
+    // create new address to update user
+    const newAddress : UserAddress = {
+      id : this.user.userId,
+      addressLine1: this.addressInfoForm.value.addressLine1,
+      addressLine2: this.addressInfoForm.value.addressLine2,
+      city: this.addressInfoForm.value.city,
+      postalCode: this.addressInfoForm.value.postalCode,
+      country: this.addressInfoForm.value.country,
+      phoneNumber: this.addressInfoForm.value.phone
+    };
+
+    // subscribe to update payment method and store user response
+
+
+
+  }
+  // function to compare input vs 
+  checkInput(control: AbstractControl | null, tooltip: MatTooltip) {
+    if (!control!.valid) {
+      tooltip.show();
+    }
+    else {
+      tooltip.hide();
+    }
+  }
+
+  closeError(): void {
+    const el = document.querySelector(".error") as HTMLElement;
+
+    if(!el.classList.contains("hide")){
+      el.classList.add("hide");
+      this.error = "";
+    }
+  }
+
+  showError(errorMessage: string): void {
+    const el = document.querySelector('.error') as HTMLElement;
+
+    this.closeError();
+    if(el.classList.contains("hide")) {
+      this.error = errorMessage;
+      el.classList.remove("hide");
+    }
   }
 
 }
