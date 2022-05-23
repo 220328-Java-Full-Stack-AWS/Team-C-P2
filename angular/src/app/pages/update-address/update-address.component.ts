@@ -82,7 +82,7 @@ export class UpdateAddressComponent implements OnInit {
   confirmAddress(): void {
     // subscribe to update payment method and route to user profile
     console.log(this.newAddress);
-    this.userService.updateUserAddress(this.newAddress).subscribe((json : any) => {
+    this.userService.updateUserAddress(this.newAddress).subscribe((json) => {
       console.log(json);
       this.router.navigate(["/profile"])
     });

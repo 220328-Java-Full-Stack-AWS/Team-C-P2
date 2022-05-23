@@ -64,6 +64,7 @@ export class UserService {
   }
 
   updateUserPayment(payment : UserPayment): Observable<any> {
-    return this.http.put<UserPayment>(this.userURL + "/update/payment", {withCredentials:true});
+    this.cookie.getCookie('user_session');
+    return this.http.put<UserPayment>(`${this.userURL}/update/payment`, {withCredentials:true});
   }
 }
