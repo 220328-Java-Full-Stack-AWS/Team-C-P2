@@ -88,20 +88,24 @@ export class CartComponent implements OnInit {
           },
           netPrice: e?.netPrice
         }
-        this.cartTotal += e?.netPrice;
+        this.cartTotal += (e?.netPrice * e?.cartItem.quantity);
         this.cartArray.push(this.cartQuery);
       }
     })
   }
 
   updateCart(cartItemId: any, quantity: any){
-    this.updateCartItem.id = cartItemId;
-    this.updateCartItem.quantity = quantity.value;
+    this.updateCartItem.cartItemId = cartItemId;
+    this.updateCartItem.quantity = quantity;
     console.log(this.updateCartItem);
+    this.userService.updateCartItem(this.updateCartItem).subscribe((json:any) => {
+      console.log(json);
+    });
+  
   }
 
   updateCartItem: UpdateCartItem = {
-    id: 0,
+    cartItemId: 0,
     quantity: 0
   }
 
