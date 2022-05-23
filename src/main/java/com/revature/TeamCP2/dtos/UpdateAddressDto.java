@@ -31,7 +31,7 @@ public class UpdateAddressDto {
     }
 
     public void setUserId(Integer userID) {
-        this.userId = userId;
+        this.userId = userID;
     }
 
     public String getAddressLine1() {
