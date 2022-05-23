@@ -6,6 +6,7 @@ import { UserService } from '../../services/user-service/user.service';
 import { ProductService } from '../../services/product-service/product.service';
 import { onSale } from '../../interfaces/Product-Interface/onsale.interface';
 import { category } from '../../interfaces/Product-Interface/category.interface';
+import { CartItem } from '../../interfaces/Cart-Interface/cart-item.interface';
 
 @Component({
   selector: 'app-featured-products',
@@ -20,10 +21,12 @@ export class FeaturedProductsComponent implements OnInit {
   constructor(private productService: ProductService, private userService: UserService) { }
 
   ngOnInit(): void {
+    this.userService.getCurrentUser().subscribe(currentUser => {
+      this.userInfo = currentUser;
+    });
     this.productService.getAllFeatured().subscribe({
       next: response => {
         this.products = (response as any).data;
-        console.log(this.products);
       },
       error: err => {
         // Todo: Handle error
@@ -31,9 +34,12 @@ export class FeaturedProductsComponent implements OnInit {
     });
   }
 
-  addToCheckout(item: Product, event: Event): void {
+  addToCart(item: Product, event: Event): void {
+    let cartItem: CartItem;
+
+    // this.userService.
+
     // Todo: Add item to users cart
-    console.log(event);
     (event.target as HTMLElement).classList.add('inCart');
     console.log(`Added ${item.product.name} to the cart`);
   }

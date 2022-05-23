@@ -4,14 +4,14 @@
   <div fxLayout="row wrap" fxLayoutAlign="space-between" *ngIf="products.length > 0">
     <div fxFlex="24%" fxFlex.lt-lg="32%" fxFlex.lt-md="48%" fxLayout="column" class="product" *ngFor="let item of products">
       <!-- Add to cart icon -->
-      <button mat-icon-button type="button" class="addToCartButton mat-elevation-z2" (click)="addToCheckout(item, $event)">
+      <button mat-icon-button type="button" class="addToCartButton mat-elevation-z2" (click)="addToCart(item, $event)">
         <mat-icon class="addCartIcon">add_shopping_cart</mat-icon>
         <!-- <mat-icon class="checkIcon" #checkIcon>check</mat-icon> check if in cart -->
       </button>
 
       <!-- Image -->
       <div class="productImage">
-        <img class="productImage" src="data:image/png;base64,{{item.product.image}}" alt="{{item.product.name | lowercase}} image">
+        <img fxFlex src="data:image/png;base64,{{item.product.image}}" alt="{{item.product.name | lowercase}} image">
       </div>
 
       <div class="productInfo" fxFlex fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="5px">

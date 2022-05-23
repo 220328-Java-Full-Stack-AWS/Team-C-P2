@@ -73,6 +73,10 @@ export class UserService {
     })
   }
 
+  getUserCart(): Observable<Cart> {
+    return this.getUserActiveCart(this.user.userId);
+  }
+
   getActiveCartByUserId(id:number) {
     this.getUserActiveCart(id).subscribe((json: any) => {
       console.log(json);
@@ -109,7 +113,7 @@ export class UserService {
       }
     })
   }
-  
+
   cartArray: Cart[] = [];
 
   private cartItems: Cart[] = this.cartArray;
@@ -137,6 +141,7 @@ export class UserService {
 
   setActiveCartId(cartId:number) {
     this.user.activeCartId = cartId;
+    this.currentUserSubject.next(this.user);
   }
 
   getUser(id: number): Observable<any> {
