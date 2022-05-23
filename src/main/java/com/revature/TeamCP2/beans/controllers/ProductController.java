@@ -17,7 +17,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -107,10 +112,14 @@ public class ProductController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public HttpResponseDto create(@RequestBody Product product, HttpServletResponse res) throws CreationFailedException, ItemHasNonNullIdException, ItemDoesNotExistException {
+    public HttpResponseDto create(@RequestBody Product product, HttpServletResponse res) throws CreationFailedException, ItemHasNonNullIdException, ItemDoesNotExistException, IOException {
 
 
-        //tried using @RequestBody but was not able to make it work
+        //tried using @RequestBody but was not able to make it wor
+
+        //make dto to prodcut
+        //
+
         Product newProduct = productService.create(product);
 
         if (!productService.getById(newProduct.getId()).isPresent()) {
