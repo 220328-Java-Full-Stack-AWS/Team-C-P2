@@ -1,0 +1,39 @@
+.cart {
+
+    &__header {
+        margin-bottom: 2rem;
+    }
+
+    &__item {
+        margin-bottom: 2rem;
+        display: flex;
+    }
+
+    &__item-image {
+        padding: 1rem;
+
+        img {
+            border: 1px solid pink;
+            width: 180px;
+            height: 180px;
+        }
+    }
+
+    &__item-content {
+        padding-top: 1rem;
+    }
+
+    &__item-header {
+        min-height: 180px;
+    }
+
+    &__item-title {
+        margin-bottom: 0.5rem;
+    }
+
+    &__item-footer {
+        margin-bottom: 1rem;
+        display: flex;
+    }
+
+}
