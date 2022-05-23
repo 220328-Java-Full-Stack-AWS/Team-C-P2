@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { Cart } from 'src/app/shared/interfaces/Cart-Interface/cart.interface';
 import { UpdateCartItem } from 'src/app/shared/interfaces/Cart-Interface/update-cart-item.interface';
 import { UserInfo } from 'src/app/shared/interfaces/User-Interface/user-info.interface';
@@ -17,7 +18,8 @@ export class CartComponent implements OnInit {
   constructor(
     private userService: UserService,
     private cookie: CookieService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private router: Router
 
   ) { }
 
@@ -27,81 +29,26 @@ export class CartComponent implements OnInit {
   }
   cartArray: Cart[] = [];
 
-  cartQuery: Cart = {
-    cartItem: {
-      id: 0,
-      cartId: 0,
-      product: {
-        id: 0,
-        name: "",
-        descr: "",
-        price: 0,
-        onSale: {
-          id: 0,
-          discount: 0
-        },
-        category: {
-          id: 0,
-          description: "",
-          name: "",
-          image: undefined,
-        },
-        isFeatured: false,
-        image: undefined,
-      },
-      quantity: 0,
-      netPrice: 0,
-    },
-    netPrice: 0
-  };
-
   cartTotal: number = 0;
-  
-  getActiveCartByUserId(id:number) {
-    this.userService.getUserActiveCart(id).subscribe((json: any) => {
+
+
+  updateCart(cartItemId: any, quantity: any){
+    this.updateCartItem.cartItemId = cartItemId;
+    this.updateCartItem.quantity = quantity;
+    console.log(this.updateCartItem);
+    this.userService.updateCartItem(this.updateCartItem).subscribe((json:any) => {
       console.log(json);
-      for (let e of json.data) {
-        this.cartQuery = {
-          cartItem: {
-            id: e.cartItem?.id,
-            cartId: e.cartItem?.cartId,
-            product: {
-              id: e.cartItem?.product.id,
-              name: e.cartItem?.product.name,
-              descr: e.cartItem?.product.descr,
-              price: e.cartItem?.product.price,
-              onSale: {
-                id: e.product?.onSale.id,
-                discount: e.product?.onSale.discount
-              },
-              category: {
-                id: e.product?.category.id,
-                description: e.product?.category.description,
-                name: e.product?.category.name,
-                image: e.product?.category.image,
-              },
-              isFeatured: e.cartItem?.product.isFeatured,
-              image: e.cartItem?.product.image,
-            },
-            quantity: e.cartItem?.quantity,
-            netPrice: e.cartItem?.netPrice,
-          },
-          netPrice: e?.netPrice
-        }
-        this.cartTotal += e?.netPrice;
-        this.cartArray.push(this.cartQuery);
-      }
+    });
+  }
+
+  removeCartItem(id: any) {
+    this.userService.removeCartItem(id).subscribe((json:any) => {
+      console.log(json);
     })
   }
 
-  updateCart(cartItemId: any, quantity: any){
-    this.updateCartItem.id = cartItemId;
-    this.updateCartItem.quantity = quantity.value;
-    console.log(this.updateCartItem);
-  }
-
   updateCartItem: UpdateCartItem = {
-    id: 0,
+    cartItemId: 0,
     quantity: 0
   }
 
@@ -112,7 +59,12 @@ export class CartComponent implements OnInit {
     this.userService.getCurrentUser().subscribe((user) => (
       this.user = user
     ));
-    this.getActiveCartByUserId(this.user.userId);
+    this.userService.getCurrentActiveCart().subscribe((cartArray) => (
+      this.cartArray = cartArray
+    ));
+    this.userService.getCartTotal().subscribe((cartTotal) => (
+      this.cartTotal = cartTotal
+    ));
   }
-
 }
+

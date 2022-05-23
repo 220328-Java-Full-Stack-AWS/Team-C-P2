@@ -111,7 +111,7 @@ public class UserController {
     }
 
 
-    @PutMapping("/update/password")
+    @PutMapping("/profile/update/password")
     @ResponseStatus(HttpStatus.OK)
     public HttpResponseDto updatePassword(HttpServletResponse res, HttpServletRequest req, @CookieValue(name = "user_session", required = false) String userSession) throws NotAuthorizedException, ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException, IOException {
         Integer userID = req.getIntHeader("id");
@@ -137,7 +137,7 @@ public class UserController {
         }
     }
 
-    @PutMapping("/update/address")
+    @PutMapping("/profile/update/address")
     @ResponseStatus(HttpStatus.OK)
     public HttpResponseDto updateAddress(@RequestBody UpdateAddressDto newAddress, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws NotAuthorizedException, ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException {
         if (userSession == null) {
@@ -146,8 +146,7 @@ public class UserController {
         }
 
         CookieDto cookie = authService.getCookieDto(userSession);
-        System.out.println(newAddress);
-        User user = userService.getById(newAddress.getUserID()).get();
+        User user = userService.getById(newAddress.getUserId()).get();
         UserAddress address = new UserAddress();
         address.setAddressLine1(newAddress.getAddressLine1());
         address.setAddressLine2(newAddress.getAddressLine2());
@@ -155,6 +154,7 @@ public class UserController {
         address.setPhoneNumber(newAddress.getPhoneNumber());
         address.setPostalCode(newAddress.getPostalCode());
         address.setCountry(newAddress.getCountry());
+        System.out.println(address);
 
         if (cookie.getUserId() != user.getId()) {
             res.setStatus(403);
@@ -173,7 +173,7 @@ public class UserController {
         }
     }
 
-    @PutMapping("/update/payment")
+    @PutMapping("/profile/update/payment")
     @ResponseStatus(HttpStatus.OK)
     public HttpResponseDto updatePayment(@RequestBody UpdatePaymentDto newPayment, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws NotAuthorizedException, ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException {
         if (userSession == null) {
@@ -282,9 +282,9 @@ public class UserController {
 
     }
 
-    @DeleteMapping("/cart/remove")
+    @DeleteMapping("/cart/remove/{cartItemId}")
     @ResponseStatus(HttpStatus.OK)
-    public HttpResponseDto removeFromCart(@RequestHeader Integer cartItemId, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws ItemHasNoIdException, ItemDoesNotExistException {
+    public HttpResponseDto removeFromCart(@PathVariable int cartItemId, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws ItemHasNoIdException, ItemDoesNotExistException {
 
         if (userSession == null) {
             res.setStatus(400);
@@ -332,7 +332,6 @@ public class UserController {
     @PostMapping("/registrations")
     public HttpResponseDto registrations(@RequestBody User user, HttpServletResponse response) {
         String usernameToCheck = user.getUsername();
-        user.setActiveCartId(cartService.createCart(user).getId());
 
         if(usernameToCheck != null) {
             User retrievedUser = userService.getByUsername(usernameToCheck);
