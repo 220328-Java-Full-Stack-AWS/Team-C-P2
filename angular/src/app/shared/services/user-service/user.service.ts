@@ -158,6 +158,7 @@ export class UserService {
   }
 
   updateUserAddress(address : UserAddress) : Observable<any> {
+    console.log(address);
     this.cookie.getCookie('user_session');
     return this.http.put<UserAddress>(`${this.userURL}/profile/update/address`, address, {withCredentials : true});
   }

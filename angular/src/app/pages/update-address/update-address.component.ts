@@ -25,7 +25,7 @@ export class UpdateAddressComponent implements OnInit {
   }
 
   public newAddress : UserAddress = {
-    id : 0,
+    userId : 0,
     addressLine1: " ",
     addressLine2: " ",
     city: " ",
@@ -65,7 +65,7 @@ export class UpdateAddressComponent implements OnInit {
   inputAddress() : void {
     // create new address to update user
     const address : UserAddress = {
-      id : this.user.userId,
+      userId : this.user.userId,
       addressLine1: this.addressInfoForm.value.addressLine1,
       addressLine2: this.addressInfoForm.value.addressLine2,
       city: this.addressInfoForm.value.city,
@@ -81,10 +81,9 @@ export class UpdateAddressComponent implements OnInit {
   // function to confirm new address information and update address
   confirmAddress(): void {
     // subscribe to update payment method and route to user profile
-    this.newAddress.id = this.user.userId;
     console.log(this.newAddress);
     this.cookie.getCookie('user_session');
-    this.userService.updateUserAddress(this.newAddress).subscribe((json) => {
+    this.userService.updateUserAddress(this.newAddress).subscribe((json : UserAddress) => {
       console.log(json);
       this.router.navigate(["/profile"])
     });
