@@ -10,5 +10,4 @@ export interface CreateProduct {
   category?: category,
   isFeatured: boolean,
   image?: Blob,
-  netPrice: number
 }
