@@ -24,6 +24,7 @@ const routes: Routes = [
       { path: 'products', component: ProductsComponent },
       { path: 'products/update', component: UpdateProductComponent },
       { path: 'products/create', component: CreateProductComponent },
+      { path: 'products/:id', component: ProductsComponent },
       { path: 'cart', component: CartComponent },
       { path: 'login', component: LoginComponent },
       { path: 'profile', component: ProfileComponent },
