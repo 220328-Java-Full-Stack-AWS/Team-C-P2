@@ -4,7 +4,18 @@
         <a routerLink="/" class="header__logo">Home</a>
 
         <div class="header__links" *ngIf="(isLoggedIn)">
-            <a class="scroll">Categories</a>
+            <div class = "dropdown">
+                <button class="dropbtn">Categories</button>
+                <div class = "dropdown-content">
+                    <a href="/category/1">Basketball</a>
+                    <a href="#">Baseball</a>
+                    <a href="#">Soccer</a>
+                    <a href="#">Football</a>
+                    <a href="#">Golf</a>
+                    <a href="#">Tennis</a>
+                </div>
+
+            </div>
             <a routerLink="/products" class="scroll">Products</a>
             <a routerLink="/cart" class="scroll">Cart</a>
             <a routerLink="/profile">Profile</a>
@@ -15,14 +26,14 @@
             <div class = "dropdown">
                 <button class="dropbtn">Categories</button>
                 <div class = "dropdown-content">
-                    <a href="#">Basketball</a>
+                    <a href="/category/1">Basketball</a>
                     <a href="#">Baseball</a>
                     <a href="#">Soccer</a>
                     <a href="#">Football</a>
-                    <a href="#">Lacrosse</a>
+                    <a href="#">Golf</a>
                     <a href="#">Tennis</a>
                 </div>
-            
+
             </div>
             <a href="" routerLink="/products" class="scroll">Products</a>
             <a href="" routerLink="/login">Login</a>
