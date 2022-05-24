@@ -97,6 +97,7 @@ public class ProductsRepository extends AbstractHibernateRepo<Product> {
     }
 
     public List<Product> getAllFeatured() {
+        this.session = connectionManager.getSessionFactory().openSession();
         Query query = session.createQuery("from Products where is_featured = true");
 
         List<Product> results = query.list();

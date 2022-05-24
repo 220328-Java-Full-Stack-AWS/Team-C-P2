@@ -7,6 +7,7 @@ import com.revature.TeamCP2.beans.services.OnSaleService;
 import com.revature.TeamCP2.beans.services.ProductService;
 import com.revature.TeamCP2.entities.OnSale;
 import com.revature.TeamCP2.entities.Product;
+import com.revature.TeamCP2.entities.ProductCategory;
 import com.revature.TeamCP2.exceptions.CreationFailedException;
 import com.revature.TeamCP2.exceptions.ItemDoesNotExistException;
 import com.revature.TeamCP2.exceptions.ItemHasNoIdException;
@@ -139,7 +140,6 @@ public class TeamCP2Application {
 //            System.out.println(result.getId());
 //        }
 //
-
 //        System.out.println(productService.getById(test.get().getId()));
     }
 
