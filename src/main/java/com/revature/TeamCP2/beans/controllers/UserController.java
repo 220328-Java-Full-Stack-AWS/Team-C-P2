@@ -202,8 +202,11 @@ public class UserController {
             return new HttpResponseDto(403, "Forbidden access", null);
         } else {
             if (user.getPayment() == null) {
+                System.out.println("first check");
                 user = userService.createUserPayment(user, payment);
+                System.out.println(user);
             } else {
+                System.out.println("second check");
                 payment.setId(user.getPayment().getId());
                 user = userService.updateUserPayment(user, payment);
             }
