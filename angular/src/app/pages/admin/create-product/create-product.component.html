@@ -1,7 +1,13 @@
 <section class="profile">
     <div class="container container--pall">
         <div class="profile__content">
+            <div class="profile__header item-container">
+                <div class="profile__item-header">
+                    <h2>Create Product</h2>
+                </div>
+            </div>
             <div class="profile__item item-container">
+
                 <div class="profile__item-header">
                     <h2>Product Information</h2>
                 </div>
@@ -10,62 +16,76 @@
                         <h3><strong>Product Name</strong></h3>
                     </div>
                     <div class="profile__item-content-info">
-                        <!-- <h3>{{firstName}}</h3> -->
+                        <label for="product_name">(4 to 15 characters):</label>
+                        <input type="text" id="product_name" name="product_name" required minlength="4" maxlength="25"
+                            size="12" [(ngModel)]='productToCreate.name'>
                     </div>
                 </div>
                 <div class="profile__item-content">
                     <div class="profile__item-content-header">
-                        <h3><strong>Product Price</strong></h3>
+                        <h3><strong>Description</strong></h3>
                     </div>
                     <div class="profile__item-content-info">
-                        <!-- <h3>{{username}}</h3> -->
+                        <!-- add textarea { resize: horizontal; } in scss -->
+                        <label for="product_description">(4 to 150 characters):</label>
+                        <input type="text" id="product_description" name="product_description" required minlength="4"
+                            maxlength="150" size="12" [(ngModel)]='productToCreate.descr'>
                     </div>
                 </div>
                 <div class="profile__item-content">
                     <div class="profile__item-content-header">
-                        <h3><strong>Product Description</strong></h3>
+                        <h3><strong>Price</strong></h3>
                     </div>
                     <div class="profile__item-content-info">
-                        <!-- <h3>{{username}}</h3> -->
-                    </div>
-                </div>
-                <div class="profile__item-content">
-                    <div class="profile__item-content-header">
-                        <h3><strong>Product Category Id</strong></h3>
-                    </div>
-                    <div class="profile__item-content-info">
-                        <!-- <h3>{{email}}</h3> -->
-                    </div>
-                </div>
-                <div class="profile__item-content">
-                    <div class="profile__item-content-header">
-                        <h3><strong>On Sale Id</strong></h3>
-                    </div>
-                    <div class="profile__item-content-info">
-                        <!-- <h3>{{phoneNumber}}</h3> -->
+                        <label for="product_price">$</label>
+                        <input type="text" inputmode="numeric" id="product_price" name="product_price" required
+                            minlength="1" maxlength="8" size="5" [(ngModel)]='productToCreate.price'>
+
                     </div>
                 </div>
 
                 <div class="profile__item-content">
                     <div class="profile__item-content-header">
-                        <h3><strong>Featured Item</strong></h3>
+                        <h3><strong>Category</strong></h3>
                     </div>
-                    <div class="profile__item-content-info">
-                        <!-- <h3>{{phoneNumber}}</h3> -->
+                    <select name="product_category_id" id="product_category_id" required
+                        [(ngModel)]='productToCreate.category.id'>
+                        <option value="" selected disabled hidden>Choose here</option>
+                        <option value="1">Soccer</option>
+                        <option value="2">Tennis</option>
+                        <option value="3">Hockey</option>
+                    </select>
+                </div>
+
+
+                <div class="profile__item-content">
+                    <div class="profile__item-content-header">
+                        <h3><strong>Sale</strong></h3>
                     </div>
+                    <select name="product_sale_id" id="product_sale_id" required
+                        [(ngModel)]='productToCreate.onSale.id'>
+                        <option value="" selected disabled hidden>Choose here</option>
+                        <option value="1">25% off</option>
+                        <option value="2">50% off</option>
+                        <option value="3">75% off</option>
+                    </select>
                 </div>
 
                 <div class="profile__item-content">
                     <div class="profile__item-content-header">
-                        <h3><strong>Product Image</strong></h3>
+                        <h3><strong>Image</strong></h3>
                     </div>
                     <div class="profile__item-content-info">
-                        <!-- <h3>{{phoneNumber}}</h3> -->
+                        <!-- add textarea { resize: horizontal; } in scss -->
+                        <label for="product_image">Choose a File: </label>
+                        <input type="file" id="product_image" name="product_image" (change)="onFileSelected($event)" required
+                            accept="image/png, image/jpeg" [(ngModel)]='productToCreate.image'>
                     </div>
                 </div>
+
 
                 <div class="profile__button">
-                    <button routerLink="updateProfile" class="button">Update Profile</button>
+                    <button (click)="createProduct(productToCreate)" class="button">Create Product</button>
                 </div>
             </div>
 

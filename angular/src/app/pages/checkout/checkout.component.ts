@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Cart } from 'src/app/shared/interfaces/Cart-Interface/cart.interface';
+import { UpdateCartItem } from 'src/app/shared/interfaces/Cart-Interface/update-cart-item.interface';
 import { UserInfo } from 'src/app/shared/interfaces/User-Interface/user-info.interface';
 
 import { UserProfile } from 'src/app/shared/interfaces/User-Interface/user-profile.interface';
@@ -84,10 +85,41 @@ export class CheckoutComponent implements OnInit {
     })
   }
 
+  updateCart(cartItemId: any, quantity: any){
+    this.updateCartItem.cartItemId = cartItemId;
+    this.updateCartItem.quantity = quantity;
+    console.log(this.updateCartItem);
+    this.userService.updateCartItem(this.updateCartItem).subscribe((json:any) => {
+      console.log(json);
+      this.cartArray = [];
+      this.cartTotal = [];
+      this.userService.setCartTotal(this.cartTotal);
+      this.ngOnInit();
+    });
+  }
+
+  removeCartItem(id: any) {
+    this.userService.removeCartItem(id).subscribe((json:any) => {
+      console.log(json);
+      this.ngOnInit();
+    })
+  }
+
+  calculateTax(total:number){
+    return (total * .13);
+  }
+
   private user: UserInfo = {
     userId: 0,
     activeCartId: 0
   }
+
+  updateCartItem: UpdateCartItem = {
+    cartItemId: 0,
+    quantity: 0
+  }
+
+  quantity: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   cartArray: Cart[] = [];
   cartTotal: number[] = [];
