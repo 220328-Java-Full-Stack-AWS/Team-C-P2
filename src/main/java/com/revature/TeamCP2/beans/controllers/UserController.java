@@ -113,12 +113,18 @@ public class UserController {
 
     @PutMapping("/profile/update/password")
     @ResponseStatus(HttpStatus.OK)
-    public HttpResponseDto updatePassword(HttpServletResponse res, HttpServletRequest req, @CookieValue(name = "user_session", required = false) String userSession) throws NotAuthorizedException, ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException, IOException {
-        Integer userID = req.getIntHeader("id");
-        String currentPassword = req.getHeader("currentPassword");
-        String newPassword = req.getHeader("newPassword");
+    public HttpResponseDto updatePassword(@RequestBody UpdatePasswordDto updatePasswordDto, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws NotAuthorizedException, ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException, IOException {
 
-        User user = userService.getById(userID).get();
+        if (userSession == null) {
+            res.setStatus(400);
+            return new HttpResponseDto(400, "Failed. You are not logged in", null);
+        }
+
+        Integer userId = updatePasswordDto.getUserId();
+        String currentPassword = updatePasswordDto.getCurrentPassword();
+        String newPassword = updatePasswordDto.getNewPassword();
+
+        User user = userService.getById(userId).get();
 
         if (userService.updatePassword(user, currentPassword, newPassword) == null) {
             res.setStatus(401);
