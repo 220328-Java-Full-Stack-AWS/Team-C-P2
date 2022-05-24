@@ -1,0 +1,27 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto11
+  pre_build:
+    commands:
+      - pwd
+      - ls -al
+      - aws s3 cp s3://teamcp2-secret-bucket/hibernate.properties src/main/resources/hibernate.properties
+      - aws s3 cp s3://teamcp2-secret-bucket/application.properties src/main/resources/application.properties
+      - ls -al
+      - ls -al src/main/resources/
+  build:
+    commands:
+      - mvn package
+  post_build:
+    commands:
+      - ls -al
+      - ls -al target/
+      - mv target/Team-C-P2-*.*.war ROOT.war
+      - ls -al
+artifacts:
+  files:
+    - ROOT.war
+    - .ebextensions/**/*
