@@ -37,14 +37,14 @@ public class OrderService {
         this.userRepository = userRepository;
     }
 
-    public Order createOrder(Order order) throws CreationFailedException, ItemHasNonNullIdException, ItemDoesNotExistException {
+    public Order createOrder(Order order) throws CreationFailedException, ItemHasNonNullIdException, ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException {
 
 
         User user = userRepository.getById(order.getCart().getUser().getId()).get();
         Cart cart = new Cart();
         cart.setUser(user);
         user.setActiveCartId(cartRepository.create(cart).getId());
-
+        userRepository.update(user);
         return orderRepository.create(order);
     }
 

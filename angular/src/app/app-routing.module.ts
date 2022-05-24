@@ -16,6 +16,7 @@ import { CreateProductComponent } from './pages/admin/create-product/create-prod
 import { RegisterComponent } from './shared/components/register/register.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { ProductViewComponent } from './product-view/product-view.component';
+import { OrderComponent } from './pages/order/order.component';
 
 
 const routes: Routes = [
@@ -37,6 +38,7 @@ const routes: Routes = [
       { path: 'profile/updateAddress', component: UpdateAddressComponent },
       { path: 'profile/updatePayment', component: UpdatePaymentComponent },
       { path: 'cart/checkout', component: CheckoutComponent },
+      { path: 'cart/checkout/order', component: OrderComponent },
     ],
     canActivate: [AuthGuard], // Kicks us out to session/login possibly
   },

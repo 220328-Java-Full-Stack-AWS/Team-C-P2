@@ -91,8 +91,11 @@ public class AdminController {
     @PostMapping("/orders")
     public ResponseEntity<Object> createOrder(
             @CookieValue(name = "user_session", required = false) String userSession,
-            @RequestBody Order order) {
-        try {
+            @RequestBody Order order) throws ItemDoesNotExistException, CreationFailedException, ItemHasNonNullIdException, UpdateFailedException, ItemHasNoIdException {
+
+        Order createdOrder = orderService.createOrder(order);
+        return new ResponseEntity<>(createdOrder, HttpStatus.CREATED);
+        /*try {
             CookieDto userCookie = authService.getAdminCookie(userSession);
 
             Order createdOrder = orderService.createOrder(order);
@@ -116,7 +119,7 @@ public class AdminController {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("message", "Creating the order failed");
             return new ResponseEntity<>(jsonObject.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        }*/
     }
 
     @GetMapping("/orders/{id}")

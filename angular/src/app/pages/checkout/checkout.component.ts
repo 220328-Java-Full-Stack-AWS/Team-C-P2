@@ -1,4 +1,7 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ActiveCart } from 'src/app/shared/interfaces/Cart-Interface/active-cart.interface';
 import { Cart } from 'src/app/shared/interfaces/Cart-Interface/cart.interface';
 import { UpdateCartItem } from 'src/app/shared/interfaces/Cart-Interface/update-cart-item.interface';
 import { UserInfo } from 'src/app/shared/interfaces/User-Interface/user-info.interface';
@@ -10,7 +13,8 @@ import { UserService } from 'src/app/shared/services/user-service/user.service';
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
-  styleUrls: ['./checkout.component.scss']
+  styleUrls: ['./checkout.component.scss'],
+  providers: [DatePipe]
 })
 export class CheckoutComponent implements OnInit {
 
@@ -18,7 +22,9 @@ export class CheckoutComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    public cookie:CookieService
+    public cookie:CookieService,
+    private datePipe: DatePipe,
+    private router: Router
     ) {
      }
 
@@ -123,6 +129,33 @@ export class CheckoutComponent implements OnInit {
 
   cartArray: Cart[] = [];
   cartTotal: number[] = [];
+
+  myDate = new Date();
+
+  activeCart: ActiveCart = {
+    id: 0,
+    user: this.userQuery,
+    total: 0
+  }
+
+  submit(total: any){
+    this.getUserById(this.user.userId);
+    let currentDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
+    console.log("Current Date:" + currentDate);
+    this.createOrder(this.userQuery, currentDate, total);
+    
+  }
+
+  createOrder(user: UserProfile, dateCreated: any, total:any) {
+    this.activeCart.id = user.activeCartId;
+    this.activeCart.user = user;
+    this.activeCart.total = total;
+    console.log("Current cart:" + this.activeCart);
+    this.userService.createOrder(this.activeCart, dateCreated).subscribe((json:any) => {
+      console.log(json);
+      this.router.navigate(['cart/checkout/order']);
+    })
+  }
 
   ngOnInit(): void {
     this.cookie.getCookie('user_session');
