@@ -48,6 +48,7 @@ export class CartComponent implements OnInit {
   removeCartItem(id: any) {
     this.userService.removeCartItem(id).subscribe((json:any) => {
       console.log(json);
+      this.ngOnInit();
     })
   }
 

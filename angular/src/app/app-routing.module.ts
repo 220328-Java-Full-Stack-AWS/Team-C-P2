@@ -14,6 +14,7 @@ import { UpdateProfileComponent } from './pages/update-profile/update-profile.co
 import { UpdateProductComponent } from './pages/admin/update-product/update-product.component';
 import { CreateProductComponent } from './pages/admin/create-product/create-product.component';
 import { RegisterComponent } from './shared/components/register/register.component';
+import { CheckoutComponent } from './pages/checkout/checkout.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,7 @@ const routes: Routes = [
       { path: 'profile/updatePassword', component: UpdatePasswordComponent },
       { path: 'profile/updateAddress', component: UpdateAddressComponent },
       { path: 'profile/updatePayment', component: UpdatePaymentComponent },
+      { path: 'cart/checkout', component: CheckoutComponent },
     ],
     canActivate: [AuthGuard], // Kicks us out to session/login possibly
   },

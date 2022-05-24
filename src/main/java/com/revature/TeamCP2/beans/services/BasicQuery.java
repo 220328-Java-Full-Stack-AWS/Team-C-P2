@@ -10,7 +10,10 @@ package com.revature.TeamCP2.beans.services;
 
 import com.revature.TeamCP2.exceptions.ItemDoesNotExistException;
 import org.hibernate.Session;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
@@ -22,12 +25,25 @@ import java.util.List;
 
 @Service
 @Scope("prototype")
-public class BasicQuery<T> {
+public class BasicQuery<T> implements ApplicationContextAware {
 
     private Session session;
     private Class<T> aClass;
+    private ApplicationContext context;
+    private ConnectionManager connectionManager;
 
-    public BasicQuery() {}
+    public BasicQuery() {
+
+    }
+
+    public ConnectionManager getConnectionManager() {
+        return connectionManager;
+    }
+
+    @Autowired
+    public void setConnectionManager(ConnectionManager connectionManager) {
+        this.connectionManager = connectionManager;
+    }
 
     /**
      * Constructor
@@ -67,7 +83,7 @@ public class BasicQuery<T> {
      * @GH
      */
     public T getById(int id) throws ItemDoesNotExistException {
-
+        this.session = connectionManager.getSessionFactory().openSession();
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<T> query = cb.createQuery(aClass);
         Root<T> root = query.from(aClass);
@@ -91,5 +107,10 @@ public class BasicQuery<T> {
 
     public void setaClass(Class<T> aClass) {
         this.aClass = aClass;
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.context = applicationContext;
     }
 }

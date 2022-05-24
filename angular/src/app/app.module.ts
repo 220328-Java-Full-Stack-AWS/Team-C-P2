@@ -28,6 +28,8 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { CheckoutComponent } from './pages/checkout/checkout.component';
+import { OrderComponent } from './pages/order/order.component';
 
 
 @NgModule({
@@ -47,8 +49,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     UpdateProductComponent,
     CreateProductComponent,
     RegisterComponent,
-    UpdateProfileComponent
-
+    UpdateProfileComponent,
+    CheckoutComponent,
+    OrderComponent
   ],
   imports: [
     AppRoutingModule,
