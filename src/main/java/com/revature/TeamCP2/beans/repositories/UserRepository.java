@@ -62,6 +62,7 @@ public class UserRepository extends AbstractHibernateRepo<User> {
         updated.setDateCreated(user.getDateCreated());
         updated.setDateModifies(user.getDateModifies());
         updated.setActiveCartId(user.getActiveCartId());
+        updated.setPayment(user.getPayment());
 
         // save to session, commit, and return updated user
         session.save(updated);

@@ -38,7 +38,7 @@ const routes: Routes = [
       { path: 'profile/updateAddress', component: UpdateAddressComponent },
       { path: 'profile/updatePayment', component: UpdatePaymentComponent },
       { path: 'cart/checkout', component: CheckoutComponent },
-      { path: 'cart/checkout/order', component: OrderComponent },
+      { path: 'cart/checkout/order/:id', component: OrderComponent },
     ],
     canActivate: [AuthGuard], // Kicks us out to session/login possibly
   },
