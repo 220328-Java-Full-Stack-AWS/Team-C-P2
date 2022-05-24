@@ -4,37 +4,28 @@
         <a routerLink="/" class="header__logo">Home</a>
 
         <div class="header__links" *ngIf="(isLoggedIn)">
-            <div class = "dropdown">
+            <div class="dropdown">
                 <button class="dropbtn">Categories</button>
-                <div class = "dropdown-content">
-                    <a href="/products/1">Soccer</a>
-                    <a href="products/2">Football</a>
-                    <a href="products/3">Tennis</a>
-                    <a href="products/4">Basketball</a>
-                    <a href="products/5">Golf</a>
-                    <a href="products/6">Baseball</a>
+                <div class="dropdown-content">
+                    <a href="/products/{{item.id}}" *ngFor="let item of categories| slice:0:10">{{item.name}}</a>
+
                 </div>
 
             </div>
             <a routerLink="/products" class="scroll">Products</a>
             <a routerLink="/cart" class="scroll cartLink">
-              Cart
-              <span class="cartCounter" *ngIf="cart.length > 0">{{cart.length}}</span>
+                Cart
+                <span class="cartCounter" *ngIf="cart.length > 0">{{cart.length}}</span>
             </a>
             <a routerLink="/profile">Profile</a>
             <a (click)='logout()'>Logout</a>
         </div>
 
         <div class="header__links" *ngIf="!(isLoggedIn)">
-            <div class = "dropdown">
+            <div class="dropdown">
                 <button class="dropbtn">Categories</button>
-                <div class = "dropdown-content">
-                    <a href="/products/1">Soccer</a>
-                    <a href="products/2">Football</a>
-                    <a href="products/3">Tennis</a>
-                    <a href="products/4">Basketball</a>
-                    <a href="products/5">Golf</a>
-                    <a href="products/6">Baseball</a>
+                <div class="dropdown-content">
+                    <a href="/products/{{item.id}}" *ngFor="let item of categories">{{item.name}}</a>
                 </div>
 
             </div>
