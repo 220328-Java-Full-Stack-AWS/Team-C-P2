@@ -55,6 +55,7 @@ public class CartItemRepository extends AbstractHibernateRepo<CartItem> {
 
     public void delete(CartItem cartItem) throws ItemDoesNotExistException {
         Transaction tx = session.beginTransaction();
+        session.clear();
         session.delete(cartItem);
         tx.commit();
 

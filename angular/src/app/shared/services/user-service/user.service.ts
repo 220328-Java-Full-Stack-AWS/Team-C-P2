@@ -11,6 +11,7 @@ import { Product } from '../../interfaces/Product-Interface/product.interface';
 import { UserAddress } from '../../interfaces/user-address.interface';
 import { UserPayment } from '../../interfaces/user-payment.interface';
 import { PasswordToChange } from '../../interfaces/password-to-change.interface';
+import { ActiveCart } from '../../interfaces/Cart-Interface/active-cart.interface';
 
 
 @Injectable({
@@ -18,16 +19,18 @@ import { PasswordToChange } from '../../interfaces/password-to-change.interface'
 })
 export class UserService {
   userURL: string = "http://localhost:8080/user";
+  adminURL: string = "http://localhost:8080/admin";
 
   constructor(
     private http: HttpClient,
     private cookie: CookieService) {
   }
-
+  length: Cart[] = [];
   cartArray: Cart[] = [];
   num: number = 0;
   total: number[] = [];
 
+  private cartLength: Cart[] = this.length;
   private cartItems: Cart[] = this.cartArray;
   private totalNum: number[] = this.total;
   private user: UserInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
@@ -42,6 +45,10 @@ export class UserService {
 
   private currentCartItems: BehaviorSubject<Cart[]> = new BehaviorSubject(
     this.cartItems
+  );
+
+  private currentCartLength: BehaviorSubject<Cart[]> = new BehaviorSubject(
+    this.cartLength
   );
 
 
@@ -78,6 +85,49 @@ export class UserService {
     this.getActiveCartByUserId(this.user.userId);
     this.currentCartItems.next(this.cartArray);
     return this.currentCartItems;
+  }
+
+  getCurrentActiveCartLength(): BehaviorSubject<Cart[]> {
+    this.length = []
+    this.getCartLength(this.user.userId);
+    this.currentCartLength.next(this.length);
+    return this.currentCartLength;
+  }
+
+  getCartLength(id:number) {
+    this.getUserActiveCart(id).subscribe((json: any) => {
+      console.log(json);
+      for (let e of json.data) {
+        this.cartQuery = {
+          cartItem: {
+            id: e.cartItem?.id,
+            cartId: e.cartItem?.cartId,
+            product: {
+              id: e.cartItem?.product.id,
+              name: e.cartItem?.product.name,
+              descr: e.cartItem?.product.descr,
+              price: e.cartItem?.product.price,
+              onSale: {
+                id: e.product?.onSale.id,
+                discount: e.product?.onSale.discount
+              },
+              category: {
+                id: e.product?.category.id,
+                description: e.product?.category.description,
+                name: e.product?.category.name,
+                image: e.product?.category.image,
+              },
+              isFeatured: e.cartItem?.product.isFeatured,
+              image: e.cartItem?.product.image,
+            },
+            quantity: e.cartItem?.quantity,
+            netPrice: e.cartItem?.netPrice,
+          },
+          netPrice: e?.netPrice
+        }
+        this.length.push(this.cartQuery);
+      }
+    })
   }
 
   getActiveCartByUserId(id:number) {
@@ -125,7 +175,6 @@ export class UserService {
     })
   }
 
-
   getCartTotal(): BehaviorSubject<number[]> {
     this.total = [];
     this.num = 0;
@@ -169,26 +218,58 @@ export class UserService {
   }
 
 
-  addCartItem(product: Product): void {
-    this.http.post(`${this.userURL}/cart/add`, {
-      userId: this.user.userId,
-      productId: product.id,
-      quantity: 1
-    }, { withCredentials: true }).subscribe({
-      next: response => {
-        const cart: Cart = {
-          cartItem: {
-            cartId: this.user.activeCartId,
-            product: product
-          }
-        }
-        this.cartArray.push(cart);
-        this.currentCartItems.next(this.cartArray);
-      },
-      error: err => {
-        console.error("Failed to add cart item");
+  addCartItem(product: Product, qty: any): void {
+    let exist: Boolean = false;
+    let itemId: any = 0;
+    for (let item of this.cartArray) {
+      if (product.id == item.cartItem?.product?.id) {
+        exist = true;
+        itemId = item.cartItem?.id;
       }
-    });
+    }
+
+    if (exist) {
+      console.log("itemId:" + itemId);
+      this.http.put(`${this.userURL}/cart/update`, {
+        cartItemId: itemId,
+        quantity: qty
+      }, { withCredentials: true }).subscribe({
+        next: response => {
+          const cart: Cart = {
+            cartItem: {
+              cartId: this.user.activeCartId,
+              product: product
+            }
+          }
+        },
+        error: err => {
+          console.error("Failed to add cart item");
+        }
+      });
+    }
+    else {
+      this.http.post(`${this.userURL}/cart/add`, {
+        userId: this.user.userId,
+        productId: product.id,
+        quantity: qty
+      }, { withCredentials: true }).subscribe({
+        next: response => {
+          const cart: Cart = {
+            cartItem: {
+              cartId: this.user.activeCartId,
+              product: product
+            }
+          }
+          this.cartArray.push(cart);
+          this.length.push(cart);
+          this.currentCartLength.next(this.length);
+          this.currentCartItems.next(this.cartArray);
+        },
+        error: err => {
+          console.error("Failed to add cart item");
+        }
+      });
+    }
   }
 
   updateUserAddress(address : UserAddress) : Observable<any> {
@@ -211,5 +292,11 @@ export class UserService {
 
   removeCartItem(id:number): Observable<any> {
     return this.http.delete(`${this.userURL}/cart/remove/` + id, {withCredentials:true});
+  }
+
+  createOrder(cart: ActiveCart, dateCreated: any): Observable<any> {
+    console.log("passed");
+    this.cookie.getCookie('user_session');
+    return this.http.post(`${this.adminURL}/orders`, {cart, dateCreated}, {withCredentials:true});
   }
 }

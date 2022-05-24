@@ -40,4 +40,6 @@ $front-theme: mat.define-light-theme((color: (primary: $front-primary,
 @import "profile";
 @import "home";
 @import "cart";
+@import "checkout";
 @import "productView";
+

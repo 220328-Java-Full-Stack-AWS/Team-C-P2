@@ -14,8 +14,8 @@
                             <h3>{{cart.cartItem?.product?.name + " " + cart.cartItem?.product?.descr}}</h3>
                         </div>
                         <div class="cart__item-price">
-                            <h3>Price: ${{cart.cartItem?.product?.price}}</h3>
-                            <h3>Net Price: ${{cart.netPrice}}</h3>
+                            <h3>Price: ${{cart.cartItem?.product?.price | number : '.2-2'}}</h3>
+                            <h3>Net Price: ${{cart.netPrice | number : '.2-2'}}</h3>
                         </div>
                     </div>
                     <div class="cart__item-footer">
@@ -32,18 +32,17 @@
                             </select>
                         </div>
                         <div class="cart__item-delete">
-                            <button (click)='removeCartItem(cart.cartItem?.id)'>Delete</button>
+                            <button (click)='removeCartItem(cart.cartItem?.id)'>Remove</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
         <div class="cart__total">
-            <h2>SubTotal: ${{cartTotal[0]}}</h2>
+            <h2>SubTotal: ${{cartTotal[0] | number : '.2-2'}}</h2>
         </div>
         <div class="cart__checkout">
-            <button >Checkout</button>
+            <button routerLink="checkout">Checkout</button>
         </div>
     </div>
 </section>

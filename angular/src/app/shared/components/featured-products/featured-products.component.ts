@@ -4,6 +4,7 @@ import { UserService } from '../../services/user-service/user.service';
 import { ProductService } from '../../services/product-service/product.service';
 import { onSale } from '../../interfaces/Product-Interface/onsale.interface';
 import { category } from '../../interfaces/Product-Interface/category.interface';
+import { Cart } from '../../interfaces/Cart-Interface/cart.interface';
 
 @Component({
   selector: 'app-featured-products',
@@ -13,7 +14,11 @@ import { category } from '../../interfaces/Product-Interface/category.interface'
 export class FeaturedProductsComponent implements OnInit {
 
   products: Product[] = [];
-  userInfo?: UserInfo;
+  userInfo: UserInfo = {
+    userId: 0,
+    activeCartId: 0
+  }
+  quantity: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   constructor(private productService: ProductService, private userService: UserService) { }
 
@@ -21,6 +26,9 @@ export class FeaturedProductsComponent implements OnInit {
     this.userService.getCurrentUser().subscribe(currentUser => {
       this.userInfo = currentUser;
     });
+    this.userService.getCurrentActiveCart().subscribe((cartArray) => (
+      this.cartArray = cartArray
+    ));
     this.productService.getAllFeatured().subscribe({
       next: response => {
         this.products = (response as any).data;
@@ -30,13 +38,15 @@ export class FeaturedProductsComponent implements OnInit {
       }
     });
   }
+  cartArray: Cart[] = [];
 
-  addToCart(item: Product, event: Event): void {
+  addToCart(item: Product, event: Event, qty: any): void {
     event.stopPropagation();
-    this.userService.addCartItem(item.product);
+    this.userService.addCartItem(item.product, qty);
 
     (event.target as HTMLElement).classList.add('inCart');
     console.log(`Added ${item.product.name} to the cart`);
+   
   }
 
 }
