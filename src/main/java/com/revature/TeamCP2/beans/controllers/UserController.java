@@ -183,7 +183,7 @@ public class UserController {
 
         CookieDto cookie = authService.getCookieDto(userSession);
 
-        User user = userService.getById(newPayment.getUserID()).get();
+        User user = userService.getById(newPayment.getUserId()).get();
         Payment payment = new Payment();
         payment.setCardNumber(newPayment.getCardNumber());
         payment.setIssuer(newPayment.getIssuer());
