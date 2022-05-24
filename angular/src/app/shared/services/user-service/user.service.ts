@@ -297,6 +297,10 @@ export class UserService {
   createOrder(cart: ActiveCart, dateCreated: any): Observable<any> {
     console.log("passed");
     this.cookie.getCookie('user_session');
-    return this.http.post(`${this.adminURL}/orders`, {cart, dateCreated}, {withCredentials:true});
+    return this.http.post(`${this.adminURL}/order`, {cart, dateCreated}, {withCredentials:true});
+  }
+
+  getOrderById(id:number): Observable<any> {
+    return this.http.get(`${this.adminURL}/order/` + id, {withCredentials:true})
   }
 }
