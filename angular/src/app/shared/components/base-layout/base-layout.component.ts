@@ -57,14 +57,11 @@ export class BaseLayoutComponent implements OnInit {
     ));
     this.userService.getCurrentActiveCart().subscribe({
       next: response => {
-        console.log(response.length);
         this.itemsInCart = (response as any).length;
       },
       error: err => {
         console.error("Failed to get cart items");
       }
     })
-
-    console.log(this.user);
   }
 }
