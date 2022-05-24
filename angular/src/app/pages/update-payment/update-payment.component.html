@@ -1,1 +1,127 @@
-<p>update-payment works!</p>
+<!DOCTYPE html>
+<section class="login">
+    <div class="container">
+        <div class="login__form forms">
+            <div class="login__form-header">
+                <h1>Add a Payment Method</h1>
+            </div>
+
+            <div class="error hide" fxLayoutAlign="space-between center">
+                <div class="stripe"></div>
+                <div class="message">{{error}}</div>
+                <mat-icon class="exit" style="color: red" (click)="closeError()">close</mat-icon>
+            </div>
+            <!-- first step-->
+            <mat-stepper linear="true" id="updatePayStepper" #stepper>
+
+                <!-- Update Address Info Form -->
+                <mat-step [stepControl]="paymentInfoForm">
+                    <form [formGroup]="paymentInfoForm">
+                    <ng-template matStepLabel>Add Information</ng-template>
+
+                        <!-- Network -->
+                        <div fxLayoutAlign="center center">
+                            <input type="text" name="network" id="network" placeholder="Network" formControlName="network"> <!--(blur)="checkInput(credentialsForm.get('username'), usernameTooltip)"-->
+                        </div>
+
+                        <!-- Issuer -->
+                        <div fxLayoutAlign="center center">
+                            <input type="text" name="issuer" id="issuer" placeholder="Issuer" formControlName="issuer"> <!--(blur)="checkInput(credentialsForm.get('username'), usernameTooltip)"-->
+                        </div>
+
+                        <!-- Card Number -->
+                        <div fxLayoutAlign="center center">
+                            <input type="text" name="cardNumber" id="cardNumber" placeholder="Card Number" formControlName="cardNumber"> <!--(blur)="checkInput(credentialsForm.get('username'), usernameTooltip)"-->
+                            <mat-icon
+                                class="info"
+                                #address1Tooltip="matTooltip"
+                                matTooltip="Card Number must be numeric and exactly 12 digits."
+                                matTooltipPosition="after">info
+                            </mat-icon>
+                        </div>
+
+                        <!-- Security Code -->
+                        <div fxLayoutAlign="center center">
+                            <input type="text" name="securityCode" id="securityCode" placeholder="Security Code" formControlName="securityCode"> <!--(blur)="checkInput(credentialsForm.get('username'), usernameTooltip)"-->
+                            <mat-icon
+                                class="info"
+                                #address1Tooltip="matTooltip"
+                                matTooltip="Security Code must be numeric and exactly 3 digits."
+                                matTooltipPosition="after">info
+                            </mat-icon>
+                        </div>
+
+                        <!-- Exp Date -->
+                        <div fxLayoutAlign="center center">
+                            <input type="text" name="expDate" id="expDate" placeholder="Expiration Date" formControlName="expDate"> <!--(blur)="checkInput(credentialsForm.get('username'), usernameTooltip)"-->
+                            <mat-icon
+                                class="info"
+                                #address1Tooltip="matTooltip"
+                                matTooltip="Expiration Date must be in form (MM/YYYY)."
+                                matTooltipPosition="after">info
+                            </mat-icon>
+                        </div>
+
+                        <!-- Button -->
+                        <div>
+                            <button class="button" [disabled]="!paymentInfoForm.valid" (click)="inputPayment()">Next</button>
+                        </div>
+                    </form>
+                </mat-step>
+                <mat-step>
+                    <ng-template matStepLabel>Confirm Payment</ng-template>
+                    <div class="profile__item item-container">
+                        <div class="profile__item-header">
+                            <h2>Confirm New Payment Information</h2>
+                        </div>
+                        <div class="profile__item-content">
+                            <div class="profile__item-content-header">
+                                <h3><strong>Network</strong></h3>
+                            </div>
+                            <div class="profile__item-content-info">
+                                <h3>{{newPayment.network}}</h3>
+                            </div>
+                        </div>
+                        <div class="profile__item-content">
+                            <div class="profile__item-content-header">
+                                <h3><strong>Issuer</strong></h3>
+                            </div>
+                            <div class="profile__item-content-info">
+                                <h3>{{newPayment.issuer}}</h3>
+                            </div>
+                        </div>
+                        <div class="profile__item-content">
+                            <div class="profile__item-content-header">
+                                <h3><strong>Card Number</strong></h3>
+                            </div>
+                            <div class="profile__item-content-info">
+                                <h3>{{newPayment.cardNumber}}</h3>
+                            </div>
+                        </div>
+                        <div class="profile__item-content">
+                            <div class="profile__item-content-header">
+                                <h3><strong>Security Code</strong></h3>
+                            </div>
+                            <div class="profile__item-content-info">
+                                <h3>{{newPayment.securityCode}}</h3>
+                            </div>
+                        </div>
+                        <div class="profile__item-content">
+                            <div class="profile__item-content-header">
+                                <h3><strong>Expiration Date</strong></h3>
+                            </div>
+                            <div class="profile__item-content-info">
+                                <h3>{{newPayment.expDate}}</h3>
+                            </div>
+                        </div>
+                        <!-- Buttons -->
+                        <div fxLayoutGap="25px">
+                            <button class="button" matStepperPrevious>Back</button>
+                            <button class="button" (click)="confirmPayment()">Confirm</button>
+                        </div>
+                    </div>
+                </mat-step>
+            </mat-stepper>
+        </div>
+    </div>
+</section>
