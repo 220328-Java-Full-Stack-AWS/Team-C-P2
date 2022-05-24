@@ -14,24 +14,19 @@ import { UserService } from '../../services/user-service/user.service';
 })
 export class BaseLayoutComponent implements OnInit {
   isLoggedIn: boolean = false;
+  itemsInCart: number = 0;
 
   constructor(
     private cookieService:CookieService,
     private authService: AuthService,
     private router: Router,
     private userService: UserService,
-
-    ){
-  };
+    ){}
 
   private user: UserInfo = {
     userId: 0,
     activeCartId: 0
   }
-
-
-
-
 
   logout() {
     this.authService.logout().subscribe(
@@ -60,6 +55,15 @@ export class BaseLayoutComponent implements OnInit {
     this.userService.getCurrentUser().subscribe((user) => (
       this.user = user
     ));
+    this.userService.getCurrentActiveCart().subscribe({
+      next: response => {
+        console.log(response.length);
+        this.itemsInCart = (response as any).length;
+      },
+      error: err => {
+        console.error("Failed to get cart items");
+      }
+    })
 
     console.log(this.user);
   }

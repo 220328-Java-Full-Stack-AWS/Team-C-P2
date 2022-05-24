@@ -8,6 +8,7 @@ import { UserProfile } from '../../interfaces/User-Interface/user-profile.interf
 import { CartItem } from '../../interfaces/Cart-Interface/cart-item.interface';
 import { UpdateCartItem } from '../../interfaces/Cart-Interface/update-cart-item.interface';
 import { CookieService } from '../cookie-service/cookie.service';
+import { Product } from '../../interfaces/Product-Interface/product.interface';
 
 
 @Injectable({
@@ -158,6 +159,28 @@ export class UserService {
     console.log(cartItem);
     this.cookie.getCookie('user_session');
     return this.http.put<UpdateCartItem>(`${this.userURL}/cart/update`, cartItem, {withCredentials:true});
+  }
+
+  addCartItem(product: Product): void {
+    this.http.post(`${this.userURL}/cart/add`, {
+      userId: this.user.userId,
+      productId: product.id,
+      quantity: 1
+    }).subscribe({
+      next: response => {
+        const cart: Cart = {
+          cartItem: {
+            cartId: this.user.activeCartId,
+            product: product
+          }
+        }
+        this.cartArray.push(cart);
+        this.currentCartItems.next(this.cartArray);
+      },
+      error: err => {
+        console.error("Failed to add cart item");
+      }
+    });
   }
 
   removeCartItem(id:number): Observable<any> {
