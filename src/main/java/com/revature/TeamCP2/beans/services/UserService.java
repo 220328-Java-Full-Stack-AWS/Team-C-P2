@@ -70,7 +70,7 @@ public class UserService {
         }
         else {
             user.setPassword(bCrypt.hash(newPassword));
-            return user;
+            return userRepository.update(user);
         }
     }
 

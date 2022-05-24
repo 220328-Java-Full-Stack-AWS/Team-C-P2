@@ -10,6 +10,7 @@ import { CookieService } from '../cookie-service/cookie.service';
 import { Product } from '../../interfaces/Product-Interface/product.interface';
 import { UserAddress } from '../../interfaces/user-address.interface';
 import { UserPayment } from '../../interfaces/user-payment.interface';
+import { PasswordToChange } from '../../interfaces/password-to-change.interface';
 
 
 @Injectable({
@@ -199,6 +200,13 @@ export class UserService {
   updateUserPayment(payment : UserPayment): Observable<any> {
     this.cookie.getCookie('user_session');
     return this.http.put<UserPayment>(`${this.userURL}/profile/update/payment`, payment, {withCredentials : true});
+  }
+
+  updateUserPassword(password : PasswordToChange) : Observable<any>  {
+    this.cookie.getCookie('user_session');
+    // observe entire response
+    return this.http.put<PasswordToChange>(`${this.userURL}/profile/update/password`, password, {withCredentials : true, observe : `response`});
+
   }
 
   removeCartItem(id:number): Observable<any> {
