@@ -1,20 +1,17 @@
-<div>
+<!-- <div>
     <div fxLayout="row wrap" fxLayoutAlign="center stretch" fxLayoutGap="10px">
-        <h1> Products Category: {{category[id]}} </h1>
+        <h1> Product </h1>
     </div>
 
     <br>
     <div fxLayout="row wrap" fxLayoutAlign="center stretch" fxLayoutGap="10px" *ngIf="products.length > 0">
         <div fxFlex="24%" fxFlex.lt-lg="32%" fxFlex.lt-md="48%" fxLayout="column" class="product"
             *ngFor="let item of products">
-            <!-- Add to cart icon -->
             <button mat-icon-button type="button" class="addToCartButton mat-elevation-z2"
                 (click)="addToCart(item, $event)">
                 <mat-icon class="addCartIcon">add_shopping_cart</mat-icon>
-                <!-- <mat-icon class="checkIcon" #checkIcon>check</mat-icon> check if in cart -->
             </button>
 
-            <!-- Image -->
             <div class="productImage">
                 <img fxFlex src="data:image/png;base64,{{item.product.image}}"
                     alt="{{item.product.name | lowercase}} image">
@@ -34,4 +31,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->

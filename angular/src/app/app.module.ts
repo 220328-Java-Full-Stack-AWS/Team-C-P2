@@ -28,6 +28,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ProductViewComponent } from './product-view/product-view.component';
 
 
 @NgModule({
@@ -40,14 +41,15 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     RegisterComponent,
     ProfileComponent,
     CartComponent,
+    CreateProductComponent,
     UpdatePasswordComponent,
     UpdateAddressComponent,
     UpdatePaymentComponent,
     UpdateProfileComponent,
     UpdateProductComponent,
-    CreateProductComponent,
     RegisterComponent,
-    UpdateProfileComponent
+    UpdateProfileComponent,
+    ProductViewComponent, 
 
   ],
   imports: [

@@ -7,7 +7,7 @@ export interface CreateProduct {
   descr: string,
   price: number,
   onSale: onSale,
-  category?: category,
+  category: category,
   isFeatured: boolean,
-  image?: Blob,
+  image?: any,
 }
