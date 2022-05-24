@@ -32,9 +32,12 @@
                     (click)="toggleImage()"> {{showImage ? 'Hide' : 'Show'}} Image
             </button>
           </th>
-          <th>Product</th>
+          <th>Product ID</th>
+          <th>Description</th>
           <th>Featured</th>
+          <th>Product Name</th>
           <th>Price</th>
+          <th>Category ID</th>
           <th>On Sale Price</th>
 
         </tr>
@@ -48,9 +51,12 @@
                  [style.width.px]="imageWidth"
                  [style.margin.px]="imageMargin">
           </td>
-          <td>{{onSaleproduct.name}}</td>
+          <td>{{onSaleproduct.id}}</td>
+          <td>{{onSaleproduct.descr| lowercase }}</td>
           <td>{{onSaleproduct.is_featured | lowercase }}</td>
+          <td>{{onSaleproduct.name}}</td>
           <td>{{onSaleproduct.price | currency}}</td>
+          <td>{{onSaleproduct.category_id }}</td>
           <td>{{onSaleproduct.on_sale | currency}}</td>
         </tr>
         </tbody>

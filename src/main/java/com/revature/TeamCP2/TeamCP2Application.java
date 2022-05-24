@@ -44,12 +44,12 @@ public class TeamCP2Application {
         OnSaleService onSaleService = new OnSaleService(onSaleRepository);
 
         //Create
-        Product product = new Product();
-        product.setDescr("Test ");
-        product.setName("Test Name");
-        product.setIsFeatured(true);
-        product.setPrice(200.25);
-        productService.create(product);
+//        Product product = new Product();
+//        product.setDescr("Test ");
+//        product.setName("Test Name");
+//        product.setIsFeatured(true);
+//        product.setPrice(200.25);
+//        productService.create(product);
 
         //Create
         OnSale onSale = new OnSale();
@@ -57,13 +57,42 @@ public class TeamCP2Application {
         onSaleService.createOnSale(onSale);
 
         //Create
+        Product product = new Product();
+        product.setImage("assets/images/basket ball");
+        product.setDescr("Lets shoot some hoops");
+        product.setName("Basketball");
+        product.setOnSale(onSale);
+        product.setIsFeatured(true);
+        product.setPrice(37.95);
+        productService.create(product);
+
+
         Product product1 = new Product();
-        product1.setDescr("2 ");
-        product1.setName("Test Featured");
+        product.setImage("assets/images/yankees cap.jpg");
+        product1.setDescr("Nice Cap for Yankees Fans.");
+        product1.setName("Yankees Cap");
         product1.setOnSale(onSale);
         product1.setIsFeatured(true);
-        product1.setPrice(123);
+        product1.setPrice(19.95);
         productService.create(product1);
+
+        Product product2 = new Product();
+        product.setImage("assets/images/football.jpg");
+        product2.setDescr("For the Football Fan");
+        product2.setName("FootBall");
+        product2.setOnSale(onSale);
+        product2.setIsFeatured(true);
+        product2.setPrice(30.95);
+        productService.create(product2);
+
+        Product product3 = new Product();
+        product.setImage("assets/images/bat.jpg");
+        product3.setDescr("Hit a Home Run");
+        product3.setName("Slugger");
+        product3.setOnSale(onSale);
+        product3.setIsFeatured(true);
+        product3.setPrice(19.95);
+        productService.create(product3);
 
 //        //update
 //        Product update = new Product();

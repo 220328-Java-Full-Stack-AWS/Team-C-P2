@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import {IProducts} from "./pages/onsale/IProduct.interface";
+import {OnSaleComponent} from "./pages/onsale/onsale.component";
+import {OnSaleService} from "./pages/onsale/onsale.service";
 
 @Component({
   selector: 'app-root',
@@ -25,5 +28,6 @@ export class AppComponent {
   // title = 'front';
   onSaleProducts: string = 'AME Store!';
   title: string="";
+
 
 }

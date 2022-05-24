@@ -1,10 +1,11 @@
 export interface IProducts {
   id: number;
-  image: string;
-  name: string;
-  is_featured: string;
   descr: string;
+  image: string;
+  is_featured: string;
+  name: string;
   price: number;
+  category_id: number;
   on_sale: number;
 
 }

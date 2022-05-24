@@ -13,19 +13,19 @@ import {IProducts} from "./IProduct.interface";
 })
 export class OnSaleService {
 
-  private onSaleProductUrl =  'api/products/onsaleproduct.json';//webserver address
+  private onSaleProductUrl =  'http://localhost:8080/products'; //webserver address  'api/products/onsaleproduct.json'
   constructor(private http: HttpClient) {
   }
 
   getOnSaleProducts(): Observable<IProducts[]> {
     return this.http.get<IProducts[]>(this.onSaleProductUrl).pipe(
-      tap(data => console.log('All', JSON.stringify(data))), catchError(this.handleError)
+      tap(data => console.log('ALL', JSON.stringify(data))), catchError(this.handleError)
     );
 //   [
 //     {
 //   "id": 1,
 //   "image": "assets/images/yankees cap.jpg",
-//   "name": "Leaf Rake",
+//   "name": "Yankees Cap",
 //   "is_featured": "March 19, 2021",
 //   "descr": "Nice Cap for Yankees Fans.",
 //   "price": 19.95,

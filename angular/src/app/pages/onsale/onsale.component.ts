@@ -35,9 +35,9 @@ export class OnSaleComponent implements OnInit, OnDestroy{
   }
 
   performFilter(filterBy: string): IProducts[]{ //filter list of products and if empty, it returns all products
-    filterBy = filterBy.toLocaleLowerCase();
+    filterBy = filterBy.toLowerCase();
     return this.onSaleproducts.filter((osproduct: IProducts)=>
-      osproduct.name.toLocaleLowerCase().includes(filterBy));
+      osproduct.name.toLowerCase().includes(filterBy));
   }
 
   toggleImage(): void{

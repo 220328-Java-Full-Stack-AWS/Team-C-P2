@@ -41,12 +41,12 @@ public class Product implements Entity {
     private boolean isFeatured;
 
     @Column(name = "image")
-    private byte[] image;
+    private String image;
 
     public Product() {
     }
 
-    public Product(Integer id, String name, String descr, double price, ProductCategory category, boolean isFeatured, byte[] image) {
+    public Product(Integer id, String name, String descr, double price, ProductCategory category, boolean isFeatured, String image) {
         this.id = id;
         this.name = name;
         this.descr = descr;
@@ -96,11 +96,11 @@ public class Product implements Entity {
         this.isFeatured = isFeatured;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
