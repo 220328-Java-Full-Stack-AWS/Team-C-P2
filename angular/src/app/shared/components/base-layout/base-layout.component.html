@@ -7,8 +7,7 @@
             <div class="dropdown">
                 <button class="dropbtn">Categories</button>
                 <div class="dropdown-content">
-                    <a href="/products/{{item.id}}" *ngFor="let item of categories| slice:0:10">{{item.name}}</a>
-
+                    <a [routerLink]="['/products', item.id]" *ngFor="let item of categories">{{item.name}}</a>
                 </div>
 
             </div>
@@ -25,7 +24,8 @@
             <div class="dropdown">
                 <button class="dropbtn">Categories</button>
                 <div class="dropdown-content">
-                    <a href="/products/{{item.id}}" *ngFor="let item of categories">{{item.name}}</a>
+                    <a [routerLink]="['/products', item.id]" *ngFor="let item of categories">{{item.name}}</a>
+
                 </div>
 
             </div>
