@@ -50,14 +50,6 @@ export class UpdatePasswordComponent implements OnInit {
 
   }
 
-  // function to check if re-enter password matches
-  checkPassword() : void {
-    if (this.credentialsForm.value.newPassword != this.credentialsForm.value.newPasswordCheck) {
-      this.showError("The passwords do not match");
-      return;
-    }
-  }
-
   // function to attempt to change user password - log out on success, error message if failed
   changePassword(): void {
     const toChange : PasswordToChange = {
@@ -65,19 +57,26 @@ export class UpdatePasswordComponent implements OnInit {
       currentPassword : this.credentialsForm.value.currentPassword,
       newPassword : this.credentialsForm.value.newPassword
     }
-    let responseStatus = 0;
-    this.cookie.getCookie('user_session');
-    this.userService.updateUserPassword(toChange).subscribe((res) => {
-      // if the response status is 401, password was unauthorized
-      if (res.status == 401) {
-        this.showError("Incorrect password");
-        return;
-      }
-      // if status is 200, success and log out
-      if (res.status == 200) {
-        this.successLogOut();
-      }
-    });
+    // if the re-enter password does not match, show error
+    if (this.credentialsForm.value.newPassword != this.credentialsForm.value.newPasswordCheck) {
+      this.showError("The passwords do not match");
+      return;
+    }
+    else {
+      let responseStatus = 0;
+      this.cookie.getCookie('user_session');
+      this.userService.updateUserPassword(toChange).subscribe((res) => {
+        // if the response status is 401, password was unauthorized
+        if (res.status == 401) {
+          this.showError("Incorrect password");
+          return;
+        }
+        // if status is 200, success and log out
+        if (res.status == 200) {
+          this.successLogOut();
+        }
+      });
+    }
     
   }
 
