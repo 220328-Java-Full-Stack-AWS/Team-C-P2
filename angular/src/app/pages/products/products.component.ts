@@ -20,7 +20,7 @@ import { Product } from 'src/app/shared/interfaces/Product-Interface/product.int
 export class ProductsComponent implements OnInit {
 
 
-  products: Product[] = [];
+  products: Item[] = [];
   //Adding parameter value to extarct parameter
   sub: any = null;
   category: any = {
@@ -162,7 +162,7 @@ export class ProductsComponent implements OnInit {
           this.products = (response as any).data;
         },
         error: err => {
-          // Todo: Handle error
+          console.error(err);
         }
       });
     });
