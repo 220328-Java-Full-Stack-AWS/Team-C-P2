@@ -173,7 +173,7 @@ export class UserService {
       userId: this.user.userId,
       productId: product.id,
       quantity: 1
-    }).subscribe({
+    }, { withCredentials: true }).subscribe({
       next: response => {
         const cart: Cart = {
           cartItem: {
