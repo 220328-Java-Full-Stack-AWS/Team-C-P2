@@ -42,11 +42,6 @@ export class FeaturedProductsComponent implements OnInit {
 
   addToCart(item: Product, event: Event, qty: any): void {
     event.stopPropagation();
-    console.log("product: " + item.product.id);
-    console.log("quantity: " + qty);
-    this.userService.getActiveCartByUserId(this.userInfo.userId);
-    console.log("quantity: " + qty);
-    console.log("product: " + item.product.id);
     this.userService.addCartItem(item.product, qty);
 
     (event.target as HTMLElement).classList.add('inCart');

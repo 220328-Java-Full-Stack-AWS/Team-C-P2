@@ -11,6 +11,7 @@ import { Product } from '../../interfaces/Product-Interface/product.interface';
 import { UserAddress } from '../../interfaces/user-address.interface';
 import { UserPayment } from '../../interfaces/user-payment.interface';
 import { PasswordToChange } from '../../interfaces/password-to-change.interface';
+import { ActiveCart } from '../../interfaces/Cart-Interface/active-cart.interface';
 
 
 @Injectable({
@@ -18,6 +19,7 @@ import { PasswordToChange } from '../../interfaces/password-to-change.interface'
 })
 export class UserService {
   userURL: string = "http://localhost:8080/user";
+  adminURL: string = "http://localhost:8080/admin";
 
   constructor(
     private http: HttpClient,
@@ -290,5 +292,11 @@ export class UserService {
 
   removeCartItem(id:number): Observable<any> {
     return this.http.delete(`${this.userURL}/cart/remove/` + id, {withCredentials:true});
+  }
+
+  createOrder(cart: ActiveCart, dateCreated: any): Observable<any> {
+    console.log("passed");
+    this.cookie.getCookie('user_session');
+    return this.http.post(`${this.adminURL}/orders`, {cart, dateCreated}, {withCredentials:true});
   }
 }

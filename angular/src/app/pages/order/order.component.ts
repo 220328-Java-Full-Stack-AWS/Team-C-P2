@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Cart } from 'src/app/shared/interfaces/Cart-Interface/cart.interface';
+import { UserInfo } from 'src/app/shared/interfaces/User-Interface/user-info.interface';
+import { CookieService } from 'src/app/shared/services/cookie-service/cookie.service';
+import { UserService } from 'src/app/shared/services/user-service/user.service';
 
 @Component({
   selector: 'app-order',
@@ -7,9 +11,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrderComponent implements OnInit {
 
-  constructor() { }
+  cart: Cart[] = [];
 
-  ngOnInit(): void {
+  constructor(
+    private cookieService:CookieService,
+    private userService: UserService,
+    ){}
+
+  private user: UserInfo = {
+    userId: 0,
+    activeCartId: 0
   }
 
+  ngOnInit(): void {
+    this.cookieService.getCookie('user_session');
+    this.userService.getCurrentUser().subscribe((user) => (
+      this.user = user
+    ));
+
+    this.userService.getCurrentActiveCartLength().subscribe((cartArray) => (
+      this.cart = cartArray
+      ));
+    }
 }

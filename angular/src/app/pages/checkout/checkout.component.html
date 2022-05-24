@@ -214,7 +214,7 @@
                     </div>
                 </div>
                 <div class="checkout__summary-button">
-                    <button>Place Your Order</button>
+                    <button (click)="submit(cartTotal[0] + calculateTax(cartTotal[0]))">Place Your Order</button>
                 </div>
             </div>
         </div>
