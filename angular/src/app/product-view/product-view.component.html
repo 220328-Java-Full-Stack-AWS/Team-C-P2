@@ -1,34 +1,36 @@
-<!-- <div>
-    <div fxLayout="row wrap" fxLayoutAlign="center stretch" fxLayoutGap="10px">
-        <h1> Product </h1>
-    </div>
-
-    <br>
-    <div fxLayout="row wrap" fxLayoutAlign="center stretch" fxLayoutGap="10px" *ngIf="products.length > 0">
-        <div fxFlex="24%" fxFlex.lt-lg="32%" fxFlex.lt-md="48%" fxLayout="column" class="product"
-            *ngFor="let item of products">
-            <button mat-icon-button type="button" class="addToCartButton mat-elevation-z2"
-                (click)="addToCart(item, $event)">
-                <mat-icon class="addCartIcon">add_shopping_cart</mat-icon>
-            </button>
-
-            <div class="productImage">
-                <img fxFlex src="data:image/png;base64,{{item.product.image}}"
-                    alt="{{item.product.name | lowercase}} image">
-            </div>
-
-            <div class="productInfo" fxFlex fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="5px">
-                <div>
-                    <b class="productName">{{item.product.name | titlecase}}</b>
-                    <p>{{item.product.descr}}</p>
-                </div>
-                <div class="productPricing" fxLayoutAlign="end" fxLayoutGap="10px">
-                    <span class="originalPrice" *ngIf="item.product.onSale != null">{{item.product.price |
-                        currency}}</span>
-                    <span class="currentPrice">{{item.netPrice | currency}}</span>
-                </div>
-
+<section class="productView">
+    <div class="pageContainer container container--pall" fxLayout="row" fxLayoutGap=" 5px"
+        fxLayoutAlign="center center">
+        <div class="productImage" fxFlex="50%">
+            <div>
+                <img fxFlex src="data:image/png;base64,{{productById.product.image}}"
+                    alt="{{productById.product.name | lowercase}} image">
             </div>
         </div>
+
+
+        <div class="productInfo" fxFlex="50%" fxLayout="column" fxLayoutAlign="space-around ">
+            <h1 class="productName">{{productById.product.name | titlecase}}</h1>
+
+
+
+            <div class="">
+                <p>{{productById.product.descr}}</p>
+            </div>
+            <div class="productPricing" fxLayoutGap="10px">
+                <span class="originalPrice" *ngIf="productById.product.onSale != null">{{productById.product.price |
+                    currency}}</span>
+                <span class="currentPrice">{{productById.netPrice | currency}}</span>
+            </div>
+            <div>
+                <button mat-icon-button type="button" class="addToCartButton mat-elevation-z2"
+                    (click)="addToCart(productById, $event)">
+                    <mat-icon class="addCartIcon">add_shopping_cart</mat-icon>
+                </button>
+            </div>
+        </div>
+
+
+
     </div>
-</div> -->
+</section>
