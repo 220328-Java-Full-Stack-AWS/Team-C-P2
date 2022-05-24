@@ -175,4 +175,6 @@ public class ProductsRepository extends AbstractHibernateRepo<Product> {
     public boolean isRunning() {
         return running;
     }
+
+
 }

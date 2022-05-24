@@ -22,12 +22,13 @@ export class ProductsComponent implements OnInit {
   products: Product[] = [];
   //Adding parameter value to extarct parameter 
   sub: any = null;
-  category: any ={
+  category: any = {
     1: "Soccer",
     2: "Football",
-    3: "Tenniss",
+    3: "Tennis",
     4: "Test"
   }
+  categories: any;
 
   id: any = "";
   constructor(private productService: ProductService, private userService: UserService, private route: ActivatedRoute) { }
