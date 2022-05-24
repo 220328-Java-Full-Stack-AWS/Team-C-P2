@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, Injectable, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { MatStepper } from "@angular/material/stepper";
 import { Router } from "@angular/router";
@@ -13,11 +13,18 @@ import { UserService } from "src/app/shared/services/user-service/user.service";
   templateUrl: './update-payment.component.html',
   styleUrls: ['./update-payment.component.scss']
 })
+
+@Injectable({
+  providedIn: 'root'
+})
+
 export class UpdatePaymentComponent implements OnInit {
 
   @ViewChild("stepper") stepper! : MatStepper;
   paymentInfoForm : FormGroup = {} as FormGroup;
   error?: string = "Error.";
+
+  isCheckingOut : boolean = false;
 
   private user : UserInfo = {
     userId : 0,
@@ -82,9 +89,13 @@ export class UpdatePaymentComponent implements OnInit {
     this.cookie.getCookie('user_session');
     this.userService.updateUserPayment(this.newPayment).subscribe((json : UserPayment) => {
       console.log(json);
-      this.router.navigate(["/profile"])
+      if (this.isCheckingOut == true) {
+        this.router.navigate(["/cart/checkout"])
+      }
+      else {
+        this.router.navigate(["/profile"])
+      }
     });
-
   }
 
   // function to close error window

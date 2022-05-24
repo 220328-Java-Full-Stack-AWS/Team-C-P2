@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Injectable, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { Router } from '@angular/router';
@@ -13,11 +13,22 @@ import { UserService } from 'src/app/shared/services/user-service/user.service';
   templateUrl: './update-address.component.html',
   styleUrls: ['./update-address.component.scss']
 })
+
+@Injectable({
+  providedIn: 'root'
+})
+
 export class UpdateAddressComponent implements OnInit {
 
   @ViewChild("stepper") stepper! : MatStepper;
   addressInfoForm : FormGroup = {} as FormGroup;
   error?: string = "Error.";
+
+  isCheckingOut : boolean = false;
+  
+  goToProfile : boolean = true;
+
+  
 
   private user: UserInfo = {
     userId: 0,
@@ -34,9 +45,12 @@ export class UpdateAddressComponent implements OnInit {
     phoneNumber: " "
   }
 
-  constructor(private fb : FormBuilder, private router : Router, private userService : UserService, public cookie : CookieService) { }
+  constructor(private fb : FormBuilder, private router : Router, private userService : UserService, public cookie : CookieService) {
+    console.log("in " + this.isCheckingOut);
+   }
 
   ngOnInit(): void {
+    console.log("on init " + this.isCheckingOut);
     // store the user cookie and info
     this.cookie.getCookie('user_session');
     this.userService.getCurrentUser().subscribe((user) => (
@@ -80,12 +94,20 @@ export class UpdateAddressComponent implements OnInit {
 
   // function to confirm new address information and update address
   confirmAddress(): void {
+    console.log("confirm address method " + this.isCheckingOut);
     // subscribe to update payment method and route to user profile
     console.log(this.newAddress);
     this.cookie.getCookie('user_session');
     this.userService.updateUserAddress(this.newAddress).subscribe((json : UserAddress) => {
       console.log(json);
-      this.router.navigate(["/profile"])
+      console.log(this.isCheckingOut);
+      if (this.isCheckingOut == true) {
+        console.log(this.isCheckingOut);
+        this.router.navigate(["/cart/checkout"])
+      }
+      else {
+        this.router.navigate(["/profile"])
+      }
     });
 
   }

@@ -9,6 +9,8 @@ import { UserInfo } from 'src/app/shared/interfaces/User-Interface/user-info.int
 import { UserProfile } from 'src/app/shared/interfaces/User-Interface/user-profile.interface';
 import { CookieService } from 'src/app/shared/services/cookie-service/cookie.service';
 import { UserService } from 'src/app/shared/services/user-service/user.service';
+import { UpdateAddressComponent } from '../update-address/update-address.component';
+import { UpdatePaymentComponent } from '../update-payment/update-payment.component';
 
 @Component({
   selector: 'app-checkout',
@@ -24,7 +26,9 @@ export class CheckoutComponent implements OnInit {
     private userService: UserService,
     public cookie:CookieService,
     private datePipe: DatePipe,
-    private router: Router
+    private router: Router,
+    private updateAddress : UpdateAddressComponent,
+    private updatePayment : UpdatePaymentComponent
     ) {
      }
 
@@ -144,6 +148,17 @@ export class CheckoutComponent implements OnInit {
     console.log("Current Date:" + currentDate);
     this.createOrder(this.userQuery, currentDate, total);
     
+  }
+
+  updateAdd() : void {
+    this.updateAddress.isCheckingOut = true;
+    console.log(this.updateAddress.isCheckingOut)
+    this.router.navigate(['profile/updateAddress']);
+  }
+
+  updatePay() : void {
+    this.updatePayment.isCheckingOut = true;
+    this.router.navigate(['profile/updatePayment']);
   }
 
   createOrder(user: UserProfile, dateCreated: any, total:any) {
