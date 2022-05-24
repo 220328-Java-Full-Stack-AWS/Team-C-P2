@@ -18,8 +18,7 @@ export class CartComponent implements OnInit {
   constructor(
     private userService: UserService,
     private cookie: CookieService,
-    private sanitizer: DomSanitizer,
-    private router: Router
+
 
   ) { }
 
@@ -47,7 +46,6 @@ export class CartComponent implements OnInit {
 
   removeCartItem(id: any) {
     this.userService.removeCartItem(id).subscribe((json:any) => {
-      console.log(json);
       this.ngOnInit();
     })
   }
@@ -70,6 +68,7 @@ export class CartComponent implements OnInit {
     this.userService.getCartTotal().subscribe((cartTotal) => (
       this.cartTotal = cartTotal
     ));
+    this.userService.getCurrentActiveCartLength().next(this.cartArray);
   }
 }
 
