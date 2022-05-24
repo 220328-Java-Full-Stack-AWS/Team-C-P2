@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatTooltip } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
 import { PasswordToChange } from 'src/app/shared/interfaces/password-to-change.interface';
 import { UserInfo } from 'src/app/shared/interfaces/User-Interface/user-info.interface';
@@ -115,6 +116,15 @@ export class UpdatePasswordComponent implements OnInit {
     if(el.classList.contains("hide")) {
       this.error = errorMessage;
       el.classList.remove("hide");
+    }
+  }
+
+  checkInput(control: AbstractControl | null, tooltip: MatTooltip) {
+    if (!control!.valid) {
+      tooltip.show();
+    }
+    else {
+      tooltip.hide();
     }
   }
 
