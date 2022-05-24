@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
@@ -9,6 +8,8 @@ import { CartItem } from '../../interfaces/Cart-Interface/cart-item.interface';
 import { UpdateCartItem } from '../../interfaces/Cart-Interface/update-cart-item.interface';
 import { CookieService } from '../cookie-service/cookie.service';
 import { Product } from '../../interfaces/Product-Interface/product.interface';
+import { UserAddress } from '../../interfaces/user-address.interface';
+import { UserPayment } from '../../interfaces/user-payment.interface';
 
 
 @Injectable({
@@ -22,11 +23,26 @@ export class UserService {
     private cookie: CookieService) {
   }
 
+  cartArray: Cart[] = [];
+  num: number = 0;
+  total: number[] = [];
+
+  private cartItems: Cart[] = this.cartArray;
+  private totalNum: number[] = this.total;
   private user: UserInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
 
   private currentUserSubject: BehaviorSubject<UserInfo> = new BehaviorSubject(
     this.user
   );
+
+  private cartTotal: BehaviorSubject<number[]> = new BehaviorSubject(
+    this.totalNum
+  );
+
+  private currentCartItems: BehaviorSubject<Cart[]> = new BehaviorSubject(
+    this.cartItems
+  );
+
 
   cartQuery: Cart = {
     cartItem: {
@@ -56,26 +72,11 @@ export class UserService {
     netPrice: 0
   };
 
-
-
   getCurrentActiveCart(): BehaviorSubject<Cart[]> {
+    this.cartArray = []
     this.getActiveCartByUserId(this.user.userId);
+    this.currentCartItems.next(this.cartArray);
     return this.currentCartItems;
-  }
-
-  total: number = 0;
-
-  getTotalByUserId(id:number) {
-    this.getUserActiveCart(id).subscribe((json: any) => {
-      console.log(json);
-      for (let e of json.data) {
-        this.total += (e?.netPrice * e?.cartItem.quantity);
-      }
-    })
-  }
-
-  getUserCart(): Observable<Cart> {
-    return this.getUserActiveCart(this.user.userId);
   }
 
   getActiveCartByUserId(id:number) {
@@ -109,26 +110,31 @@ export class UserService {
           },
           netPrice: e?.netPrice
         }
-        this.total += (e?.netPrice * e?.cartItem.quantity);
         this.cartArray.push(this.cartQuery);
       }
     })
   }
 
-  cartArray: Cart[] = [];
+  getTotalByUserId(id:number) {
+    this.getUserActiveCart(id).subscribe((json: any) => {
+      for (let e of json.data) {
+        this.num += (e?.netPrice * e?.cartItem.quantity);
+      }
+      this.total.push(this.num);
+    })
+  }
 
-  private cartItems: Cart[] = this.cartArray;
-  private cartTotal: BehaviorSubject<number> = new BehaviorSubject(
-    this.total
-  );
 
-  private currentCartItems: BehaviorSubject<Cart[]> = new BehaviorSubject(
-    this.cartItems
-  );
-
-  getCartTotal(): BehaviorSubject<number> {
+  getCartTotal(): BehaviorSubject<number[]> {
+    this.total = [];
+    this.num = 0;
     this.getTotalByUserId(this.user.userId);
+    this.cartTotal.next(this.total);
     return this.cartTotal;
+  }
+
+  setCartTotal(num: number[]) {
+    this.totalNum = num;
   }
 
   getCurrentUser(): BehaviorSubject<UserInfo> {
@@ -161,6 +167,7 @@ export class UserService {
     return this.http.put<UpdateCartItem>(`${this.userURL}/cart/update`, cartItem, {withCredentials:true});
   }
 
+
   addCartItem(product: Product): void {
     this.http.post(`${this.userURL}/cart/add`, {
       userId: this.user.userId,
@@ -181,6 +188,17 @@ export class UserService {
         console.error("Failed to add cart item");
       }
     });
+  }
+
+  updateUserAddress(address : UserAddress) : Observable<any> {
+    console.log(address);
+    this.cookie.getCookie('user_session');
+    return this.http.put<UserAddress>(`${this.userURL}/profile/update/address`, address, {withCredentials : true});
+  }
+
+  updateUserPayment(payment : UserPayment): Observable<any> {
+    this.cookie.getCookie('user_session');
+    return this.http.put<UserPayment>(`${this.userURL}/profile/update/payment`, payment, {withCredentials : true});
   }
 
   removeCartItem(id:number): Observable<any> {
