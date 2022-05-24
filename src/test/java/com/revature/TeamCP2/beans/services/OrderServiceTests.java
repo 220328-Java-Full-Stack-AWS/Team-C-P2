@@ -50,7 +50,7 @@ public class OrderServiceTests {
     }
 
     @Test
-    public void testCreateOrder(@Autowired OrderService orderService) throws ItemDoesNotExistException, CreationFailedException, ItemHasNonNullIdException {
+    public void testCreateOrder(@Autowired OrderService orderService) throws ItemDoesNotExistException, CreationFailedException, ItemHasNonNullIdException, UpdateFailedException, ItemHasNoIdException {
 
 
         // mock repository methods used by OrderService createOrder with test objects
