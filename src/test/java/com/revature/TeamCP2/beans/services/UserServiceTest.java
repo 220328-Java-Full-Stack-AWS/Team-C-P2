@@ -149,7 +149,7 @@ public class UserServiceTest {
     @Test
     public void createUserPaymentCallsPaymentRepoAndReturnsUser(@Autowired UserService userService) {
         User user = USER_2;
-        Payment payment = new Payment("VISA", "Capital One", 555000302, (short)234, "2022-05-17");
+        Payment payment = new Payment("VISA", "Capital One", "555000302", 234, "2022-05-17");
         when(paymentRepositoryMock.create(payment)).thenReturn(payment);
 
         User retrieveduser = userService.createUserPayment(user, payment);
@@ -173,7 +173,7 @@ public class UserServiceTest {
     @Test
     public void updateUserPaymentPaymentRepoAndReturnsUser(@Autowired UserService userService) {
         User user = USER_2;
-        Payment payment = new Payment("VISA", "Capital One", 555000302, (short)234, "2022-05-17");
+        Payment payment = new Payment("VISA", "Capital One", "555000302", 234, "2022-05-17");
 
         User updatedUser = userService.updateUserPayment(user, payment);
 
