@@ -7,6 +7,7 @@ import { UserInfo } from 'src/app/shared/interfaces/User-Interface/user-info.int
 import { AuthService } from 'src/app/shared/services/auth-service/auth.service';
 import { CookieService } from 'src/app/shared/services/cookie-service/cookie.service';
 import { UserService } from 'src/app/shared/services/user-service/user.service';
+import { BaseLayoutComponent } from 'src/app/shared/components/base-layout/base-layout.component';
 
 @Component({
   selector: 'app-update-password',
@@ -29,7 +30,13 @@ export class UpdatePasswordComponent implements OnInit {
     newPassword: " "
   }
 
-  constructor(private fb : FormBuilder, private router : Router, private userService : UserService, public cookie : CookieService, private authService : AuthService) { }
+  constructor(
+    private fb : FormBuilder, 
+    private router : Router, 
+    private userService : UserService, 
+    public cookie : CookieService, 
+    private authService : AuthService,
+    private baseLayout : BaseLayoutComponent) { }
 
   ngOnInit(): void {
 
@@ -61,22 +68,23 @@ export class UpdatePasswordComponent implements OnInit {
     // if the re-enter password does not match, show error
     if (this.credentialsForm.value.newPassword != this.credentialsForm.value.newPasswordCheck) {
       this.showError("The passwords do not match");
-      return;
     }
     else {
-      let responseStatus = 0;
-      this.cookie.getCookie('user_session');
-      this.userService.updateUserPassword(toChange).subscribe((res) => {
-        // if the response status is 401, password was unauthorized
-        if (res.status == 401) {
-          this.showError("Incorrect password");
-          return;
+      this.userService.updateUserPassword(toChange).subscribe(
+        (res) => {
+          if (res.body.statusCode == 200) {
+            // if success logout
+            this.successLogOut();
+          }
+          else {
+            this.showError("Current Password is Incorrect.");
+          console.error(res);
+          }
+        },
+        (err) => {
+          this.showError("Current Password is Incorrect.");
         }
-        // if status is 200, success and log out
-        if (res.status == 200) {
-          this.successLogOut();
-        }
-      });
+      );
     }
     
   }
@@ -87,6 +95,7 @@ export class UpdatePasswordComponent implements OnInit {
     this.authService.logout().subscribe(
       (res) => {
         if (res.status == 200) {
+          this.baseLayout.isLoggedIn = false;
           this.cookie.deleteCookie('user_session');
           this.router.navigate(['/']);
         }
@@ -120,6 +129,7 @@ export class UpdatePasswordComponent implements OnInit {
   }
 
   checkInput(control: AbstractControl | null, tooltip: MatTooltip) {
+    this.cookie.getCookie('user_session');
     if (!control!.valid) {
       tooltip.show();
     }

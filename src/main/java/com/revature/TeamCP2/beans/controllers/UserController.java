@@ -132,12 +132,12 @@ public class UserController {
         } else {
             res.setStatus(200);
 
-            //sets cookie to null
+            /*sets cookie to null
             Cookie cookie = new Cookie("user_session", "");
             cookie.setMaxAge(0);
             cookie.setPath("/");
             cookie.setHttpOnly(true);
-            res.addCookie(cookie);
+            res.addCookie(cookie);*/
 
             return new HttpResponseDto(200, "Successfully changed password.", user);
         }
