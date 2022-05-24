@@ -47,7 +47,7 @@ export class BaseLayoutComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.userService.getCurrentActiveCart().subscribe((cartArray) => (
+    this.userService.getCurrentActiveCartLength().subscribe((cartArray) => (
     this.cart = cartArray
     ));
     if(this.cookieService.getCookie('user_session')) {
@@ -60,5 +60,6 @@ export class BaseLayoutComponent implements OnInit {
     this.userService.getCurrentUser().subscribe((user) => (
       this.user = user
     ));
+
   }
 }
