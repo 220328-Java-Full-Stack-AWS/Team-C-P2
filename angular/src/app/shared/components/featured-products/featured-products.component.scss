@@ -1,20 +1,24 @@
+@import '../../../../styles/variables';
 .product {
-  position: relative;
   margin-top: 10px;
   padding: 5px;
-  border: 1px solid green; //! Filler
+  cursor: pointer;
 
 
   .addToCartButton {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    background-color: white;
+    padding: 1px 8px;
+    line-height: initial;
+    font-size: 0.7rem;
+    background-color: #2988bc;
+    color: white;
 
-     &.addCartIcon {
-
+    .addToCartText {
+      display: none;
     }
 
+    &:hover .addToCartText {
+      display: inline;
+    }
     &.checkIcon {
       color: green;
     }
@@ -23,26 +27,17 @@
 
   .productImage {
     margin: auto;
-    width: 200px; //! Fiiller
-    height: 200px; //! Fiiller
-    border: 1px solid black; //! Fiiller
+    width: 180px;
+    height: 180px;
   }
 
   .productInfo {
-
-    .productName {
-
-    }
 
     .productPricing {
 
       .originalPrice {
         text-decoration: line-through;
         color: red;
-      }
-
-      .currentPrice {
-
       }
     }
   }

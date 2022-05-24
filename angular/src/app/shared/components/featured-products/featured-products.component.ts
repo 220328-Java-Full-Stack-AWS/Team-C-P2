@@ -1,4 +1,4 @@
-import { Component, Injectable, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserInfo } from '../../interfaces/User-Interface/user-info.interface';
 import { UserService } from '../../services/user-service/user.service';
 import { ProductService } from '../../services/product-service/product.service';
@@ -32,6 +32,7 @@ export class FeaturedProductsComponent implements OnInit {
   }
 
   addToCart(item: Product, event: Event): void {
+    event.stopPropagation();
     this.userService.addCartItem(item.product);
 
     (event.target as HTMLElement).classList.add('inCart');

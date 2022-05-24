@@ -1,7 +1,6 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, Injectable, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { Category } from '../../interfaces/Category-Interface/category.interface';
+import { CategoriesService } from '../../services/category-service/category.service';
 
 @Component({
   selector: 'app-categories-nav',
@@ -12,27 +11,16 @@ export class CategoriesNavComponent implements OnInit {
 
   categories: Category[] = [];
 
-  constructor(private categoryService: CategoryService) { }
+  constructor(private categoryService: CategoriesService) { }
 
   ngOnInit(): void {
     this.categoryService.getAllCategories().subscribe({
       next: response => {
-        this.categories = (response as any).data;
+        this.categories = (response as any).data
       },
       error: err => {
-        // Todo: Handle error
+        console.error(err);
       }
     })
-  }
-}
-
-@Injectable({
-  providedIn: 'root'
-})
-class CategoryService {
-  constructor(private http: HttpClient){}
-
-  getAllCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>("http://localhost:8080/categories");
   }
 }

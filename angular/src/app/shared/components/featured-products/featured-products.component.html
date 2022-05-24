@@ -1,17 +1,11 @@
 <div>
   <h1>Featured Products</h1>
   <br>
-  <div fxLayout="row wrap" fxLayoutAlign="space-between" *ngIf="products.length > 0">
-    <div fxFlex="24%" fxFlex.lt-lg="32%" fxFlex.lt-md="48%" fxLayout="column" class="product" *ngFor="let item of products">
-      <!-- Add to cart icon -->
-      <button mat-icon-button type="button" class="addToCartButton mat-elevation-z2" (click)="addToCart(item, $event)">
-        <mat-icon class="addCartIcon">add_shopping_cart</mat-icon>
-        <!-- <mat-icon class="checkIcon" #checkIcon>check</mat-icon> check if in cart -->
-      </button>
-
+  <div fxLayout="row wrap" fxLayoutAlign="start" fxLayoutAlign.lt-md="space-around" *ngIf="products.length > 0" fxLayoutGap="5px">
+    <div fxFlex="19%" fxFlex.lt-lg="24%" fxFlex.lt-md="33%" fxLayout="column" class="product" *ngFor="let item of products" routerLink="/product/{{item.product.id}}">
       <!-- Image -->
       <div class="productImage">
-        <img fxFlex src="data:image/png;base64,{{item.product.image}}" alt="{{item.product.name | lowercase}} image">
+        <img fxFlex src="data:image/png;base64,{{item.product.image}}" width="180px" height="180px" alt="{{item.product.name | lowercase}} image">
       </div>
 
       <div class="productInfo" fxFlex fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="5px">
@@ -19,16 +13,17 @@
           <b class="productName">{{item.product.name | titlecase}}</b>
           <p>{{item.product.descr}}</p>
         </div>
-        <div class="productPricing" fxLayoutAlign="end" fxLayoutGap="10px">
-          <span class="originalPrice" *ngIf="item.product.onSale != null">{{item.product.price | currency}}</span>
-          <span class="currentPrice">{{item.netPrice | currency}}</span>
+        <div class="productPricing" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+          <button mat-raised-button type="button" class="addToCartButton" (click)="addToCart(item, $event)">
+            <div class="addToCartText">Add </div> <mat-icon class="addCartIcon">add_shopping_cart</mat-icon>
+          </button>
+          <div class="productPricing" fxLayoutGap="10px">
+            <span class="originalPrice" *ngIf="item.product.onSale != null">{{item.product.price | currency}}</span>
+            <span class="currentPrice">{{item.netPrice | currency}}</span>
+          </div>
         </div>
 
       </div>
     </div>
   </div>
 </div>
-
-<!-- <ng-template #noProductsTemplate>
-  Sorry there are currently no featured products. Click <a routerLink="/products">here</a> to see all of our products.
-</ng-template> -->

@@ -1,5 +1,5 @@
 <div class="categories" fxLayout="row wrap" fxLayoutGap="20px" fxLayoutAlign="space-around">
-  <div fxFlex fxFlex.lt-md="33%" class="category" *ngFor="let category of categories" fxLayout="column">
+  <div fxFlex fxFlex.lt-md="33%" class="category" *ngFor="let category of categories" routerLink="/products/{{category.id}}" fxLayout="column">
     <div fxFlex class="categoryImage">
       <img fxFlex src="'data:image/png;base64,' + {{category.image}}" alt="{{category.description}}">
     </div>
