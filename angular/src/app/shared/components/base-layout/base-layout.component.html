@@ -17,7 +17,10 @@
 
             </div>
             <a routerLink="/products" class="scroll">Products</a>
-            <a routerLink="/cart" class="scroll">Cart</a>
+            <a routerLink="/cart" class="scroll cartLink">
+              Cart
+              <span class="cartCounter" *ngIf="cart.length > 0">{{cart.length}}</span>
+            </a>
             <a routerLink="/profile">Profile</a>
             <a (click)='logout()'>Logout</a>
         </div>

@@ -7,6 +7,7 @@ import com.revature.TeamCP2.beans.services.OnSaleService;
 import com.revature.TeamCP2.beans.services.ProductService;
 import com.revature.TeamCP2.entities.OnSale;
 import com.revature.TeamCP2.entities.Product;
+import com.revature.TeamCP2.entities.ProductCategory;
 import com.revature.TeamCP2.exceptions.CreationFailedException;
 import com.revature.TeamCP2.exceptions.ItemDoesNotExistException;
 import com.revature.TeamCP2.exceptions.ItemHasNoIdException;
@@ -62,38 +63,38 @@ public class TeamCP2Application {
 
 		*/
 
-//        ProductsRepository productsRepository = context.getBean(ProductsRepository.class);
-//        ProductService productService = new ProductService(productsRepository);
-//        OnSaleRepository onSaleRepository = context.getBean(OnSaleRepository.class);
-//        OnSaleService onSaleService = new OnSaleService(onSaleRepository);
-//
-//        //Create
-//        Product product = new Product();
-//        product.setDescr("Test ");
-//        product.setName("Test Name");
-//        product.setIsFeatured(true);
-//        product.setPrice(200.25);
-//        productService.create(product);
-//
-//        //Create
-//        OnSale onSale = new OnSale();
-//        onSale.setDiscount(0.25);
-//        onSaleService.createOnSale(onSale);
-//
-//        //Create
-//        Product product1 = new Product();
-//        product1.setDescr("Image of cat");
-//        product1.setName("Cat");
-//        product1.setOnSale(onSale);
-//        product1.setIsFeatured(true);
-//        product1.setPrice(20);
-//
-//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//        BufferedImage img = ImageIO.read(new File("src/main/images/cat.png"));
-//        ImageIO.write(img, "png", baos);
-//        byte[] bytes = baos.toByteArray();
-//        product1.setImage(bytes);
-//        productService.create(product1);
+        ProductsRepository productsRepository = context.getBean(ProductsRepository.class);
+        ProductService productService = new ProductService(productsRepository);
+        OnSaleRepository onSaleRepository = context.getBean(OnSaleRepository.class);
+        OnSaleService onSaleService = new OnSaleService(onSaleRepository);
+
+        //Create
+        Product product = new Product();
+        product.setDescr("Test ");
+        product.setName("Test Name");
+        product.setIsFeatured(true);
+        product.setPrice(200.25);
+        productService.create(product);
+
+        //Create
+        OnSale onSale = new OnSale();
+        onSale.setDiscount(0.25);
+        onSaleService.createOnSale(onSale);
+
+        //Create
+        Product product1 = new Product();
+        product1.setDescr("Image of cat");
+        product1.setName("Cat");
+        product1.setOnSale(onSale);
+        product1.setIsFeatured(true);
+        product1.setPrice(20);
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        BufferedImage img = ImageIO.read(new File("src/main/images/cat.png"));
+        ImageIO.write(img, "png", baos);
+        byte[] bytes = baos.toByteArray();
+        product1.setImage(bytes);
+        productService.create(product1);
 //        //update
 //        Product update = new Product();
 //        product.setDescr("Update");
@@ -101,7 +102,7 @@ public class TeamCP2Application {
 //        product.setIsFeatured(true);
 //        product.setPrice(200.25);
 //        productService.create(product);
-//
+
 //        //Create
 //        OnSale onSale = new OnSale();
 //        onSale.setDiscount(0.25);
@@ -139,7 +140,6 @@ public class TeamCP2Application {
 //            System.out.println(result.getId());
 //        }
 //
-
 //        System.out.println(productService.getById(test.get().getId()));
     }
 

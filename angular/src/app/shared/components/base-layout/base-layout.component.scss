@@ -1,3 +1,5 @@
+@import '../../../../styles/variables';
+
 /* Dropdown Button */
 .dropbtn {
     background-color: white;
@@ -39,3 +41,14 @@
   
   /* Change the background color of the dropdown button when the dropdown content is shown */
   .dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+.cartLink {
+  position: relative;
+
+  .cartCounter {
+    color: white;
+    border-radius: 50%;
+    padding: 0 3px;
+    background-color: $lightBlue;
+  }
+}

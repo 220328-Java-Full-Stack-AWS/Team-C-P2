@@ -16,6 +16,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -97,6 +98,7 @@ public class ProductsRepository extends AbstractHibernateRepo<Product> {
     }
 
     public List<Product> getAllFeatured() {
+        this.session = connectionManager.getSessionFactory().openSession();
         Query query = session.createQuery("from Products where is_featured = true");
 
         List<Product> results = query.list();

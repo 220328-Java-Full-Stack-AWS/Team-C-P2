@@ -109,8 +109,7 @@ public class ProductService {
             throw new ItemDoesNotExistException("No Items to retrieve");
         }
 
-
-        return productsRepository.getAllFeatured();
+        return ProductList;
     }
 
     // net price of product
