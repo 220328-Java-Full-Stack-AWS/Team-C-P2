@@ -14,6 +14,7 @@ import { UpdateProfileComponent } from './pages/update-profile/update-profile.co
 import { UpdateProductComponent } from './pages/admin/update-product/update-product.component';
 import { CreateProductComponent } from './pages/admin/create-product/create-product.component';
 import { RegisterComponent } from './shared/components/register/register.component';
+import { ProductViewComponent } from './product-view/product-view.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,8 @@ const routes: Routes = [
       { path: 'products', component: ProductsComponent },
       { path: 'products/update', component: UpdateProductComponent },
       { path: 'products/create', component: CreateProductComponent },
+      { path: 'products/:id', component: ProductsComponent },
+      { path: 'product/:id', component: ProductViewComponent },
       { path: 'cart', component: CartComponent },
       { path: 'login', component: LoginComponent },
       { path: 'profile', component: ProfileComponent },

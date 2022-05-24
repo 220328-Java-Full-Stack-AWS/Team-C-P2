@@ -32,6 +32,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { FeaturedProductsComponent } from './shared/components/featured-products/featured-products.component';
 import { CategoriesNavComponent } from './shared/components/categories-nav/categories-nav.component';
 
+import { ProductViewComponent } from './product-view/product-view.component';
+
 
 @NgModule({
   declarations: [
@@ -43,16 +45,18 @@ import { CategoriesNavComponent } from './shared/components/categories-nav/categ
     RegisterComponent,
     ProfileComponent,
     CartComponent,
+    CreateProductComponent,
     UpdatePasswordComponent,
     UpdateAddressComponent,
     UpdatePaymentComponent,
     UpdateProfileComponent,
     UpdateProductComponent,
-    CreateProductComponent,
     RegisterComponent,
     UpdateProfileComponent,
     FeaturedProductsComponent,
-    CategoriesNavComponent
+    CategoriesNavComponent,
+    ProductViewComponent,
+
 
   ],
   imports: [

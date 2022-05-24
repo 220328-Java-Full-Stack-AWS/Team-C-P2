@@ -18,12 +18,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
 
 //annotation, a combination of @Controller and @ResponseBody.
 
+/**
+ * The  class for ProductController
+ * <p>
+ * This Controller is used for REST endpoints and web UI
+ * </p>
+ *
+ * @author Diego Leon
+ */
 @RestController
 @RequestMapping("/products")
 public class ProductController {
@@ -107,10 +116,14 @@ public class ProductController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public HttpResponseDto create(@RequestBody Product product, HttpServletResponse res) throws CreationFailedException, ItemHasNonNullIdException, ItemDoesNotExistException {
+    public HttpResponseDto create(@RequestBody Product product, HttpServletResponse res) throws CreationFailedException, ItemHasNonNullIdException, ItemDoesNotExistException, IOException {
 
 
-        //tried using @RequestBody but was not able to make it work
+        //tried using @RequestBody but was not able to make it wor
+
+        //make dto to p
+        //
+
         Product newProduct = productService.create(product);
 
         if (!productService.getById(newProduct.getId()).isPresent()) {

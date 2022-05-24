@@ -2,8 +2,8 @@ import { HttpClient } from "@angular/common/http";
 import { HttpHeaders } from "@angular/common/http";
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { CreateProduct } from "../../interfaces/Product-Interface/product.create.interface";
 import { Product } from "../../interfaces/Product-Interface/product.interface";
+import { CreateProduct } from "../../interfaces/Product-Interface/product-create.interface";
 
 
 @Injectable({
