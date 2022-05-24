@@ -1,0 +1,36 @@
+<section class="productView">
+    <div class="pageContainer container container--pall" fxLayout="row" fxLayoutGap=" 5px"
+        fxLayoutAlign="center center">
+        <div class="productImage" fxFlex="50%">
+            <div>
+                <img fxFlex src="data:image/png;base64,{{productById.product.image}}"
+                    alt="{{productById.product.name | lowercase}} image">
+            </div>
+        </div>
+
+
+        <div class="productInfo" fxFlex="50%" fxLayout="column" fxLayoutAlign="space-around ">
+            <h1 class="productName">{{productById.product.name | titlecase}}</h1>
+
+
+
+            <div class="">
+                <p>{{productById.product.descr}}</p>
+            </div>
+            <div class="productPricing" fxLayoutGap="10px">
+                <span class="originalPrice" *ngIf="productById.product.onSale != null">{{productById.product.price |
+                    currency}}</span>
+                <span class="currentPrice">{{productById.netPrice | currency}}</span>
+            </div>
+            <div>
+                <button mat-icon-button type="button" class="addToCartButton mat-elevation-z2"
+                    (click)="addToCart(productById, $event)">
+                    <mat-icon class="addCartIcon">add_shopping_cart</mat-icon>
+                </button>
+            </div>
+        </div>
+
+
+
+    </div>
+</section>

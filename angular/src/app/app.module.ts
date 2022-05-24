@@ -28,6 +28,11 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatButtonModule } from '@angular/material/button';
+import { FeaturedProductsComponent } from './shared/components/featured-products/featured-products.component';
+import { CategoriesNavComponent } from './shared/components/categories-nav/categories-nav.component';
+
+import { ProductViewComponent } from './product-view/product-view.component';
 
 
 @NgModule({
@@ -40,14 +45,18 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     RegisterComponent,
     ProfileComponent,
     CartComponent,
+    CreateProductComponent,
     UpdatePasswordComponent,
     UpdateAddressComponent,
     UpdatePaymentComponent,
     UpdateProfileComponent,
     UpdateProductComponent,
-    CreateProductComponent,
     RegisterComponent,
-    UpdateProfileComponent
+    UpdateProfileComponent,
+    FeaturedProductsComponent,
+    CategoriesNavComponent,
+    ProductViewComponent,
+
 
   ],
   imports: [
@@ -60,7 +69,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatStepperModule,
     FlexLayoutModule,
     MatTooltipModule,
-    MatIconModule
+    MatIconModule,
+    MatButtonModule
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]

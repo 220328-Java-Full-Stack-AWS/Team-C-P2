@@ -55,7 +55,7 @@ public class CategoriesRepository extends AbstractHibernateRepo<ProductCategory>
 
     @Override
     public List<ProductCategory> getAll() {
-
+        this.session = connectionManager.getSessionFactory().openSession();
         Query query = session.createQuery("from ProductCategory ");
 
         List<ProductCategory> results = query.list();

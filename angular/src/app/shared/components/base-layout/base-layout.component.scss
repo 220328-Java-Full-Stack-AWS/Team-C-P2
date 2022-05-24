@@ -1,0 +1,11 @@
+@import '../../../../styles/variables';
+.cartLink {
+  position: relative;
+
+  .cartCounter {
+    color: white;
+    border-radius: 50%;
+    padding: 0 3px;
+    background-color: $lightBlue;
+  }
+}

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProfileComponent } from 'src/app/pages/profile/profile.component';
+import { Cart } from '../../interfaces/Cart-Interface/cart.interface';
 import { UserInfo } from '../../interfaces/User-Interface/user-info.interface';
 import { UserProfile } from '../../interfaces/User-Interface/user-profile.interface';
 import { AuthService } from '../../services/auth-service/auth.service';
@@ -14,15 +15,14 @@ import { UserService } from '../../services/user-service/user.service';
 })
 export class BaseLayoutComponent implements OnInit {
   isLoggedIn: boolean = false;
+  cart: Cart[] = [];
 
   constructor(
     private cookieService:CookieService,
     private authService: AuthService,
     private router: Router,
     private userService: UserService,
-
-    ){
-  };
+    ){}
 
   private user: UserInfo = {
     userId: 0,
@@ -45,7 +45,11 @@ export class BaseLayoutComponent implements OnInit {
 
   userSubscription: any;
 
-  ngOnInit() {
+  ngOnInit(): void {
+
+    this.userService.getCurrentActiveCart().subscribe((cartArray) => (
+    this.cart = cartArray
+    ));
     if(this.cookieService.getCookie('user_session')) {
       this.isLoggedIn = true;
     }
@@ -56,7 +60,5 @@ export class BaseLayoutComponent implements OnInit {
     this.userService.getCurrentUser().subscribe((user) => (
       this.user = user
     ));
-
-    console.log(this.user);
   }
 }

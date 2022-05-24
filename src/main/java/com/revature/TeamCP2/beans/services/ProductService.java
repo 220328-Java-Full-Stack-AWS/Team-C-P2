@@ -12,12 +12,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
+
+/**
+ * The  class for ProductService
+ * <p>
+ * This class is used as an intermediary between ProductsRepository and ProductController
+ * </p>
+ * <p>
+ * This class calls the crud functionally in the Repository class and is injected in the Product Controller
+ * </p>
+ *
+ * @author Diego Leon
+ */
 @Service
 public class ProductService {
     private final ProductsRepository productsRepository;
+
 
     @Autowired
     public ProductService(ProductsRepository userRepository) {
@@ -97,8 +109,7 @@ public class ProductService {
             throw new ItemDoesNotExistException("No Items to retrieve");
         }
 
-
-        return productsRepository.getAllFeatured();
+        return ProductList;
     }
 
     // net price of product

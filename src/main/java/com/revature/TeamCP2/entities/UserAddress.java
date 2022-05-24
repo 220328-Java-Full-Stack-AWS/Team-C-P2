@@ -10,6 +10,18 @@ import com.revature.TeamCP2.interfaces.Entity;
 
 import javax.persistence.*;
 
+
+/**
+ * The  class for User Address
+ * <p>
+ * This class is used by hibernate to create the User Address Table
+ * </p>
+ * <p>
+ * This class also serves as a model to be used in service, repository, and controller.
+ * </p>
+ *
+ * @author Diego Leon
+ */
 @javax.persistence.Entity
 @Table(name = "User_Address", schema = "public")
 public class UserAddress implements Entity {
