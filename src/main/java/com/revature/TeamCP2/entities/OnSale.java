@@ -42,6 +42,10 @@ public class OnSale implements Entity {
         this.discount = discount;
     }
 
+    public OnSale(Double discount) {
+        this.discount = discount;
+    }
+
     public Integer getId() {
         return id;
     }

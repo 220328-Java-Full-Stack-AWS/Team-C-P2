@@ -25,6 +25,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { OrderComponent } from './pages/order/order.component';
+import { MatButtonModule } from '@angular/material/button';
+import { FeaturedProductsComponent } from './shared/components/featured-products/featured-products.component';
+import { CategoriesNavComponent } from './shared/components/categories-nav/categories-nav.component';
 import { ProductViewComponent } from './product-view/product-view.component';
 
 
@@ -50,6 +53,9 @@ import { ProductViewComponent } from './product-view/product-view.component';
     CheckoutComponent,
     OrderComponent,
     ProductViewComponent, 
+    FeaturedProductsComponent,
+    CategoriesNavComponent,
+    ProductViewComponent,
 
   ],
   imports: [
@@ -62,7 +68,8 @@ import { ProductViewComponent } from './product-view/product-view.component';
     MatStepperModule,
     FlexLayoutModule,
     MatTooltipModule,
-    MatIconModule
+    MatIconModule,
+    MatButtonModule
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]
