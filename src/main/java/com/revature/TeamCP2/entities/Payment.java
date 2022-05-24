@@ -27,10 +27,10 @@ public class Payment implements Entity {
     private String issuer;
 
     @Column(name = "card_number", nullable = false)
-    private Integer cardNumber;
+    private String cardNumber;
 
     @Column(name = "security_code", nullable = false)
-    private Short securityCode;
+    private Integer securityCode;
 
     @Column(name = "expiration_date", nullable = false)
     private String expirationDate;
@@ -38,7 +38,7 @@ public class Payment implements Entity {
     public Payment() {
     }
 
-    public Payment(String network, String issuer, Integer cardNumber, Short securityCode, String expirationDate) {
+    public Payment(String network, String issuer, String cardNumber, Integer securityCode, String expirationDate) {
         this.network = network;
         this.issuer = issuer;
         this.cardNumber = cardNumber;
@@ -62,19 +62,19 @@ public class Payment implements Entity {
         this.issuer = provider;
     }
 
-    public Integer getCardNumber() {
+    public String getCardNumber() {
         return cardNumber;
     }
 
-    public void setCardNumber(Integer cardNumber) {
+    public void setCardNumber(String cardNumber) {
         this.cardNumber = cardNumber;
     }
 
-    public Short getSecurityCode() {
+    public Integer getSecurityCode() {
         return securityCode;
     }
 
-    public void setSecurityCode(Short securityCode) {
+    public void setSecurityCode(Integer securityCode) {
         this.securityCode = securityCode;
     }
 
