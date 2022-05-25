@@ -141,8 +141,8 @@
                                         </div>
                                     </div>
                                     <div class="checkout__cart-item-footer">
-                                        <div class="checkout__cart-item-quantity"> 
-                                            <select name="quantity" id="" #mySelect (change)="updateCart(cart.cartItem?.id, mySelect.value)">
+                                        <div class="checkout__cart-item-quantity">
+                                            <select name="quantity" id="" #mySelect (change)="updateCart(cart.cartItem!, mySelect.value)">
                                                 <ng-container *ngFor="let num of quantity">
                                                         <option [value]="cart.cartItem?.quantity" value="cart.cartItem?.quantity" *ngIf="cart.cartItem?.quantity == num" selected>
                                                             Qty: {{cart.cartItem?.quantity}}
@@ -154,7 +154,7 @@
                                             </select>
                                         </div>
                                         <div class="checkout__cart-item-delete">
-                                            <button (click)='removeCartItem(cart.cartItem?.id)'>Remove</button>
+                                            <button (click)='removeCartItem(cart.cartItem!)'>Remove</button>
                                         </div>
                                     </div>
                                 </div>
@@ -173,7 +173,7 @@
                             <h3>Items ({{cartArray.length}}):</h3>
                         </div>
                         <div class="checkout__summary-info">
-                            <h3>${{cartTotal[0] | number : '.2-2'}}</h3>
+                            <h3>${{cartTotal | number : '.2-2'}}</h3>
                         </div>
                     </div>
                     <div class="checkout__summary-item">
@@ -190,7 +190,7 @@
                             <h3>Total before tax: </h3>
                         </div>
                         <div class="checkout__summary-info">
-                            <h3>${{cartTotal[0] | number : '.2-2'}}</h3>
+                            <h3>${{cartTotal | number : '.2-2'}}</h3>
                         </div>
                     </div>
 
@@ -199,18 +199,18 @@
                             <h3>Estimated tax to be collected:</h3>
                         </div>
                         <div class="checkout__summary-info">
-                            <h3>${{calculateTax(cartTotal[0]) | number : '.2-2'}}</h3>
+                            <h3>${{calculateTax(cartTotal) | number : '.2-2'}}</h3>
                         </div>
                     </div>
 
-                    
+
                 </div>
                 <div class="checkout__summary-total">
                     <div class="checkout__summary-title">
                         <h2><strong>Order Total:</strong></h2>
                     </div>
                     <div class="checkout__summary-info">
-                        <h2><strong>${{cartTotal[0] + calculateTax(cartTotal[0]) | number : '.2-2'}}</strong></h2>
+                        <h2><strong>${{cartTotal + calculateTax(cartTotal) | number : '.2-2'}}</strong></h2>
                     </div>
                 </div>
                 <div class="checkout__summary-button">

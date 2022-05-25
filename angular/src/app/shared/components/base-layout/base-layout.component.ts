@@ -15,7 +15,7 @@ import { UserService } from '../../services/user-service/user.service';
 })
 export class BaseLayoutComponent implements OnInit {
   isLoggedIn: boolean = false;
-  cart: Cart[] = [];
+  itemCount: number = 0;
 
   constructor(
     private cookieService:CookieService,
@@ -23,11 +23,6 @@ export class BaseLayoutComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     ){}
-
-  private user: UserInfo = {
-    userId: 0,
-    activeCartId: 0
-  }
 
   logout() {
     this.authService.logout().subscribe(
@@ -46,20 +41,22 @@ export class BaseLayoutComponent implements OnInit {
   userSubscription: any;
 
   ngOnInit(): void {
-
-    this.userService.getCurrentActiveCartLength().subscribe((cartArray) => (
-    this.cart = cartArray
-    ));
     if(this.cookieService.getCookie('user_session')) {
       this.isLoggedIn = true;
     }
     else {
       this.isLoggedIn = false;
     }
-
-    this.userService.getCurrentUser().subscribe((user) => (
-      this.user = user
-    ));
-
+    // Get Cart Item count
+    this.userService.getCurrentCartSubject().subscribe((currentCart: any) => {
+      console.log(currentCart);
+      let count = 0;
+      // Loop through cart items add to count
+      Array.prototype.forEach.call(currentCart, (cartItem: Cart) => {
+        count += cartItem.cartItem?.quantity!;
+      });
+      // Pass count to view
+      this.itemCount = count;
+    });
   }
 }
