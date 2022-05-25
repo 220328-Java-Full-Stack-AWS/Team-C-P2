@@ -5,7 +5,7 @@
 
         <div class="header__links" *ngIf="(isLoggedIn)">
             <div class="dropdown">
-                <button class="dropbtn">Categories</button>
+                <a class="dropbtn">Categories</a>
                 <div class="dropdown-content">
                     <a [routerLink]="['/products', item.id]" *ngFor="let item of categories">{{item.name}}</a>
                 </div>
@@ -22,10 +22,9 @@
 
         <div class="header__links" *ngIf="!(isLoggedIn)">
             <div class="dropdown">
-                <button class="dropbtn">Categories</button>
+                <a class="dropbtn">Categories</a>
                 <div class="dropdown-content">
                     <a [routerLink]="['/products', item.id]" *ngFor="let item of categories">{{item.name}}</a>
-
                 </div>
 
             </div>
