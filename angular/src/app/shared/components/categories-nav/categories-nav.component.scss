@@ -1,0 +1,23 @@
+.categories {
+  padding: 0 25px;
+
+  .category {
+    height: 175px;
+    cursor: pointer;
+
+    .categoryImage {
+      // border: 1px solid black;
+      box-shadow: 0px 0px 3px 1px rgb(36 36 36 / 20%);
+      border-radius: 6px;
+      margin-bottom: 10px;
+
+      &:hover {
+        transform: scale(1.025);
+        cursor: pointer;
+      }
+    }
+    .categoryName {
+      text-align: center;
+    }
+  }
+}

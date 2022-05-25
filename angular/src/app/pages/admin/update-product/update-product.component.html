@@ -1,0 +1,83 @@
+<section class="profile">
+    <div class="container container--pall">
+        <div class="profile__content">
+            <div class="profile__item item-container">
+                <div class="profile__item-header">
+                    <h2>Product Information</h2>
+                </div>
+                <div class="profile__item-content">
+                    <div class="profile__item-content-header">
+                        <h3><strong>Product Id</strong></h3>
+                    </div>
+                    <div class="profile__item-content-info">
+                        <input type="text" [(ngModel)]='id'>
+                    </div>
+                    <div class="profile__button">
+                        <button (click)='getByID(id)'>Get Product Information</button>
+                    </div>
+                </div>
+
+                <div class="profile__item-content">
+                    <div class="profile__item-content-header">
+                        <h3><strong>Product Name</strong></h3>
+                    </div>
+                    <div class="profile__item-content-info">
+                        <h3>{{productById.name}}</h3>
+                    </div>
+                </div>
+                <div class="profile__item-content">
+                    <div class="profile__item-content-header">
+                        <h3><strong>Description</strong></h3>
+                    </div>
+                    <div class="profile__item-content-info">
+                        <h3>{{productById.descr}}</h3>
+                    </div>
+                </div>
+                <div class="profile__item-content">
+                    <div class="profile__item-content-header">
+                        <h3><strong>Price</strong></h3>
+                    </div>
+                    <div class="profile__item-content-info">
+                        <h3>${{productById.price}}</h3>
+                    </div>
+                </div>
+                <div class="profile__item-content">
+                    <div class="profile__item-content-header">
+                        <h3><strong>Category Name</strong></h3>
+                    </div>
+                    <div class="profile__item-content-info">
+                        <h3>{{productById.category.name}}</h3>
+                    </div>
+                </div>
+                <div class="profile__item-content">
+                    <div class="profile__item-content-header">
+                        <h3><strong>Category Id</strong></h3>
+                    </div>
+                    <div class="profile__item-content-info">
+                        <h3>{{productById.category.id}}</h3>
+                    </div>
+                </div>
+                <div class="profile__item-content">
+                    <div class="profile__item-content-header">
+                        <h3><strong>Sale Id</strong></h3>
+                    </div>
+                    <div class="profile__item-content-info">
+                        <h3>{{productById.onSale.id}}</h3>
+                    </div>
+                </div>
+                <div class="profile__item-content">
+                    <div class="profile__item-content-header">
+                        <h3><strong>Discount</strong></h3>
+                    </div>
+                    <div class="profile__item-content-info">
+                        <h3>{{productById.onSale.discount}}</h3>
+                    </div>
+                </div>
+                <div class="profile__button">
+                    <button routerLink="updateProfile" class="button">Update Profile</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

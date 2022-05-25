@@ -1,0 +1,182 @@
+<section class="checkout">
+    <div class="checkout__container container container--pall">
+        <div class="checkout__header">
+            <h1>Checkout</h1><h2>({{cartArray.length}} items)</h2>
+        </div>
+        <div class="checkout__content-1">
+            <div class="checkout__user-container">
+                <div class="checkout__address">
+                    <div class="checkout__content-header">
+                        <h2><strong>1&emsp;Shipping address</strong></h2>
+                    </div>
+
+                    <div class="checkout__content-1-item" *ngIf="(userQuery.userAddress.userId != null)">
+                        <div class="checkout__address-content">
+                            <div class="checkout__address-content-info">
+                                <h3>{{userQuery.userAddress.addressLine1}}</h3>
+                            </div>
+                        </div>
+                        <div class="checkout__address-content">
+                            <div class="checkout__address-content-info">
+                                <h3>{{userQuery.userAddress.addressLine2}}</h3>
+                            </div>
+                        </div>
+                        <div class="checkout__address-content">
+                            <div class="checkout__address-content-info">
+                                <h3>{{userQuery.userAddress.city}}</h3>
+                            </div>
+                        </div>
+                        <div class="checkout__address-content">
+                            <div class="checkout__address-content-info">
+                                <h3>{{userQuery.userAddress.postalCode}}</h3>
+                            </div>
+                        </div>
+                        <div class="checkout__address-content">
+                            <div class="checkout__address-content-info">
+                                <h3>{{userQuery.userAddress.country}}</h3>
+                            </div>
+                        </div>
+                        <div class="profile__button">
+                            <button routerLink='/profile/updateAddress' class="button">Update Address</button>
+                        </div>
+                    </div>
+
+                    <div class="checkout__content-1-item" *ngIf="(userQuery.userAddress.userId == null)">
+                        <div class="profile__button">
+                            <button routerLink='/profile/updateAddress' class="button">Add Address</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="checkout__payment">
+                    <div class="checkout__content-header">
+                        <h2><strong>2&emsp;Payment method</strong></h2>
+                    </div>
+                    <div class="checkout__content-1-item " *ngIf="(userQuery.payment.userId != null)">
+                        <div class="checkout__payment-content">
+                            <div class="checkout__payment-content-info">
+                                <h3>Network : {{userQuery.payment.network}}</h3>
+                            </div>
+                        </div>
+                        <div class="checkout__payment-content">
+                            <div class="checkout__payment-content-info">
+                                <h3>Issuer : {{userQuery.payment.issuer}}</h3>
+                            </div>
+                        </div>
+                        <div class="checkout__payment-content">
+                            <div class="checkout__payment-content-info">
+                                <h3>Exp Date : {{userQuery.payment.expDate}}</h3>
+                            </div>
+                        </div>
+                        <div class="profile__button">
+                            <button routerLink='/profile/updatePayment' class="button">Update Payment</button>
+                        </div>
+                    </div>
+
+                    <div class="checkout__content-1-item" *ngIf="(userQuery.payment.userId == null)">
+
+                        <div class="profile__button">
+                            <button routerLink='/profile/updatePayment' class="button">Add Payment</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="checkout__cart">
+                    <div class="checkout__content-header">
+                        <h2><strong>3&emsp;Review your cart items</strong></h2>
+                    </div>
+                    <div class="checkout__cart-container item-container">
+                        <div class="checkout__cart-item-container" *ngFor="let cart of cartArray">
+                            <div class="checkout__cart-item">
+                                <div class="checkout__cart-item-image">
+                                    <img src="data:image/png;base64,{{cart.cartItem?.product?.image}}" alt="">
+                                </div>
+                                <div class="checkout__cart-item-content">
+                                    <div class="checkout__cart-item-header">
+                                        <div class="checkout__cart-item-title">
+                                            <h3>{{cart.cartItem?.product?.name + " " + cart.cartItem?.product?.descr}}</h3>
+                                        </div>
+                                        <div class="checkout__cart-item-price">
+                                            <h3>Price: ${{cart.cartItem?.product?.price | number : '.2-2'}}</h3>
+                                            <h3>Net Price: ${{cart.cartItem!.netPrice | number : '.2-2'}}</h3>
+                                        </div>
+                                    </div>
+                                    <div class="checkout__cart-item-footer">
+                                        <div class="checkout__cart-item-quantity">
+                                            <select name="quantity" id="" #mySelect (change)="updateCart(cart.cartItem!, mySelect.value)">
+                                                <ng-container *ngFor="let num of quantity">
+                                                        <option [value]="cart.cartItem?.quantity" value="cart.cartItem?.quantity" *ngIf="cart.cartItem?.quantity == num" selected>
+                                                            Qty: {{cart.cartItem?.quantity}}
+                                                        </option>
+                                                        <option [value]="num" value="num" *ngIf="cart.cartItem?.quantity != num">
+                                                            Qty: {{num}}
+                                                        </option>
+                                                </ng-container>
+                                            </select>
+                                        </div>
+                                        <div class="checkout__cart-item-delete">
+                                            <button (click)='removeCartItem(cart.cartItem!)'>Remove</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="checkout__summary item-container">
+                <div class="checkout__summary-header">
+                    <h2><strong>Order Summary</strong></h2>
+                </div>
+                <div class="checkout__summary-content">
+                    <div class="checkout__summary-item">
+                        <div class="checkout__summary-title">
+                            <h3>Items ({{cartArray.length}}):</h3>
+                        </div>
+                        <div class="checkout__summary-info">
+                            <h3>${{cartTotal | number : '.2-2'}}</h3>
+                        </div>
+                    </div>
+                    <div class="checkout__summary-item">
+                        <div class="checkout__summary-title">
+                            <h3>Shipping & handling:</h3>
+                        </div>
+                        <div class="checkout__summary-info checkout__summary-info-shipping">
+                            <h3>$0.00</h3>
+                        </div>
+                    </div>
+
+                    <div class="checkout__summary-item">
+                        <div class="checkout__summary-title">
+                            <h3>Total before tax: </h3>
+                        </div>
+                        <div class="checkout__summary-info">
+                            <h3>${{cartTotal | number : '.2-2'}}</h3>
+                        </div>
+                    </div>
+
+                    <div class="checkout__summary-item checkout__summary-item-footer">
+                        <div class="checkout__summary-title">
+                            <h3>Estimated tax to be collected:</h3>
+                        </div>
+                        <div class="checkout__summary-info">
+                            <h3>${{calculateTax(cartTotal) | number : '.2-2'}}</h3>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="checkout__summary-total">
+                    <div class="checkout__summary-title">
+                        <h2><strong>Order Total:</strong></h2>
+                    </div>
+                    <div class="checkout__summary-info">
+                        <h2><strong>${{cartTotal + calculateTax(cartTotal) | number : '.2-2'}}</strong></h2>
+                    </div>
+                </div>
+                <div class="checkout__summary-button">
+                    <button (click)="submit(cartTotal + calculateTax(cartTotal))">Place Your Order</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

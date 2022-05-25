@@ -1,0 +1,61 @@
+.productView {
+    .pageContainer {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        border: 1px solid black;
+
+
+        .productImage {
+            margin: auto;
+            width: 560px; //! Fiiller
+            height: 560px; //! Fiiller
+            border: 1px solid red; //! Fiiller
+        }
+
+        .productInfo {
+            // height: 100%;
+            width: 560px; //! Fiiller
+            height: 560px; //! Fiiller
+            border: 1px green solid;
+
+
+            .productName {}
+
+            .productPricing {
+
+                .originalPrice {
+                    text-decoration: line-through;
+                    color: red;
+                }
+
+                .currentPrice {
+                    color: green;
+                }
+
+            }
+
+            .addToCartButton {
+                padding: 1px 8px;
+                line-height: initial;
+                font-size: 0.7rem;
+                background-color: #2988bc;
+                color: white;
+
+                .addToCartText {
+                    display: none;
+                }
+
+                &:hover .addToCartText {
+                    display: inline;
+                }
+
+                &.checkIcon {
+                    color: green;
+                }
+
+            }
+
+        }
+
+    }
+}

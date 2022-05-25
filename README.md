@@ -1,5 +1,8 @@
 # Team-C-P2 - E-Commerce SPA
 
+## JUnit-Mockito Testing
+[![junit_tests](https://github.com/220328-Java-Full-Stack-AWS/Team-C-P2/actions/workflows/junit_tests.yml/badge.svg?branch=auto-tester)](https://github.com/220328-Java-Full-Stack-AWS/Team-C-P2/actions/workflows/junit_tests.yml)
+
 ## Executive Summary
 The E-Commerce Single-Page Application will allow consumers to browse, search, and buy products. Users will be able to browse our catelog of products, or search for a specific item, and add these to a cart. Users can register accounts which includes a profile. There are a number of stretch goals to choose from. Please update this text to summarize additional features. This text is fairly generic, your project will be unique, this text should be re-written to reflect your final deliverable.
 

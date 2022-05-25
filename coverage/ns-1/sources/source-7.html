@@ -1,0 +1,254 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ConnectionManager</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.revature.TeamCP2.beans.services</a>
+</div>
+
+<h1>Coverage Summary for Class: ConnectionManager (com.revature.TeamCP2.beans.services)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ConnectionManager</td>
+<td class="coverageStat">
+  <span class="percent">
+    58.3%
+  </span>
+  <span class="absValue">
+    (7/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    83.9%
+  </span>
+  <span class="absValue">
+    (26/31)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ConnectionManager$MockitoMock$1796359155</td>
+  </tr>
+  <tr>
+    <td class="name">ConnectionManager$MockitoMock$1796359155$auxiliary$0oV5n8yE</td>
+  </tr>
+  <tr>
+    <td class="name">ConnectionManager$MockitoMock$1796359155$auxiliary$3jjmRs5z</td>
+  </tr>
+  <tr>
+    <td class="name">ConnectionManager$MockitoMock$1796359155$auxiliary$8iBkA5ne</td>
+  </tr>
+  <tr>
+    <td class="name">ConnectionManager$MockitoMock$1796359155$auxiliary$9U0z2Y84</td>
+  </tr>
+  <tr>
+    <td class="name">ConnectionManager$MockitoMock$1796359155$auxiliary$ae6WHTT4</td>
+  </tr>
+  <tr>
+    <td class="name">ConnectionManager$MockitoMock$1796359155$auxiliary$eRSYY9CP</td>
+  </tr>
+  <tr>
+    <td class="name">ConnectionManager$MockitoMock$1796359155$auxiliary$F3Zx1hUx</td>
+  </tr>
+  <tr>
+    <td class="name">ConnectionManager$MockitoMock$1796359155$auxiliary$oHRfD84I</td>
+  </tr>
+  <tr>
+    <td class="name">ConnectionManager$MockitoMock$1796359155$auxiliary$OY5NtNtg</td>
+  </tr>
+  <tr>
+    <td class="name">ConnectionManager$MockitoMock$1796359155$auxiliary$sjb7vIuD</td>
+  </tr>
+  <tr>
+    <td class="name">ConnectionManager$MockitoMock$1796359155$auxiliary$XIVVqc4a</td>
+  </tr>
+  <tr>
+    <td class="name">ConnectionManager$MockitoMock$1796359155$auxiliary$XSOkQem2</td>
+  </tr>
+  <tr>
+    <td class="name">ConnectionManager$MockitoMock$1796359155$auxiliary$ZN8Hp2fa</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    58.3%
+  </span>
+  <span class="absValue">
+    (7/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    83.9%
+  </span>
+  <span class="absValue">
+    (26/31)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;/**
+<i class="no-highlight">2</i>&nbsp; * Author(s): @Brandon Le
+<i class="no-highlight">3</i>&nbsp; * Contributor(s):
+<i class="no-highlight">4</i>&nbsp; * Purpose: ConnectionManager provides implementations to persist or retrieve user objects.
+<i class="no-highlight">5</i>&nbsp; *          UserService @Autowires UserRepository.
+<i class="no-highlight">6</i>&nbsp; *
+<i class="no-highlight">7</i>&nbsp; */
+<i class="no-highlight">8</i>&nbsp;
+<i class="no-highlight">9</i>&nbsp;package com.revature.TeamCP2.beans.services;
+<i class="no-highlight">10</i>&nbsp;
+<i class="no-highlight">11</i>&nbsp;import com.revature.TeamCP2.entities.*;
+<i class="no-highlight">12</i>&nbsp;import org.hibernate.Session;
+<i class="no-highlight">13</i>&nbsp;import org.hibernate.SessionFactory;
+<i class="no-highlight">14</i>&nbsp;import org.hibernate.cfg.Configuration;
+<i class="no-highlight">15</i>&nbsp;import org.springframework.context.Lifecycle;
+<i class="no-highlight">16</i>&nbsp;import org.springframework.stereotype.Service;
+<i class="no-highlight">17</i>&nbsp;
+<i class="no-highlight">18</i>&nbsp;import java.util.LinkedList;
+<i class="no-highlight">19</i>&nbsp;import java.util.List;
+<i class="no-highlight">20</i>&nbsp;
+<i class="no-highlight">21</i>&nbsp;@Service
+<i class="no-highlight">22</i>&nbsp;public class ConnectionManager implements Lifecycle {
+<b class="fc"><i class="no-highlight">23</i>&nbsp;    private boolean running = false;</b>
+<i class="no-highlight">24</i>&nbsp;
+<i class="no-highlight">25</i>&nbsp;    private final List&lt;Class&gt; models;
+<i class="no-highlight">26</i>&nbsp;    private Configuration config;
+<i class="no-highlight">27</i>&nbsp;    private SessionFactory sessionFactory;
+<i class="no-highlight">28</i>&nbsp;    private Session session;
+<i class="no-highlight">29</i>&nbsp;
+<b class="fc"><i class="no-highlight">30</i>&nbsp;    public ConnectionManager() {</b>
+<b class="fc"><i class="no-highlight">31</i>&nbsp;        config = new Configuration();</b>
+<b class="fc"><i class="no-highlight">32</i>&nbsp;        sessionFactory = config.buildSessionFactory();</b>
+<b class="fc"><i class="no-highlight">33</i>&nbsp;        models = new LinkedList&lt;&gt;();</b>
+<i class="no-highlight">34</i>&nbsp;    }
+<i class="no-highlight">35</i>&nbsp;
+<i class="no-highlight">36</i>&nbsp;    @Override
+<i class="no-highlight">37</i>&nbsp;    public void start() {
+<i class="no-highlight">38</i>&nbsp;
+<b class="fc"><i class="no-highlight">39</i>&nbsp;        models.add(User.class);</b>
+<b class="fc"><i class="no-highlight">40</i>&nbsp;        models.add(Cart.class);</b>
+<b class="fc"><i class="no-highlight">41</i>&nbsp;        models.add(CartItem.class);</b>
+<b class="fc"><i class="no-highlight">42</i>&nbsp;        models.add(OnSale.class);</b>
+<b class="fc"><i class="no-highlight">43</i>&nbsp;        models.add(Order.class);</b>
+<b class="fc"><i class="no-highlight">44</i>&nbsp;        models.add(Payment.class);</b>
+<b class="fc"><i class="no-highlight">45</i>&nbsp;        models.add(Product.class);</b>
+<b class="fc"><i class="no-highlight">46</i>&nbsp;        models.add(ProductCategory.class);</b>
+<b class="fc"><i class="no-highlight">47</i>&nbsp;        models.add(UserAddress.class);</b>
+<i class="no-highlight">48</i>&nbsp;
+<b class="fc"><i class="no-highlight">49</i>&nbsp;        for (Class model : models) {</b>
+<b class="fc"><i class="no-highlight">50</i>&nbsp;            config.addAnnotatedClass(model);</b>
+<b class="fc"><i class="no-highlight">51</i>&nbsp;        }</b>
+<i class="no-highlight">52</i>&nbsp;
+<b class="fc"><i class="no-highlight">53</i>&nbsp;        sessionFactory = config.buildSessionFactory();</b>
+<b class="fc"><i class="no-highlight">54</i>&nbsp;        session = sessionFactory.openSession();</b>
+<b class="fc"><i class="no-highlight">55</i>&nbsp;        running = true;</b>
+<i class="no-highlight">56</i>&nbsp;    }
+<i class="no-highlight">57</i>&nbsp;
+<i class="no-highlight">58</i>&nbsp;    @Override
+<i class="no-highlight">59</i>&nbsp;    public void stop() {
+<b class="fc"><i class="no-highlight">60</i>&nbsp;        running = false;</b>
+<b class="fc"><i class="no-highlight">61</i>&nbsp;        session.close();</b>
+<i class="no-highlight">62</i>&nbsp;    }
+<i class="no-highlight">63</i>&nbsp;
+<i class="no-highlight">64</i>&nbsp;    @Override
+<i class="no-highlight">65</i>&nbsp;    public boolean isRunning() {
+<b class="fc"><i class="no-highlight">66</i>&nbsp;        return running;</b>
+<i class="no-highlight">67</i>&nbsp;    }
+<i class="no-highlight">68</i>&nbsp;
+<i class="no-highlight">69</i>&nbsp;    public SessionFactory getSessionFactory() {
+<b class="nc"><i class="no-highlight">70</i>&nbsp;        return sessionFactory;</b>
+<i class="no-highlight">71</i>&nbsp;    }
+<i class="no-highlight">72</i>&nbsp;
+<i class="no-highlight">73</i>&nbsp;    public Session getSession() {
+<b class="nc"><i class="no-highlight">74</i>&nbsp;        return session;</b>
+<i class="no-highlight">75</i>&nbsp;    }
+<i class="no-highlight">76</i>&nbsp;
+<i class="no-highlight">77</i>&nbsp;    public void setSession(Session session) {
+<b class="fc"><i class="no-highlight">78</i>&nbsp;        this.session = session;</b>
+<i class="no-highlight">79</i>&nbsp;    }
+<i class="no-highlight">80</i>&nbsp;
+<i class="no-highlight">81</i>&nbsp;    public void addModel(Class model) {
+<b class="nc"><i class="no-highlight">82</i>&nbsp;        models.add(model);</b>
+<i class="no-highlight">83</i>&nbsp;    }
+<i class="no-highlight">84</i>&nbsp;
+<i class="no-highlight">85</i>&nbsp;    public List&lt;Class&gt; getModels() {
+<b class="fc"><i class="no-highlight">86</i>&nbsp;        return models;</b>
+<i class="no-highlight">87</i>&nbsp;    }
+<i class="no-highlight">88</i>&nbsp;
+<i class="no-highlight">89</i>&nbsp;    public Configuration getConfig() {
+<b class="nc"><i class="no-highlight">90</i>&nbsp;        return config;</b>
+<i class="no-highlight">91</i>&nbsp;    }
+<i class="no-highlight">92</i>&nbsp;
+<i class="no-highlight">93</i>&nbsp;    public void setSessionFactory(SessionFactory sessionFactory) {
+<b class="nc"><i class="no-highlight">94</i>&nbsp;        this.sessionFactory = sessionFactory;</b>
+<i class="no-highlight">95</i>&nbsp;    }
+<i class="no-highlight">96</i>&nbsp;
+<i class="no-highlight">97</i>&nbsp;    public void setConfig(Configuration config) {
+<b class="fc"><i class="no-highlight">98</i>&nbsp;        this.config = config;</b>
+<i class="no-highlight">99</i>&nbsp;    }
+<i class="no-highlight">100</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-05-25 13:09</div>
+</div>
+</body>
+</html>

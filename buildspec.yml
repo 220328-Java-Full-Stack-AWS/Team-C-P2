@@ -6,19 +6,30 @@ phases:
       java: corretto11
   pre_build:
     commands:
+      - echo ============= Pre-Build =============
       - pwd
       - ls -al
       - aws s3 cp s3://teamcp2-secret-bucket/hibernate.properties src/main/resources/hibernate.properties
       - aws s3 cp s3://teamcp2-secret-bucket/application.properties src/main/resources/application.properties
       - ls -al
       - ls -al src/main/resources/
+      - aws s3 rm --recursive s3://teamcp2-ui/*
   build:
     commands:
+      - echo ============= Build =============
       - mvn package
+      - cd angular
+      - npm install
+      - npm install -g @angular/cli
+      - ng build
+      - ls -al
   post_build:
     commands:
+      - echo ============= Post-Build =============
+      - cd dist/Team-C-P2
       - ls -al
-      - ls -al target/
+      - aws s3 cp ./* s3://teamcp2-ui
+      - cd ../../../
       - mv target/Team-C-P2-*.*.war ROOT.war
       - ls -al
 artifacts:
