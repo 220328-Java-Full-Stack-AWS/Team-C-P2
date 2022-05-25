@@ -1,47 +1,37 @@
 <!-- NavBar -->
 <header class="header">
-    <nav class="container container--pall flex flex-jc-sb flex-ai-c">
-        <a routerLink="/" class="header__logo">Home</a>
+  <nav class="container container--pall flex flex-jc-sb flex-ai-c">
+    <a routerLink="/" class="header__logo">Home</a>
 
-        <div class="header__links" *ngIf="(isLoggedIn)">
-            <div class = "dropdown">
-                <button class="dropbtn">CATEGORIES</button>
-                <div class = "dropdown-content">
-                    <a href="/products/1">Soccer</a>
-                    <a href="products/2">Football</a>
-                    <a href="products/3">Tennis</a>
-                    <a href="products/4">Basketball</a>
-                    <a href="products/5">Golf</a>
-                    <a href="products/6">Baseball</a>
-                </div>
-
-            </div>
-            <a routerLink="/products" class="scroll">Products</a>
-            <a routerLink="/cart" class="scroll cartLink">
-              Cart
-              <span class="cartCounter" *ngIf="cart.length > 0">{{cart.length}}</span>
-            </a>
-            <a routerLink="/profile" class="scroll">Profile</a>
-            <a (click)='logout()'class = "scroll">Logout</a>
+    <div class="header__links" *ngIf="(isLoggedIn)">
+      <div class="dropdown">
+        <button class="dropbtn">CATEGORIES</button>
+        <div class="dropdown-content">
+          <a *ngFor="let item of categories" [routerLink]="['/products', item.id]">{{item.name}}</a>
         </div>
 
-        <div class="header__links" *ngIf="!(isLoggedIn)">
-            <div class = "dropdown">
-                <button class="dropbtn">Categories</button>
-                <div class = "dropdown-content">
-                    <a href="/products/1">Soccer</a>
-                    <a href="products/2">Football</a>
-                    <a href="products/3">Tennis</a>
-                    <a href="products/4">Basketball</a>
-                    <a href="products/5">Golf</a>
-                    <a href="products/6">Baseball</a>
-                </div>
+      </div>
+      <a routerLink="/products" class="scroll">Products</a>
+      <a routerLink="/cart" class="scroll cartLink">
+        Cart
+        <span class="cartCounter" *ngIf="cart.length > 0">{{cart.length}}</span>
+      </a>
+      <a routerLink="/profile" class="scroll">Profile</a>
+      <a (click)='logout()' class="scroll">Logout</a>
+    </div>
 
-            </div>
-            <a href="" routerLink="/products" class="scroll">Products</a>
-            <a href="" routerLink="/login">Login</a>
-            <a href="" routerLink="/register">Register</a>
+    <div class="header__links" *ngIf="!(isLoggedIn)">
+      <div class="dropdown">
+        <button class="dropbtn">CATEGORIES</button>
+        <div class="dropdown-content">
+          <a *ngFor="let item of categories" [routerLink]="['/products', item.id]">{{item.name}}</a>
         </div>
-    </nav>
+
+      </div>
+      <a href="" routerLink="/products" class="scroll">Products</a>
+      <a href="" routerLink="/login" class="scroll">Login</a>
+      <a href="" routerLink="/register" class="scroll">Register</a>
+    </div>
+  </nav>
 </header>
 <router-outlet></router-outlet>
