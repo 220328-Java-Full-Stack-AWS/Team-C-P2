@@ -12,41 +12,26 @@
 
                     <div class="checkout__content-1-item" *ngIf="(userQuery.userAddress.userId != null)">
                         <div class="checkout__address-content">
-                            <div class="checkout__address-content-header">
-                                <h3><strong>Address Line 1</strong></h3>
-                            </div>
                             <div class="checkout__address-content-info">
                                 <h3>{{userQuery.userAddress.addressLine1}}</h3>
                             </div>
                         </div>
                         <div class="checkout__address-content">
-                            <div class="checkout__address-content-header">
-                                <h3><strong>Address Line 2</strong></h3>
-                            </div>
                             <div class="checkout__address-content-info">
                                 <h3>{{userQuery.userAddress.addressLine2}}</h3>
                             </div>
                         </div>
                         <div class="checkout__address-content">
-                            <div class="checkout__address-content-header">
-                                <h3><strong>City</strong></h3>
-                            </div>
                             <div class="checkout__address-content-info">
                                 <h3>{{userQuery.userAddress.city}}</h3>
                             </div>
                         </div>
                         <div class="checkout__address-content">
-                            <div class="checkout__address-content-header">
-                                <h3><strong>Postal Code</strong></h3>
-                            </div>
                             <div class="checkout__address-content-info">
                                 <h3>{{userQuery.userAddress.postalCode}}</h3>
                             </div>
                         </div>
                         <div class="checkout__address-content">
-                            <div class="checkout__address-content-header">
-                                <h3><strong>Country</strong></h3>
-                            </div>
                             <div class="checkout__address-content-info">
                                 <h3>{{userQuery.userAddress.country}}</h3>
                             </div>
@@ -68,43 +53,18 @@
                     </div>
                     <div class="checkout__content-1-item " *ngIf="(userQuery.payment.userId != null)">
                         <div class="checkout__payment-content">
-                            <div class="checkout__payment-content-header">
-                                <h3><strong>Network</strong></h3>
-                            </div>
                             <div class="checkout__payment-content-info">
-                                <h3>{{userQuery.payment.network}}</h3>
+                                <h3>Network : {{userQuery.payment.network}}</h3>
                             </div>
                         </div>
                         <div class="checkout__payment-content">
-                            <div class="checkout__payment-content-header">
-                                <h3><strong>Issuer</strong></h3>
-                            </div>
                             <div class="checkout__payment-content-info">
-                                <h3>{{userQuery.payment.issuer}}</h3>
+                                <h3>Issuer : {{userQuery.payment.issuer}}</h3>
                             </div>
                         </div>
                         <div class="checkout__payment-content">
-                            <div class="checkout__payment-content-header">
-                                <h3><strong>Card Number</strong></h3>
-                            </div>
                             <div class="checkout__payment-content-info">
-                                <h3>{{userQuery.payment.cardNumber}}</h3>
-                            </div>
-                        </div>
-                        <div class="checkout__payment-content">
-                            <div class="checkout__payment-content-header">
-                                <h3><strong>Security Code</strong></h3>
-                            </div>
-                            <div class="checkout__payment-content-info">
-                                <h3>{{userQuery.payment.securityCode}}</h3>
-                            </div>
-                        </div>
-                        <div class="checkout__payment-content">
-                            <div class="checkout__payment-content-header">
-                                <h3><strong>Expiration Date</strong></h3>
-                            </div>
-                            <div class="checkout__payment-content-info">
-                                <h3>{{userQuery.payment.expDate}}</h3>
+                                <h3>Exp Date : {{userQuery.payment.expDate}}</h3>
                             </div>
                         </div>
                         <div class="profile__button">
