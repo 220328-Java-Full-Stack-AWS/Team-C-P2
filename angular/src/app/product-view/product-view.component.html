@@ -11,9 +11,6 @@
 
         <div class="productInfo" fxFlex="50%" fxLayout="column" fxLayoutAlign="space-around ">
             <h1 class="productName">{{productById.product.name | titlecase}}</h1>
-
-
-
             <div class="">
                 <p>{{productById.product.descr}}</p>
             </div>
@@ -23,14 +20,26 @@
                 <span class="currentPrice">{{productById.netPrice | currency}}</span>
             </div>
             <div>
-                <button mat-icon-button type="button" class="addToCartButton mat-elevation-z2"
-                    (click)="addToCart(productById, $event)">
+                <button mat-raised-button type="button" class="addToCartButton mat-elevation-z2" routerLink="/login"
+                    *ngIf="!(isLoggedIn)">
+                    <div class="addToCartText">Add </div>
                     <mat-icon class="addCartIcon">add_shopping_cart</mat-icon>
                 </button>
+                <button mat-raised-button type="button" class="addToCartButton mat-elevation-z2"
+                    (click)="addToCart(productById, $event, mySelect.value)" *ngIf="(isLoggedIn)">
+                    <div class="addToCartText">Add </div>
+                    <mat-icon class="addCartIcon">add_shopping_cart</mat-icon>
+                </button>
+                <div class="cart__item-quantity">
+                    <select name="quantity" id="" #mySelect>
+                        <ng-container *ngFor="let num of quantity">
+                            <option [value]="num" value="num">
+                                Qty: {{num}}
+                            </option>
+                        </ng-container>
+                    </select>
+                </div>
             </div>
         </div>
-
-
-
     </div>
 </section>
