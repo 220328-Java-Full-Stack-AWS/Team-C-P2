@@ -56,7 +56,7 @@ export class UpdatePaymentComponent implements OnInit {
       // check for numeric only, exactly 3 digits
       "securityCode" : [""],
       // numeric only, yyyy-mm-dd format?
-      "expDate" : [""] 
+      "expDate" : [""]
     });
 
   }
