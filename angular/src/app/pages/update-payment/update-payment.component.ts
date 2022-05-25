@@ -1,3 +1,4 @@
+import { Location } from "@angular/common";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { MatStepper } from "@angular/material/stepper";
@@ -33,7 +34,7 @@ export class UpdatePaymentComponent implements OnInit {
     expDate: " "
   }
 
-  constructor(private fb : FormBuilder, private router : Router, private userService : UserService, public cookie : CookieService) { }
+  constructor(private fb : FormBuilder, private router : Router, private location : Location, private userService : UserService, public cookie : CookieService) { }
 
   ngOnInit(): void {
 
@@ -82,7 +83,7 @@ export class UpdatePaymentComponent implements OnInit {
     this.cookie.getCookie('user_session');
     this.userService.updateUserPayment(this.newPayment).subscribe((json : UserPayment) => {
       console.log(json);
-      this.router.navigate(["/profile"])
+      this.location.back();
     });
 
   }
