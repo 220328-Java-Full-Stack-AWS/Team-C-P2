@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CartItem } from '../shared/interfaces/Cart-Interface/cart-item.interface';
 import { category } from '../shared/interfaces/Product-Interface/category.interface';
 import { onSale } from '../shared/interfaces/Product-Interface/onsale.interface';
+import { CookieService } from '../shared/services/cookie-service/cookie.service';
 import { ProductService } from '../shared/services/product-service/product.service';
 import { UserService } from '../shared/services/user-service/user.service';
 
@@ -12,8 +13,13 @@ import { UserService } from '../shared/services/user-service/user.service';
   styleUrls: ['./product-view.component.scss']
 })
 export class ProductViewComponent implements OnInit {
+  products: Item[] = [];
+  quantity: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  isLoggedIn: boolean = false;
 
-  productById: Product = {
+  error?: string = "Error.";
+
+  productById: Item = {
     netPrice: 0,
     product: {
       id: 0,
@@ -39,7 +45,11 @@ export class ProductViewComponent implements OnInit {
 
 
   id: any = "";
-  constructor(private productService: ProductService, private userService: UserService, private route: ActivatedRoute) { }
+  constructor(
+    private productService: ProductService
+    , private userService: UserService,
+    private route: ActivatedRoute,
+    private cookieService: CookieService) { }
   //
   ngOnInit(): void {
     // let id: any;
@@ -55,22 +65,47 @@ export class ProductViewComponent implements OnInit {
         }
       });
     });
+
+    if (this.cookieService.getCookie('user_session')) {
+      this.isLoggedIn = true;
+    }
+    else {
+      this.isLoggedIn = false;
+    }
   }
 
-  addToCart(item: Product, event: Event): void {
-    let cartItem: CartItem;
-
-    // this.userService.
-
-    // Todo: Add item to users cart
+  addToCart(item: Item, event: Event, qty: any): void {
+    event.stopPropagation();
+    this.userService.addToCart(item.product, qty);
     (event.target as HTMLElement).classList.add('inCart');
-    console.log(`Added ${this.productById.product.name} to the cart`);
+
+  }
+
+  // function to close error window
+  closeError(): void {
+    const el = document.querySelector(".error") as HTMLElement;
+
+    if (!el.classList.contains("hide")) {
+      el.classList.add("hide");
+      this.error = "";
+    }
+  }
+
+  // function to show errors
+  showError(errorMessage: string): void {
+    const el = document.querySelector('.error') as HTMLElement;
+
+    this.closeError();
+    if (el.classList.contains("hide")) {
+      this.error = errorMessage;
+      el.classList.remove("hide");
+    }
   }
 
 }
 
 
-interface Product {
+interface Item {
   netPrice: number,
   product: {
     id?: number,
