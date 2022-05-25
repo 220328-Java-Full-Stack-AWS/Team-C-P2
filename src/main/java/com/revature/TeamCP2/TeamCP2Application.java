@@ -30,79 +30,54 @@ public class TeamCP2Application {
         ConfigurableApplicationContext context = SpringApplication.run(TeamCP2Application.class, args);
         context.start();
 
-        //Initializing repositories
-        ProductsRepository productsRepository = context.getBean(ProductsRepository.class);
-        ProductService productService = new ProductService(productsRepository);
-        OnSaleRepository onSaleRepository = context.getBean(OnSaleRepository.class);
-        OnSaleService onSaleService = new OnSaleService(onSaleRepository);
+        //Byte Outputstream
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        byte[] bytes = baos.toByteArray();
+
+
+        //Initialize Category repositories
         CategoriesRepository categoriesRepository = context.getBean(CategoriesRepository.class);
         CategoriesService categoriesService = new CategoriesService(categoriesRepository);
 
-
-        //Byte Outputstream
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
         //Create Category
+        ProductCategory category = new ProductCategory();
+        category.setName("name");
+        category.setDescription("description");
+
+        BufferedImage categoryImg = ImageIO.read(new File("src/main/images/cat.png"));
+        ImageIO.write(categoryImg, "png", baos);
+        bytes = baos.toByteArray();
+
+        category.setImage(bytes);
+
+        categoriesService.create(category);
+
+
+        //Initializing Product Repositories
+        ProductsRepository productsRepository = context.getBean(ProductsRepository.class);
+        ProductService productService = new ProductService(productsRepository);
 
         //Create Product
         Product product1 = new Product();
         product1.setDescr("Image of cat");
         product1.setName("Cat");
         product1.setIsFeatured(true);
-        product1.setPrice(20);
+        product1.setPrice(1);
 
         BufferedImage img = ImageIO.read(new File("src/main/images/cat.png"));
         ImageIO.write(img, "png", baos);
-        byte[] bytes = baos.toByteArray();
+        bytes = baos.toByteArray();
         product1.setImage(bytes);
         productService.create(product1);
 
 
-//        //update
-//        Product update = new Product();
-//        product.setDescr("Update");
-//        product.setName("Test Name");
-//        product.setIsFeatured(true);
-//        product.setPrice(200.25);
-//        productService.create(product);
+        //Initializing onSale repositories
+        OnSaleRepository onSaleRepository = context.getBean(OnSaleRepository.class);
+        OnSaleService onSaleService = new OnSaleService(onSaleRepository);
 
 //        //Create
 //        OnSale onSale = new OnSale();
 //        onSale.setDiscount(0.25);
 //        onSaleService.createOnSale(onSale);
-//
-//        //Create
-//        Product product1 = new Product();
-//        product1.setDescr("2 ");
-//        product1.setName("Test Featured");
-//        product1.setOnSale(onSale);
-//        product1.setIsFeatured(true);
-//        product1.setPrice(123);
-//        productService.create(product1);
-//
-////        //update
-////        Product update = new Product();
-////        product.setDescr("Update");
-////        product.setName("Test Name");
-////        product.setPrice(200);
-////        productService.update(product);
-//
-//        //get byID
-////        Optional<Product> test = productService.getById(2);
-////        System.out.println(test.get().getName());
-//        //getAll
-//        List<Product> test2 = productService.getAll();
-//        System.out.println(test2);
-//
-//        //delete
-//        //productService.delete(product);
-//
-//        //get all deatured
-//        List<Product> test3 = productService.getAllFeatured();
-//        for (Product result : test3) {
-//            System.out.println(result.getId());
-//        }
-//
-//        System.out.println(productService.getById(test.get().getId()));
     }
 }
