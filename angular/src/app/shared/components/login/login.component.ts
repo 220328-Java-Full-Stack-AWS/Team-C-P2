@@ -44,9 +44,7 @@ export class LoginComponent implements OnInit {
     const formValue = this.loginForm.value;
     this.authService.login(formValue.username, formValue.password).subscribe({
       next: response => {
-        // Success response
-        console.log(`Hello ${response.data.firstName} ${response.data.lastName}`);
-
+        // Success
         // Sets current user info to behavior service and sets logged in to true
         this.baseLayout.isLoggedIn = true;
         this.user.userId = response.data.id;
