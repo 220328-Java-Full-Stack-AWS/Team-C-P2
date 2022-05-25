@@ -25,7 +25,7 @@
             </div>
 
             <!-- Image -->
-            <div class="productImage">
+            <div class="productImage" routerLink="/product/{{item.product.id}}">
                 <img fxFlex src="data:image/png;base64,{{item.product.image}}"
                     alt="{{item.product.name | lowercase}} image">
             </div>
