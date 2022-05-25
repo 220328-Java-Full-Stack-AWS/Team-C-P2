@@ -44,6 +44,7 @@ export class UserService {
         // Initialize Cart
         this.currentCart = res.data;
         this.currentCartSubject.next(this.currentCart);
+        console.log(this.currentCart);
       });
   }
 
@@ -382,6 +383,11 @@ export class UserService {
     getOrderById(id:number): Observable<any> {
       return this.http.get(`${this.adminURL}/order/` + id, {withCredentials:true})
     }
+
+  setCartValue(cart: Cart[]) {
+    this.currentCart = cart;
+    this.currentCartSubject.next(this.currentCart);
+  }
 }
 
 interface CartItemDto {
