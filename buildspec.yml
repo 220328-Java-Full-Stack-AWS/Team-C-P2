@@ -26,7 +26,7 @@ phases:
   post_build:
     commands:
       - echo ============= Post-Build =============
-      - cd dist/Team-C-P2
+      - cd dist/front
       - ls -al
       - aws s3 cp ./* s3://teamcp2-ui
       - cd ../../../
