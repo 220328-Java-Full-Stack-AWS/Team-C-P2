@@ -12,8 +12,10 @@ import { UserService } from '../shared/services/user-service/user.service';
   styleUrls: ['./product-view.component.scss']
 })
 export class ProductViewComponent implements OnInit {
+  products: Item[] = [];
+  quantity: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-  productById: Product = {
+  productById: Item = {
     netPrice: 0,
     product: {
       id: 0,
@@ -57,20 +59,18 @@ export class ProductViewComponent implements OnInit {
     });
   }
 
-  addToCart(item: Product, event: Event): void {
-    let cartItem: CartItem;
+  addToCart(item: Item, event: Event, qty: any): void {
+    event.stopPropagation();
 
-    // this.userService.
+    this.userService.addToCart(item.product, qty);
 
-    // Todo: Add item to users cart
     (event.target as HTMLElement).classList.add('inCart');
-    console.log(`Added ${this.productById.product.name} to the cart`);
   }
 
 }
 
 
-interface Product {
+interface Item {
   netPrice: number,
   product: {
     id?: number,
