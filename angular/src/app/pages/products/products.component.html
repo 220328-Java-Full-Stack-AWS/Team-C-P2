@@ -8,11 +8,21 @@
         <div fxFlex="24%" fxFlex.lt-lg="32%" fxFlex.lt-md="48%" fxLayout="column" class="product"
             *ngFor="let item of products">
             <!-- Add to cart icon -->
-            <button mat-icon-button type="button" class="addToCartButton mat-elevation-z2"
-                (click)="addToCart(item, $event)">
+            <button mat-raised-button type="button" class="addToCartButton mat-elevation-z2"
+                (click)="addToCart(item, $event, mySelect.value)">
+                <div class="addToCartText">Add </div>
                 <mat-icon class="addCartIcon">add_shopping_cart</mat-icon>
-                <!-- <mat-icon class="checkIcon" #checkIcon>check</mat-icon> check if in cart -->
             </button>
+
+            <div class="cart__item-quantity">
+                <select name="quantity" id="" #mySelect>
+                    <ng-container *ngFor="let num of quantity">
+                        <option [value]="num" value="num">
+                            Qty: {{num}}
+                        </option>
+                    </ng-container>
+                </select>
+            </div>
 
             <!-- Image -->
             <div class="productImage">

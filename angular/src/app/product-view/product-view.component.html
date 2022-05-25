@@ -20,8 +20,13 @@
                 <span class="currentPrice">{{productById.netPrice | currency}}</span>
             </div>
             <div>
+                <button mat-raised-button type="button" class="addToCartButton mat-elevation-z2" routerLink="/login"
+                    *ngIf="!(isLoggedIn)">
+                    <div class="addToCartText">Add </div>
+                    <mat-icon class="addCartIcon">add_shopping_cart</mat-icon>
+                </button>
                 <button mat-raised-button type="button" class="addToCartButton mat-elevation-z2"
-                    (click)="addToCart(productById, $event, mySelect.value)">
+                    (click)="addToCart(productById, $event, mySelect.value)" *ngIf="(isLoggedIn)">
                     <div class="addToCartText">Add </div>
                     <mat-icon class="addCartIcon">add_shopping_cart</mat-icon>
                 </button>

@@ -6,18 +6,26 @@
 
 
     .addToCartButton {
-        position: absolute;
-        top: 5px;
-        right: 5px;
-        background-color: white;
+        padding: 1px 8px;
+        line-height: initial;
+        font-size: 0.7rem;
+        background-color: #2988bc;
+        color: white;
 
-        &.addCartIcon {}
+        .addToCartText {
+            display: none;
+        }
+
+        &:hover .addToCartText {
+            display: inline;
+        }
 
         &.checkIcon {
             color: green;
         }
 
     }
+
 
     .productImage {
         margin: auto;
@@ -30,7 +38,10 @@
 
         .productName {}
 
+
         .productPricing {
+
+
 
             .originalPrice {
                 text-decoration: line-through;
