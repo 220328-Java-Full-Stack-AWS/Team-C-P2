@@ -23,7 +23,7 @@ public class Product implements Entity {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "descr")
+    @Column(name = "descr", length=500)
     private String descr;
 
     @Column(name = "price")

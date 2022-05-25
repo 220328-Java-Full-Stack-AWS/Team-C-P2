@@ -9,7 +9,7 @@ import {UserInfo} from "../../interfaces/User-Interface/user-info.interface";
 })
 export class AuthService {
 
-  authRoute : string = "http://Teamcp2ecommerce-env.eba-h8zawm3k.us-east-1.elasticbeanstalk.com/auth";
+  authRoute : string = "http://localhost:8080/auth";
   private userInfo: UserInfo = {
     userId: 0,
     activeCartId: 0
@@ -25,7 +25,7 @@ export class AuthService {
   };
 
   checkUsername(username: string): Observable<any> {
-    return this.http.post("http://Teamcp2ecommerce-env.eba-h8zawm3k.us-east-1.elasticbeanstalk.com/user/registrations", {
+    return this.http.post("http://localhost:8080/user/registrations", {
       username: username
     }, { withCredentials: true });
   }

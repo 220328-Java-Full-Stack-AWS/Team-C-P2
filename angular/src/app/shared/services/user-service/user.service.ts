@@ -17,8 +17,8 @@ import { ActiveCart } from '../../interfaces/Cart-Interface/active-cart.interfac
   providedIn: 'root'
 })
 export class UserService {
-  userURL: string = "http://Teamcp2ecommerce-env.eba-h8zawm3k.us-east-1.elasticbeanstalk.com/user";
-  adminURL: string = "http://Teamcp2ecommerce-env.eba-h8zawm3k.us-east-1.elasticbeanstalk.com/admin";
+  userURL: string = "http://localhost:8080/user";
+  adminURL: string = "http://localhost:8080/admin";
 
   private user: UserInfo; // Contains user
   private currentCart: Cart[] = [];

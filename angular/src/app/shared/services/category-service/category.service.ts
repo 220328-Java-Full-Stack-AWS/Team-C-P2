@@ -11,7 +11,7 @@ export class CategoriesService {
     httpOptions = {
         headers: new HttpHeaders({ 'Content-Type': 'application/json'})
     }
-    categoriesURL: string = "http://Teamcp2ecommerce-env.eba-h8zawm3k.us-east-1.elasticbeanstalk.com/categories";
+    categoriesURL: string = "http://localhost:8080/categories";
 
     constructor(private http: HttpClient) { }
 

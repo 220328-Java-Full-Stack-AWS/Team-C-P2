@@ -42,6 +42,21 @@ public class TeamCP2Application {
         CategoriesRepository categoriesRepository = context.getBean(CategoriesRepository.class);
         CategoriesService categoriesService = new CategoriesService(categoriesRepository);
 
+
+        /*//Create Category
+        ProductCategory category = new ProductCategory();
+        category.setName("name");
+        category.setDescription("description");
+
+        BufferedImage categoryImg = ImageIO.read(new File("src/main/images/cat.png"));
+        ImageIO.write(categoryImg, "png", baos);
+        bytes = baos.toByteArray();
+
+        category.setImage(bytes);
+
+        categoriesService.create(category);*/
+
+
         //Initializing Product Repositories
         ProductsRepository productsRepository = context.getBean(ProductsRepository.class);
         ProductService productService = new ProductService(productsRepository);
@@ -50,11 +65,12 @@ public class TeamCP2Application {
         ProductCategory cCategory = new ProductCategory();
         cCategory.setName("Cricket");
         cCategory.setDescription("Items used for playing European Cricket");
-        BufferedImage cCategoryImg = ImageIO.read(new File("src/main/images/products/Cricket/cricketCategory.png"));
+        BufferedImage cCategoryImg = ImageIO.read(new File("src/main/images/categories/cricketCategory.png"));
         ImageIO.write(cCategoryImg, "png", baos);
         bytes = baos.toByteArray();
         cCategory.setImage(bytes);
         categoriesService.create(cCategory);
+        baos = new ByteArrayOutputStream();
 
         //Create Cricket Product
         Product cProduct1 = new Product();
@@ -68,6 +84,7 @@ public class TeamCP2Application {
         bytes = baos.toByteArray();
         cProduct1.setImage(bytes);
         productService.create(cProduct1);
+        baos = new ByteArrayOutputStream();
 
         //Create Cricket Product
         Product cProduct2 = new Product();
@@ -81,6 +98,7 @@ public class TeamCP2Application {
         bytes = baos.toByteArray();
         cProduct2.setImage(bytes);
         productService.create(cProduct2);
+        baos = new ByteArrayOutputStream();
 
         //Create Cricket Product
         Product cProduct3 = new Product();
@@ -94,6 +112,7 @@ public class TeamCP2Application {
         bytes = baos.toByteArray();
         cProduct3.setImage(bytes);
         productService.create(cProduct3);
+        baos = new ByteArrayOutputStream();
 
         //Create Cricket Product
         Product cProduct4 = new Product();
@@ -107,6 +126,7 @@ public class TeamCP2Application {
         bytes = baos.toByteArray();
         cProduct4.setImage(bytes);
         productService.create(cProduct4);
+        baos = new ByteArrayOutputStream();
 
         //Create Cricket Product
         Product cProduct5 = new Product();
@@ -120,6 +140,7 @@ public class TeamCP2Application {
         bytes = baos.toByteArray();
         cProduct5.setImage(bytes);
         productService.create(cProduct5);
+        baos = new ByteArrayOutputStream();
 
         //Create Football Category
         ProductCategory fbCategory = new ProductCategory();
@@ -130,70 +151,120 @@ public class TeamCP2Application {
         bytes = baos.toByteArray();
         fbCategory.setImage(bytes);
         categoriesService.create(fbCategory);
+        baos = new ByteArrayOutputStream();
 
 
-
-        /*//Create football Product
-        Product fbProduct1 = new Product();
-        fbProduct1.setDescr("Premium Leather Football");
-        fbProduct1.setName("Football");
-        fbProduct1.setIsFeatured(true);
-        fbProduct1.setPrice(1);
-        BufferedImage fb1img = ImageIO.read(new File("src/main/images/products/Football/football.png"));
-        ImageIO.write(fb1img, "png", baos);
+        //Create Running Category
+        ProductCategory rCategory = new ProductCategory();
+        rCategory.setName("Running");
+        rCategory.setDescription("Anything and everything that has to do with running.");
+        BufferedImage rCategoryImg = ImageIO.read(new File("src/main/images/categories/runningCategory.png"));
+        ImageIO.write(rCategoryImg, "png", baos);
         bytes = baos.toByteArray();
-        fbProduct1.setImage(bytes);
-        productService.create(fbProduct1);
+        rCategory.setImage(bytes);
+        categoriesService.create(rCategory);
+        baos = new ByteArrayOutputStream();
 
-        //Create football Product
-        Product fbProduct2 = new Product();
-        fbProduct2.setDescr("Shoes used to increase grip");
-        fbProduct2.setName("Football Cleats");
-        fbProduct2.setIsFeatured(true);
-        fbProduct2.setPrice(1);
-        BufferedImage fb2img = ImageIO.read(new File("src/main/images/products/Football/footballCleats.png"));
-        ImageIO.write(fb2img, "png", baos);
+        //Create Running Sale
+        //Initializing onSale repositories
+        OnSale runningSale = new OnSale(.60);
+        onSaleService.createOnSale(runningSale);
+
+        //Create Running Product
+        Product rProduct1 = new Product();
+        rProduct1.setCategory(rCategory);
+        rProduct1.setDescr("The best Outdoor Running Belt You Can Find! RevSport Running Waist Belt is made of soft fabric, so the runners belt is very soft and breathable, fits comfortably to your body and doesn't move, jiggle, bounce, ride up or chafe. Our Running Waist Belt Phone Holder has more a durable zipper than any other brand, thousands of tests prove that");
+        rProduct1.setName("RevSport Running Waist Belt");
+        rProduct1.setIsFeatured(false);
+        rProduct1.setPrice(25.00);
+        BufferedImage r1img = ImageIO.read(new File("src/main/images/products/Running/runningfannypack.png"));
+        ImageIO.write(r1img, "png", baos);
         bytes = baos.toByteArray();
-        fbProduct2.setImage(bytes);
-        productService.create(fbProduct2);
+        rProduct1.setImage(bytes);
+        productService.create(rProduct1);
+        baos = new ByteArrayOutputStream();
 
-        //Create football Product
-        Product fbProduct3 = new Product();
-        fbProduct3.setDescr("Helmet to protect from head injury");
-        fbProduct3.setName("Football Helmet");
-        fbProduct3.setIsFeatured(true);
-        fbProduct3.setPrice(1);
-        BufferedImage fb3img = ImageIO.read(new File("src/main/images/products/Football/footballHelmet.png"));
-        ImageIO.write(fb3img, "png", baos);
+        ///////////////////////////////////////////////////////////////
+        //Create Running  Product 2
+        Product rProduct2 = new Product();
+        rProduct2.setCategory(rCategory);
+        rProduct2.setDescr("Still our most tested shoe, made to help you stay after those lofty running goals. The RevSport Run 3 feels soft and stable with a smooth ride that carries you through routes, long and short. A breathable upper is made to feel contained, yet flexible. We even added more cushioning around the heel and ankle for a supportive sensation. Keep running, we've got you.");
+
+        rProduct2.setName("RevSport Run 3");
+        rProduct2.setIsFeatured(true);
+        rProduct2.setPrice(160);
+        BufferedImage r2img = ImageIO.read(new File("src/main/images/products/Running/runningshoes1.png"));
+        ImageIO.write(r2img, "png", baos);
         bytes = baos.toByteArray();
-        fbProduct3.setImage(bytes);
-        productService.create(fbProduct3);
+        rProduct2.setImage(bytes);
+        rProduct2.setCategory(cCategory);
+        rProduct2.setOnSale(runningSale);
+        productService.create(rProduct2);
+        baos = new ByteArrayOutputStream();
 
-        //Create football Product
-        Product fbProduct4 = new Product();
-        fbProduct4.setDescr("Breathable jersey that shows off you team's colors");
-        fbProduct4.setName("Football Jersey");
-        fbProduct4.setIsFeatured(true);
-        fbProduct4.setPrice(1);
-        BufferedImage fb4img = ImageIO.read(new File("src/main/images/products/Football/footballJersey.png"));
-        ImageIO.write(fb4img, "png", baos);
+        ///////////////////////////////////
+
+
+        //Create Running Product 3
+        Product rProduct3 = new Product();
+        rProduct3.setCategory(rCategory);
+        rProduct3.setDescr("Chilly weather can't stop the run when you suit up in this spin on a favorite. The RecSport Therma-FIT Element Sweater can be worn 4 ways, giving you options for before, during or after your run. One side delivers a classic look while the other has Swoosh-shaped nodes for a riff on the traditional sweater. Heat-managing technology with stretchy fabric helps you stay moving in cool conditions. This product is made with at least 75% recycled polyester fibers.");
+
+        rProduct3.setName("RevSport Running Sweater");
+
+        rProduct3.setIsFeatured(false);
+        rProduct3.setPrice(50.97);
+        BufferedImage r3img = ImageIO.read(new File("src/main/images/products/Running/runningSweater.png"));
+        ImageIO.write(r3img, "png", baos);
         bytes = baos.toByteArray();
-        fbProduct4.setImage(bytes);
-        productService.create(fbProduct4);
+        rProduct3.setImage(bytes);
+        rProduct3.setCategory(rCategory);
+        productService.create(rProduct3);
+        baos = new ByteArrayOutputStream();
 
-        //Create football Product
-        Product fbProduct5 = new Product();
-        fbProduct5.setDescr("Protect your body from tackling damage");
-        fbProduct5.setName("Football Pads");
-        fbProduct5.setIsFeatured(true);
-        fbProduct5.setPrice(1);
-        BufferedImage fb5img = ImageIO.read(new File("src/main/images/products/Football/footballPads.png"));
-        ImageIO.write(fb5img, "png", baos);
+        //Create Running Product 4
+        Product rProduct4 = new Product();
+        rProduct4.setCategory(rCategory);
+        rProduct4.setDescr("The finish is only a quick sprint away. Let the lightweight feel of the RevSPort Zoom Maxfly take you there. Bounce at every step gives you the responsiveness to match your speed as you race to shatter personal goals. We added plenty of traction to give you extra grip for races from 100 to 400 meters with hurdles.");
+
+        rProduct4.setName("RevSport Sprinting Shoes");
+
+        rProduct4.setIsFeatured(true);
+        rProduct4.setPrice(200);
+        BufferedImage r4img = ImageIO.read(new File("src/main/images/products/Running/sprintingshoes.png"));
+        ImageIO.write(r4img, "png", baos);
         bytes = baos.toByteArray();
-        fbProduct5.setImage(bytes);
-        productService.create(fbProduct5);*/
+        rProduct4.setImage(bytes);
+        rProduct4.setCategory(cCategory);
+        rProduct4.setOnSale(runningSale);
+        productService.create(rProduct4);
+        baos = new ByteArrayOutputStream();
+
+        //Create runnign product 5
+
+        Product rProduct5 = new Product();
+        rProduct5.setCategory(rCategory);
+        rProduct5.setDescr("The road is your runway. Get ready to take flight in the workhorse with wings. Back with extra bounce that’s perfect for hitting the pavement. Whether you’re racking up everyday miles or on your long run, feel the spring in your step with the same cushioned support as its predecessor. Breathable mesh in the upper combines the comfort and durability you want with a wider fit at the toes.");
+
+        rProduct5.setName("REvSport Women's Running Shoes");
+
+        rProduct5.setIsFeatured(true);
+        rProduct5.setPrice(300);
+        BufferedImage r5img = ImageIO.read(new File("src/main/images/products/Running/womensrunninghsoes.png"));
+        ImageIO.write(r5img, "png", baos);
+        bytes = baos.toByteArray();
+        rProduct5.setImage(bytes);
+        rProduct5.setCategory(cCategory);
+        rProduct5.setOnSale(runningSale);
+        productService.create(rProduct5);
+        baos = new ByteArrayOutputStream();
 
 
+
+//        //Initializing onSale repositories
+//        OnSaleRepository onSaleRepository = context.getBean(OnSaleRepository.class);
+//        OnSaleService onSaleService = new OnSaleService(onSaleRepository);
+//
 //        //Create
 //        OnSale onSale = new OnSale();
 //        onSale.setDiscount(0.25);
