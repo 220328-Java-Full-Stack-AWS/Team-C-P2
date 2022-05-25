@@ -153,7 +153,8 @@ export class CheckoutComponent implements OnInit {
     console.log("Current cart:" + this.activeCart);
     this.userService.createOrder(this.activeCart, dateCreated).subscribe((json:any) => {
       console.log(json);
-      this.router.navigate(['cart/checkout/order']);
+      console.log(json.id);
+      this.router.navigate(['cart/checkout/order/' + json.id]);
     })
   }
 

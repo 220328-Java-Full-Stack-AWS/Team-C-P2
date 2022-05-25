@@ -52,13 +52,13 @@
                             </div>
                         </div>
                         <div class="profile__button">
-                            <button routerLink="updateAddress" class="button">Update Address</button>
+                            <button routerLink='/profile/updateAddress' class="button">Update Address</button>
                         </div>
                     </div>
 
                     <div class="checkout__content-1-item" *ngIf="(userQuery.userAddress.userId == null)">
                         <div class="profile__button">
-                            <button routerLink="updateAddress" class="button">Add Address</button>
+                            <button routerLink='/profile/updateAddress' class="button">Add Address</button>
                         </div>
                     </div>
                 </div>
@@ -108,14 +108,14 @@
                             </div>
                         </div>
                         <div class="profile__button">
-                            <button routerLink="updatePayment" class="button">Update Payment</button>
+                            <button routerLink='/profile/updatePayment' class="button">Update Payment</button>
                         </div>
                     </div>
 
                     <div class="checkout__content-1-item" *ngIf="(userQuery.payment.userId == null)">
 
                         <div class="profile__button">
-                            <button routerLink="updatePayment" class="button">Add Payment</button>
+                            <button routerLink='/profile/updatePayment' class="button">Add Payment</button>
                         </div>
                     </div>
                 </div>

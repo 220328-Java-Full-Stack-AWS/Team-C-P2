@@ -1,7 +1,16 @@
 @import '../../../../styles/variables';
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+
 /* Dropdown Button */
+
+.scroll {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
 .dropbtn {
+
   background-color: white;
   color: black;
   padding: 16px;
@@ -47,6 +56,7 @@
 .dropdown:hover .dropbtn {
   background-color: #f26925;
 }
+
 
 .cartLink {
   position: relative;
