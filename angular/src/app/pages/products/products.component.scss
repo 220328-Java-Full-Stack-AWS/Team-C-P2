@@ -5,7 +5,6 @@
     border: 1px solid green; //! Filler
     cursor: pointer;
 
-
     .addToCartButton {
         padding: 1px 8px;
         line-height: initial;
@@ -28,11 +27,33 @@
     }
 
 
+
     .productImage {
         margin: auto;
         width: 200px; //! Fiiller
         height: 200px; //! Fiiller
         border: 1px solid black; //! Fiiller
+    }
+
+    .addToCartButton {
+        padding: 1px 8px;
+        line-height: initial;
+        font-size: 0.7rem;
+        background-color: #2988bc;
+        color: white;
+
+        .addToCartText {
+            display: none;
+        }
+
+        &:hover .addToCartText {
+            display: inline;
+        }
+
+        &.checkIcon {
+            color: green;
+        }
+
     }
 
     .productInfo {
@@ -51,5 +72,7 @@
 
             .currentPrice {}
         }
+
+
     }
 }
