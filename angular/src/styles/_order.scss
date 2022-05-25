@@ -1,0 +1,17 @@
+.order {
+    &__header {
+        margin: auto;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    &__title {
+        text-align: center;
+    }
+
+    &__details {
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+}

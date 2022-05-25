@@ -3,6 +3,7 @@
   <nav class="container container--pall flex flex-jc-sb flex-ai-c">
     <a routerLink="/" class="header__logo">Home</a>
 
+
     <div class="header__links" *ngIf="(isLoggedIn)">
       <div class="dropdown">
         <button class="dropbtn">CATEGORIES</button>
@@ -11,10 +12,9 @@
         </div>
 
       </div>
-      <a routerLink="/products" class="scroll">Products</a>
       <a routerLink="/cart" class="scroll cartLink">
         Cart
-        <span class="cartCounter" *ngIf="cart.length > 0">{{cart.length}}</span>
+        <span class="cartCounter" *ngIf="itemCount > 0">{{itemCount}}</span>
       </a>
       <a routerLink="/profile" class="scroll">Profile</a>
       <a (click)='logout()' class="scroll">Logout</a>
@@ -28,7 +28,6 @@
         </div>
 
       </div>
-      <a href="" routerLink="/products" class="scroll">Products</a>
       <a href="" routerLink="/login" class="scroll">Login</a>
       <a href="" routerLink="/register" class="scroll">Register</a>
     </div>

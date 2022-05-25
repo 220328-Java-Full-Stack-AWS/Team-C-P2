@@ -34,23 +34,26 @@ export class OrderComponent implements OnInit {
     dateCreated: "",
     id: 0
   }
-  
+
 
   ngOnInit(): void {
     this.cookieService.getCookie('user_session');
     this.userService.getCurrentUser().subscribe((user) => (
       this.user = user
     ));
-    this.userService.getCurrentActiveCartLength().subscribe((cartArray) => (
-      this.cart = cartArray
-    ));
-    
+
+    // Initialize current cart
+    this.userService.getCurrentCartSubject().subscribe((res: any) => {
+      this.cart = res;
+    });
+
     this.subscriber = this.route.paramMap.subscribe(params => {
       this.id = params.get("id");
       this.userService.getOrderById(this.id).subscribe({
         next: response => {
           console.log(response)
-          this.order = (response as any).data
+          this.order = (response as any)
+          console.log(this.order);
         },
         error: err => {
           // Todo: Handle error

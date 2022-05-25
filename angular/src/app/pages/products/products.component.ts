@@ -19,8 +19,8 @@ import { Product } from 'src/app/shared/interfaces/Product-Interface/product.int
 })
 export class ProductsComponent implements OnInit {
 
-
   products: Item[] = [];
+  quantity: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   //Adding parameter value to extarct parameter
   sub: any = null;
   category: any = {
@@ -168,14 +168,12 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-  addToCart(item: Item, event: Event): void {
-    let cartItem: CartItem;
+  addToCart(item: Item, event: Event, qty: any): void {
+    event.stopPropagation();
 
-    // this.userService.
+    this.userService.addToCart(item.product, qty);
 
-    // Todo: Add item to users cart
     (event.target as HTMLElement).classList.add('inCart');
-    console.log(`Added ${item.product.name} to the cart`);
   }
 
 }
