@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { UserInfo } from '../../interfaces/User-Interface/user-info.interface';
 import { Cart } from '../../interfaces/Cart-Interface/cart.interface';
 import { UserProfile } from '../../interfaces/User-Interface/user-profile.interface';
@@ -17,8 +17,8 @@ import { ActiveCart } from '../../interfaces/Cart-Interface/active-cart.interfac
   providedIn: 'root'
 })
 export class UserService {
-  userURL: string = "http://localhost:8080/user";
-  adminURL: string = "http://localhost:8080/admin";
+  userURL: string = "http://Teamcp2ecommerce-env.eba-h8zawm3k.us-east-1.elasticbeanstalk.com/user";
+  adminURL: string = "http://Teamcp2ecommerce-env.eba-h8zawm3k.us-east-1.elasticbeanstalk.com/admin";
 
   private user: UserInfo; // Contains user
   private currentCart: Cart[] = [];

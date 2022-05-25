@@ -12,7 +12,7 @@ import { CreateProduct } from "../../interfaces/Product-Interface/product-create
 export class ProductService {
 
 
-  productsURL: string = "http://localhost:8080/products";
+  productsURL: string = "http://Teamcp2ecommerce-env.eba-h8zawm3k.us-east-1.elasticbeanstalk.com/products";
 
   constructor(private http: HttpClient) {
   }
