@@ -1,1 +1,106 @@
-1
+1        //Create Running Category
+         ProductCategory cCategory = new ProductCategory();
+         category.setName("Soccer");
+         category.setDescription("Anything and everything that has to do with soccer.");
+         BufferedImage cCategoryImg = ImageIO.read(new File("src/main/images/categories/soccerCategory.png"));
+         ImageIO.write(cCategoryImg, "png", baos);
+         bytes = baos.toByteArray();
+         category.setImage(bytes);
+         categoriesService.create(cCategory);
+
+            //Create Running Sale
+            //Initializing onSale repositories
+           OnSale runningSale = new OnSale(.25);
+            onSaleService.createOnSale(runningSale);
+
+         //Create Runnig Product
+         Product cProduct1 = new Product();
+
+         cProduct1.setDescr("The RevSport Coaches Dri-FIT AWF Jacket gives you a durable-yet-modern design for days when you have to brave rainy weather.
+         It's coated with a water-repellent finish to help you stay dry when you're on the go.
+         This product is made with 100% recycled polyester fibers.");
+
+         cProduct1.setName("RevSport Coaches Dri-FIT AWF Jacket ");
+         cProduct1.setIsFeatured(true);
+         cProduct1.setPrice(90.00);
+         BufferedImage c1img = ImageIO.read(new File("src/main/images/Running/coachesJacket.png"));
+         ImageIO.write(c1img, "png", baos);
+         bytes = baos.toByteArray();
+         cProduct1.setImage(bytes);
+         productService.create(cProduct1);
+         cProduct1.setCategory(cCategory);
+
+///////////////////////////////////////////////////////////////
+         //Create Running  Product 2
+         Product cProduct2 = new Product();
+         cProduct2.setDescr("The RevSport Strike Soccer Ball is ready to fly into the back of the net.
+          A textured casing and stabilizing grooves help you put the ball right where you want it.");
+
+         cProduct2.setName("RevSport Strike Soccer Ball");
+
+         cProduct2.setIsFeatured(false);
+         cProduct2.setPrice(35);
+         BufferedImage c2img = ImageIO.read(new File("src/main/images/Running/soccerball.png"));
+         ImageIO.write(c2img, "png", baos);
+         bytes = baos.toByteArray();
+         cProduct2.setImage(bytes);
+         cProduct2.setCategory(cCategory);
+         cProduct2.setOnsale(runningSale);
+         productService.create(cProduct2);
+
+///////////////////////////////////
+
+
+         //Create Running Product 3
+          Product cProduct3 = new Product();
+                  cProduct3.setDescr("The RevSport Goalkeeper Match Gloves are ready to make every save.
+                  Soft padding provides cushioning against shots, while a smooth surface gives you grip in wet or dry conditions.");
+
+                  cProduct3.setName("RevSport Goalkeeper Match Gloves ");
+
+                  cProduct3.setIsFeatured(true);
+                  cProduct3.setPrice(100);
+                  BufferedImage c2img = ImageIO.read(new File("src/main/images/Running/soccergloves.png.png"));
+                  ImageIO.write(c2img, "png", baos);
+                  bytes = baos.toByteArray();
+                  cProduct3.setImage(bytes);
+                  cProduct3.setCategory(cCategory);
+                  productService.create(cProduct3);
+
+         //Create Running Product 4
+          Product cProduct4 = new Product();
+                  cProduct4.setDescr("Like other jerseys from our Match collection, this one pairs authentic
+                  design details with lightweight, quick-drying fabric to help keep the world’s biggest soccer stars
+                  cool and comfortable on the field. This product is made with at least 75% recycled polyester fibers.");
+
+                  cProduct4.setName("RevSport Match Jersey");
+
+                  cProduct4.setIsFeatured(true);
+                  cProduct4.setPrice(160);
+                  BufferedImage c2img = ImageIO.read(new File("src/main/images/Running/soccerjersey.png"));
+                  ImageIO.write(c2img, "png", baos);
+                  bytes = baos.toByteArray();
+                  cProduct4.setImage(bytes);
+                  cproduct4.setCategory(cCategory);
+                  cproduct4.setOnsale(runningSale);
+                  productService.create(cProduct4);
+
+         //Create runnign product 5
+
+          Product cProduct5 = new Product();
+                  cProduct5.setDescr("The REvSport Mercurial Dream Speed Superfly 8 Elite embodies Cristiano Ronaldo’s
+                  greatest self-proclaimed strength: the power of the mind and meditation.
+                  Calming shades of green work together with energizing tones of purple and yellow,
+                  creating a cleat that radiates positivity.");
+
+                  cProduct2.setName("REvSport Nike Mercurial Dream Speed Superfly 8 Elite");
+
+                  cProduct5.setIsFeatured(true);
+                  cProduct5.setPrice(270);
+                  BufferedImage c2img = ImageIO.read(new File("src/main/images/Running/soccershoes.png"));
+                  ImageIO.write(c2img, "png", baos);
+                  bytes = baos.toByteArray();
+                  cProduct5.setImage(bytes);
+                  cProduct5.setCategory(cCategory);
+                  cProduct5.setOnsale(runningSale);
+                  productService.create(cProduct5);

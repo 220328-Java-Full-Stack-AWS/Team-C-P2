@@ -53,8 +53,6 @@ public class TeamCP2Application {
         categoriesService.create(category);
 
 
-
-
         //Initializing Product Repositories
         ProductsRepository productsRepository = context.getBean(ProductsRepository.class);
         ProductService productService = new ProductService(productsRepository);
@@ -73,10 +71,10 @@ public class TeamCP2Application {
         productService.create(product1);
 
 
-        //Initializing onSale repositories
-        OnSaleRepository onSaleRepository = context.getBean(OnSaleRepository.class);
-        OnSaleService onSaleService = new OnSaleService(onSaleRepository);
-
+//        //Initializing onSale repositories
+//        OnSaleRepository onSaleRepository = context.getBean(OnSaleRepository.class);
+//        OnSaleService onSaleService = new OnSaleService(onSaleRepository);
+//
 //        //Create
 //        OnSale onSale = new OnSale();
 //        onSale.setDiscount(0.25);
