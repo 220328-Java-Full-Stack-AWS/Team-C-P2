@@ -79,7 +79,7 @@ export class CheckoutComponent implements OnInit {
       // Initialize cart total (count and set view)
       let totalCount = 0;
       currentCart.forEach((cart: Cart) => {
-        totalCount += cart.netPrice!;
+        totalCount += cart.cartItem?.netPrice! * cart.cartItem?.quantity!;
       });
       this.cartTotal = totalCount;
     });

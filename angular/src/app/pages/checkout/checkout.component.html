@@ -97,7 +97,7 @@
                                         </div>
                                         <div class="checkout__cart-item-price">
                                             <h3>Price: ${{cart.cartItem?.product?.price | number : '.2-2'}}</h3>
-                                            <h3>Net Price: ${{cart.netPrice | number : '.2-2'}}</h3>
+                                            <h3>Net Price: ${{cart.cartItem!.netPrice | number : '.2-2'}}</h3>
                                         </div>
                                     </div>
                                     <div class="checkout__cart-item-footer">
@@ -174,7 +174,7 @@
                     </div>
                 </div>
                 <div class="checkout__summary-button">
-                    <button (click)="submit(cartTotal[0] + calculateTax(cartTotal[0]))">Place Your Order</button>
+                    <button (click)="submit(cartTotal + calculateTax(cartTotal))">Place Your Order</button>
                 </div>
             </div>
         </div>
