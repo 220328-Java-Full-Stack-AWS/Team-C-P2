@@ -1,1 +1,85 @@
-1
+    //Create Baseball Category
+    ProductCategory category = new ProductCategory();
+    category.setName("Baseball");
+    category.setDescription("Shop Essential Baseball Gear and Accessories");
+
+    BufferedImage categoryImg = ImageIO.read(new File("src/main/images/categories/baseballCategory.jpg"));
+    ImageIO.write(categoryImg, "jpg", baos);
+
+    bytes = baos.toByteArray();
+    category.setImage(bytes);
+    categoriesService.create(category);
+
+    //Create Baseball Products
+
+    //Mizuno Bat
+    Product product = new Product();
+    product.setDescr("Mizuno Premier Aluminum Baseball Bat Red. Rubber base grip and barrel polish included.");
+    product.setName("Mizuno Baseball Bat");
+    product.setIsFeatured(true);
+    product.setPrice(1);
+
+    BufferedImage img = ImageIO.read(new File("src/main/images/products/Baseball/mizunobat.jpg"));
+    ImageIO.write(img, "jpg", baos);
+
+    bytes = baos.toByteArray();
+    product.setImage(bytes);
+    productService.create(product);
+
+    //Nike Black Cap
+    Product product = new Product();
+    product.setDescr("Nike Athletic Cotton Baseball Cap Black. Available in Children and Adult sizes S - L");
+    product.setName("Nike Baseball Cap");
+    product.setIsFeatured(true);
+    product.setPrice(1);
+
+    BufferedImage img = ImageIO.read(new File("src/main/products/Baseball/nikeblackcap.jpg"));
+    ImageIO.write(img, "jpg", baos);
+
+    bytes = baos.toByteArray();
+    product.setImage(bytes);
+    productService.create(product);
+
+    //Mizuno Glove
+    Product product = new Product();
+    product.setDescr("Mizuno Leather Men's Baseball Glove. Outfield left-handed. Available in sizes 8-14 inches.");
+    product.setName("Mizuno Baseball Glove");
+    product.setIsFeatured(true);
+    product.setPrice(1);
+
+    BufferedImage img = ImageIO.read(new File("src/main/products/Baseball/mizunoglove.jpg"));
+    ImageIO.write(img, "jpg", baos);
+
+    bytes = baos.toByteArray();
+    product.setImage(bytes);
+    productService.create(product);
+
+    //Rawlings Glove
+    Product product = new Product();
+    product.setDescr("Rawlings Renegade Leather Men's Baseball Glove. Outfielder left-handed. 12 1/2 inches.");
+    product.setName("Rawlings Baseball Glove");
+    product.setIsFeatured(true);
+    product.setPrice(1);
+
+    BufferedImage img = ImageIO.read(new File("src/main/products/Baseball/rawlingsglove.jpg"));
+    ImageIO.write(img, "jpg", baos);
+
+    bytes = baos.toByteArray();
+    product.setImage(bytes);
+    productService.create(product);
+
+    //Pitt Cap
+    Product product = new Product();
+    product.setDescr("Pittsburgh Panthers newEra Pitt Script Baseball Cap Blue. Hail to Pitt");
+    product.setName("Pittsburgh Panthers Baseball Cap");
+    product.setIsFeatured(true);
+    product.setPrice(1);
+
+    BufferedImage img = ImageIO.read(new File("src/main/products/Baseball/pittcap.jpg"));
+    ImageIO.write(img, "jpg", baos);
+
+    bytes = baos.toByteArray();
+    product.setImage(bytes);
+    productService.create(product);
+
+

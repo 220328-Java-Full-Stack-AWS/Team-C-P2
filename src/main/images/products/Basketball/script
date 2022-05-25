@@ -1,1 +1,85 @@
-1
+    //Create Baseball Category
+    ProductCategory category = new ProductCategory();
+    category.setName("Basketball");
+    category.setDescription("Shop Men's and Women's Basketball Essentials");
+
+    BufferedImage categoryImg = ImageIO.read(new File("src/main/images/categories/basketballCategory.jpg"));
+    ImageIO.write(categoryImg, "jpg", baos);
+
+    bytes = baos.toByteArray();
+    category.setImage(bytes);
+    categoriesService.create(category);
+
+    //Create Basketball Products
+
+    //Wilson Ball
+    Product product = new Product();
+    product.setDescr("Wilson Evolution NCAA Basketball. Official NCAA College Basketball game regulation size.");
+    product.setName("Wilson NCAA Basketball");
+    product.setIsFeatured(true);
+    product.setPrice(1);
+
+    BufferedImage img = ImageIO.read(new File("src/main/images/products/Basketball/wilsonball.jpg"));
+    ImageIO.write(img, "jpg", baos);
+
+    bytes = baos.toByteArray();
+    product.setImage(bytes);
+    productService.create(product);
+
+    //Jordan 11
+    Product product = new Product();
+    product.setDescr("Jordan 11 Miami Vice Colorway Grey Women's. Available in all Women's sizes.");
+    product.setName("Jordan 11 Women's Basketball Shoe");
+    product.setIsFeatured(true);
+    product.setPrice(1);
+
+    BufferedImage img = ImageIO.read(new File("src/main/images/products/Basketball/jordan11womens.jpg"));
+    ImageIO.write(img, "jpg", baos);
+
+    bytes = baos.toByteArray();
+    product.setImage(bytes);
+    productService.create(product);
+
+    //Adidas shorts
+    Product product = new Product();
+    product.setDescr("Adidas Stripe Elite Basketball Shorts Black Men's. Cotton and mesh. Available in Children and Men's Adult sizes.");
+    product.setName("Adidas Men's Basketball Shorts");
+    product.setIsFeatured(true);
+    product.setPrice(1);
+
+    BufferedImage img = ImageIO.read(new File("src/main/images/products/Basketball/nikeshortsmens.jpg"));
+    ImageIO.write(img, "jpg", baos);
+
+    bytes = baos.toByteArray();
+    product.setImage(bytes);
+    productService.create(product);
+
+    //Jordan Flights
+    Product product = new Product();
+    product.setDescr("Jordan Flight Basketball Shoe Black and Red Colorway Women's. Available in Adult Women's sizes only.");
+    product.setName("Jordan Premier Flight Women's Basketball Shoes");
+    product.setIsFeatured(true);
+    product.setPrice(1);
+
+    BufferedImage img = ImageIO.read(new File("src/main/images/products/Basketball/jordanflightwomens.jpg"));
+    ImageIO.write(img, "jpg", baos);
+
+    bytes = baos.toByteArray();
+    product.setImage(bytes);
+    productService.create(product);
+
+    //Pitt Cap
+    Product product = new Product();
+    product.setDescr("Adidas Basketball Tank Top Blue Men's. Athletic waterproof material. Available in Children's and Adult sizes.");
+    product.setName("Adidas Basketball Tank Top");
+    product.setIsFeatured(true);
+    product.setPrice(1);
+
+    BufferedImage img = ImageIO.read(new File("src/main/images/products/Basketball/adidastankmens.jpg"));
+    ImageIO.write(img, "jpg", baos);
+
+    bytes = baos.toByteArray();
+    product.setImage(bytes);
+    productService.create(product);
+
+
