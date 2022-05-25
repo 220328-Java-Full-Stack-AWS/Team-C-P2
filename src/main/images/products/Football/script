@@ -1,1 +1,69 @@
-1
+        //Create Football Category
+        ProductCategory fbCategory = new ProductCategory();
+        category.setName("Football");
+        category.setDescription("Items used for playing American Football");
+        BufferedImage fbCategoryImg = ImageIO.read(new File("src/main/images/Football/footballCategory.png"));
+        ImageIO.write(fbCategoryImg, "png", baos);
+        bytes = baos.toByteArray();
+        category.setImage(bytes);
+        categoriesService.create(fbCategory);
+
+        //Create football Product
+        Product fbProduct1 = new Product();
+        fbProduct1.setDescr("Premium Leather Football");
+        fbProduct1.setName("Football");
+        fbProduct1.setIsFeatured(true);
+        fbProduct1.setPrice(1);
+        BufferedImage fb1img = ImageIO.read(new File("src/main/images/Football/football.png"));
+        ImageIO.write(fb1img, "png", baos);
+        bytes = baos.toByteArray();
+        fbProduct1.setImage(bytes);
+        productService.create(fbProduct1);
+
+        //Create football Product
+        Product fbProduct2 = new Product();
+        fbProduct2.setDescr("Shoes used to increase grip");
+        fbProduct2.setName("Football Cleats");
+        fbProduct2.setIsFeatured(true);
+        fbProduct2.setPrice(1);
+        BufferedImage fb2img = ImageIO.read(new File("src/main/images/Football/footballCleats.png"));
+        ImageIO.write(fb2img, "png", baos);
+        bytes = baos.toByteArray();
+        fbProduct2.setImage(bytes);
+        productService.create(fbProduct2);
+
+        //Create football Product
+        Product fbProduct3 = new Product();
+        fbProduct3.setDescr("Helmet to protect from head injury");
+        fbProduct3.setName("Football Helmet");
+        fbProduct3.setIsFeatured(true);
+        fbProduct3.setPrice(1);
+        BufferedImage fb3img = ImageIO.read(new File("src/main/images/Football/footballHelmet.png"));
+        ImageIO.write(fb3img, "png", baos);
+        bytes = baos.toByteArray();
+        fbProduct3.setImage(bytes);
+        productService.create(fbProduct3);
+
+        //Create football Product
+        Product fbProduct4 = new Product();
+        fbProduct4.setDescr("Breathable jersey that shows off you team's colors");
+        fbProduct4.setName("Football Jersey");
+        fbProduct4.setIsFeatured(true);
+        fbProduct4.setPrice(1);
+        BufferedImage fb4img = ImageIO.read(new File("src/main/images/Football/footballJersey.png"));
+        ImageIO.write(fb4img, "png", baos);
+        bytes = baos.toByteArray();
+        fbProduct4.setImage(bytes);
+        productService.create(fbProduct4);
+
+        //Create football Product
+        Product fbProduct5 = new Product();
+        fbProduct5.setDescr("Protect your body from tackling damage");
+        fbProduct5.setName("Football Pads");
+        fbProduct5.setIsFeatured(true);
+        fbProduct5.setPrice(1);
+        BufferedImage fb5img = ImageIO.read(new File("src/main/images/Football/footballPads.png"));
+        ImageIO.write(fb5img, "png", baos);
+        bytes = baos.toByteArray();
+        fbProduct5.setImage(bytes);
+        productService.create(fbProduct5);
