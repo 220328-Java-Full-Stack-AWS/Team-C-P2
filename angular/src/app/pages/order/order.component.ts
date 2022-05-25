@@ -52,7 +52,8 @@ export class OrderComponent implements OnInit {
       this.userService.getOrderById(this.id).subscribe({
         next: response => {
           console.log(response)
-          this.order = (response as any).data
+          this.order = (response as any)
+          console.log(this.order);
         },
         error: err => {
           // Todo: Handle error
