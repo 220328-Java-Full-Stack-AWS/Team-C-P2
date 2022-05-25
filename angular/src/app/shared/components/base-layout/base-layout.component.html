@@ -5,7 +5,7 @@
 
         <div class="header__links" *ngIf="(isLoggedIn)">
             <div class = "dropdown">
-                <button class="dropbtn">Categories</button>
+                <button class="dropbtn">CATEGORIES</button>
                 <div class = "dropdown-content">
                     <a href="/products/1">Soccer</a>
                     <a href="products/2">Football</a>
@@ -21,8 +21,8 @@
               Cart
               <span class="cartCounter" *ngIf="cart.length > 0">{{cart.length}}</span>
             </a>
-            <a routerLink="/profile">Profile</a>
-            <a (click)='logout()'>Logout</a>
+            <a routerLink="/profile" class="scroll">Profile</a>
+            <a (click)='logout()'class = "scroll">Logout</a>
         </div>
 
         <div class="header__links" *ngIf="!(isLoggedIn)">
