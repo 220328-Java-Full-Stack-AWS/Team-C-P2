@@ -10,6 +10,7 @@ import { Product } from '../../interfaces/Product-Interface/product.interface';
 import { UserAddress } from '../../interfaces/user-address.interface';
 import { UserPayment } from '../../interfaces/user-payment.interface';
 import { PasswordToChange } from '../../interfaces/password-to-change.interface';
+import { ActiveCart } from '../../interfaces/Cart-Interface/active-cart.interface';
 
 
 @Injectable({
@@ -17,6 +18,7 @@ import { PasswordToChange } from '../../interfaces/password-to-change.interface'
 })
 export class UserService {
   userURL: string = "http://localhost:8080/user";
+  adminURL: string = "http://localhost:8080/admin";
 
   private user: UserInfo; // Contains user
   private currentCart: Cart[] = [];
@@ -370,6 +372,16 @@ export class UserService {
     return this.http.put<PasswordToChange>(`${this.userURL}/profile/update/password`, password, {withCredentials : true, observe : `response`});
 
   }
+
+  createOrder(cart: ActiveCart, dateCreated: any): Observable<any> {
+      console.log("passed");
+      this.cookie.getCookie('user_session');
+      return this.http.post(`${this.adminURL}/order`, {cart, dateCreated}, {withCredentials:true});
+    }
+
+    getOrderById(id:number): Observable<any> {
+      return this.http.get(`${this.adminURL}/order/` + id, {withCredentials:true})
+    }
 }
 
 interface CartItemDto {
@@ -382,4 +394,9 @@ interface CartItemDto {
 interface CartItemUpdateDto {
   cartItemId: number,
   quantity: number
+
+
+
+
+
 }

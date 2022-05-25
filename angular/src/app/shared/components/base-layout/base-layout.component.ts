@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ProfileComponent } from 'src/app/pages/profile/profile.component';
-import { Cart } from '../../interfaces/Cart-Interface/cart.interface';
-import { UserInfo } from '../../interfaces/User-Interface/user-info.interface';
-import { UserProfile } from '../../interfaces/User-Interface/user-profile.interface';
+import { Router } from '@angular/router';
+import { category } from '../../interfaces/Product-Interface/category.interface';
 import { AuthService } from '../../services/auth-service/auth.service';
+import { CategoriesService } from '../../services/category-service/category.service';
 import { CookieService } from '../../services/cookie-service/cookie.service';
 import { UserService } from '../../services/user-service/user.service';
 
@@ -18,11 +16,12 @@ export class BaseLayoutComponent implements OnInit {
   itemCount: number = 0;
 
   constructor(
-    private cookieService:CookieService,
+    private cookieService: CookieService,
     private authService: AuthService,
     private router: Router,
     private userService: UserService,
-    ){}
+    private categoryService: CategoriesService
+  ) { }
 
   logout() {
     this.authService.logout().subscribe(
@@ -34,11 +33,24 @@ export class BaseLayoutComponent implements OnInit {
         }
       }, (err) => {
         console.error(err.error.message);
-        }
+      }
     );
   }
 
   userSubscription: any;
+  categories: Array<category> = [];
+
+  getCategories() {
+    this.categoryService.getAllCategories().subscribe({
+      next: response => {
+        console.log(response)
+        this.categories = (response as any).data;
+      },
+      error: err => {
+        console.error(err);
+      }
+    });
+  }
 
   ngOnInit(): void {
     if(this.cookieService.getCookie('user_session')) {
@@ -47,6 +59,7 @@ export class BaseLayoutComponent implements OnInit {
     else {
       this.isLoggedIn = false;
     }
+
     // Get Cart Item count
     this.userService.getCurrentCartSubject().subscribe((currentCart: any) => {
       let count = 0;
@@ -57,5 +70,6 @@ export class BaseLayoutComponent implements OnInit {
       // Pass count to view
       this.itemCount = count;
     });
+    this.getCategories();
   }
 }

@@ -88,11 +88,14 @@ public class AdminController {
         }
     }
 
-    @PostMapping("/orders")
+    @PostMapping("/order")
     public ResponseEntity<Object> createOrder(
             @CookieValue(name = "user_session", required = false) String userSession,
-            @RequestBody Order order) {
-        try {
+            @RequestBody Order order) throws ItemDoesNotExistException, CreationFailedException, ItemHasNonNullIdException, UpdateFailedException, ItemHasNoIdException {
+
+        Order createdOrder = orderService.createOrder(order);
+        return new ResponseEntity<>(createdOrder, HttpStatus.CREATED);
+        /*try {
             CookieDto userCookie = authService.getAdminCookie(userSession);
 
             Order createdOrder = orderService.createOrder(order);
@@ -116,15 +119,17 @@ public class AdminController {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("message", "Creating the order failed");
             return new ResponseEntity<>(jsonObject.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        }*/
     }
 
-    @GetMapping("/orders/{id}")
+    @GetMapping("/order/{id}")
     public ResponseEntity<Object> getOrder(
             @CookieValue(name = "user_session", required = false) String userSession,
             @PathVariable(name = "id") Integer id) {
+
+
         try {
-            CookieDto userCookie = authService.getAdminCookie(userSession);
+            CookieDto userCookie = authService.getCookieDto(userSession);
 
             Optional<Order> retrievedOrder = orderService.getOrderById(id);
             if(!retrievedOrder.isPresent())
@@ -144,13 +149,14 @@ public class AdminController {
         }
     }
 
-    @PutMapping("/orders/{id}")
+    @PutMapping("/order/{id}")
     public ResponseEntity<Object> updateOrder(
             @CookieValue(name = "user_session", required = false) String userSession,
             @PathVariable(name = "id") Integer id,
             @RequestBody Order orderToUpdate) {
+
         try {
-            CookieDto adminCookie = authService.getAdminCookie(userSession);
+            CookieDto adminCookie = authService.getCookieDto(userSession);
 
             Order updatedOrder = orderService.updateOrder(orderToUpdate);
             return new ResponseEntity<>(updatedOrder, HttpStatus.OK);
@@ -179,7 +185,7 @@ public class AdminController {
         }
     }
 
-    @DeleteMapping("/orders/{id}")
+    @DeleteMapping("/order/{id}")
     public ResponseEntity<Object> deleteOrder(
             @CookieValue(name = "user_session", required = false) String userSession,
             @PathVariable(name = "id") Integer id) {
@@ -205,7 +211,6 @@ public class AdminController {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("message", "Deleting the order failed, please try again");
             return new ResponseEntity<>(jsonObject.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
-
         }
     }
 }

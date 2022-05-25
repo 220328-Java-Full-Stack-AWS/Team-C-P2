@@ -147,7 +147,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void createUserPaymentCallsPaymentRepoAndReturnsUser(@Autowired UserService userService) {
+    public void createUserPaymentCallsPaymentRepoAndReturnsUser(@Autowired UserService userService) throws ItemDoesNotExistException, UpdateFailedException, ItemHasNoIdException {
         User user = USER_2;
         Payment payment = new Payment("VISA", "Capital One", "555000302", 234, "2022-05-17");
         when(paymentRepositoryMock.create(payment)).thenReturn(payment);

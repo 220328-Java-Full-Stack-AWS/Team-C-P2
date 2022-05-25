@@ -1,25 +1,38 @@
 <!-- NavBar -->
 <header class="header">
-    <nav class="container container--pall flex flex-jc-sb flex-ai-c">
-        <a routerLink="/" class="header__logo">Home</a>
+  <nav class="container container--pall flex flex-jc-sb flex-ai-c">
+    <a routerLink="/" class="header__logo">Home</a>
 
-        <div class="header__links" *ngIf="(isLoggedIn)">
-            <a class="scroll">Categories</a>
-            <a routerLink="/products" class="scroll">Products</a>
-            <a routerLink="/cart" class="scroll cartLink">
-              Cart
-              <span class="cartCounter" *ngIf="itemCount > 0">{{itemCount}}</span>
-            </a>
-            <a routerLink="/profile">Profile</a>
-            <a (click)='logout()'>Logout</a>
+
+    <div class="header__links" *ngIf="(isLoggedIn)">
+      <div class="dropdown">
+        <button class="dropbtn">CATEGORIES</button>
+        <div class="dropdown-content">
+          <a *ngFor="let item of categories" [routerLink]="['/products', item.id]">{{item.name}}</a>
         </div>
 
-        <div class="header__links" *ngIf="!(isLoggedIn)">
-            <a href="" class="scroll">Categories</a>
-            <a href="" routerLink="/products" class="scroll">Products</a>
-            <a href="" routerLink="/login">Login</a>
-            <a href="" routerLink="/register">Register</a>
+      </div>
+      <a routerLink="/products" class="scroll">Products</a>
+      <a routerLink="/cart" class="scroll cartLink">
+        Cart
+        <span class="cartCounter" *ngIf="itemCount > 0">{{itemCount}}</span>
+      </a>
+      <a routerLink="/profile" class="scroll">Profile</a>
+      <a (click)='logout()' class="scroll">Logout</a>
+    </div>
+
+    <div class="header__links" *ngIf="!(isLoggedIn)">
+      <div class="dropdown">
+        <button class="dropbtn">CATEGORIES</button>
+        <div class="dropdown-content">
+          <a *ngFor="let item of categories" [routerLink]="['/products', item.id]">{{item.name}}</a>
         </div>
-    </nav>
+
+      </div>
+      <a href="" routerLink="/products" class="scroll">Products</a>
+      <a href="" routerLink="/login" class="scroll">Login</a>
+      <a href="" routerLink="/register" class="scroll">Register</a>
+    </div>
+  </nav>
 </header>
 <router-outlet></router-outlet>
