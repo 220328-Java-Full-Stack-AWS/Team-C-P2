@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { CartItem } from 'src/app/shared/interfaces/Cart-Interface/cart-item.interface';
 import { Cart } from 'src/app/shared/interfaces/Cart-Interface/cart.interface';
-import { UpdateCartItem } from 'src/app/shared/interfaces/Cart-Interface/update-cart-item.interface';
 import { UserInfo } from 'src/app/shared/interfaces/User-Interface/user-info.interface';
 import { CookieService } from 'src/app/shared/services/cookie-service/cookie.service';
 import { UserService } from 'src/app/shared/services/user-service/user.service';
@@ -15,60 +15,37 @@ import { UserService } from 'src/app/shared/services/user-service/user.service';
 })
 export class CartComponent implements OnInit {
 
+  currentCart: Cart[] = [];
+  cartTotal: number = 0;
+  quantity: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
   constructor(
     private userService: UserService,
     private cookie: CookieService,
-
-
   ) { }
 
-  private user: UserInfo = {
-    userId: 0,
-    activeCartId: 0
-  }
-  cartArray: Cart[] = [];
-
-  cartTotal: number[] = [];
-
-
-  updateCart(cartItemId: any, quantity: any){
-    this.updateCartItem.cartItemId = cartItemId;
-    this.updateCartItem.quantity = quantity;
-    console.log(this.updateCartItem);
-    this.userService.updateCartItem(this.updateCartItem).subscribe((json:any) => {
-      console.log(json);
-      this.cartArray = [];
-      this.cartTotal = [];
-      this.userService.setCartTotal(this.cartTotal);
-      this.ngOnInit();
-    });
+  updateCart(cartItem: CartItem, quantity: any){
+    this.userService.updateItemInCart(cartItem, quantity);
   }
 
-  removeCartItem(id: any) {
-    this.userService.removeCartItem(id).subscribe((json:any) => {
-      this.ngOnInit();
-    })
+  removeCartItem(cartItem: CartItem) {
+    this.userService.removeCartItem(cartItem);
   }
 
-  updateCartItem: UpdateCartItem = {
-    cartItemId: 0,
-    quantity: 0
-  }
 
-  quantity: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   ngOnInit(): void {
     this.cookie.getCookie('user_session');
-    this.userService.getCurrentUser().subscribe((user) => (
-      this.user = user
-    ));
-    this.userService.getCurrentActiveCart().subscribe((cartArray) => (
-      this.cartArray = cartArray
-    ));
-    this.userService.getCartTotal().subscribe((cartTotal) => (
-      this.cartTotal = cartTotal
-    ));
-    this.userService.getCurrentActiveCartLength().next(this.cartArray);
+    // Initialize current cart
+    this.userService.getCurrentCartSubject().subscribe((res: any) => {
+      this.currentCart = res;
+      // Initialize cart total (count and set view)
+      let totalCount = 0;
+      Array.prototype.forEach.call(this.currentCart, (cart: Cart) => {
+        totalCount += cart.cartItem?.netPrice! * cart.cartItem?.quantity!;
+      });
+      this.cartTotal = totalCount;
+    });
   }
 }
 

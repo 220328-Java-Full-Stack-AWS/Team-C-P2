@@ -1,14 +1,16 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { CartItem } from 'src/app/shared/interfaces/Cart-Interface/cart-item.interface';
 import { Router } from '@angular/router';
 import { ActiveCart } from 'src/app/shared/interfaces/Cart-Interface/active-cart.interface';
+
 import { Cart } from 'src/app/shared/interfaces/Cart-Interface/cart.interface';
-import { UpdateCartItem } from 'src/app/shared/interfaces/Cart-Interface/update-cart-item.interface';
 import { UserInfo } from 'src/app/shared/interfaces/User-Interface/user-info.interface';
 
 import { UserProfile } from 'src/app/shared/interfaces/User-Interface/user-profile.interface';
 import { CookieService } from 'src/app/shared/services/cookie-service/cookie.service';
 import { UserService } from 'src/app/shared/services/user-service/user.service';
+import { UpdateCartItem } from 'src/app/shared/interfaces/Cart-Interface/update-cart-item.interface';
 
 @Component({
   selector: 'app-checkout',
@@ -18,7 +20,43 @@ import { UserService } from 'src/app/shared/services/user-service/user.service';
 })
 export class CheckoutComponent implements OnInit {
 
-  userId: number = 0;
+  private user: UserInfo = {
+    userId: 0,
+    activeCartId: 0
+  }
+
+  quantity: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  cartArray: Cart[] = [];
+  cartTotal: number = 0;
+
+  userQuery: UserProfile = {
+      id: 0,
+      username: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      role: "",
+      activeCartId: 0,
+      userAddress: {
+        userId: 0,
+        addressLine1: "",
+        addressLine2: "string",
+        city: "",
+        postalCode: 0,
+        country: "",
+        phoneNumber: ""
+      },
+      payment: {
+        userId: 0,
+        network: "",
+        issuer: "",
+        cardNumber: "",
+        securityCode: 0,
+        expDate: ""
+      },
+      dateCreated: "",
+      dateModifies: ""
+    }
 
   constructor(
     private userService: UserService,
@@ -28,33 +66,23 @@ export class CheckoutComponent implements OnInit {
     ) {
      }
 
-  userQuery: UserProfile = {
-    id: 0,
-    username: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    role: "",
-    activeCartId: 0,
-    userAddress: {
-      userId: 0,
-      addressLine1: "",
-      addressLine2: "string",
-      city: "",
-      postalCode: 0,
-      country: "",
-      phoneNumber: ""
-    },
-    payment: {
-      userId: 0,
-      network: "",
-      issuer: "",
-      cardNumber: "",
-      securityCode: 0,
-      expDate: ""
-    },
-    dateCreated: "",
-    dateModifies: ""
+  ngOnInit(): void {
+    this.cookie.getCookie('user_session');
+    this.userService.getCurrentUser().subscribe((user) => (
+      this.user = user
+    ));
+    this.getUserById(this.user.userId);
+
+    // Initialize current cart
+    this.userService.getCurrentCartSubject().subscribe((currentCart: Cart[]) => {
+      this.cartArray = currentCart;
+      // Initialize cart total (count and set view)
+      let totalCount = 0;
+      currentCart.forEach((cart: Cart) => {
+        totalCount += cart.cartItem?.netPrice! * cart.cartItem?.quantity!;
+      });
+      this.cartTotal = totalCount;
+    });
   }
 
   getUserById(id:number) {
@@ -91,44 +119,22 @@ export class CheckoutComponent implements OnInit {
     })
   }
 
-  updateCart(cartItemId: any, quantity: any){
-    this.updateCartItem.cartItemId = cartItemId;
-    this.updateCartItem.quantity = quantity;
-    console.log(this.updateCartItem);
-    this.userService.updateCartItem(this.updateCartItem).subscribe((json:any) => {
-      console.log(json);
-      this.cartArray = [];
-      this.cartTotal = [];
-      this.userService.setCartTotal(this.cartTotal);
-      this.ngOnInit();
-    });
+  updateCart(cartItem: CartItem, quantity: any){
+    this.userService.updateItemInCart(cartItem, quantity);
   }
 
-  removeCartItem(id: any) {
-    this.userService.removeCartItem(id).subscribe((json:any) => {
-      console.log(json);
-      this.ngOnInit();
-    })
+  removeCartItem(cartItem: CartItem) {
+    this.userService.removeCartItem(cartItem);
   }
 
   calculateTax(total:number){
     return (total * .13);
   }
 
-  private user: UserInfo = {
-    userId: 0,
-    activeCartId: 0
-  }
-
   updateCartItem: UpdateCartItem = {
     cartItemId: 0,
     quantity: 0
   }
-
-  quantity: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-  cartArray: Cart[] = [];
-  cartTotal: number[] = [];
 
   myDate = new Date();
 
@@ -143,7 +149,7 @@ export class CheckoutComponent implements OnInit {
     let currentDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
     console.log("Current Date:" + currentDate);
     this.createOrder(this.userQuery, currentDate, total);
-    
+
   }
 
   createOrder(user: UserProfile, dateCreated: any, total:any) {
@@ -157,19 +163,4 @@ export class CheckoutComponent implements OnInit {
       this.router.navigate(['cart/checkout/order/' + json.id]);
     })
   }
-
-  ngOnInit(): void {
-    this.cookie.getCookie('user_session');
-    this.userService.getCurrentUser().subscribe((user) => (
-      this.user = user
-    ));
-    this.getUserById(this.user.userId);
-    this.userService.getCurrentActiveCart().subscribe((cartArray) => (
-      this.cartArray = cartArray
-    ));
-    this.userService.getCartTotal().subscribe((cartTotal) => (
-      this.cartTotal = cartTotal
-    ));
-  }
-
 }
