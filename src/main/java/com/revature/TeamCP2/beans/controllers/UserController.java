@@ -360,4 +360,31 @@ public class UserController {
             return new HttpResponseDto(400, "Required fields not present", null);
         }
     }
+
+    @GetMapping("/cart/{cartId}")
+    @ResponseStatus(HttpStatus.OK)
+    public HttpResponseDto getCart(@PathVariable int cartId, HttpServletResponse res, @CookieValue(name = "user_session", required = false) String userSession) throws ItemDoesNotExistException {
+
+        Double total = 0.00;
+        if (userSession == null) {
+            res.setStatus(400);
+            return new HttpResponseDto(400, "Failed. You are not logged in", null);
+        }
+
+        if (cartService.getCartbyId(cartId).isPresent()) {
+            Cart cart = cartService.getCartbyId(cartId).get();
+
+            List<CartItem> cartItemList = cartItemService.getAllCartItemsByCart(cartService.getCartbyId(cart.getId()).get());
+            List<ItemNetPriceDto> dtoList = new LinkedList<>();
+            for (CartItem c : cartItemList) {
+                ItemNetPriceDto netPriceDto = new ItemNetPriceDto(c, productService.getNetPrice(c.getProduct()));
+                total += (netPriceDto.getNetPrice()*c.getQuantity());
+                dtoList.add(netPriceDto);
+            }
+            res.setStatus(200);
+            return new HttpResponseDto(200, "Success. Viewing Cart.", dtoList);
+        }
+
+        return new HttpResponseDto(404, "Failed. User not found.", null);
+    }
 }

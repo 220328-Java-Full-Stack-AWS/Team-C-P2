@@ -1,7 +1,7 @@
-import { Cart } from "../Cart-Interface/cart.interface";
+import { CartOrder } from "../Cart-Interface/cart-order.interface";
 
 export interface Order {
-    cart?: Cart,
+    cart?: CartOrder,
     dateCreated: String,
     id: number
 }

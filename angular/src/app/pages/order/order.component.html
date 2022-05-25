@@ -6,8 +6,49 @@
         <div class="order__title">
             <h2>We'll send you a confirmation email once your order has shipped.</h2>
         </div>
-        <div class="order__details"></div>
-        <div class="order__summary"></div>
+        <div class="order__details">
+            <div class="order__details-item">
+                <div class="order__details-content">
+                    <div class="order__details-title">
+                        <h2><strong>Order Number: </strong></h2></div>
+                    <div class="order__details-info">
+                        <h3>{{order.id}}</h3>
+                    </div>
+                </div>
+                <div class="order__details-content">
+                    <div class="order__details-title">
+                        <h2><strong>Payment: </strong></h2></div>
+                    <div class="order__details-info">
+                        <h3>{{order.cart?.user?.payment?.issuer}}</h3>
+                        <h3>{{order.cart?.user?.payment?.cardNumber}}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="order__details-item">
+                <div class="order__details-content">
+                    <div class="order__details-title">
+                        <h2><strong>Order Date: </strong></h2></div>
+                    <div class="order__details-info">
+                        <h3>{{order.dateCreated}}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="order__details-item">
+                <div class="order__details-content">
+                    <div class="order__details-title">
+                        <h2><strong>Delivery Details: </strong></h2></div>
+                    <div class="order__details-info">
+                        <h3>{{order.cart?.user?.firstName + " " + order.cart?.user?.lastName}}</h3>
+                        <h3>{{order.cart?.user?.userAddress?.addressLine1}}</h3>
+                        <h3>{{order.cart?.user?.userAddress?.addressLine2}}</h3>
+                        <h3>{{order.cart?.user?.userAddress?.city + " " + order.cart?.user?.userAddress?.postalCode + ", " + order.cart?.user?.userAddress?.country}}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="order__summary">
+            
+        </div>
         <div class="order__total"></div>
     </div>
 </section>

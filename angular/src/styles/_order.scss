@@ -1,17 +1,31 @@
 .order {
+    h3 {
+        line-height: 1.25;
+    }
     &__header {
         margin: auto;
         text-align: center;
         text-transform: uppercase;
+        margin-bottom: 2rem;
     }
 
     &__title {
         text-align: center;
+        margin-bottom: 2rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid $gray;
     }
 
     &__details {
         display: flex;
         justify-content: space-evenly;
+    }
+
+    &__details-content {
+        margin-bottom: 1rem;
+    }
+    &__details-title {
+        margin-bottom: 0.5rem;
     }
 
 }
