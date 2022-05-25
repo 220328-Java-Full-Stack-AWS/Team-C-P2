@@ -1,4 +1,4 @@
-    //Create Baseball Category
+    //Create Basketball Category
     ProductCategory category = new ProductCategory();
     category.setName("Basketball");
     category.setDescription("Shop Men's and Women's Basketball Essentials");
