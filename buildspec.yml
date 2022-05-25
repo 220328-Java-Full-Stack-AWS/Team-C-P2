@@ -28,7 +28,7 @@ phases:
       - echo ============= Post-Build =============
       - cd dist/front
       - ls -al
-      - aws s3 cp ./* s3://teamcp2-ui
+      - aws s3 cp . s3://teamcp2-ui --recursive
       - cd ../../../
       - mv target/Team-C-P2-*.*.war ROOT.war
       - ls -al
