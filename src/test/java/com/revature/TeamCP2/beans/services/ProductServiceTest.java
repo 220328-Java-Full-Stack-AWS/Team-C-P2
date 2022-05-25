@@ -1,6 +1,7 @@
 package com.revature.TeamCP2.beans.services;
 
 import com.revature.TeamCP2.beans.repositories.ProductsRepository;
+import com.revature.TeamCP2.entities.OnSale;
 import com.revature.TeamCP2.entities.Product;
 import com.revature.TeamCP2.entities.ProductCategory;
 import com.revature.TeamCP2.exceptions.*;
@@ -12,9 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -186,5 +185,52 @@ class ProductServiceTest {
 
     }
 
+    @Test
+    public void getNetPriceReturnsProductPriceWhenNotOnSale(@Autowired ProductService productService) {
+        Product productToPass = PRODUCT_2;
+        productToPass.setPrice(50.00);
+        productToPass.setOnSale(null);
 
+        Double returnedPrice = productService.getNetPrice(productToPass);
+
+        assertEquals(50.00, returnedPrice);
+    }
+
+    @Test
+    public void getNetPriceReturnsSalePriceWhenOnSale(@Autowired ProductService productService) {
+        Product productToPass = PRODUCT_2;
+        productToPass.setPrice(50.00);
+        productToPass.setOnSale(new OnSale(.20));
+
+        Double returnedPrice = productService.getNetPrice(productToPass);
+
+        assertEquals(40.00, returnedPrice);
+    }
+
+    @Test
+    public void getByCategoryIdThrowsItemDoesNotExistExceptionOnEmptyList(@Autowired ProductService productService) {
+        int idToPass = 3;
+        List<Product> emptyList = Collections.emptyList();
+        when(productRepositoryMock.getByCategoryId(idToPass)).thenReturn(emptyList);
+
+        assertThrows(ItemDoesNotExistException.class, () -> {
+                productService.getByCategoryId(idToPass);
+        });
+        verify(productRepositoryMock, times(1)).getByCategoryId(idToPass);
+    }
+
+    @Test
+    public void getByCategoryIdReturnsListOfProducts(@Autowired ProductService productService) throws ItemDoesNotExistException {
+        int idToPass = 44;
+        List<Product> productList = new ArrayList<Product>();
+        productList.add(PRODUCT);
+        productList.add(PRODUCT_1);
+        productList.add(PRODUCT_2);
+        when(productRepositoryMock.getByCategoryId(idToPass)).thenReturn(productList);
+
+        List<Product> returnedProductList = productService.getByCategoryId(idToPass);
+
+        assertEquals(productList, returnedProductList);
+        verify(productRepositoryMock, times(1)).getByCategoryId(idToPass);
+    }
 }

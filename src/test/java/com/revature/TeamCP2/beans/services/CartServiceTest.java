@@ -6,6 +6,8 @@ import com.revature.TeamCP2.entities.CartItem;
 import com.revature.TeamCP2.entities.Product;
 import com.revature.TeamCP2.entities.User;
 
+import com.revature.TeamCP2.exceptions.ItemDoesNotExistException;
+import com.revature.TeamCP2.exceptions.ItemHasNoIdException;
 import com.revature.TeamCP2.interfaces.Role;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,6 +29,7 @@ public class CartServiceTest {
 
     @MockBean
     CartRepository cartRepositoryMock;
+    @MockBean CartItemService cartItemServiceMock;
 
 
 
@@ -64,6 +67,57 @@ public class CartServiceTest {
 
         assertEquals(cartToCreate, cart);
 
+    }
+
+    @Test
+    public void addCartItemCallsCartItemServiceAndReturnsCart(@Autowired CartService cartService) {
+        CartItem cartItemToPass = CART_ITEM_1;
+        cartItemToPass.setCart(CART_2);
+        Cart cartToVerify = cartItemToPass.getCart();
+        when(cartItemServiceMock.createCartItem(cartItemToPass)).thenReturn(cartItemToPass);
+
+        Cart returnedCart = cartService.addCartItem(cartItemToPass);
+
+        assertEquals(cartToVerify, returnedCart);
+        verify(cartItemServiceMock, times(1)).createCartItem(cartItemToPass);
+    }
+
+    @Test
+    public void removeCartItemCallsCartItemServiceAndReturnsCart(@Autowired CartService cartService) throws ItemDoesNotExistException, ItemHasNoIdException {
+        CartItem cartItemToPass = CART_ITEM_1;
+        cartItemToPass.setCart(CART_2);
+        Cart cartToReturn = cartItemToPass.getCart();
+        doNothing().when(cartItemServiceMock).delete(cartItemToPass);
+
+        Cart returnedCart = cartService.removeCartItem(cartItemToPass);
+
+        assertEquals(cartToReturn, returnedCart);
+        verify(cartItemServiceMock, times(1)).delete(cartItemToPass);
+    }
+
+    @Test
+    public void updateCartItemCallsCartItemServiceAndReturnsCart(@Autowired CartService cartService) {
+        CartItem cartItemToPass = CART_ITEM_1;
+        cartItemToPass.setCart(new Cart(USER_1, 545.00));
+        CartItem cartItemToReturn = cartItemToPass;
+        when(cartItemServiceMock.update(cartItemToPass)).thenReturn(cartItemToReturn);
+
+        Cart returnedCart = cartService.updateCartItem(cartItemToPass);
+
+        assertEquals(cartItemToPass.getCart(), returnedCart);
+        verify(cartItemServiceMock, times(1)).update(cartItemToPass);
+    }
+
+    @Test
+    public void getAllCartItemsCallsCartItemServiceAndReturnsListOfCartItems(@Autowired CartService cartService) {
+        List<CartItem> cartItemListToReturn = CART_LIST;
+        Cart cartToPass = CART_1;
+        when(cartItemServiceMock.getAllCartItemsByCart(cartToPass)).thenReturn(cartItemListToReturn);
+
+        List<CartItem> returnedCartItemList = cartService.getAllCartItems(cartToPass);
+
+        assertEquals(cartItemListToReturn, returnedCartItemList);
+        verify(cartItemServiceMock, times(1)).getAllCartItemsByCart(cartToPass);
     }
 
     //test that get cart by id returns cart

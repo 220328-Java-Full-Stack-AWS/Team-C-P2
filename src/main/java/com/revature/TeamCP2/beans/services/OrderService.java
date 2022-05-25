@@ -92,9 +92,9 @@ public class OrderService {
      * @throws ItemDoesNotExistException if given order does not exist
      */
     public String getUsername(Integer id) throws ItemDoesNotExistException {
-        if (orderRepository.getById(id).isPresent()) {
-            return orderRepository.getById(id).get().getCart().getUser().getUsername();
-        }
+        Optional<Order> opOrder = orderRepository.getById(id);
+        if (opOrder.isPresent())
+            return opOrder.get().getCart().getUser().getUsername();
         return " ";
     }
 
@@ -105,9 +105,9 @@ public class OrderService {
      * @throws ItemDoesNotExistException if given order does not exist
      */
     public Double getTotal(Integer id) throws ItemDoesNotExistException {
-        if (orderRepository.getById(id).isPresent()) {
-            return orderRepository.getById(id).get().getCart().getTotal();
-        }
+        Optional<Order> opOrder = orderRepository.getById(id);
+        if (opOrder.isPresent())
+            return opOrder.get().getCart().getTotal();
         return 0.0;
     }
 

@@ -1,12 +1,11 @@
 /**
  Author: Steven Dowd
- Contributor(s): @Brandon Le
+ Contributor(s): @Brandon Le, @George Henderson
  Purpose: Cart Service
  */
 
 package com.revature.TeamCP2.beans.services;
 
-import com.revature.TeamCP2.beans.repositories.CartItemRepository;
 import com.revature.TeamCP2.beans.repositories.CartRepository;
 import com.revature.TeamCP2.entities.Cart;
 import com.revature.TeamCP2.entities.CartItem;

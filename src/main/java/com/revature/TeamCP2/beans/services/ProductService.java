@@ -66,7 +66,7 @@ public class ProductService {
             throw new ItemDoesNotExistException("No Items to retrieve");
         }
 
-        return productsRepository.getByCategoryId(id);
+        return ProductList;
     }
 
 

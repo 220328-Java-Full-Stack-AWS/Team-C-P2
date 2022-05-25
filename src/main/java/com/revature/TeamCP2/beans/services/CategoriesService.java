@@ -41,7 +41,6 @@ public class CategoriesService {
 
     public void deleteById(Integer id) {
         categoriesRepository.deleteById(id);
-
     }
 
 
