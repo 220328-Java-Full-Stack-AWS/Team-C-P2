@@ -1,1 +1,69 @@
-1
+        //Create Cricket Category
+        ProductCategory cCategory = new ProductCategory();
+        category.setName("Cricket");
+        category.setDescription("Items used for playing European Cricket");
+        BufferedImage cCategoryImg = ImageIO.read(new File("src/main/images/Cricket/cricketCategory.png"));
+        ImageIO.write(cCategoryImg, "png", baos);
+        bytes = baos.toByteArray();
+        category.setImage(bytes);
+        categoriesService.create(cCategory);
+
+        //Create Cricket Product
+        Product cProduct1 = new Product();
+        cProduct1.setDescr("Hard Cricket Ball");
+        cProduct1.setName("Cricket Ball");
+        cProduct1.setIsFeatured(true);
+        cProduct1.setPrice(1);
+        BufferedImage c1img = ImageIO.read(new File("src/main/images/Cricket/cricketBall.png"));
+        ImageIO.write(c1img, "png", baos);
+        bytes = baos.toByteArray();
+        cProduct1.setImage(bytes);
+        productService.create(cProduct1);
+
+        //Create Cricket Product
+        Product cProduct2 = new Product();
+        cProduct2.setDescr("Bat used to strike cricket balls");
+        cProduct2.setName("Cricket Bat");
+        cProduct2.setIsFeatured(true);
+        cProduct2.setPrice(1);
+        BufferedImage c2img = ImageIO.read(new File("src/main/images/Cricket/cricketBat.png"));
+        ImageIO.write(c2img, "png", baos);
+        bytes = baos.toByteArray();
+        cProduct2.setImage(bytes);
+        productService.create(cProduct2);
+
+        //Create Cricket Product
+        Product cProduct3 = new Product();
+        cProduct3.setDescr("Cricket Helmet to protect from head injury");
+        cProduct3.setName("Cricket Helmet");
+        cProduct3.setIsFeatured(true);
+        cProduct3.setPrice(1);
+        BufferedImage c3img = ImageIO.read(new File("src/main/images/Cricket/cricketHelmet.png"));
+        ImageIO.write(c3img, "png", baos);
+        bytes = baos.toByteArray();
+        cProduct3.setImage(bytes);
+        productService.create(cProduct3);
+
+        //Create Cricket Product
+        Product cProduct4 = new Product();
+        cProduct4.setDescr("Pads to protect the legs from being hit by the cricket ball");
+        cProduct4.setName("Cricket Pads");
+        cProduct4.setIsFeatured(true);
+        cProduct4.setPrice(1);
+        BufferedImage c4img = ImageIO.read(new File("src/main/images/Cricket/cricketPads.png"));
+        ImageIO.write(c4img, "png", baos);
+        bytes = baos.toByteArray();
+        cProduct4.setImage(bytes);
+        productService.create(cProduct4);
+
+        //Create Cricket Product
+        Product cProduct5 = new Product();
+        cProduct5.setDescr("Long-sleeved shirt worn while playing Cricket");
+        cProduct5.setName("Cricket Shirt");
+        cProduct5.setIsFeatured(true);
+        cProduct5.setPrice(1);
+        BufferedImage c5img = ImageIO.read(new File("src/main/images/Cricket/cricketShirt.png"));
+        ImageIO.write(c5img, "png", baos);
+        bytes = baos.toByteArray();
+        cProduct5.setImage(bytes);
+        productService.create(cProduct5);

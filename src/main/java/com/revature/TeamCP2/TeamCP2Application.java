@@ -53,6 +53,8 @@ public class TeamCP2Application {
         categoriesService.create(category);
 
 
+
+
         //Initializing Product Repositories
         ProductsRepository productsRepository = context.getBean(ProductsRepository.class);
         ProductService productService = new ProductService(productsRepository);
