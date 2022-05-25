@@ -5,6 +5,7 @@ import { ProductService } from '../../services/product-service/product.service';
 import { onSale } from '../../interfaces/Product-Interface/onsale.interface';
 import { category } from '../../interfaces/Product-Interface/category.interface';
 import { Cart } from '../../interfaces/Cart-Interface/cart.interface';
+import { CookieService } from '../../services/cookie-service/cookie.service';
 
 @Component({
   selector: 'app-featured-products',
@@ -13,6 +14,8 @@ import { Cart } from '../../interfaces/Cart-Interface/cart.interface';
 })
 export class FeaturedProductsComponent implements OnInit {
 
+  isLoggedIn: boolean = false;
+
   products: Product[] = [];
   userInfo: UserInfo = {
     userId: 0,
@@ -20,7 +23,11 @@ export class FeaturedProductsComponent implements OnInit {
   }
   quantity: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-  constructor(private productService: ProductService, private userService: UserService) { }
+  constructor(
+    private productService: ProductService, 
+    private userService: UserService,
+    private cookieService: CookieService
+    ) { }
 
   ngOnInit(): void {
     this.userService.getCurrentUser().subscribe(currentUser => {
@@ -37,6 +44,13 @@ export class FeaturedProductsComponent implements OnInit {
         // Todo: Handle error
       }
     });
+
+    if (this.cookieService.getCookie('user_session')) {
+      this.isLoggedIn = true;
+    }
+    else {
+      this.isLoggedIn = false;
+    }
   }
   cartArray: Cart[] = [];
 
