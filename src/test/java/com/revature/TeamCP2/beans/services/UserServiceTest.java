@@ -107,15 +107,19 @@ public class UserServiceTest {
         String currentPassword = "currentPass";
         String newPassword = "newPassword";
         String hashedPassword = "This is definitely hashed this time!@30a;";
+        User userToReturn = USER_2;
+        userToReturn.setPassword(hashedPassword);
         when(bCryptHashMock.verify(any(), any())).thenReturn(true);
         when(bCryptHashMock.hash(newPassword)).thenReturn(hashedPassword);
+        when(userRepositoryMock.update(USER_2)).thenReturn(userToReturn);
 
         User updatedUser = userService.updatePassword(USER_2, currentPassword, newPassword);
 
 
-        assertEquals(USER_2, updatedUser);
+        assertEquals(updatedUser.getPassword(), hashedPassword);
         verify(bCryptHashMock, times(1)).verify(any(), any());
         verify(bCryptHashMock, times(1)).hash(newPassword);
+        verify(userRepositoryMock, times(1)).update(USER_2);
     }
 
     @Test
@@ -205,5 +209,21 @@ public class UserServiceTest {
 
         assertEquals(opUserToReturn, opRetrievedUser);
         verify(userRepositoryMock, times(1)).getById(id);
+    }
+
+    @Test
+    public void updateUserActiveCartIdCallsUserRepoAndReturnsOptionalUser(@Autowired UserService userService) throws ItemDoesNotExistException {
+        int idToPass = 44;
+        User userToReturn = new User();
+        userToReturn.setFirstName("John");
+        userToReturn.setLastName("Jacob");
+        userToReturn.setUsername("jj456@email.com");
+        userToReturn.setPassword("uniquePassword");
+        when(userRepositoryMock.getById(idToPass)).thenReturn(Optional.of(userToReturn));
+
+        Optional<User> opReturnedUser = userService.getById(idToPass);
+
+        assertEquals(Optional.of(userToReturn), opReturnedUser);
+        verify(userRepositoryMock, times(1)).getById(idToPass);
     }
 }

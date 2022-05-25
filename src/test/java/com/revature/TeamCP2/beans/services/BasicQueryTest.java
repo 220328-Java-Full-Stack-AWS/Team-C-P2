@@ -3,6 +3,7 @@ package com.revature.TeamCP2.beans.services;
 import com.revature.TeamCP2.entities.User;
 import com.revature.TeamCP2.exceptions.ItemDoesNotExistException;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,6 +33,7 @@ public class BasicQueryTest {
     static User USER_1;
 
     @MockBean ConnectionManager connectionManagerMock;
+    @MockBean SessionFactory sessionFactoryMock;
     @MockBean Session sessionMock;
     @MockBean CriteriaBuilder criteriaBuilderMock;
     @MockBean CriteriaQuery criteriaQueryMock;
@@ -50,6 +52,8 @@ public class BasicQueryTest {
     @BeforeEach
     public void beforeEach() {
         when(connectionManagerMock.getSession()).thenReturn(sessionMock);
+        when(connectionManagerMock.getSessionFactory()).thenReturn(sessionFactoryMock);
+        when(sessionFactoryMock.openSession()).thenReturn(sessionMock);
         when(sessionMock.getCriteriaBuilder()).thenReturn(criteriaBuilderMock);
         when(sessionMock.createQuery((CriteriaQuery<Object>) any())).thenReturn(queryMock);
         when(criteriaBuilderMock.createQuery(targetClass)).thenReturn(criteriaQueryMock);

@@ -1,54 +1,43 @@
 package com.revature.TeamCP2.beans.services;
 
-import com.revature.TeamCP2.beans.controllers.CategoriesController;
 import com.revature.TeamCP2.beans.repositories.CategoriesRepository;
-import com.revature.TeamCP2.beans.services.*;
 import com.revature.TeamCP2.entities.ProductCategory;
 import com.revature.TeamCP2.exceptions.ItemDoesNotExistException;
 import com.revature.TeamCP2.exceptions.ItemHasNoIdException;
 import com.revature.TeamCP2.exceptions.UpdateFailedException;
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 
-@SpringBootTest()
+@SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class CategoriesServiceTest {
     ProductCategory Categories1;
     ProductCategory Categories2;
+    ProductCategory Categories3;
 
     @MockBean
     CategoriesRepository categoriesRepositoryMock;
-    @MockBean
-    BCryptHash bCryptHashMock;
-    @MockBean
-    AuthService authServiceMock;
-    @MockBean
-    ProductCategory productCategoryMock;
+
 
     @BeforeEach
     public void beforeEach() {
-        Categories1 = new ProductCategory();
-
-
+        Categories1 = new ProductCategory("Basket ball", "Sport played with an orange ball", null);
+        Categories2 = new ProductCategory("Soccer", "Sport played with a white ball", null);
+        Categories3 = new ProductCategory("Base ball", "Sport played by running from base to base", null);
     }
 
     @Test
@@ -59,7 +48,7 @@ public class CategoriesServiceTest {
 
         ProductCategory retrievedcategory = categoriesService.create(productCategory);
 
-        assertEquals(retrievedcategory.getDescription(), productCategory);
+        assertEquals(retrievedcategory, productCategory);
         verify(categoriesRepositoryMock, Mockito.times(1)).create(productCategory);
     }
     @Test
@@ -86,6 +75,21 @@ public class CategoriesServiceTest {
         assertEquals(listToReturn, userList);
         verify(categoriesRepositoryMock, Mockito.times(1)).getAll();
     }
+
+    @Test
+    public void getAllUsersReturnsListOfProductCategories(@Autowired CategoriesService categoriesService) {
+        List<ProductCategory> productCategoryListToReturn = new ArrayList<>();
+        productCategoryListToReturn.add(Categories1);
+        productCategoryListToReturn.add(Categories2);
+        productCategoryListToReturn.add(Categories3);
+        when(categoriesRepositoryMock.getAll()).thenReturn(productCategoryListToReturn);
+
+        List<ProductCategory> returnedCategoryList = categoriesService.getAllUsers();
+
+        assertEquals(productCategoryListToReturn, returnedCategoryList);
+        verify(categoriesRepositoryMock, times(1)).getAll();
+    }
+
     @Test
     public void getByIdCategories(@Autowired CategoriesService categoriesService) throws ItemDoesNotExistException {
         int id = 2;
@@ -96,5 +100,26 @@ public class CategoriesServiceTest {
 
         assertEquals(categoriesToReturn, opRetrievedUser);
         verify(categoriesRepositoryMock, Mockito.times(1)).getById(id);
+    }
+
+    @Test
+    public void deleteByIdCallsCategoryRepo(@Autowired CategoriesService categoriesService) {
+        int categoryIdToPass = 410;
+        doNothing().when(categoriesRepositoryMock).deleteById(categoryIdToPass);
+
+        categoriesService.deleteById(categoryIdToPass);
+
+        verify(categoriesRepositoryMock, times(1)).deleteById(categoryIdToPass);
+    }
+
+    @Test
+    public void deleteCallsCategoryRepoAndReturnsNull(@Autowired CategoriesService categoriesService) throws ItemHasNoIdException {
+        ProductCategory productCategoryToPass = Categories1;
+        doThrow(ItemHasNoIdException.class).when(categoriesRepositoryMock).delete(productCategoryToPass);
+
+        ProductCategory returnedCategory = categoriesService.delete(productCategoryToPass);
+
+        verify(categoriesRepositoryMock, times(1)).delete(productCategoryToPass);
+        assertNull(returnedCategory);
     }
 }

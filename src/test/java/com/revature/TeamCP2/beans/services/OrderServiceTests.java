@@ -90,6 +90,52 @@ public class OrderServiceTests {
     }
 
     @Test
+    public void deleteOrderCallsOrderRepo(@Autowired OrderService orderService) throws ItemDoesNotExistException, DeletionFailedException, ItemHasNoIdException {
+        Order orderToPass = new Order();
+        orderToPass.setDateCreated("2022-05-30");
+        doNothing().when(orderRepositoryMock).delete(orderToPass);
+
+        orderService.deleteOrder(orderToPass);
+
+        verify(orderRepositoryMock, times(1)).delete(orderToPass);
+    }
+
+    @Test
+    public void deleteOrderIdCallsOrderRepo(@Autowired OrderService orderService) throws ItemDoesNotExistException, DeletionFailedException, ItemHasNoIdException {
+        int orderIdToPass = 77;
+        doNothing().when(orderRepositoryMock).deleteById(orderIdToPass);
+
+        orderService.deleteOrder(orderIdToPass);
+
+        verify(orderRepositoryMock, times(1)).deleteById(orderIdToPass);
+    }
+
+    @Test
+    public void getOrderByIdCallsOrderRepoAndReturnsOptionalOrder(@Autowired OrderService orderService) throws ItemDoesNotExistException {
+        int orderIdToPass = 889;
+        Optional<Order> opOrderToReturn = Optional.of(testOrder);
+        when(orderRepositoryMock.getById(orderIdToPass)).thenReturn(opOrderToReturn);
+
+        Optional<Order> returnedOpOrder = orderService.getOrderById(orderIdToPass);
+
+        assertEquals(opOrderToReturn, returnedOpOrder);
+        verify(orderRepositoryMock, times(1)).getById(orderIdToPass);
+    }
+
+    @Test
+    public void getAllCallsOrderRepoAndReturnsListOfOrders(@Autowired OrderService orderService) {
+        List<Order> orderListToReturn = new ArrayList<>();
+        orderListToReturn.add(testOrder);
+        orderListToReturn.add(new Order());
+        when(orderRepositoryMock.getAll()).thenReturn(orderListToReturn);
+
+        List<Order> returnedOrderList = orderService.getAll();
+
+        assertEquals(orderListToReturn, returnedOrderList);
+        verify(orderRepositoryMock, times(1)).getAll();
+    }
+
+    @Test
     public void testGetOrderByUserId(@Autowired OrderService orderService) {
         // create test objects to interact with
         User user1 = new User();
@@ -143,7 +189,7 @@ public class OrderServiceTests {
         assertEquals(returnedName, testUn);
 
         // verify order repo methods were called
-        verify(orderRepositoryMock, times(2)).getById(1);
+        verify(orderRepositoryMock, times(1)).getById(1);
 
     }
 
@@ -162,8 +208,28 @@ public class OrderServiceTests {
         assertEquals(returnedTotal, total);
 
         // verify order repo methods were called
-        verify(orderRepositoryMock, times(2)).getById(1);
+        verify(orderRepositoryMock, times(1)).getById(1);
 
+    }
+
+    @Test
+    public void getUsernameReturnsSpaceCharacterWhenNoOrderMatchesId(@Autowired OrderService orderService) throws ItemDoesNotExistException {
+        int orderIdToPass = 189;
+        when(orderRepositoryMock.getById(orderIdToPass)).thenReturn(Optional.empty());
+
+        String returnedUsername = orderService.getUsername(orderIdToPass);
+
+        assertEquals(" ", returnedUsername);
+    }
+
+    @Test
+    public void getTotalReturnsZeroWhenNoOrderMatchesId(@Autowired OrderService orderService) throws ItemDoesNotExistException {
+        int orderIdToPass = 999;
+        when(orderRepositoryMock.getById(orderIdToPass)).thenReturn(Optional.empty());
+
+        Double returnedOrderTotal = orderService.getTotal(orderIdToPass);
+
+        assertEquals(0.0, returnedOrderTotal);
     }
 
 }
