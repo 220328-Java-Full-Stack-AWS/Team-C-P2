@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UserInfo } from '../../interfaces/User-Interface/user-info.interface';
 import { UserService } from '../../services/user-service/user.service';
 import { ProductService } from '../../services/product-service/product.service';
 import { onSale } from '../../interfaces/Product-Interface/onsale.interface';
 import { category } from '../../interfaces/Product-Interface/category.interface';
-import { Cart } from '../../interfaces/Cart-Interface/cart.interface';
 
 @Component({
   selector: 'app-featured-products',
@@ -13,45 +11,33 @@ import { Cart } from '../../interfaces/Cart-Interface/cart.interface';
 })
 export class FeaturedProductsComponent implements OnInit {
 
-  products: Product[] = [];
-  userInfo: UserInfo = {
-    userId: 0,
-    activeCartId: 0
-  }
+  products: Item[] = [];
   quantity: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   constructor(private productService: ProductService, private userService: UserService) { }
 
   ngOnInit(): void {
-    this.userService.getCurrentUser().subscribe(currentUser => {
-      this.userInfo = currentUser;
-    });
-    this.userService.getCurrentActiveCart().subscribe((cartArray) => (
-      this.cartArray = cartArray
-    ));
+    // Initialize
     this.productService.getAllFeatured().subscribe({
       next: response => {
         this.products = (response as any).data;
       },
       error: err => {
-        // Todo: Handle error
+        console.log(err);
       }
     });
   }
-  cartArray: Cart[] = [];
 
-  addToCart(item: Product, event: Event, qty: any): void {
+  addToCart(item: Item, event: Event, qty: any): void {
     event.stopPropagation();
-    this.userService.addCartItem(item.product, qty);
+
+    this.userService.addToCart(item.product, qty);
 
     (event.target as HTMLElement).classList.add('inCart');
-    console.log(`Added ${item.product.name} to the cart`);
-   
   }
-
 }
 
-interface Product {
+interface Item {
   netPrice: number,
   product: {
     id?: number,

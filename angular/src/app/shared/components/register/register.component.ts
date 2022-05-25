@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { MatTooltip } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
@@ -81,9 +81,10 @@ export class RegisterComponent implements OnInit {
         this.baseLayout.isLoggedIn = true;
         this.user.userId = response.data.id;
         this.user.activeCartId = response.data.activeCartId;
+
         this.userService.setUserId(response.data.id);
         this.userService.setActiveCartId(response.data.activeCartId);
-        localStorage.setItem('userInfo', JSON.stringify(this.user));
+
         this.router.navigate(["/"]);
       },
       error: err => {

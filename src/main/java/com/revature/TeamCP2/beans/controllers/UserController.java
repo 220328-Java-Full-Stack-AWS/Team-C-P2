@@ -278,8 +278,9 @@ public class UserController {
         if (userService.getById(cartItemDto.getUserId()).isPresent() && productService.getById(cartItemDto.getProductId()).isPresent()) {
             User user = userService.getById(cartItemDto.getUserId()).get();
             Cart cart = cartService.getCartbyId(user.getActiveCartId()).get();
+            cart.setTotal(cartItemDto.getNetPrice());
             Product product = productService.getById(cartItemDto.getProductId()).get();
-            CartItem cartItem = new CartItem(cart, product, cartItemDto.getQuantity(), productService.getNetPrice(product));
+            CartItem cartItem = new CartItem(cart, product, cartItemDto.getQuantity(), cartItemDto.getNetPrice());
             cartService.addCartItem(cartItem);
 
             res.setStatus(200);
@@ -328,6 +329,7 @@ public class UserController {
         if (cartItemService.getById(updateItemDto.getCartItemId()).isPresent()) {
             CartItem cartItem = cartItemService.getById(updateItemDto.getCartItemId()).get();
             cartItem.setQuantity(updateItemDto.getQuantity());
+            cartItem.setNetPrice(cartItem.getProduct().getOnSale() != null ? cartItem.getProduct().getPrice() * (1 - cartItem.getProduct().getOnSale().getDiscount()) * cartItem.getQuantity() : cartItem.getProduct().getPrice() * cartItem.getQuantity());
 
             cartService.updateCartItem(cartItem);
             res.setStatus(200);
