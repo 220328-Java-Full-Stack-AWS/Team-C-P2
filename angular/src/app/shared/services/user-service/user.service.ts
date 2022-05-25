@@ -42,8 +42,6 @@ export class UserService {
         // Initialize Cart
         this.currentCart = res.data;
         this.currentCartSubject.next(this.currentCart);
-
-        console.log(this.currentCart);
       });
   }
 
@@ -51,7 +49,6 @@ export class UserService {
    * Return current cart subject to be subscribed to
    */
   getCurrentCartSubject(): BehaviorSubject<Cart[]> {
-    console.log(this.currentCartSubject);
     return this.currentCartSubject;
   }
 
@@ -261,25 +258,30 @@ export class UserService {
 
   updateItemInCart(cartItem: CartItem, qty: number) {
 
-    console.log("INSIDE UPDATEITEMINCART");
-    console.log(cartItem);
     const itemToUpdate: CartItemUpdateDto = {
       cartItemId: cartItem.id!,
-      quantity: qty
+      quantity: Number(qty)
     }
 
     this.http.put(`${this.userURL}/cart/update`, itemToUpdate, { withCredentials: true }).subscribe({
           next: response => {
 
             //Successfully Updated in backend
-            console.log("Successfully updated item")
-            console.log(response);
             // Loop update in memory cart to update it
-            Array.prototype.forEach.call(this.currentCart, (cart: Cart) => {
+            const index = Array.prototype.indexOf.call(this.currentCart, Array.prototype.filter.call( this.currentCart, (cart: Cart) => {
               if(cart.cartItem?.id == cartItem.id){
-                cart.cartItem = cartItem;
+                return true;
               }
-            });
+              return false;
+            })[0]);
+
+            cartItem.quantity = (response as any).data.quantity;
+            // In memory differ
+            const cart: Cart = {
+              cartItem: cartItem,
+              netPrice: cartItem.netPrice! * cartItem.quantity!
+            }
+            this.currentCart.splice(index, 1, cart);
             // Emit
             this.currentCartSubject.next(this.currentCart);
           },
@@ -294,8 +296,14 @@ export class UserService {
       // Successfully deleted cart item
       Array.prototype.forEach.call(this.currentCart, (cart: Cart) => {
         // Remove element from in Memory
+        let index = this.currentCart.indexOf(this.currentCart.filter((cart: Cart) => {
+          if(cart.cartItem?.id == cartItem.id){
+            return true;
+          }
+          return false;
+        })[0]);
         if(cartItem.id == cart.cartItem?.id){
-          this.currentCart.splice(this.currentCart.indexOf(cartItem), 1);
+          this.currentCart.splice(index, 1);
           // Emit
           this.currentCartSubject.next(this.currentCart);
         }
@@ -308,10 +316,7 @@ export class UserService {
 
     Array.prototype.forEach.call(this.currentCart, (cart: Cart) => {
       // Item already exists in cart
-      console.log(cart.cartItem?.product?.id + "==" + product.id)
       if (cart.cartItem?.product?.id == product.id) {
-        console.log("found equal")
-        console.log(cart);
         this.updateItemInCart(cart.cartItem!, Number(qty) + Number(cart.cartItem!.quantity));
         isAlreadyAdded = true;
         return;
@@ -326,13 +331,14 @@ export class UserService {
         cartId: this.user.activeCartId,
         product: product,
         quantity: qty,
-        netPrice: product.onSale != null ? product.price * product.onSale.discount! * qty : product.price * qty
+        netPrice: product.onSale != null ? product.price * (1 - product.onSale.discount!) : product.price
       }
     }
     // Server side representation differs from client side
     const cartToPersist: CartItemDto = {
       userId: this.user.userId,
       productId: product.id!,
+      netPrice: product.onSale != null ? product.price * (1 - product.onSale.discount!) : product.price,
       quantity: qty
     };
 
@@ -340,8 +346,6 @@ export class UserService {
     this.http.post(`${this.userURL}/cart/add`, cartToPersist, { withCredentials: true }).subscribe((response: any) => {
       // Success
       //Successfully Updated in backend
-      console.log("Successfully added item")
-      console.log(response);
       cart.cartItem!.id = response.data.id;
       // Update in memory
       Array.prototype.push.call(this.currentCart, cart);
@@ -351,7 +355,6 @@ export class UserService {
   }
 
   updateUserAddress(address : UserAddress) : Observable<any> {
-    console.log(address);
     this.cookie.getCookie('user_session');
     return this.http.put<UserAddress>(`${this.userURL}/profile/update/address`, address, {withCredentials : true});
   }

@@ -49,11 +49,10 @@ export class BaseLayoutComponent implements OnInit {
     }
     // Get Cart Item count
     this.userService.getCurrentCartSubject().subscribe((currentCart: any) => {
-      console.log(currentCart);
       let count = 0;
       // Loop through cart items add to count
-      Array.prototype.forEach.call(currentCart, (cartItem: Cart) => {
-        count += cartItem.cartItem?.quantity!;
+      Array.prototype.forEach.call(currentCart, (cartItem: any) => {
+        count += cartItem.cartItem ? Number(cartItem.cartItem?.quantity!) : Number(cartItem.quantity);
       });
       // Pass count to view
       this.itemCount = count;

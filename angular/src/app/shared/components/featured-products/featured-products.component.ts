@@ -34,7 +34,6 @@ export class FeaturedProductsComponent implements OnInit {
     this.userService.addToCart(item.product, qty);
 
     (event.target as HTMLElement).classList.add('inCart');
-    console.log(`Added ${item.product.name} to the cart`);
   }
 }
 
