@@ -1,9 +1,7 @@
 .checkout {
 
 
-    &__container {
-        
-    }
+
 
     &__header {
         margin: auto;
@@ -138,6 +136,10 @@
         padding: 2rem;
     }
 
+    &__cart-item-title {
+        margin-bottom: .5rem;
+    }
+
     &__cart-item-image {
         text-align: center;
         img {
@@ -151,6 +153,12 @@
        
     }
 
+    &__cart-item-desc {
+        height: 53px;
+        overflow: hidden;
+        margin-bottom: .5rem;
+    }
+
     &__cart-item-header {
     }
 
@@ -161,5 +169,19 @@
 
     &__cart-item-delete {
         padding-left: 1rem;
+    }
+
+    &__etc {
+        margin-bottom: .5rem;
+    }
+
+    .originalPrice {
+        text-decoration: line-through;
+        color: red;
+        margin-right: 0.5rem;
+    }
+
+    &__cart-item-price {
+        margin-bottom: .5rem;
     }
 }

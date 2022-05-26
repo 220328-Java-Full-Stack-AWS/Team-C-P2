@@ -35,6 +35,7 @@
                 .originalPrice {
                     text-decoration: line-through;
                     color: red;
+                    margin-right: .5rem;
                 }
 
                 .currentPrice {
@@ -65,6 +66,9 @@
 
         }
 
+    }
+    .tt {
+        margin-bottom: .5rem;
     }
 
     &__header {

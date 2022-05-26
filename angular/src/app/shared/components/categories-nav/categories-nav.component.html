@@ -1,8 +1,12 @@
-<div class="categories" fxLayout="row wrap" fxLayoutGap="20px" fxLayoutAlign="space-around">
-  <div fxFlex fxFlex.lt-md="33%" class="category" *ngFor="let category of categories" routerLink="/products/{{category.id}}" fxLayout="column">
-    <div fxFlex class="categoryImage">
-      <img fxFlex src="data:image/png;base64,{{category.image}}" alt="{{category.description}}">
+<section class="categories flex flex-jc-sb">
+  <div class="categories__container" *ngFor="let category of categories; let i = index">
+    <div class="categories__content" *ngIf="!(i >= 5)" routerLink="/products/{{category.id}}">
+      <div class="categories__header">
+        <h2><strong>{{category.name}}</strong></h2>
+      </div>
+      <div class="categories__image">
+        <img  src="data:image/png;base64,{{category.image}}" alt="{{category.description}}">
+      </div>
     </div>
-    <b class="categoryName">{{category.name}}</b>
   </div>
-</div>
+</section>

@@ -510,6 +510,104 @@ public class TeamCP2Application {
         productService.create(sProduct5);
         baos = new ByteArrayOutputStream();
 
+        //Create Baseball Category
+        ProductCategory bcategory = new ProductCategory();
+        bcategory.setName("Baseball");
+        bcategory.setDescription("Shop Essential Baseball Gear and Accessories");
+
+        BufferedImage bcategoryImg = ImageIO.read(new File("src/main/images/categories/baseballCategory.jpg"));
+        ImageIO.write(bcategoryImg, "jpg", baos);
+
+        bytes = baos.toByteArray();
+        bcategory.setImage(bytes);
+        categoriesService.create(bcategory);
+        baos = new ByteArrayOutputStream();
+
+        //Create Baseball Products
+
+        //Mizuno Bat
+        Product bproduct = new Product();
+        bproduct.setCategory(bcategory);
+        bproduct.setDescr("Mizuno Premier Aluminum Baseball Bat Red. Rubber base grip and barrel polish included.");
+        bproduct.setName("Mizuno Baseball Bat");
+        bproduct.setIsFeatured(true);
+        bproduct.setPrice(1);
+
+        BufferedImage bimg = ImageIO.read(new File("src/main/images/products/Baseball/mizunobat.jpg"));
+        ImageIO.write(bimg, "jpg", baos);
+
+        bytes = baos.toByteArray();
+        bproduct.setImage(bytes);
+        productService.create(bproduct);
+        baos = new ByteArrayOutputStream();
+
+        //Nike Black Cap
+        Product b2product = new Product();
+        b2product.setCategory(bcategory);
+        b2product.setDescr("Nike Athletic Cotton Baseball Cap Black. Available in Children and Adult sizes S - L");
+        b2product.setName("Nike Baseball Cap");
+        b2product.setIsFeatured(true);
+        b2product.setPrice(1);
+
+        BufferedImage b2img = ImageIO.read(new File("src/main/images/products/Baseball/nikeblackcap.jpg"));
+        ImageIO.write(b2img, "jpg", baos);
+
+        bytes = baos.toByteArray();
+        b2product.setImage(bytes);
+        productService.create(b2product);
+        baos = new ByteArrayOutputStream();
+
+        //Mizuno Glove
+        Product b3product = new Product();
+        b3product.setCategory(bcategory);
+        b3product.setDescr("Mizuno Leather Men's Baseball Glove. Outfield left-handed. Available in sizes 8-14 inches.");
+        b3product.setName("Mizuno Baseball Glove");
+        b3product.setIsFeatured(true);
+        b3product.setPrice(1);
+
+        BufferedImage b3img = ImageIO.read(new File("src/main/images/products/Baseball/mizunoglove.jpg"));
+        ImageIO.write(b3img, "jpg", baos);
+
+        bytes = baos.toByteArray();
+        b3product.setImage(bytes);
+        productService.create(b3product);
+        baos = new ByteArrayOutputStream();
+
+        //Rawlings Glove
+        Product b4product = new Product();
+        b4product.setCategory(bcategory);
+        b4product.setDescr("Rawlings Renegade Leather Men's Baseball Glove. Outfielder left-handed. 12 1/2 inches.");
+        b4product.setName("Rawlings Baseball Glove");
+        b4product.setIsFeatured(true);
+        b4product.setPrice(1);
+
+        BufferedImage b4img = ImageIO.read(new File("src/main/images/products/Baseball/rawlingsglove.jpg"));
+        ImageIO.write(b4img, "jpg", baos);
+
+        bytes = baos.toByteArray();
+        b4product.setImage(bytes);
+        productService.create(b4product);
+        baos = new ByteArrayOutputStream();
+
+        //Pitt Cap
+        Product b5product = new Product();
+        b5product.setCategory(bcategory);
+        b5product.setDescr("Pittsburgh Panthers newEra Pitt Script Baseball Cap Blue. Hail to Pitt");
+        b5product.setName("Pittsburgh Panthers Baseball Cap");
+        b5product.setIsFeatured(true);
+        b5product.setPrice(1);
+
+        BufferedImage b5img = ImageIO.read(new File("src/main/images/products/Baseball/pittcap.jpg"));
+        ImageIO.write(b5img, "jpg", baos);
+
+        bytes = baos.toByteArray();
+        b5product.setImage(bytes);
+        productService.create(b5product);
+
+
+
+
+
 
 
 

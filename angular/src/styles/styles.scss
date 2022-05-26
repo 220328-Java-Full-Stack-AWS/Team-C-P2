@@ -43,3 +43,5 @@ $front-theme: mat.define-light-theme((color: (primary: $front-primary,
 @import "checkout";
 @import "productView";
 @import "order";
+@import "products";
+@import "categories";

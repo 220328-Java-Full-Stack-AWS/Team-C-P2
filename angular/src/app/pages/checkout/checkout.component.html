@@ -1,7 +1,7 @@
 <section class="checkout">
     <div class="checkout__container container container--pall">
         <div class="checkout__header">
-            <h1>Checkout</h1><h2>({{cartArray.length}} items)</h2>
+            <h1>Checkout</h1><h2>({{itemCount}} items)</h2>
             <div class="error hide" fxLayoutAlign="space-between center">
                 <div class="stripe"></div>
                 <div class="message">{{error}}</div>
@@ -99,11 +99,21 @@
                                 <div class="checkout__cart-item-content">
                                     <div class="checkout__cart-item-header">
                                         <div class="checkout__cart-item-title">
-                                            <h3>{{cart.cartItem?.product?.name + " " + cart.cartItem?.product?.descr}}</h3>
+                                            <h3><strong>{{cart.cartItem?.product?.name}}</strong></h3>
                                         </div>
-                                        <div class="checkout__cart-item-price">
-                                            <h3>Price: ${{cart.cartItem?.product?.price | number : '.2-2'}}</h3>
-                                            <h3>Net Price: ${{cart.cartItem!.netPrice | number : '.2-2'}}</h3>
+                                        <div class="checkout__cart-item-desc">
+                                            <h3>{{cart.cartItem?.product?.descr}}</h3>
+                                        </div>
+                                        <div class="checkout__etc">
+                                            <h3><strong>...</strong></h3>
+                                        </div>
+                                        <div class="checkout__cart-item-price flex">
+                                            <span class="originalPrice" *ngIf="cart.cartItem?.product?.onSale != null">
+                                                <h3>${{cart.cartItem!.netPrice | number : '.2-2'}}</h3>
+                                            </span>
+                                            <span class="currentPrice">
+                                                <h3>${{cart.cartItem?.product?.price | number : '.2-2'}}</h3>
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="checkout__cart-item-footer">
@@ -136,7 +146,7 @@
                 <div class="checkout__summary-content">
                     <div class="checkout__summary-item">
                         <div class="checkout__summary-title">
-                            <h3>Items ({{cartArray.length}}):</h3>
+                            <h3>Items ({{itemCount}}):</h3>
                         </div>
                         <div class="checkout__summary-info">
                             <h3>${{cartTotal | number : '.2-2'}}</h3>

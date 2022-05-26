@@ -3,40 +3,75 @@
         <div class="cart__header">
             <h1>Shopping Cart</h1>
         </div>
-        <div class="cart__item-container" *ngFor="let cart of currentCart">
-            <div class="cart__item item-container">
-                <div class="cart__item-image">
-                    <img src="data:image/png;base64,{{cart.cartItem?.product?.image}}" alt="">
+        <div class="cart__container flex">
+            <div class="cart__content-container">
+                <div class="cart__item-container " *ngFor="let cart of currentCart">
+                    <div class="cart__item">
+                        <div class="cart__item-image">
+                            <img src="data:image/png;base64,{{cart.cartItem?.product?.image}}" alt="">
+                        </div>
+                        <div class="cart__item-content">
+                            <div class="cart__item-header">
+                                <div class="cart__item-title">
+                                    <h3><strong>{{cart.cartItem?.product?.name}}</strong></h3>
+                                    <h3>{{cart.cartItem?.product?.descr}}</h3>
+                                </div>
+                            </div>
+                            <div class="cart__item-price">
+                                <div class="originalPrice" *ngIf="cart.cartItem?.product?.onSale != null">
+                                    <h3>${{cart.cartItem!.netPrice | number : '.2-2'}}</h3>
+                                </div>
+                                <div class="currentPrice">
+                                    <h3>${{cart.cartItem?.product?.price | number : '.2-2'}}</h3>
+                                </div>
+                            </div>
+                            <div class="cart__item-footer">
+                                <div class="cart__item-quantity">
+                                    <select name="quantity" id="" #mySelect
+                                        (change)="updateCart(cart.cartItem!, mySelect.value)">
+                                        <ng-container *ngFor="let num of quantity">
+                                            <option [value]="cart.cartItem?.quantity" value="cart.cartItem?.quantity"
+                                                *ngIf="cart.cartItem?.quantity == num" selected>
+                                                Qty: {{cart.cartItem?.quantity}}
+                                            </option>
+                                            <option [value]="num" value="num" *ngIf="cart.cartItem?.quantity != num">
+                                                Qty: {{num}}
+                                            </option>
+                                        </ng-container>
+                                    </select>
+                                </div>
+                                <div class="cart__item-delete">
+                                    <button (click)='removeCartItem(cart.cartItem!)'>Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="cart__item-content">
-                    <div class="cart__item-header">
-                        <div class="cart__item-title">
-                            <h3>{{cart.cartItem?.product?.name + " " + cart.cartItem?.product?.descr}}</h3>
+            </div>
+            <div class="cart__summary item-container">
+                <div class="cart__summary-header">
+                    <h2><strong>Order Summary</strong></h2>
+                </div>
+                <div class="cart__summary-content">
+                    <div class="cart__summary-item">
+                        <div class="cart__summary-title">
+                            <h3>Items ({{itemCount}}):</h3>
                         </div>
-                        <div class="cart__item-price">
-                            <h3>Price: ${{cart.cartItem?.product?.price | number : '.2-2'}}</h3>
-                            <h3>Net Price: ${{cart.cartItem?.netPrice | number : '.2-2'}}</h3>
-                        </div>
-                    </div>
-                    <div class="cart__item-footer">
-                        <div class="cart__item-quantity">
-                            <select name="quantity" id="" #mySelect
-                                (change)="updateCart(cart.cartItem!, mySelect.value)">
-                                <ng-container *ngFor="let num of quantity">
-                                    <option [value]="cart.cartItem?.quantity" value="cart.cartItem?.quantity"
-                                        *ngIf="cart.cartItem?.quantity == num" selected>
-                                        Qty: {{cart.cartItem?.quantity}}
-                                    </option>
-                                    <option [value]="num" value="num" *ngIf="cart.cartItem?.quantity != num">
-                                        Qty: {{num}}
-                                    </option>
-                                </ng-container>
-                            </select>
-                        </div>
-                        <div class="cart__item-delete">
-                            <button (click)='removeCartItem(cart.cartItem!)'>Remove</button>
+                        <div class="cart__summary-info cart__summary-item-footer">
+                            <h3>${{cartTotal | number : '.2-2'}}</h3>
                         </div>
                     </div>
+                </div>
+                <div class="cart__summary-total">
+                    <div class="cart__summary-title">
+                        <h2><strong>Order Total:</strong></h2>
+                    </div>
+                    <div class="cart__summary-info">
+                        <h2><strong>${{cartTotal | number : '.2-2'}}</strong></h2>
+                    </div>
+                </div>
+                <div class="cart__summary-button">
+                    <button routerLink="checkout" [disabled]="!cartTotal"><h2><strong>Checkout</strong></h2></button>
                 </div>
             </div>
         </div>

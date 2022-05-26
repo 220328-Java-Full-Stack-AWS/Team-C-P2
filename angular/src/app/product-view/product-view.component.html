@@ -11,11 +11,10 @@
         
                 <div class="productInfo">
                     <div class="productView__content">
-                        <h1></h1>
+                        <h2 class="tt"><strong>{{productById.product.name}}</strong></h2>
                         <h2>{{productById.product.descr}}</h2>
                     </div>
-                    <div class="productPricing">
-                        <h2><strong>Price:</strong></h2>
+                    <div class="productPricing flex">
                         <span class="originalPrice" *ngIf="productById.product.onSale != null"><h2>{{productById.product.price |
                             currency}}</h2></span>
                         <span class="currentPrice"><h2>{{productById.netPrice | currency}}</h2></span>
@@ -31,7 +30,7 @@
                             <div class="addToCartText">Add </div>
                             <mat-icon class="addCartIcon">add_shopping_cart</mat-icon>
                         </button>
-                        <div class="cart__item-quantity">
+                        <div class="products__item-quantity">
                             <select name="quantity" id="" #mySelect>
                                 <ng-container *ngFor="let num of quantity">
                                     <option [value]="num" value="num">
