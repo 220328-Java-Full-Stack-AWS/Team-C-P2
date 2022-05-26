@@ -1,4 +1,4 @@
-1        //Create Running Category
+         //Create Running Category
          ProductCategory cCategory = new ProductCategory();
          category.setName("Soccer");
          category.setDescription("Anything and everything that has to do with soccer.");
@@ -30,7 +30,7 @@
          productService.create(cProduct1);
          cProduct1.setCategory(cCategory);
 
-///////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////
          //Create Running  Product 2
          Product cProduct2 = new Product();
          cProduct2.setDescr("The RevSport Strike Soccer Ball is ready to fly into the back of the net.
@@ -48,7 +48,7 @@
          cProduct2.setOnsale(runningSale);
          productService.create(cProduct2);
 
-///////////////////////////////////
+        ///////////////////////////////////
 
 
          //Create Running Product 3

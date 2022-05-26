@@ -6,8 +6,122 @@
         <div class="order__title">
             <h2>We'll send you a confirmation email once your order has shipped.</h2>
         </div>
-        <div class="order__details"></div>
-        <div class="order__summary"></div>
-        <div class="order__total"></div>
+        <div class="order__details">
+            <div class="order__details-item">
+                <div class="order__details-content">
+                    <div class="order__details-title">
+                        <h2><strong>Order Number: </strong></h2></div>
+                    <div class="order__details-info">
+                        <h3>{{order.id}}</h3>
+                    </div>
+                </div>
+                <div class="order__details-content">
+                    <div class="order__details-title">
+                        <h2><strong>Payment: </strong></h2></div>
+                    <div class="order__details-info">
+                        <h3>{{order.cart?.user?.payment?.issuer}}</h3>
+                        <h3>{{order.cart?.user?.payment?.cardNumber}}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="order__details-item">
+                <div class="order__details-content">
+                    <div class="order__details-title">
+                        <h2><strong>Order Date: </strong></h2></div>
+                    <div class="order__details-info">
+                        <h3>{{order.dateCreated}}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="order__details-item">
+                <div class="order__details-content">
+                    <div class="order__details-title">
+                        <h2><strong>Delivery Details: </strong></h2></div>
+                    <div class="order__details-info">
+                        <h3>{{order.cart?.user?.firstName + " " + order.cart?.user?.lastName}}</h3>
+                        <h3>{{order.cart?.user?.userAddress?.addressLine1}}</h3>
+                        <h3>{{order.cart?.user?.userAddress?.addressLine2}}</h3>
+                        <h3>{{order.cart?.user?.userAddress?.city + " " + order.cart?.user?.userAddress?.postalCode + ", " + order.cart?.user?.userAddress?.country}}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="order__summary">
+            <div class="order__summary-title">
+                <h2><strong>Order Items:</strong></h2>
+            </div>
+            <div class="order__summary-content">
+                <div class="order__summary-container item-container">
+                    <div class="order__summary-item-container" *ngFor="let cart of cartArray">
+                        <div class="order__summary-item">
+                            <div class="order__summary-item-image">
+                                <img src="data:image/png;base64,{{cart.cartItem?.product?.image}}" alt="">
+                            </div>
+                            <div class="order__summary-item-content">
+                                <div class="order__summary-item-header">
+                                    <div class="order__summary-item-title">
+                                        <h3><strong>{{cart.cartItem?.product?.name}}</strong></h3>
+                                    </div>
+                                    <div class="order__summary-item-descr">
+                                        <h3>{{cart.cartItem?.product?.descr}}</h3>
+                                    </div>
+                                </div>
+  
+                                <div class="order__summary-item-quantity">
+                                    <h3><strong>Qty:</strong></h3>
+                                    <h3>{{cart.cartItem!.quantity}}</h3>
+                                </div>
+
+                                <div class="order__summary-item-price">
+                                    <h3><strong>Price:</strong></h3>
+                                    <h3>${{cart.cartItem!.netPrice | number : '.2-2'}}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="order__total item-container">
+            <div class="order__total-header">
+                <h2><strong>Order Total: </strong></h2>
+            </div>
+            <div class="order__total-content">
+                <div class="order__total-subtotal">
+                    <div class="order__total-item">
+                        <div class="order__total-title">
+                            <h3><strong>Subtotal:</strong></h3>
+                        </div>
+                        <div class="order__total-info">
+                            <h3>${{order.cart?.total | number : '.2-2'}}</h3>
+                        </div>
+                    </div>
+                    <div class="order__total-item">
+                        <div class="order__total-title">
+                            <h3><strong>Discount:</strong></h3>
+                        </div>
+                        <div class="order__total-info">
+                            <h3>$(math not implemented yet)</h3>
+                        </div>
+                    </div>
+                    <div class="order__total-item">
+                        <div class="order__total-title">
+                            <h3><strong>Tax:</strong></h3>
+                        </div>
+                        <div class="order__total-info">
+                            <h3>${{getTax() | number : '.2-2'}}</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="order__total-total">
+                    <div class="order__total-title">
+                        <h2><strong>Total:</strong></h2>
+                    </div>
+                    <div class="order__value">
+                        <h2><strong>${{order.cart!.total + getTax() | number : '.2-2'}}</strong></h2>
+                    </div>
+                </div>
+            </div>
+            </div>
     </div>
 </section>

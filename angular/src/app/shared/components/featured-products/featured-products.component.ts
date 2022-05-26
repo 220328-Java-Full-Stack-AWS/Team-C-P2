@@ -21,6 +21,7 @@ export class FeaturedProductsComponent implements OnInit {
     this.productService.getAllFeatured().subscribe({
       next: response => {
         this.products = (response as any).data;
+        console.log(this.products);
       },
       error: err => {
         console.log(err);

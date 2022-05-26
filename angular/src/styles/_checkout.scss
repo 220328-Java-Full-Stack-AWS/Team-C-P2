@@ -133,13 +133,13 @@
 
 
     &__cart-item {
-        margin-left: 3rem;
-        width: 100%;
+        width: 332px;
         flex: 50%;
         padding: 2rem;
     }
 
     &__cart-item-image {
+        text-align: center;
         img {
             width: 180px;
             height: 180px;

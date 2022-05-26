@@ -15,6 +15,8 @@ export class OrderComponent implements OnInit {
 
   cart: Cart[] = [];
 
+  cartArray: Cart[] = [];
+
   constructor(
     private cookieService:CookieService,
     private userService: UserService,
@@ -35,13 +37,17 @@ export class OrderComponent implements OnInit {
     id: 0
   }
 
+  getTax() {
+    return this.order.cart!.total * .13;
+  }
+
 
   ngOnInit(): void {
     this.cookieService.getCookie('user_session');
     this.userService.getCurrentUser().subscribe((user) => (
       this.user = user
     ));
-
+    
     // Initialize current cart
     this.userService.getCurrentCartSubject().subscribe((res: any) => {
       this.cart = res;
@@ -54,6 +60,11 @@ export class OrderComponent implements OnInit {
           console.log(response)
           this.order = (response as any)
           console.log(this.order);
+          this.userService.getCartById(this.order.cart!.id).subscribe((result: any) => {
+            console.log(result);
+            this.cartArray = result.data;
+            console.log(this.cartArray);
+          })
         },
         error: err => {
           // Todo: Handle error
@@ -61,4 +72,6 @@ export class OrderComponent implements OnInit {
       })
     })
     }
+
+    
 }

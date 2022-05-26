@@ -82,6 +82,7 @@ export class CheckoutComponent implements OnInit {
         totalCount += cart.cartItem?.netPrice! * cart.cartItem?.quantity!;
       });
       this.cartTotal = totalCount;
+      this.cartArray.sort((a,b) => (a.cartItem?.id || 0) < (b.cartItem?.id || 0) ? -1 : 1);
     });
   }
 

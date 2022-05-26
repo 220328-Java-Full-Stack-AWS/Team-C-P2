@@ -1,113 +1,113 @@
-1        //Create Running Category
-         ProductCategory cCategory = new ProductCategory();
-         category.setName("Running");
-         category.setDescription("Anything and everything that has to do with running.");
-         BufferedImage cCategoryImg = ImageIO.read(new File("src/main/images/categories/runningCategory.png"));
-         ImageIO.write(cCategoryImg, "png", baos);
-         bytes = baos.toByteArray();
-         category.setImage(bytes);
-         categoriesService.create(cCategory);
+     //Create Running Category
+     ProductCategory cCategory = new ProductCategory();
+     category.setName("Running");
+     category.setDescription("Anything and everything that has to do with running.");
+     BufferedImage cCategoryImg = ImageIO.read(new File("src/main/images/categories/runningCategory.png"));
+     ImageIO.write(cCategoryImg, "png", baos);
+     bytes = baos.toByteArray();
+     category.setImage(bytes);
+     categoriesService.create(cCategory);
 
-            //Create Running Sale
-            //Initializing onSale repositories
-           OnSale runningSale = new OnSale(.60);
-            onSaleService.createOnSale(runningSale);
+        //Create Running Sale
+        //Initializing onSale repositories
+       OnSale runningSale = new OnSale(.60);
+        onSaleService.createOnSale(runningSale);
 
-         //Create Runnig Product
-         Product cProduct1 = new Product();
+     //Create Runnig Product
+     Product cProduct1 = new Product();
 
-         cProduct1.setDescr("The best Outdoor Running Belt You Can Find! RevSport
-         Running Waist Belt is made of soft fabric, so the runners belt is very soft and breathable,
-         fits comfortably to your body and doesn't move, jiggle, bounce, ride up or chafe. Our Running Waist Belt
-         Phone Holder has more a durable zipper than any other brand, thousands of tests prove that");
+     cProduct1.setDescr("The best Outdoor Running Belt You Can Find! RevSport
+     Running Waist Belt is made of soft fabric, so the runners belt is very soft and breathable,
+     fits comfortably to your body and doesn't move, jiggle, bounce, ride up or chafe. Our Running Waist Belt
+     Phone Holder has more a durable zipper than any other brand, thousands of tests prove that");
 
-         cProduct1.setName("RevSport Running Waist Belt");
-         cProduct1.setIsFeatured(false);
-         cProduct1.setPrice(25.00);
-         BufferedImage c1img = ImageIO.read(new File("src/main/images/Running/runningfannypack.png"));
-         ImageIO.write(c1img, "png", baos);
-         bytes = baos.toByteArray();
-         cProduct1.setImage(bytes);
-         productService.create(cProduct1);
-         cProduct1.setCategory(cCategory);
+     cProduct1.setName("RevSport Running Waist Belt");
+     cProduct1.setIsFeatured(false);
+     cProduct1.setPrice(25.00);
+     BufferedImage c1img = ImageIO.read(new File("src/main/images/Running/runningfannypack.png"));
+     ImageIO.write(c1img, "png", baos);
+     bytes = baos.toByteArray();
+     cProduct1.setImage(bytes);
+     productService.create(cProduct1);
+     cProduct1.setCategory(cCategory);
 
 ///////////////////////////////////////////////////////////////
-         //Create Running  Product 2
-         Product cProduct2 = new Product();
-         cProduct2.setDescr("Still our most tested shoe, made to help you stay after those lofty running goals.
-                                     The RevSport Run 3 feels soft and stable with a smooth ride that carries you through routes, long and short.
-                                     A breathable upper is made to feel contained, yet flexible.
-                                      We even added more cushioning around the heel and ankle for a supportive sensation. Keep running, we've got you.");
+     //Create Running  Product 2
+     Product cProduct2 = new Product();
+     cProduct2.setDescr("Still our most tested shoe, made to help you stay after those lofty running goals.
+                                 The RevSport Run 3 feels soft and stable with a smooth ride that carries you through routes, long and short.
+                                 A breathable upper is made to feel contained, yet flexible.
+                                  We even added more cushioning around the heel and ankle for a supportive sensation. Keep running, we've got you.");
 
-         cProduct2.setName("RevSport Run 3");
+     cProduct2.setName("RevSport Run 3");
 
-         cProduct2.setIsFeatured(true);
-         cProduct2.setPrice(160);
-         BufferedImage c2img = ImageIO.read(new File("src/main/images/Running/runningshoes1.png"));
-         ImageIO.write(c2img, "png", baos);
-         bytes = baos.toByteArray();
-         cProduct2.setImage(bytes);
-         cProduct2.setCategory(cCategory);
-         cProduct2.setOnsale(runningSale);
-         productService.create(cProduct2);
+     cProduct2.setIsFeatured(true);
+     cProduct2.setPrice(160);
+     BufferedImage c2img = ImageIO.read(new File("src/main/images/Running/runningshoes1.png"));
+     ImageIO.write(c2img, "png", baos);
+     bytes = baos.toByteArray();
+     cProduct2.setImage(bytes);
+     cProduct2.setCategory(cCategory);
+     cProduct2.setOnsale(runningSale);
+     productService.create(cProduct2);
 
 ///////////////////////////////////
 
 
-         //Create Running Product 3
-          Product cProduct3 = new Product();
-                  cProduct3.setDescr("Chilly weather can't stop the run when you suit up in this spin on a favorite.
-                                                       The RecSport Therma-FIT Element Sweater can be worn 4 ways, giving you options for before, during or after your run.
-                                                       One side delivers a classic look while the other has Swoosh-shaped nodes for a riff on the traditional sweater.
-                                                       Heat-managing technology with stretchy fabric helps you stay moving in cool conditions.
-                                                       This product is made with at least 75% recycled polyester fibers.");
+     //Create Running Product 3
+      Product cProduct3 = new Product();
+              cProduct3.setDescr("Chilly weather can't stop the run when you suit up in this spin on a favorite.
+                                                   The RecSport Therma-FIT Element Sweater can be worn 4 ways, giving you options for before, during or after your run.
+                                                   One side delivers a classic look while the other has Swoosh-shaped nodes for a riff on the traditional sweater.
+                                                   Heat-managing technology with stretchy fabric helps you stay moving in cool conditions.
+                                                   This product is made with at least 75% recycled polyester fibers.");
 
-                  cProduct3.setName("RevSport Running Sweater");
+              cProduct3.setName("RevSport Running Sweater");
 
-                  cProduct3.setIsFeatured(false);
-                  cProduct3.setPrice(50.97);
-                  BufferedImage c2img = ImageIO.read(new File("src/main/images/Running/runningSweater.png"));
-                  ImageIO.write(c2img, "png", baos);
-                  bytes = baos.toByteArray();
-                  cProduct3.setImage(bytes);
-                  cProduct3.setCategory(cCategory);
-                  productService.create(cProduct3);
+              cProduct3.setIsFeatured(false);
+              cProduct3.setPrice(50.97);
+              BufferedImage c2img = ImageIO.read(new File("src/main/images/Running/runningSweater.png"));
+              ImageIO.write(c2img, "png", baos);
+              bytes = baos.toByteArray();
+              cProduct3.setImage(bytes);
+              cProduct3.setCategory(cCategory);
+              productService.create(cProduct3);
 
-         //Create Running Product 4
-          Product cProduct4 = new Product();
-                  cProduct4.setDescr("The finish is only a quick sprint away.
-                  Let the lightweight feel of the RevSPort Zoom Maxfly take you there.
-                  Bounce at every step gives you the responsiveness to match your speed as you race to shatter personal goals.
-                  We added plenty of traction to give you extra grip for races from 100 to 400 meters with hurdles.");
+     //Create Running Product 4
+      Product cProduct4 = new Product();
+              cProduct4.setDescr("The finish is only a quick sprint away.
+              Let the lightweight feel of the RevSPort Zoom Maxfly take you there.
+              Bounce at every step gives you the responsiveness to match your speed as you race to shatter personal goals.
+              We added plenty of traction to give you extra grip for races from 100 to 400 meters with hurdles.");
 
-                  cProduct4.setName("RevSport Sprinting Shoes");
+              cProduct4.setName("RevSport Sprinting Shoes");
 
-                  cProduct4.setIsFeatured(true);
-                  cProduct4.setPrice(200);
-                  BufferedImage c2img = ImageIO.read(new File("src/main/images/Running/sprintingshoes.png"));
-                  ImageIO.write(c2img, "png", baos);
-                  bytes = baos.toByteArray();
-                  cProduct4.setImage(bytes);
-                  cproduct4.setCategory(cCategory);
-                  cproduct4.setOnsale(runningSale);
-                  productService.create(cProduct4);
+              cProduct4.setIsFeatured(true);
+              cProduct4.setPrice(200);
+              BufferedImage c2img = ImageIO.read(new File("src/main/images/Running/sprintingshoes.png"));
+              ImageIO.write(c2img, "png", baos);
+              bytes = baos.toByteArray();
+              cProduct4.setImage(bytes);
+              cproduct4.setCategory(cCategory);
+              cproduct4.setOnsale(runningSale);
+              productService.create(cProduct4);
 
-         //Create runnign product 5
+     //Create runnign product 5
 
-          Product cProduct5 = new Product();
-                  cProduct5.setDescr("The road is your runway.
-                  Get ready to take flight in the workhorse with wings. Back with extra bounce that’s perfect for hitting the pavement.
-                  Whether you’re racking up everyday miles or on your long run, feel the spring in your step with the same cushioned support as its predecessor.
-                  Breathable mesh in the upper combines the comfort and durability you want with a wider fit at the toes.");
+      Product cProduct5 = new Product();
+              cProduct5.setDescr("The road is your runway.
+              Get ready to take flight in the workhorse with wings. Back with extra bounce that’s perfect for hitting the pavement.
+              Whether you’re racking up everyday miles or on your long run, feel the spring in your step with the same cushioned support as its predecessor.
+              Breathable mesh in the upper combines the comfort and durability you want with a wider fit at the toes.");
 
-                  cProduct2.setName("REvSport Women's Running Shoes");
+              cProduct2.setName("REvSport Women's Running Shoes");
 
-                  cProduct5.setIsFeatured(true);
-                  cProduct5.setPrice(300);
-                  BufferedImage c2img = ImageIO.read(new File("src/main/images/Running/womensrunninghsoes.png"));
-                  ImageIO.write(c2img, "png", baos);
-                  bytes = baos.toByteArray();
-                  cProduct5.setImage(bytes);
-                  cProduct5.setCategory(cCategory);
-                  cProduct5.setOnsale(runningSale);
-                  productService.create(cProduct5);
+              cProduct5.setIsFeatured(true);
+              cProduct5.setPrice(300);
+              BufferedImage c2img = ImageIO.read(new File("src/main/images/Running/womensrunninghsoes.png"));
+              ImageIO.write(c2img, "png", baos);
+              bytes = baos.toByteArray();
+              cProduct5.setImage(bytes);
+              cProduct5.setCategory(cCategory);
+              cProduct5.setOnsale(runningSale);
+              productService.create(cProduct5);
