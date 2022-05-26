@@ -20,6 +20,8 @@ import { UpdateCartItem } from 'src/app/shared/interfaces/Cart-Interface/update-
 })
 export class CheckoutComponent implements OnInit {
 
+  error?: string = "Error.";
+
   private user: UserInfo = {
     userId: 0,
     activeCartId: 0
@@ -148,8 +150,16 @@ export class CheckoutComponent implements OnInit {
   submit(total: any){
     this.getUserById(this.user.userId);
     let currentDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
-    console.log("Current Date:" + currentDate);
-    this.createOrder(this.userQuery, currentDate, total);
+    console.log(this.userQuery.userAddress)
+    console.log(this.userQuery.payment)
+    if (this.userQuery.userAddress.userId == undefined || this.userQuery.payment.userId == undefined) {
+      this.showError("Please ensure you have provided address and payment information.");
+
+    }
+    else {
+      console.log("Current Date:" + currentDate);
+      this.createOrder(this.userQuery, currentDate, total);
+    }
 
   }
 
@@ -164,5 +174,26 @@ export class CheckoutComponent implements OnInit {
       this.userService.setCartValue([]);
       this.router.navigate(['cart/checkout/order/' + json.id]);
     })
+  }
+
+  // function to close error window
+  closeError(): void {
+    const el = document.querySelector(".error") as HTMLElement;
+
+    if(!el.classList.contains("hide")){
+      el.classList.add("hide");
+      this.error = "";
+    }
+  }
+
+  // function to show errors
+  showError(errorMessage: string): void {
+    const el = document.querySelector('.error') as HTMLElement;
+
+    this.closeError();
+    if(el.classList.contains("hide")) {
+      this.error = errorMessage;
+      el.classList.remove("hide");
+    }
   }
 }

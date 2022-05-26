@@ -2,7 +2,13 @@
     <div class="checkout__container container container--pall">
         <div class="checkout__header">
             <h1>Checkout</h1><h2>({{cartArray.length}} items)</h2>
+            <div class="error hide" fxLayoutAlign="space-between center">
+                <div class="stripe"></div>
+                <div class="message">{{error}}</div>
+                <mat-icon class="exit" style="color: red" (click)="closeError()">close</mat-icon>
+            </div>
         </div>
+        
         <div class="checkout__content-1">
             <div class="checkout__user-container">
                 <div class="checkout__address">

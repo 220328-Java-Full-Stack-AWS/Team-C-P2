@@ -32,34 +32,16 @@
                         <!-- Card Number -->
                         <div fxLayoutAlign="center center">
                             <input type="text" name="cardNumber" id="cardNumber" placeholder="Card Number" formControlName="cardNumber"> <!--(blur)="checkInput(credentialsForm.get('username'), usernameTooltip)"-->
-                            <mat-icon
-                                class="info"
-                                #address1Tooltip="matTooltip"
-                                matTooltip="Card Number must be numeric and exactly 12 digits."
-                                matTooltipPosition="after">info
-                            </mat-icon>
                         </div>
 
                         <!-- Security Code -->
                         <div fxLayoutAlign="center center">
                             <input type="text" name="securityCode" id="securityCode" placeholder="Security Code" formControlName="securityCode"> <!--(blur)="checkInput(credentialsForm.get('username'), usernameTooltip)"-->
-                            <mat-icon
-                                class="info"
-                                #address1Tooltip="matTooltip"
-                                matTooltip="Security Code must be numeric and exactly 3 digits."
-                                matTooltipPosition="after">info
-                            </mat-icon>
                         </div>
 
                         <!-- Exp Date -->
                         <div fxLayoutAlign="center center">
                             <input type="text" name="expDate" id="expDate" placeholder="Expiration Date" formControlName="expDate"> <!--(blur)="checkInput(credentialsForm.get('username'), usernameTooltip)"-->
-                            <mat-icon
-                                class="info"
-                                #address1Tooltip="matTooltip"
-                                matTooltip="Expiration Date must be in form (MM/YYYY)."
-                                matTooltipPosition="after">info
-                            </mat-icon>
                         </div>
 
                         <!-- Button -->
