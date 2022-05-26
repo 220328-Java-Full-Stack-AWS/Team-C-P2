@@ -1,47 +1,56 @@
-<div>
-    <div fxLayout="row wrap" fxLayoutAlign="center stretch" fxLayoutGap="10px">
-        <!-- <h1> Products Category: {{products.netPrice}} </h1> -->
+<section class="products container container--pall">
+    <div class="products__title">
+        <h2><strong>{{products[0].product.category.name}} Products</strong></h2>
     </div>
-
-    <br>
-    <div fxLayout="row wrap" fxLayoutAlign="center stretch" fxLayoutGap="10px" *ngIf="products.length > 0">
-        <div fxFlex="24%" fxFlex.lt-lg="32%" fxFlex.lt-md="48%" fxLayout="column" class="product"
-            *ngFor="let item of products">
-            <!-- Add to cart icon -->
-            <button mat-raised-button type="button" class="addToCartButton mat-elevation-z2"
-                (click)="addToCart(item, $event, mySelect.value)">
-                <div class="addToCartText">Add </div>
-                <mat-icon class="addCartIcon">add_shopping_cart</mat-icon>
-            </button>
-
-            <div class="cart__item-quantity">
-                <select name="quantity" id="" #mySelect>
-                    <ng-container *ngFor="let num of quantity">
-                        <option [value]="num" value="num">
-                            Qty: {{num}}
-                        </option>
-                    </ng-container>
-                </select>
-            </div>
-
-            <!-- Image -->
-            <div class="productImage" routerLink="/product/{{item.product.id}}">
+    <div class="products__container flex">
+        <div class="products__item" *ngFor="let item of products">
+            <div class="products__item-image" routerLink="/product/{{item.product.id}}">
                 <img fxFlex src="data:image/png;base64,{{item.product.image}}"
                     alt="{{item.product.name | lowercase}} image">
             </div>
-
-            <div class="productInfo" fxFlex fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="5px">
-                <div>
-                    <b class="productName">{{item.product.name | titlecase}}</b>
-                    <p>{{item.product.descr}}</p>
+            <div class="products__item-content" >
+                <div class="products__item-title" routerLink="/product/{{item.product.id}}">
+                    <h3><strong>{{item.product.name | titlecase}}</strong></h3>
                 </div>
-                <div class="productPricing" fxLayoutAlign="end" fxLayoutGap="10px">
-                    <span class="originalPrice" *ngIf="item.product.onSale != null">{{item.product.price |
-                        currency}}</span>
-                    <span class="currentPrice">{{item.netPrice | currency}}</span>
+                <div class="products__item-info">
+                    <h3>{{item.product.descr}}</h3>
                 </div>
+            </div>
 
+
+            <div class="products__item-footer">
+                <div class="products__etc">
+                    <h3><strong>...</strong></h3>
+                </div>
+                <div class="products__footer-content">
+                    <div class="product__price flex">
+                        <div class="product__price-value originalPrice" *ngIf="item.product.onSale != null">
+                            <h3>{{item.product.price | currency}}</h3>
+                        </div>
+                        <div class="currentPrice"><h3>{{item.netPrice | currency}}</h3></div>
+                    </div>
+                    <div class="products__qty flex">
+                        <button mat-raised-button type="button" class="addToCartButton mat-elevation-z2" (click)="addToCart(item, $event, mySelect.value)">
+                            <div class="addToCartText">
+                                Add
+                            </div>
+                            <mat-icon class="addCartIcon">
+                                add_shopping_cart
+                            </mat-icon>
+                        </button>
+                        <div class="products__item-quantity">
+                            <select name="quantity" id="" #mySelect>
+                                <ng-container *ngFor="let num of quantity">
+                                    <option [value]="num" value="num">
+                                        Qty: {{num}}
+                                    </option>
+                                </ng-container>
+                            </select>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+</section>

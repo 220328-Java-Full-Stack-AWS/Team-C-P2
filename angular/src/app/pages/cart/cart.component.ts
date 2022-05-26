@@ -18,6 +18,7 @@ export class CartComponent implements OnInit {
   currentCart: Cart[] = [];
   cartTotal: number = 0;
   quantity: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  itemCount: number = 0;
 
   constructor(
     private userService: UserService,
@@ -26,6 +27,7 @@ export class CartComponent implements OnInit {
 
   updateCart(cartItem: CartItem, quantity: any){
     this.userService.updateItemInCart(cartItem, quantity);
+    
   }
 
   removeCartItem(cartItem: CartItem) {
@@ -41,12 +43,16 @@ export class CartComponent implements OnInit {
       this.currentCart = res;
       // Initialize cart total (count and set view)
       let totalCount = 0;
+      let count = 0;
       Array.prototype.forEach.call(this.currentCart, (cart: Cart) => {
         totalCount += cart.cartItem?.netPrice! * cart.cartItem?.quantity!;
+        count += cart.cartItem ? Number(cart.cartItem?.quantity!) : Number(cart.cartItem!.quantity);
       });
       this.cartTotal = totalCount;
+      this.itemCount = count;
       this.currentCart.sort((a,b) => (a.cartItem?.id || 0) < (b.cartItem?.id || 0) ? -1 : 1);
     });
+
   }
 }
 

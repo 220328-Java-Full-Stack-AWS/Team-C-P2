@@ -32,33 +32,35 @@ export class CheckoutComponent implements OnInit {
   cartTotal: number = 0;
 
   userQuery: UserProfile = {
-      id: 0,
-      username: "",
-      firstName: "",
-      lastName: "",
-      email: "",
-      role: "",
-      activeCartId: 0,
-      userAddress: {
-        userId: 0,
-        addressLine1: "",
-        addressLine2: "string",
-        city: "",
-        postalCode: 0,
-        country: "",
-        phoneNumber: ""
-      },
-      payment: {
-        userId: 0,
-        network: "",
-        issuer: "",
-        cardNumber: "",
-        securityCode: 0,
-        expDate: ""
-      },
-      dateCreated: "",
-      dateModifies: ""
-    }
+    id: 0,
+    username: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    role: "",
+    activeCartId: 0,
+    userAddress: {
+      userId: 0,
+      addressLine1: "",
+      addressLine2: "string",
+      city: "",
+      postalCode: 0,
+      country: "",
+      phoneNumber: ""
+    },
+    payment: {
+      userId: 0,
+      network: "",
+      issuer: "",
+      cardNumber: "",
+      securityCode: 0,
+      expDate: ""
+    },
+    dateCreated: "",
+    dateModifies: ""
+  }
+
+  itemCount:number = 0;
 
   constructor(
     private userService: UserService,
@@ -80,9 +82,12 @@ export class CheckoutComponent implements OnInit {
       this.cartArray = currentCart;
       // Initialize cart total (count and set view)
       let totalCount = 0;
+      let count = 0;
       currentCart.forEach((cart: Cart) => {
         totalCount += cart.cartItem?.netPrice! * cart.cartItem?.quantity!;
+        count += cart.cartItem ? Number(cart.cartItem?.quantity!) : Number(cart.cartItem!.quantity);
       });
+      this.itemCount = count;
       this.cartTotal = totalCount;
       this.cartArray.sort((a,b) => (a.cartItem?.id || 0) < (b.cartItem?.id || 0) ? -1 : 1);
     });

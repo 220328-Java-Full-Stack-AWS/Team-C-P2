@@ -5,7 +5,9 @@
     }
 
     &__item {
-        margin-bottom: 2rem;
+        width: 746px;
+        margin-right: 1rem;
+        margin-bottom: 1rem;
         display: flex;
     }
 
@@ -13,7 +15,6 @@
         padding: 1rem;
 
         img {
-            border: 1px solid pink;
             width: 180px;
             height: 180px;
         }
@@ -34,5 +35,80 @@
     &__item-footer {
         margin-bottom: 1rem;
         display: flex;
+    }
+
+    &__item-delete {
+        padding-left: 0.5rem;
+    }
+
+    &__summary {
+        display: block;
+        min-width: 330px;
+        max-height: 240px;
+        
+        h3 {
+            font-size: 14px;
+        }
+    }
+
+    &__summary-header {
+        padding-top: 1rem;
+        padding-left: 1rem;
+    }
+
+    &__summary-content {
+        padding: 1rem;
+    }
+
+    &__summary-item {
+        display: flex;
+        justify-content: space-between;
+
+    }
+    
+    &__summary-title {
+        min-width: 1rem;
+    }
+
+    &__summary-item-footer {
+        padding-bottom: 2rem;
+        border-bottom: 1px solid lightgray;
+    }
+
+    &__summary-info {
+        text-align: right;
+        margin-bottom: 0.5rem;
+        min-width: 6rem;
+    }
+
+    &__summary-total {
+        display: flex;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        padding-bottom: 1rem;
+        justify-content: space-between;
+        
+        h2 {
+            color: darkred;
+        }
+    }
+
+    &__summary-button {
+        padding-right: 1rem;
+        text-align: right;
+
+        &:hover {
+
+        }
+    }
+
+    .originalPrice {
+        text-decoration: line-through;
+        color: red;
+        margin-right: 0.5rem;
+    }
+
+    &__item-price {
+        margin-bottom: .5rem;
     }
 }

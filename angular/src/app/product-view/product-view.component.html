@@ -1,45 +1,48 @@
-<section class="productView">
-    <div class="pageContainer container container--pall" fxLayout="row" fxLayoutGap=" 5px"
-        fxLayoutAlign="center center">
-        <div class="productImage" fxFlex="50%">
-            <div>
-                <img fxFlex src="data:image/png;base64,{{productById.product.image}}"
-                    alt="{{productById.product.name | lowercase}} image">
+<section class="productView ">
+    <div class="container container--pall">
+        <div class="productView__container">
+            <div class="productView__header">
+                <h1><strong>{{productById.product.name | titlecase}}</strong></h1>
             </div>
-        </div>
-
-
-        <div class="productInfo" fxFlex="50%" fxLayout="column" fxLayoutAlign="space-around ">
-            <h1 class="productName">{{productById.product.name | titlecase}}</h1>
-            <div class="">
-                <p>{{productById.product.descr}}</p>
-            </div>
-            <div class="productPricing" fxLayoutGap="10px">
-                <span class="originalPrice" *ngIf="productById.product.onSale != null">{{productById.product.price |
-                    currency}}</span>
-                <span class="currentPrice">{{productById.netPrice | currency}}</span>
-            </div>
-            <div>
-                <button mat-raised-button type="button" class="addToCartButton mat-elevation-z2" routerLink="/login"
-                    *ngIf="!(isLoggedIn)">
-                    <div class="addToCartText">Add </div>
-                    <mat-icon class="addCartIcon">add_shopping_cart</mat-icon>
-                </button>
-                <button mat-raised-button type="button" class="addToCartButton mat-elevation-z2"
-                    (click)="addToCart(productById, $event, mySelect.value)" *ngIf="(isLoggedIn)">
-                    <div class="addToCartText">Add </div>
-                    <mat-icon class="addCartIcon">add_shopping_cart</mat-icon>
-                </button>
-                <div class="cart__item-quantity">
-                    <select name="quantity" id="" #mySelect>
-                        <ng-container *ngFor="let num of quantity">
-                            <option [value]="num" value="num">
-                                Qty: {{num}}
-                            </option>
-                        </ng-container>
-                    </select>
+            <div class="pageContainer flex">
+                <div class="productImage" >
+                    <img src="data:image/png;base64,{{productById.product.image}}" alt="{{productById.product.name | lowercase}} image">
+                </div>
+        
+                <div class="productInfo">
+                    <div class="productView__content">
+                        <h2 class="tt"><strong>{{productById.product.name}}</strong></h2>
+                        <h2>{{productById.product.descr}}</h2>
+                    </div>
+                    <div class="productPricing flex">
+                        <span class="originalPrice" *ngIf="productById.product.onSale != null"><h2>{{productById.product.price |
+                            currency}}</h2></span>
+                        <span class="currentPrice"><h2>{{productById.netPrice | currency}}</h2></span>
+                    </div>
+                    <div class="productView__footer flex">
+                        <button mat-raised-button type="button" class="addToCartButton mat-elevation-z2" routerLink="/login"
+                            *ngIf="!(isLoggedIn)">
+                            <div class="addToCartText">Add </div>
+                            <mat-icon class="addCartIcon">add_shopping_cart</mat-icon>
+                        </button>
+                        <button mat-raised-button type="button" class="addToCartButton mat-elevation-z2"
+                            (click)="addToCart(productById, $event, mySelect.value)" *ngIf="(isLoggedIn)">
+                            <div class="addToCartText">Add </div>
+                            <mat-icon class="addCartIcon">add_shopping_cart</mat-icon>
+                        </button>
+                        <div class="products__item-quantity">
+                            <select name="quantity" id="" #mySelect>
+                                <ng-container *ngFor="let num of quantity">
+                                    <option [value]="num" value="num">
+                                        Qty: {{num}}
+                                    </option>
+                                </ng-container>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+    
     </div>
 </section>
