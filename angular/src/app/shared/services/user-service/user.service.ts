@@ -388,6 +388,10 @@ export class UserService {
     this.currentCart = cart;
     this.currentCartSubject.next(this.currentCart);
   }
+
+  getCartById(id: number): Observable<any> {
+    return this.http.get<any>(this.userURL + "/cart/" + id, { withCredentials:true });
+  }
 }
 
 interface CartItemDto {

@@ -45,6 +45,7 @@ export class CartComponent implements OnInit {
         totalCount += cart.cartItem?.netPrice! * cart.cartItem?.quantity!;
       });
       this.cartTotal = totalCount;
+      this.currentCart.sort((a,b) => (a.cartItem?.id || 0) < (b.cartItem?.id || 0) ? -1 : 1);
     });
   }
 }

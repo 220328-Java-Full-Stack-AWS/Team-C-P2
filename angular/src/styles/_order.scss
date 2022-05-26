@@ -18,7 +18,13 @@
 
     &__details {
         display: flex;
-        justify-content: space-evenly;
+        border-bottom: 1px solid $gray;
+        margin-bottom: 2rem;
+        padding-bottom: 2rem;
+    }
+
+    &__details-item {
+        min-width: 33.33%;
     }
 
     &__details-content {
@@ -26,6 +32,86 @@
     }
     &__details-title {
         margin-bottom: 0.5rem;
+    }
+
+    //summary
+    &__summary {
+        margin-bottom: 2rem;
+    }
+    
+    &__summary-container{
+        padding: 1rem;
+    }
+
+    &__summary-item {
+        display: flex;
+    }
+
+    &__summary-item-header {
+        padding-top: 1rem;
+        padding-left: 1rem;
+        width: 720px;
+    }
+
+    &__summary-title {
+        margin-bottom: 1rem;
+    }
+
+    &__summary-item-descr {
+        
+    }
+    
+
+    &__summary-item-quantity {
+        width: 111px;
+        padding-top: 1rem;
+    }
+
+    &__summary-item-price {
+        width: 111px;
+        padding-top: 1rem;
+        
+    }
+
+    &__summary-item-content{
+        display: flex;
+    }
+
+    &__summary-item-image {
+        img {
+            height: 100px;
+            width: 100px;
+        }
+    }
+
+    &__total-content {
+        display: flex;
+    }
+
+    &__total {
+        margin-bottom: 1rem;
+        padding: 1rem;
+    }
+
+    &__total-header {
+        margin-bottom: 1rem;
+    }
+
+    &__total-item {
+        display: flex;
+        width: 831px;
+        margin-bottom: 1rem;
+    }
+
+    &__total-title {
+        width: 100px;
+    }
+
+    &__total-total {
+        display: flex;
+        justify-content: center;
+        padding-top: 1rem;
+        
     }
 
 }
