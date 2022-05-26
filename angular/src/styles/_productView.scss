@@ -1,27 +1,36 @@
 .productView {
+    
+    &__container {
+        
+    }
     .pageContainer {
-        padding-left: 1rem;
-        padding-right: 1rem;
         border: 1px solid black;
+        padding-left: 2rem;
 
 
         .productImage {
-            margin: auto;
-            width: 560px; //! Fiiller
-            height: 560px; //! Fiiller
-            border: 1px solid red; //! Fiiller
+            padding-top: 2rem;
+            img {
+                width: 400px; //! Fiiller
+                height: 400px; //! Fiiller
+            }
+
         }
 
         .productInfo {
             // height: 100%;
-            width: 560px; //! Fiiller
-            height: 560px; //! Fiiller
-            border: 1px green solid;
+            width: 100%;
+            padding-left: 4rem;
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+            padding-right: 2rem;
+            
 
 
             .productName {}
 
             .productPricing {
+                padding-bottom: 1rem;
 
                 .originalPrice {
                     text-decoration: line-through;
@@ -31,7 +40,6 @@
                 .currentPrice {
                     color: green;
                 }
-
             }
 
             .addToCartButton {
@@ -56,6 +64,18 @@
             }
 
         }
+
+    }
+
+    &__header {
+        margin-bottom: 1rem;
+    }
+
+    &__content {
+        height: 320px;
+    }
+
+    &__footer{
 
     }
 }
