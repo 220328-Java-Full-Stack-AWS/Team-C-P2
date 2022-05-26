@@ -46,17 +46,6 @@
                         <h3>{{userQuery.email}}</h3>
                     </div>
                 </div>
-                <div class="profile__item-content">
-                    <div class="profile__item-content-header">
-                        <h3><strong>Phone Number</strong></h3>
-                    </div>
-                    <div class="profile__item-content-info">
-                        <h3>{{userQuery.userAddress.phoneNumber}}</h3>
-                    </div>
-                </div>
-                <div class="profile__button">
-                    <button routerLink="updateProfile" class="button">Update Profile</button>
-                </div>
             </div>
 
             <div class="profile__item item-container" *ngIf="(userQuery.userAddress.userId != null)">
@@ -101,6 +90,14 @@
                     </div>
                     <div class="profile__item-content-info">
                         <h3>{{userQuery.userAddress.country}}</h3>
+                    </div>
+                </div>
+                <div class="profile__item-content">
+                    <div class="profile__item-content-header">
+                        <h3><strong>Phone Number</strong></h3>
+                    </div>
+                    <div class="profile__item-content-info">
+                        <h3>{{userQuery.userAddress.phoneNumber}}</h3>
                     </div>
                 </div>
                 <div class="profile__button">
